@@ -3,18 +3,17 @@
 <?php 
     require_once('access.php'); 
 
-echo "<html>
+echo '<html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>".$event_tools_event_name." Layout List</title>
+    <title>'.$event_tools_event_name.' Layout List</title>
 
         <link href="layouts.css" rel="stylesheet" type="text/css" />    
 
 </head>
 <body>
-<h1>".$event_tools_event_name." Layout List</h1>  
+<h1>'.$event_tools_event_name.' Layout List</h1>  
 <a href="index.php">Back to main page</a>
-";
+';
 
 require_once('access.php');
 require_once('utilities.php');

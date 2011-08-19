@@ -3,18 +3,17 @@
 <?php 
     require_once('access.php'); 
 
-echo "<html>
+echo '<html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>".$event_tools_event_name." Layout Index</title>
+    <title>'.$event_tools_event_name.' Layout Index</title>
 
     <link href="tours.css" rel="stylesheet" type="text/css" />    
 
 </head>
 <body>
-<h2>".$event_tools_event_name." Layout Index</h2>  
+<h2>'.$event_tools_event_name.' Layout Index</h2>  
 <a href="index.php">Back to main page</a>
-<p>";
+<p>';
 
 require_once('utilities.php');
 require_once('indexing.php');
