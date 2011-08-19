@@ -43,8 +43,8 @@
 
 if (!$event_tools_user_email_log_skip) {
     // email results
-    $opts['notify']['all'] = 'x2011west@pacbell.net';
-    $opts['notify']['prefix'] = 'X2011west ';
+    $opts['notify']['all'] = $event_tools_notify_email_address;
+    $opts['notify']['prefix'] = $event_tools_notify_email_prefix;
 }
 
 $opts['tb'] = $event_tools_db_prefix .'eventtools_general_tours';

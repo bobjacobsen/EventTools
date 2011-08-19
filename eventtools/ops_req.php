@@ -144,8 +144,8 @@ You will be able to make changes to your requests up until approximately April 1
 
 if (!$event_tools_user_email_log_skip) {
     // email results
-    $opts['notify']['all'] = 'x2011west@pacbell.net';
-    $opts['notify']['prefix'] = 'X2011west ';
+    $opts['notify']['all'] = $event_tools_notify_email_address;
+    $opts['notify']['prefix'] = $event_tools_notify_email_prefix;
 }
 
 // MySQL host name, user name, password, database, and table

@@ -11,7 +11,7 @@
 // email utilities
 //
 
-define(EMAIL_FROM, "x2011west@pacbell.net");
+define(EMAIL_FROM, $event_tools_notify_email_address);
 
 function sendNotificationEmail($to, $subject, $body) {
     $from = "From:" . EMAIL_FROM;
