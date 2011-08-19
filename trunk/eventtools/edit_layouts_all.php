@@ -499,6 +499,14 @@ $opts['fdd']['layout_last_mod_time'] = array(
   'maxlen'   => 19,
   'sort'     => true
 );
+$opts['fdd']['layout_allow_photo'] = array(
+  'name'     => 'Allow Photos',
+  'select'   => 'O',
+  'maxlen'   => 1,
+  'sort'     => true,
+  'default'  => 'Unknown',
+  'values2'   => array(''=>'Unknown', 'Y'=>'Yes', 'N'=>'No') 
+);
 
 // Now important call to phpMyEdit
 require_once 'phpMyEdit.class.php';
