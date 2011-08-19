@@ -43,8 +43,8 @@
 
 if (!$event_tools_user_email_log_skip) {
     // email results
-    $opts['notify']['all'] = 'x2011west@pacbell.net';
-    $opts['notify']['prefix'] = 'X2011west ';
+    $opts['notify']['all'] = $event_tools_notify_email_address;
+    $opts['notify']['prefix'] = $event_tools_notify_email_prefix;
 }
 
 $opts['tb'] = $event_tools_db_prefix .'eventtools_layouts';
@@ -188,9 +188,12 @@ $opts['fdd']['layout_status_code'] = array(
 );
 $opts['fdd']['layout_scale'] = array(
   'name'     => 'Scale',
-  'select'   => 'T',
-  'maxlen'   => 20,
-  'sort'     => true
+  'select'   => 'D',
+  'maxlen'   => 25,
+  'sort'     => true,
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_constrain_scale', 
+                        'column' => 'constrain_scale_value'),
+  'default'  => 6
 );
 $opts['fdd']['layout_size'] = array(
   'name'     => 'Size',
