@@ -116,6 +116,7 @@ CREATE TABLE IF NOT EXISTS `gr2012_eventtools_layouts` (
   `layout_plan_type` varchar(64) default NULL,
   `layout_ops_scheme` varchar(64) default NULL,
   `layout_control` varchar(64) default NULL,
+  `layout_allow_photo` char(1) default NULL,
   
   `layout_accessibility` int(3) default NULL,
   `layout_wheelchair_access` char(1) default NULL,
