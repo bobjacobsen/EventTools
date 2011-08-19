@@ -207,6 +207,62 @@ if ($event_tools_constrain_scale) {
 }
 $opts['fdd']['layout_gauge'] = $gaugeArray; 
 
+$eraArray = 
+array(
+  'name'     => 'Era',
+  'select'   => 'T',
+  'maxlen'   => 64,
+  'sort'     => true,
+  'nowrap'   => true
+);
+if ($event_tools_constrain_era) {
+    $eraArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_era', 
+                        'column' => 'constrain_value');
+}
+$opts['fdd']['layout_era'] = $eraArray;
+
+$classArray = 
+array(
+  'name'     => 'Class',
+  'select'   => 'T',
+  'maxlen'   => 64,
+  'sort'     => true,
+  'nowrap'   => true
+);
+if ($event_tools_constrain_class) {
+    $classArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_class', 
+                        'column' => 'constrain_value');
+}
+$opts['fdd']['layout_class'] = $classArray;
+
+$themeArray = 
+array(
+  'name'     => 'Theme',
+  'select'   => 'T',
+  'maxlen'   => 64,
+  'sort'     => true,
+  'nowrap'   => true
+);
+if ($event_tools_constrain_theme) {
+    $themeArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_theme', 
+                        'column' => 'constrain_value');
+}
+$opts['fdd']['layout_theme'] = $themeArray;
+
+$localeArray = 
+array(
+  'name'     => 'Locale',
+  'select'   => 'T',
+  'maxlen'   => 64,
+  'sort'     => true,
+  'nowrap'   => true
+);
+if ($event_tools_constrain_locale) {
+    $localeArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_locale', 
+                        'column' => 'constrain_value');
+}
+$opts['fdd']['layout_locale'] = $localeArray;
+
 $opts['fdd']['layout_size'] = array(
   'name'     => 'Size',
   'select'   => 'T',
@@ -290,63 +346,6 @@ $opts['fdd']['layout_prototype'] = array(
   'maxlen'   => 64,
   'sort'     => true
 );
-
-$eraArray = 
-array(
-  'name'     => 'Era',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true,
-  'nowrap'   => true
-);
-if ($event_tools_constrain_era) {
-    $eraArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_era', 
-                        'column' => 'constrain_value');
-}
-$opts['fdd']['layout_era'] = $eraArray;
-
-$classArray = 
-array(
-  'name'     => 'Class',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true,
-  'nowrap'   => true
-);
-if ($event_tools_constrain_class) {
-    $classArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_class', 
-                        'column' => 'constrain_value');
-}
-$opts['fdd']['layout_class'] = $classArray;
-
-$themeArray = 
-array(
-  'name'     => 'Theme',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true,
-  'nowrap'   => true
-);
-if ($event_tools_constrain_theme) {
-    $themeArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_theme', 
-                        'column' => 'constrain_value');
-}
-$opts['fdd']['layout_theme'] = $themeArray;
-
-$localeArray = 
-array(
-  'name'     => 'Locale',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true,
-  'nowrap'   => true
-);
-if ($event_tools_constrain_locale) {
-    $localeArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_locale', 
-                        'column' => 'constrain_value');
-}
-$opts['fdd']['layout_locale'] = $localeArray;
-
 
 $opts['fdd']['layout_mainline_length'] = array(
   'name'     => 'Mainline Length',
@@ -485,6 +484,14 @@ $opts['fdd']['layout_communications'] = array(
   'default'  => 'Unknown',
   'values'   => array('Unknown', 'Voice', 'Telephone', '5ch Radio', 'Radio', 'FRS', 'Signals', 'N/A', 'TBD') 
 );
+$opts['fdd']['layout_allow_photo'] = array(
+  'name'     => 'Allow Photos',
+  'select'   => 'O',
+  'maxlen'   => 1,
+  'sort'     => true,
+  'default'  => 'Unknown',
+  'values2'   => array(''=>'Unknown', 'Y'=>'Yes', 'N'=>'No') 
+);
 $opts['fdd']['layout_mark_changed'] = array(
   'name'     => 'Changed?',
   'values'   => array('','Y'),
@@ -498,14 +505,6 @@ $opts['fdd']['layout_last_mod_time'] = array(
   'select'   => 'T',
   'maxlen'   => 19,
   'sort'     => true
-);
-$opts['fdd']['layout_allow_photo'] = array(
-  'name'     => 'Allow Photos',
-  'select'   => 'O',
-  'maxlen'   => 1,
-  'sort'     => true,
-  'default'  => 'Unknown',
-  'values2'   => array(''=>'Unknown', 'Y'=>'Yes', 'N'=>'No') 
 );
 
 // Now important call to phpMyEdit
