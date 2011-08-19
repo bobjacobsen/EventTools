@@ -21,20 +21,20 @@ function my_exec($cmd, $input='')
          } 
 
 
-$command = 'svn update ';
+$command = 'svn update';
 
 echo 'Command: <pre>'.$command.'</pre><br>';
 
 $vals = my_exec($command, ''); 
 
-echo 'stdout:<br><hr>';
-echo '<pre>';
+echo "\n".'stdout:<br><hr>';
+echo '<pre>'."\n";
 echo $vals['stdout'];
-echo '</pre><hr>';
-echo 'stderr:<br><hr>';
-echo '<pre>';
+echo "\n".'</pre><hr>';
+echo "\n".'stderr:<br><hr>';
+echo '<pre>'."\n";
 echo $vals['stderr'];
-echo '</pre><hr>';
+echo "\n".'</pre><hr>';
 echo '<p>Returned: '.$vals['return'];
 ?>
 
