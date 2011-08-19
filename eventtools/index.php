@@ -1,12 +1,18 @@
 <!DOCTYPE html>
-<html>
+<?php 
+    require_once('access.php'); 
+
+echo "<html>
 <head>
-	<title>X2011West Event Tools</title>
+	<title>".$event_tools_event_name." Event Tools</title>
 </head>
 <body>
-<h1>X2011West Event Tools</h1>
+<h1>".$event_tools_event_name." Event Tools</h1>
 
-Provides access to the X2011West tour and clinic tools.
+Provides access to Event Tools for tours and clinics.
+
+"?>
+
 <p>
 
 <table border="1">
@@ -24,7 +30,9 @@ Provides access to the X2011West tour and clinic tools.
     <td></td>
     <td><a href="edit_layout_tour_add_layout.php">Add Layouts To Tour</a></td>
     <td><a href="edit_misc_event_tags.php">Add or remove tags</a></td>
-    <td><a href="edit_layouts_entry.php">Quick Entry</a></td>
+    <td><a href="edit_layouts_entry.php">Quick Entry</a>
+        <a href="edit_constrain_scale.php">Edit Scale Values<a/>
+    </td>
     <td><a href="edit_clinic_tags.php">Add or remove tags</a></td>
     <td><a href="edit_ops_all.php">Enter/Change User Requests</a></td>
 </tr><tr>
@@ -52,23 +60,23 @@ Provides access to the X2011West tour and clinic tools.
     <td><a href="format_all_clinics.php">Formatted View</td>
     <td></td>
 </tr><tr>
-    <th>X2011west Test Pages</th>
-    <td><a href="../generalTable.php">X2011west Table</a><br/>
-        <a href="../generalIndex.php">X2011west Index</a>
+    <th>Test Pages</th>
+    <td><a href="../generalTable.php">General Table</a><br/>
+        <a href="../generalIndex.php">General Index</a>
     </td>
-    <td><a href="../layoutToursTable.php">X2011west Table</a><br/>
-        <a href="../layoutToursIndex.php">X2011west Index</a>
+    <td><a href="../layoutToursTable.php">Layout Tour Table</a><br/>
+        <a href="../layoutToursIndex.php">Layout Tour Index</a>
     </td>
-    <td><a href="../miscEventsTable.php">X2011west Table</a><br/>
-        <a href="../miscEventsIndex.php">X2011west Index</a>
+    <td><a href="../miscEventsTable.php">Misc Event Table</a><br/>
+        <a href="../miscEventsIndex.php">Misc Event Index</a>
     </td>
-    <td><a href="../layoutsTable.php">X2011west Table</a><br/>
-        <a href="../layoutsIndex.php">X2011west Index</a>
+    <td><a href="../layoutsTable.php">Layouts Table</a><br/>
+        <a href="../layoutsIndex.php">Layouts Index</a>
     </td>
-    <td><a href="../clinicsTable.php">X2011west Table</a><br/>
-        <a href="../clinicsIndex.php">X2011west Index</a>
+    <td><a href="../clinicsTable.php">Clinics Table</a><br/>
+        <a href="../clinicsIndex.php">Clinics Index</a>
     </td>
-    <td><a href="ops_req.php">User request</a></td>
+    <td><a href="ops_req.php">User session request</a></td>
 </tr><tr>
     <th>Other Displays</th>
     <td>
@@ -81,7 +89,8 @@ Provides access to the X2011West tour and clinic tools.
     <td><a href="format_misc_by_loc.php">Misc Events Grouped by Location<a/><p>
         <a href="calendar/show_misc_events_cal.php">Interactive Misc Events Calendar<a/>
     </td>
-    <td></td>
+    <td>
+    </td>
     <td><a href="format_clinics_by_loc.php">Clinics Grouped by Location<a/><p>
         <a href="calendar/show_clinics_cal.php">Interactive Clinics Calendar<a/>
     </td>
