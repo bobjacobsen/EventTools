@@ -50,13 +50,13 @@ if (!$event_tools_user_email_log_skip) {
 $opts['tb'] = 'gr2012_eventtools_constrain_scale';
 
 // Name of field which is the unique key
-$opts['key'] = 'constrain_scale_id';
+$opts['key'] = 'constrain_id';
 
 // Type of key field (int/real/string/date etc.)
 $opts['key_type'] = 'int';
 
 // Sorting field(s)
-$opts['sort_field'] = array('constrain_scale_id');
+$opts['sort_field'] = array('constrain_value');
 
 // Number of records to display on the screen
 // Value of -1 lists all records in a table
@@ -142,7 +142,7 @@ appear in generated list. Here are some most used field options documented.
   descriptions fields are also possible. Check documentation for this.
 */
 
-$opts['fdd']['constrain_scale_id'] = array(
+$opts['fdd']['constrain_id'] = array(
   'name'     => 'Constrain scale ID',
   'select'   => 'T',
   'options'  => 'AVCPDR', // auto increment
@@ -150,7 +150,7 @@ $opts['fdd']['constrain_scale_id'] = array(
   'default'  => '0',
   'sort'     => true
 );
-$opts['fdd']['constrain_scale_value'] = array(
+$opts['fdd']['constrain_value'] = array(
   'name'     => 'Constrain scale value',
   'select'   => 'T',
   'maxlen'   => 25,

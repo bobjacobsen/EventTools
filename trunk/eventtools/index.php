@@ -30,9 +30,7 @@ Provides access to Event Tools for tours and clinics.
     <td></td>
     <td><a href="edit_layout_tour_add_layout.php">Add Layouts To Tour</a></td>
     <td><a href="edit_misc_event_tags.php">Add or remove tags</a></td>
-    <td><a href="edit_layouts_entry.php">Quick Entry</a><p>
-        <a href="edit_constrain_scale.php">Edit Scale Values<a/>
-    </td>
+    <td><a href="edit_layouts_entry.php">Quick Entry</a></td>
     <td><a href="edit_clinic_tags.php">Add or remove tags</a></td>
     <td><a href="edit_ops_all.php">Enter/Change User Requests</a></td>
 </tr><tr>
@@ -111,6 +109,23 @@ Provides access to Event Tools for tours and clinics.
 <a href="edit_location_keys.php ">Edit Location Keys<a/><br/>
 </td>
 </tr></table>
+
+<p>
+EventTools can optionally require that only certain
+values be entered in tables, for example for scale or gauge.
+If you're using that feature, enter the acceptable values using
+the following links.
+<table border="1">
+<tr><th>Constraints</th></tr>
+<?php
+if ($event_tools_constrain_scale)  echo '<tr><td><a href="edit_constrain_scale.php" >Valid Scales<a/></td></tr>';
+if ($event_tools_constrain_gauge)  echo '<tr><td><a href="edit_constrain_gauge.php" >Valid Gauges<a/></td></tr>';
+if ($event_tools_constrain_era)    echo '<tr><td><a href="edit_constrain_era.php"   >Valid Eras<a/></td></tr>';
+if ($event_tools_constrain_class)  echo '<tr><td><a href="edit_constrain_class.php" >Valid Railroad Classes<a/></td></tr>';
+if ($event_tools_constrain_theme)  echo '<tr><td><a href="edit_constrain_theme.php" >Valid Themes<a/></td></tr>';
+if ($event_tools_constrain_locale) echo '<tr><td><a href="edit_constrain_locale.php">Valid Locales<a/></td></tr>';
+?>
+</table>
 
 <p>
 <table border="1">

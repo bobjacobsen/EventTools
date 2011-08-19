@@ -1,11 +1,56 @@
 --
--- Loading data for table `gr2012_eventtools_constrain_scale`
+-- Loading data for constraint tables
 --
 
-INSERT INTO `gr2012_eventtools_constrain_scale` (`constrain_scale_value`) VALUES
+INSERT INTO `gr2012_eventtools_constrain_scale` (`constrain_value`) VALUES
+('Z'),
+('S'),
 ('HO'),
+('G/F'),
 ('O'),
 ('N');
+
+INSERT INTO `gr2012_eventtools_constrain_gauge` (`constrain_value`) VALUES
+('Std.'),
+('N2'),
+('N30'),
+('N3'),
+('Dual');
+
+INSERT INTO `gr2012_eventtools_constrain_era` (`constrain_value`) VALUES
+('Early'),
+('Golden Age'),
+('Transition'),
+('First Gen.'),
+('Mining'),
+('Other');
+
+INSERT INTO `gr2012_eventtools_constrain_class` (`constrain_value`) VALUES
+('Mainline'),
+('Bridge Line'),
+('Short Line'),
+('Branch Line'),
+('Industrial'),
+('Other');
+
+INSERT INTO `gr2012_eventtools_constrain_theme` (`constrain_value`) VALUES
+('Gen. Freight'),
+('Coal'),
+('Logging'),
+('Passenger'),
+('Mining'),
+('Other');
+
+INSERT INTO `gr2012_eventtools_constrain_locale` (`constrain_value`) VALUES
+('East'),
+('West'),
+('Midwest'),
+('North'),
+('South'),
+('Pac. NW'),
+('Other');
+
+
 
 --
 -- Loading data for table `gr2012_eventtools_accessibility_codes`

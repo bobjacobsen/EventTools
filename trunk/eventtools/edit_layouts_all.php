@@ -180,6 +180,7 @@ $opts['fdd']['layout_status_code'] = array(
                         'description' => 'event_status_name'),
   'trimlen|LF' => 36
 );
+
 $scaleArray = 
 array(
   'name'     => 'Scale',
@@ -189,9 +190,23 @@ array(
 );
 if ($event_tools_constrain_scale) {
     $scaleArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_scale', 
-                        'column' => 'constrain_scale_value');
+                        'column' => 'constrain_value');
 }
 $opts['fdd']['layout_scale'] = $scaleArray; 
+
+$gaugeArray = 
+array(
+  'name'     => 'Gauge',
+  'select'   => 'D',
+  'maxlen'   => 25,
+  'sort'     => true
+);
+if ($event_tools_constrain_scale) {
+    $gaugeArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_gauge', 
+                        'column' => 'constrain_value');
+}
+$opts['fdd']['layout_gauge'] = $gaugeArray; 
+
 $opts['fdd']['layout_size'] = array(
   'name'     => 'Size',
   'select'   => 'T',
@@ -269,20 +284,70 @@ $opts['fdd']['layout_long_description'] = array(
   'nowrap|LF'   => false
 );
 
-
 $opts['fdd']['layout_prototype'] = array(
   'name'     => 'Prototype',
   'select'   => 'T',
   'maxlen'   => 64,
   'sort'     => true
 );
-$opts['fdd']['layout_era'] = array(
+
+$eraArray = 
+array(
   'name'     => 'Era',
   'select'   => 'T',
   'maxlen'   => 64,
   'sort'     => true,
   'nowrap'   => true
 );
+if ($event_tools_constrain_era) {
+    $eraArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_era', 
+                        'column' => 'constrain_value');
+}
+$opts['fdd']['layout_era'] = $eraArray;
+
+$classArray = 
+array(
+  'name'     => 'Class',
+  'select'   => 'T',
+  'maxlen'   => 64,
+  'sort'     => true,
+  'nowrap'   => true
+);
+if ($event_tools_constrain_class) {
+    $classArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_class', 
+                        'column' => 'constrain_value');
+}
+$opts['fdd']['layout_class'] = $classArray;
+
+$themeArray = 
+array(
+  'name'     => 'Theme',
+  'select'   => 'T',
+  'maxlen'   => 64,
+  'sort'     => true,
+  'nowrap'   => true
+);
+if ($event_tools_constrain_theme) {
+    $themeArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_theme', 
+                        'column' => 'constrain_value');
+}
+$opts['fdd']['layout_theme'] = $themeArray;
+
+$localeArray = 
+array(
+  'name'     => 'Locale',
+  'select'   => 'T',
+  'maxlen'   => 64,
+  'sort'     => true,
+  'nowrap'   => true
+);
+if ($event_tools_constrain_locale) {
+    $localeArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_locale', 
+                        'column' => 'constrain_value');
+}
+$opts['fdd']['layout_locale'] = $localeArray;
+
+
 $opts['fdd']['layout_mainline_length'] = array(
   'name'     => 'Mainline Length',
   'select'   => 'T',
