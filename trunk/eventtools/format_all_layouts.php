@@ -1,19 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 		"http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<?php 
+    require_once('access.php'); 
+
+echo '<html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>X2011West Layouts</title>
+    <title>'.$event_tools_event_name.' Layouts</title>
 
     <link href="layouts.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
-<h1>X2011West Layouts</h1>  
+<h1>'.$event_tools_event_name.' Layouts</h1>  
 <a href="index.php">Back to main page</a>
 <p>
+';
 
-<?php
 require_once('access.php');
 require_once('utilities.php');
 require_once('formatting.php');
