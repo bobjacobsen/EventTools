@@ -1,0 +1,737 @@
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+--
+-- Database: `x2011west`
+--
+
+-- --------------------------------------------------------
+
+-- 
+-- You can do a bulk replace of 'test_eventtools_'
+-- to conver to 'prod_eventtools_' and vice versa
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_eventtools_users`
+--
+
+DROP TABLE IF EXISTS `test_eventtools_users`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_users` (
+  `user_id` int(5) NOT NULL auto_increment,
+  `user_name` varchar(25) NOT NULL,
+  `user_pwd` varchar(25) NOT NULL,
+  `user_key` varchar(25) NOT NULL,
+  PRIMARY KEY  (`user_id`),
+  KEY `idx_eventtools_users_user_name` (`user_name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Table structure for table `test_eventtools_layouts`
+--
+
+DROP TABLE IF EXISTS `test_eventtools_layouts`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_layouts` (
+  `layout_id` int(5) NOT NULL auto_increment,
+  `layout_num` varchar(5) NOT NULL,
+
+  `layout_name` varchar(64) default '',
+  `layout_short_description` varchar(64) default '',
+  `layout_long_description` varchar(5000) default '',
+
+  `layout_scale` varchar(20) default NULL,
+  `layout_prototype` varchar(64) default NULL,
+  `layout_era` varchar(64) default NULL,
+  `layout_scenery` varchar(64) default NULL,
+  `layout_size` varchar(64) default NULL,
+  `layout_mainline_length` varchar(64) default NULL,
+  `layout_plan_type` varchar(64) default NULL,
+  `layout_ops_scheme` varchar(64) default NULL,
+  `layout_control` varchar(64) default NULL,
+  
+  `layout_accessibility` int(3) default NULL,
+  `layout_wheelchair_access` char(1) default NULL,
+  `layout_duckunder_entry` char(1) default NULL,
+
+  `layout_owner_url` varchar(128) default '',
+  
+  `layout_owner_firstname` varchar(16) default '',
+  `layout_owner_lastname` varchar(32) default '',
+  `layout_owner_phone` varchar(16) default '',
+  `layout_owner_call_time` varchar(32) default '',
+  `layout_owner_email` varchar(32) default '',
+  
+  `layout_street_address` varchar(64) default '',
+  `layout_city` varchar(32) default '',
+  `layout_state` char(2) default '',
+  `layout_postcode` varchar(14) default '',
+
+  `layout_local_url` varchar(50) default '',
+  
+  `layout_status_code` int(3)  default 0,
+
+  `layout_fidelity` varchar(12) default '',
+  `layout_rigor` varchar(12) default '',
+  `layout_documentation` varchar(12) default '',
+  `layout_session_pace` varchar(12) default '',
+  `layout_car_forwarding` varchar(12) default '',
+  `layout_tone` varchar(12) default '',
+  `layout_dispatched_by1` varchar(12) default '',
+  `layout_dispatched_by2` varchar(12) default '',
+  `layout_communications` varchar(12) default '',
+  
+  `layout_organizer_comment` varchar(250) default '',
+  `layout_photo_url` varchar(50) default '',
+  
+  `layout_mark_changed` varchar(1) default '',
+  `layout_last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY  (`layout_id`),
+  CONSTRAINT up UNIQUE NONCLUSTERED(layout_num),
+  KEY `idx_eventtools_layouts_layout_id` (`layout_num`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_eventtools_layout_tours`
+--
+
+DROP TABLE IF EXISTS `test_eventtools_layout_tours`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_layout_tours` (
+  `id` int(5) NOT NULL auto_increment,
+  `number` varchar(5) NOT NULL,
+  `name` varchar(64) default '<none>',
+  `start_date` datetime NOT NULL default '2011-07-01 00:00:00',
+  `end_date` datetime NOT NULL default '2011-07-01 00:00:00',
+  `description` varchar(5000) default '<none>',
+  `status_code` int(3)  default 0,
+  `cart_item` varchar(5) default '',
+  
+  `tour_price` decimal(8,2)  default '-1',
+  `tour_seats` int(5)  default '0',
+  `tour_bus_type` varchar(16)  default '',
+  `tour_buses` int(5)  default '0',
+  `tour_mileage` int(5)  default '0',
+
+  `mark_changed` varchar(1) default '',
+  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY  (`id`),
+  KEY `idx_eventtools_layout_tours_number` (`number`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_eventtools_layout_tour_links`
+--
+
+DROP TABLE IF EXISTS `test_eventtools_layout_tour_links`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_layout_tour_links` (
+  `layout_tour_link_num` int(11) NOT NULL auto_increment,
+  `tour_number` varchar(5) NOT NULL,
+  `layout_id` int(5) NOT NULL,
+  `layout_tour_link_order` int(2) NOT NULL,
+
+  `link_mark_changed` varchar(1) default '',
+  `link_last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY  (`layout_tour_link_num`),
+  KEY `idx_eventtools_layout_tour_links_layout` (`layout_id`),
+  KEY `idx_eventtools_layout_tour_links_tour` (`tour_number`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_eventtools_clinics`
+--
+
+DROP TABLE IF EXISTS `test_eventtools_clinics`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_clinics` (
+  `id` int(5) NOT NULL auto_increment,
+  `number` varchar(5) NOT NULL,
+  `name` varchar(64) default '',
+  `start_date` datetime NOT NULL default '2011-07-01 00:00:00',
+  `end_date` datetime NOT NULL default '2011-07-01 00:00:00',
+  `description` varchar(5000) default '',
+  `status_code` int(3)  default '0',
+  `cart_item` varchar(5) default '',
+  
+  `clinic_presenter` varchar(48) default '',
+  `clinic_location_code` int(5) default 0,
+  `clinic_url` varchar(64) default '',
+  `clinic_presenter_email` varchar(64) default '',
+  `comment` varchar(500) default '',
+  `clinic_ok` varchar(2) default '',
+  `clinic_presenter_cell_number` varchar(15) default '',
+  `clinic_presenter_confirm_comment` varchar(500) default '',
+  `clinic_presenter_av_comment` varchar(500) default '',
+  `clinic_presenter_av_request` varchar(10) default '',
+
+  `mark_changed` varchar(1) default '',
+  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY  (`id`),
+  KEY `idx_eventtools_clinics_number` (`number`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_eventtools_misc_events`
+--
+
+DROP TABLE IF EXISTS `test_eventtools_misc_events`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_misc_events` (
+  `id` int(5) NOT NULL auto_increment,
+  `number` varchar(5) NOT NULL,
+  `name` varchar(64) default '',
+  `start_date` datetime NOT NULL default '2011-07-01 00:00:00',
+  `end_date` datetime NOT NULL default '2011-07-01 00:00:00',
+  `description` varchar(5000) default '',
+  `status_code` int(3)  default '0',
+  `cart_item` varchar(5) default '',
+  
+  `misc_location_code` int(5) default 0,
+  `misc_url` varchar(64) default '',
+
+  `mark_changed` varchar(1) default '',
+  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY  (`id`),
+  KEY `idx_eventtools_misc_number` (`number`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_eventtools_handicapped_values`
+--
+
+DROP TABLE IF EXISTS `test_eventtools_accessibility_codes`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_accessibility_codes` (
+  `accessibility_code` int(3) NOT NULL auto_increment,
+  `accessibility_name` varchar(40) NOT NULL,
+  `accessibility_display` varchar(40) NOT NULL,
+
+  `acc_mark_changed` varchar(1) default '',
+  `acc_last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY  (`accessibility_code`),
+  KEY `idx_eventtools_accessibility_name` (`accessibility_name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_eventtools_tour_status_values`
+--
+
+DROP TABLE IF EXISTS `test_eventtools_event_status_values`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_event_status_values` (
+  `event_status_id` int(5) NOT NULL auto_increment,
+  `event_status_code` int(3) NOT NULL,
+  `event_status_name` varchar(40) NOT NULL,
+  `event_status_display` varchar(40) default NULL,
+
+  `status_mark_changed` varchar(1) default '',
+  `status_last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY  (`event_status_id`),
+  KEY `idx_eventtools_event_status_code` (`event_status_code`),
+  KEY `idx_eventtools_event_status_name` (`event_status_name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_eventtools_clinic_locations`
+--
+
+DROP TABLE IF EXISTS `test_eventtools_clinic_locations`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_clinic_locations` (
+  `id` int(5) NOT NULL auto_increment,
+  `location_code` int(3) NOT NULL,
+  `location_name` varchar(40) NOT NULL,
+
+  `locations_mark_changed` varchar(1) default '',
+  `locations_last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY  (`id`),
+  KEY `idx_eventtools_clinic_location_code` (`location_code`),
+  KEY `idx_eventtools_clinic_location_name` (`location_name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_eventtools_clinic_tags`
+--
+
+DROP TABLE IF EXISTS `test_eventtools_clinic_tags`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_clinic_tags` (
+  `clinic_tag_num` int(11) NOT NULL auto_increment,
+  `clinic_tag_clinic_number` varchar(5) NOT NULL,
+  `tag_name` varchar(64) default '',
+
+  `mark_changed` varchar(1) default '',
+  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY  (`clinic_tag_num`),
+  CONSTRAINT up UNIQUE NONCLUSTERED(clinic_tag_clinic_number, tag_name),
+  KEY `idx_eventtools_clinic_tag_name` (`tag_name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_eventtools_misc_event_tags`
+--
+
+DROP TABLE IF EXISTS `test_eventtools_misc_event_tags`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_misc_event_tags` (
+  `misc_event_tag_num` int(11) NOT NULL auto_increment,
+  `misc_event_tag_misc_event_number` varchar(5) NOT NULL,
+  `tag_name` varchar(64) default '',
+
+  `mark_changed` varchar(1) default '',
+  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY  (`misc_event_tag_num`),
+  CONSTRAINT up UNIQUE NONCLUSTERED(misc_event_tag_misc_event_number, tag_name),
+  KEY `idx_eventtools_misc_event_tag_name` (`tag_name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_eventtools_general_tours`
+--
+
+DROP TABLE IF EXISTS `test_eventtools_general_tours`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_general_tours` (
+  `id` int(5) NOT NULL auto_increment,
+  `number` varchar(5) NOT NULL,
+  `name` varchar(64) default '<none>',
+  `start_date` datetime NOT NULL default '2011-07-01 00:00:00',
+  `end_date` datetime NOT NULL default '2011-07-01 00:00:00',
+  `description` varchar(5000) default '<none>',
+  `status_code` int(3)  default 0,
+  `cart_item` varchar(5) default '',
+  
+  `tour_price` decimal(8,2)  default '-1',
+  `tour_seats` int(5)  default '0',
+  `tour_bus_type` varchar(16)  default '',
+  `tour_buses` int(5)  default '0',
+  `tour_mileage` int(5)  default '0',
+  
+  `mark_changed` varchar(1) default '',
+  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY  (`id`),
+  KEY `idx_eventtools_general_tours_number` (`number`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_eventtools_users`
+--
+
+DROP TABLE IF EXISTS `test_eventtools_users`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_users` (
+  `user_id` int(5) NOT NULL auto_increment,
+  `user_name` varchar(25) NOT NULL,
+  `user_pwd` varchar(25) NOT NULL,
+  `user_key` varchar(25) NOT NULL,
+  `user_email_log_skip` binary(1) DEFAULT '0',
+
+  `mark_changed` varchar(1) default '',
+  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY  (`user_id`),
+  KEY `idx_eventtools_users_user_name` (`user_name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_eventtools_people`
+--
+
+DROP TABLE IF EXISTS `test_eventtools_people`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_people` (
+  `person_id` int(5) NOT NULL auto_increment,
+  `person_firstname` varchar(16) default '',
+  `person_lastname` varchar(32) default '',
+  `person_phone` varchar(16) default '',
+  `person_call_time` varchar(32) default '',
+  `person_email` varchar(32) default '',
+
+  `mark_changed` varchar(1) default '',
+  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY  (`person_id`),
+  KEY `idx_eventtools_person_email` (`person_email`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_eventtools_opsession`
+--
+
+DROP TABLE IF EXISTS `test_eventtools_opsession`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_opsession` (
+  `ops_id` int(5) NOT NULL auto_increment,
+  `ops_layout_id` int(5),
+  `start_date` datetime,
+  `end_date` datetime,
+  `location` varchar(25),
+  `distance` varchar(25),
+  `travel_time` varchar(25),
+  `status_code` int(3)  default 0,
+  `spaces` int(3) default 0,
+  `presenting_time` varchar(50),
+  `note` varchar(250),
+  `ops_layout_id2` int(5),
+  `ops_layout_id3` int(5),
+  `ops_layout_id4` int(5),
+  
+  `mark_changed` varchar(1) default '',
+  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY  (`ops_id`),
+  KEY `idx_eventtools_ops_layout_id` (`ops_layout_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_eventtools_opsession_req`
+--
+
+DROP TABLE IF EXISTS `test_eventtools_opsession_req`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_opsession_req` (
+  `opsreq_id` int(5) NOT NULL auto_increment,
+  `opsreq_person_email` varchar(32),
+  `opsreq_pri1` int(5),
+  `opsreq_pri2` int(5),
+  `opsreq_pri3` int(5),
+  `opsreq_pri4` int(5),
+  `opsreq_pri5` int(5),
+  `opsreq_pri6` int(5),
+  `opsreq_pri7` int(5),
+  `opsreq_pri8` int(5),
+  `opsreq_any` char(1),
+  `opsreq_number` int(5),
+  `opsreq_comment` varchar(200),
+
+  `mark_changed` varchar(1) default '',
+  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY  (`opsreq_id`),
+  KEY `idx_eventtools_opsreq_person_email` (`opsreq_person_email`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `test_eventtools_opsreq_group`
+--
+-- Denotes an assignable group of attendees
+--
+
+DROP TABLE IF EXISTS `test_eventtools_opsreq_group`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_opsreq_group` (
+  `opsreq_group_id` int(5) NOT NULL auto_increment,
+  `opsreq_group_cycle_name` varchar(32),
+
+  `mark_changed` varchar(1) default '',
+  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY  (`opsreq_group_id`),
+  KEY `idx_eventtools_opsreq_group_cycle_name` (`opsreq_group_cycle_name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `test_eventtools_opsreq_group_req_link`
+--
+-- Links an assignable group of attendees to a single session request
+--
+
+DROP TABLE IF EXISTS `test_eventtools_opsreq_group_req_link`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_opsreq_group_req_link` (
+  `opsreq_group_req_link_id` int(5) NOT NULL auto_increment,
+  `opsreq_group_id` int(5),
+  `opsreq_id` int(5),
+
+  `mark_changed` varchar(1) default '',
+  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY  (`opsreq_group_req_link_id`),
+  KEY `idx_eventtools_opsreq_group_id` (`opsreq_group_id`),
+  KEY `idx_eventtools_opsreq_id` (`opsreq_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `test_eventtools_opsreq_req_status`
+--
+-- A specific layout request and status
+---    opsreq_group_req_link_id     points to a specific reg&group link, hence request
+---    req_num                      1-8 request number
+---    ops_id                       operating session link
+---    status                       0 none, 1 assigned, 2 locked out
+--
+
+DROP TABLE IF EXISTS `test_eventtools_opsreq_req_status`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_opsreq_req_status` (
+  `opsreq_req_status_id` int(5) NOT NULL auto_increment,
+  `opsreq_group_req_link_id` int(5),
+  `req_num` int(2),
+  `ops_id` int(5),
+  `status` int(2) DEFAULT 0,
+  `forced` int(1) DEFAULT 0,
+
+  `mark_changed` varchar(1) default '',
+  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY  (`opsreq_req_status_id`),
+  KEY `idx_eventtools_opsreq_group_req_link_id` (`opsreq_group_req_link_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_eventtools_availability`
+--
+
+DROP TABLE IF EXISTS `test_eventtools_availability`;
+
+CREATE TABLE IF NOT EXISTS `test_eventtools_availability` (
+  `availability_id` int(5) NOT NULL auto_increment,
+  `availability_person_id` int(5) NOT NULL,
+  `availability_comment` varchar(32) default '',
+  `availability_1_m` BOOLEAN default '1',
+  `availability_1_a` BOOLEAN default '1',
+  `availability_1_e` BOOLEAN default '1',
+  `availability_2_m` BOOLEAN default '1',
+  `availability_2_a` BOOLEAN default '1',
+  `availability_2_e` BOOLEAN default '1',
+  `availability_3_m` BOOLEAN default '1',
+  `availability_3_a` BOOLEAN default '1',
+  `availability_3_e` BOOLEAN default '1',
+  `availability_4_m` BOOLEAN default '1',
+  `availability_4_a` BOOLEAN default '1',
+  `availability_4_e` BOOLEAN default '1',
+  `availability_5_m` BOOLEAN default '1',
+  `availability_5_a` BOOLEAN default '1',
+  `availability_5_e` BOOLEAN default '1',
+  `availability_6_m` BOOLEAN default '1',
+  `availability_6_a` BOOLEAN default '1',
+  `availability_6_e` BOOLEAN default '1',
+  `availability_7_m` BOOLEAN default '1',
+  `availability_7_a` BOOLEAN default '1',
+  `availability_7_e` BOOLEAN default '1',
+  `availability_8_m` BOOLEAN default '1',
+  `availability_8_a` BOOLEAN default '1',
+  `availability_8_e` BOOLEAN default '1',
+  `availability_9_m` BOOLEAN default '1',
+  `availability_9_a` BOOLEAN default '1',
+  `availability_9_e` BOOLEAN default '1',
+
+  PRIMARY KEY  (`availability_id`),
+  KEY `idx_eventtools_availability_person_id` (`availability_person_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_eventtools_changelog`
+--
+DROP TABLE IF EXISTS `test_eventtools_changelog`;
+
+CREATE TABLE test_eventtools_changelog (
+	updated    TIMESTAMP 	  DEFAULT CURRENT_TIMESTAMP,
+	user       varchar(255)   default NULL,
+	host       varchar(255)   default NULL,
+	operation  varchar(255)   default NULL,
+	tab        varchar(255)   default NULL,
+	rowkey     varchar(255)   default NULL,
+	col        varchar(255)   default NULL,
+	oldval     blob           default NULL,
+	newval     blob           default NULL
+);
+
+-- --------------------------------------------------------
+
+--
+-- View section, done last to ensure tables exist
+--
+
+-- Layout tours, plus any contained layouts
+CREATE OR REPLACE VIEW test_eventtools_layout_tour_with_layouts
+AS SELECT test_eventtools_layout_tours.*, test_eventtools_layouts.*, 
+                test_eventtools_layout_tour_links.layout_tour_link_order, test_eventtools_event_status_values.*, 
+                test_eventtools_accessibility_codes.*
+        FROM ((
+                (test_eventtools_layout_tours
+                    LEFT JOIN test_eventtools_layout_tour_links
+                    ON test_eventtools_layout_tour_links.tour_number = test_eventtools_layout_tours.id
+                )  
+                    LEFT JOIN test_eventtools_layouts 
+                    ON test_eventtools_layouts.layout_id = test_eventtools_layout_tour_links.layout_id
+                )
+                    LEFT JOIN test_eventtools_event_status_values
+                    ON test_eventtools_layout_tours.status_code = test_eventtools_event_status_values.event_status_code
+                )
+                    LEFT JOIN test_eventtools_accessibility_codes
+                    ON layout_accessibility = accessibility_code;
+                
+
+-- Layouts, plus any tours they're on, and accessibility
+CREATE OR REPLACE VIEW test_eventtools_layout_with_layout_tours
+AS  SELECT  test_eventtools_layout_tours.*,
+            test_eventtools_layouts.*, test_eventtools_accessibility_codes.*, test_eventtools_event_status_values.*
+    FROM  ((
+            (test_eventtools_layouts 
+                LEFT JOIN test_eventtools_layout_tour_links
+                ON test_eventtools_layouts.layout_id = test_eventtools_layout_tour_links.layout_id
+            )  
+                LEFT JOIN test_eventtools_layout_tours
+                ON test_eventtools_layout_tour_links.tour_number = test_eventtools_layout_tours.id
+            )
+                LEFT JOIN test_eventtools_accessibility_codes
+                ON layout_accessibility = accessibility_code
+            )
+                LEFT JOIN test_eventtools_event_status_values
+                ON test_eventtools_layouts.layout_status_code = test_eventtools_event_status_values.event_status_code;
+            
+-- General tours, plus any contained status
+CREATE OR REPLACE VIEW test_eventtools_general_tour_with_status
+AS SELECT test_eventtools_general_tours.*, test_eventtools_event_status_values.*
+        FROM test_eventtools_general_tours
+            LEFT JOIN test_eventtools_event_status_values
+            ON test_eventtools_general_tours.status_code = test_eventtools_event_status_values.event_status_code;
+
+
+-- Clinics, plus any applied tags
+
+CREATE OR REPLACE VIEW test_eventtools_clinics_with_tags
+AS SELECT test_eventtools_clinics.*, test_eventtools_clinic_tags.tag_name, test_eventtools_clinic_locations.location_name
+        FROM (
+            test_eventtools_clinics
+            LEFT JOIN test_eventtools_clinic_tags
+            ON test_eventtools_clinics.id = clinic_tag_clinic_number
+            )
+            LEFT JOIN test_eventtools_clinic_locations
+            ON clinic_location_code = location_code
+            ;
+
+
+-- Misc Events, plus any applied tags
+
+CREATE OR REPLACE VIEW test_eventtools_misc_events_with_tags
+AS SELECT test_eventtools_misc_events.*, test_eventtools_misc_event_tags.tag_name, test_eventtools_clinic_locations.location_name
+        FROM (
+            test_eventtools_misc_events
+            LEFT JOIN test_eventtools_misc_event_tags
+            ON test_eventtools_misc_events.id = misc_event_tag_misc_event_number
+            )
+            LEFT JOIN test_eventtools_clinic_locations
+            ON misc_location_code = location_code
+            ;
+
+
+-- Person, plus any availability tags
+CREATE OR REPLACE VIEW test_eventtools_person_with_availability
+AS SELECT * FROM test_eventtools_people LEFT JOIN test_eventtools_availability
+    ON test_eventtools_people.person_id = test_eventtools_availability.availability_person_id;
+
+-- Op Session, plus layout info if present
+CREATE OR REPLACE VIEW test_eventtools_opsession_with_layouts
+AS SELECT * FROM test_eventtools_opsession LEFT JOIN test_eventtools_layouts
+    ON test_eventtools_opsession.ops_layout_id = test_eventtools_layouts.layout_id;
+
+
+-- Op Session name for use in requests
+CREATE OR REPLACE VIEW test_eventtools_opsession_name
+AS SELECT ops_id, start_date, presenting_time, spaces, distance, travel_time, location, ops_layout_id,
+            IF((ops_layout_id2!=0),CONCAT(l1.layout_owner_lastname,' / ',l2.layout_owner_lastname),CONCAT(l1.layout_owner_lastname,' ',l1.layout_name)) AS show_name,
+            l1.layout_owner_lastname AS layout_owner_lastname1, l2.layout_owner_lastname AS layout_owner_lastname2,
+            l1.layout_owner_firstname AS layout_owner_firstname1, l2.layout_owner_firstname AS layout_owner_firstname2,
+            l1.layout_name AS layout_name1, l2.layout_name AS layout_name2,
+            l1.layout_id AS layout_id1, l2.layout_id AS layout_id2
+    FROM (
+        test_eventtools_opsession LEFT JOIN test_eventtools_layouts l1
+        ON test_eventtools_opsession.ops_layout_id = l1.layout_id
+        )
+        LEFT JOIN test_eventtools_layouts l2
+        ON test_eventtools_opsession.ops_layout_id2 = l2.layout_id;
+
+CREATE OR REPLACE VIEW test_eventtools_ops_group_names
+AS SELECT customers_firstname, customers_lastname, opsreq_person_email, test_eventtools_opsreq_group.opsreq_group_id, 
+            opsreq_group_cycle_name, opsreq_comment, test_eventtools_opsreq_group_req_link.opsreq_id,
+            opsreq_group_req_link_id, entry_city, entry_state, opsreq_number, opsreq_any
+        FROM (((
+        test_eventtools_opsession_req LEFT JOIN test_customers
+        ON test_eventtools_opsession_req.opsreq_person_email = test_customers.customers_email_address
+        ) JOIN test_eventtools_opsreq_group_req_link
+        ON test_eventtools_opsession_req.opsreq_id = test_eventtools_opsreq_group_req_link.opsreq_id
+        ) JOIN test_eventtools_opsreq_group
+        ON test_eventtools_opsreq_group_req_link.opsreq_group_id = test_eventtools_opsreq_group.opsreq_group_id
+        ) LEFT JOIN test_address_book
+        ON test_customers.customers_default_address_id = test_address_book.address_book_id
+        ;
+
+--- op session request assignment with session name info
+CREATE OR REPLACE VIEW test_eventtools_ops_group_session_assignments
+AS SELECT customers_firstname, customers_lastname, opsreq_person_email, test_eventtools_ops_group_names.opsreq_group_id, 
+            opsreq_group_cycle_name, opsreq_comment, test_eventtools_ops_group_names.opsreq_id, opsreq_req_status_id, status,
+            test_eventtools_ops_group_names.opsreq_group_req_link_id, req_num, test_eventtools_opsreq_req_status.ops_id,
+            start_date, spaces, show_name, entry_city, entry_state, opsreq_number, opsreq_any, ops_layout_id 
+    FROM (test_eventtools_ops_group_names
+        LEFT JOIN test_eventtools_opsreq_req_status
+        ON test_eventtools_ops_group_names.opsreq_group_req_link_id = test_eventtools_opsreq_req_status.opsreq_group_req_link_id
+        ) LEFT JOIN test_eventtools_opsession_name
+        ON test_eventtools_opsreq_req_status.ops_id = test_eventtools_opsession_name.ops_id
+    ;
+
+--
+-- Trigger ensures availability is always available for view
+--
+-- DROP TRIGGER IF EXISTS test_eventtools_trigger_person_gets_availability;
+-- delimiter |
+-- CREATE TRIGGER test_eventtools_trigger_person_gets_availability
+-- AFTER INSERT ON test_eventtools_people
+-- FOR EACH ROW
+-- BEGIN
+--     INSERT INTO test_eventtools_availability SET availability_person_id = NEW.person_id;
+-- END;
+-- |
+

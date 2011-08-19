@@ -1,0 +1,24 @@
+﻿/** tours stylesheet **/
+
+/*  TEMPORARY FOR TESTING    ************************  */
+
+.et-tour-name { background: #E0E0FF; }
+.et-tour-tr1 { background: #E0E0FF; }
+
+.et-tour-td1 { width: 12%; }
+.et-tour-td2 { width: 13%; }
+.et-tour-td3 { width: 12%; }
+.et-tour-td4 { width: 13%; }
+.et-tour-td5 { width: 12%; }
+.et-tour-td6 { width: 13%; }
+.et-tour-td7 { width: 12%; }
+.et-tour-td8 { width: 13%; }
+
+.et-tour-layout-tr2 { background: #E0FFE0; }
+
+table {width: 100%; margin-bottom: 10px; }
+
+/** usual warnings in bright colors **/
+
+span.et-error-missing   { background:red;  }
+span.et-warning-missing   { background:yellow;  }

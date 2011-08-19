@@ -1,0 +1,18 @@
+﻿/** layouts stylesheet **/
+
+/*  TEMPORARY FOR TESTING    ************************  */
+
+.et-layout-tr1 { background: #C0FFC0; }
+.et-layout-tr-tour { background: #C0FFC0; }
+.et-layout-tr-ops { background: #C0FFC0; }
+
+.et-layout-td1 { width: 40%; }
+.et-layout-td2 { width: 30%; }
+.et-layout-td3 { width: 30%; }
+
+table {width: 100%; margin-bottom: 10px; }
+
+/** usual warnings in bright colors **/
+
+span.et-error-missing   { background:red;  }
+span.et-warning-missing   { background:yellow;  }
