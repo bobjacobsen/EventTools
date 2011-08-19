@@ -1,0 +1,32 @@
+/** clinics stylesheet **/
+
+/*  TEMPORARY FOR TESTING    ************************  */
+
+/** Highlight clinic name **/
+tr.et-clinic-tr1 { background: #FF9960; }
+.et-clinic-name { background: #FF9960; }
+.et-clbl-sub-tr1 { background: #FF9960; }
+
+/** try to fix layout size **/
+table.et-clinic { width: 100%; 	margin-top: 15px; margin-bottom: 15px; }
+td.et-clinic-td2  { width: 15%; text-align: right; }
+td.et-clinic-td3  { width: 15%; text-align: right; }
+
+table.et-clbl-table { width: 100%; 	margin-top: 15px; margin-bottom: 15px; }
+td.et-clbl-td-clinic { width: 60px; }
+td.et-clbl-td-clinic-empty { width: 60px; }
+
+/** highlight tags **/
+.et-clinic-tags { background: #D0D0A0; }
+.et-clbl-sub-tr3 { background: #D0D0A0; }
+
+.et-clbl-td-clinic-empty { background: #A0A0A0; }
+
+/** usual warnings in bright colors **/
+
+span.et-error-missing   { background:red;  }
+span.et-warning-missing   { background:yellow;  }
+
+/** printing **/
+
+table.et-clbl-table { page-break-after: always; }
