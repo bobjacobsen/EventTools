@@ -30,7 +30,7 @@ Provides access to Event Tools for tours and clinics.
     <td></td>
     <td><a href="edit_layout_tour_add_layout.php">Add Layouts To Tour</a></td>
     <td><a href="edit_misc_event_tags.php">Add or remove tags</a></td>
-    <td><a href="edit_layouts_entry.php">Quick Entry</a>
+    <td><a href="edit_layouts_entry.php">Quick Entry</a><p>
         <a href="edit_constrain_scale.php">Edit Scale Values<a/>
     </td>
     <td><a href="edit_clinic_tags.php">Add or remove tags</a></td>
