@@ -1,20 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 		"http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<?php 
+    require_once('access.php'); 
+
+echo "<html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>X2011West Layout Index</title>
+    <title>".$event_tools_event_name." Layout Index</title>
 
     <link href="tours.css" rel="stylesheet" type="text/css" />    
 
 </head>
 <body>
-<h2>X2011West Layout Index</h2>  
+<h2>".$event_tools_event_name." Layout Index</h2>  
 <a href="index.php">Back to main page</a>
-<p>
+<p>";
 
-<?php
-require_once('access.php');
 require_once('utilities.php');
 require_once('indexing.php');
 require_once('parsers.php');
