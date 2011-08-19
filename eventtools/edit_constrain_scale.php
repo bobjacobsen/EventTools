@@ -21,6 +21,8 @@
 </head>
 <body>
 <h3>Edit Scale Constraint</h3>
+<a href="index.php">Back to main page</a>
+<p>
 <?php
 
 /*

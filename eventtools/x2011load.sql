@@ -860,7 +860,6 @@ CREATE TABLE IF NOT EXISTS `prod_eventtools_general_tour_with_status` (
 
 CREATE TABLE IF NOT EXISTS `prod_eventtools_layouts` (
   `layout_id` int(5) NOT NULL auto_increment,
-  `layout_num` varchar(5) NOT NULL,
   `layout_name` varchar(64) default '',
   `layout_short_description` varchar(150) default '',
   `layout_long_description` varchar(5000) default '',
@@ -901,7 +900,6 @@ CREATE TABLE IF NOT EXISTS `prod_eventtools_layouts` (
   `layout_mark_changed` varchar(1) default NULL,
   `layout_last_mod_time` timestamp NULL default NULL on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`layout_id`),
-  KEY `idx_eventtools_layouts_layout_id` (`layout_num`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=257 ;
 
 --
