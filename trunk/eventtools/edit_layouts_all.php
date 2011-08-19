@@ -151,12 +151,6 @@ $opts['fdd']['layout_id'] = array(
   'default'  => '0',
   'sort'     => true
 );
-$opts['fdd']['layout_num'] = array(
-  'name'     => 'Num',
-  'select'   => 'T',
-  'maxlen'   => 5,
-  'sort'     => true
-);
 $opts['fdd']['layout_owner_firstname'] = array(
   'name'     => 'Owner first name',
   'select'   => 'T',
@@ -186,12 +180,18 @@ $opts['fdd']['layout_status_code'] = array(
                         'description' => 'event_status_name'),
   'trimlen|LF' => 36
 );
-$opts['fdd']['layout_scale'] = array(
+$scaleArray = 
+array(
   'name'     => 'Scale',
-  'select'   => 'T',
-  'maxlen'   => 20,
+  'select'   => 'D',
+  'maxlen'   => 25,
   'sort'     => true
 );
+if ($event_tools_constrain_scale) {
+    $scaleArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_scale', 
+                        'column' => 'constrain_scale_value');
+}
+$opts['fdd']['layout_scale'] = $scaleArray; 
 $opts['fdd']['layout_size'] = array(
   'name'     => 'Size',
   'select'   => 'T',

@@ -8,19 +8,34 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 -- 
--- You can do a bulk replace of 'test_eventtools_'
+-- You can do a bulk replace of 'gr2012_eventtools_'
 -- to conver to 'prod_eventtools_' and vice versa
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test_eventtools_users`
+-- Table structure for table `gr2012_eventtools_constrain_scale`
+-- Defines valid values for layout scale
 --
 
-DROP TABLE IF EXISTS `test_eventtools_users`;
+DROP TABLE IF EXISTS `gr2012_eventtools_constrain_scale`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_users` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_scale` (
+  `constrain_scale_id` int(5) NOT NULL auto_increment,
+  `constrain_scale_value` varchar(25) NOT NULL,
+  PRIMARY KEY  (`constrain_scale_id`),
+  KEY `idx_eventtools_constrain_scale_value` (`constrain_scale_value`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Table structure for table `gr2012_eventtools_users`
+-- Defines user accounts that can access the tools
+--
+
+DROP TABLE IF EXISTS `gr2012_eventtools_users`;
+
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_users` (
   `user_id` int(5) NOT NULL auto_increment,
   `user_name` varchar(25) NOT NULL,
   `user_pwd` varchar(25) NOT NULL,
@@ -30,14 +45,13 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_users` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
--- Table structure for table `test_eventtools_layouts`
+-- Table structure for table `gr2012_eventtools_layouts`
 --
 
-DROP TABLE IF EXISTS `test_eventtools_layouts`;
+DROP TABLE IF EXISTS `gr2012_eventtools_layouts`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_layouts` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_layouts` (
   `layout_id` int(5) NOT NULL auto_increment,
-  `layout_num` varchar(5) NOT NULL,
 
   `layout_name` varchar(64) default '',
   `layout_short_description` varchar(64) default '',
@@ -90,21 +104,19 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_layouts` (
   `layout_mark_changed` varchar(1) default '',
   `layout_last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
 
-  PRIMARY KEY  (`layout_id`),
-  CONSTRAINT up UNIQUE NONCLUSTERED(layout_num),
-  KEY `idx_eventtools_layouts_layout_id` (`layout_num`)
+  PRIMARY KEY  (`layout_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test_eventtools_layout_tours`
+-- Table structure for table `gr2012_eventtools_layout_tours`
 --
 
-DROP TABLE IF EXISTS `test_eventtools_layout_tours`;
+DROP TABLE IF EXISTS `gr2012_eventtools_layout_tours`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_layout_tours` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_layout_tours` (
   `id` int(5) NOT NULL auto_increment,
   `number` varchar(5) NOT NULL,
   `name` varchar(64) default '<none>',
@@ -130,12 +142,12 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_layout_tours` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test_eventtools_layout_tour_links`
+-- Table structure for table `gr2012_eventtools_layout_tour_links`
 --
 
-DROP TABLE IF EXISTS `test_eventtools_layout_tour_links`;
+DROP TABLE IF EXISTS `gr2012_eventtools_layout_tour_links`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_layout_tour_links` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_layout_tour_links` (
   `layout_tour_link_num` int(11) NOT NULL auto_increment,
   `tour_number` varchar(5) NOT NULL,
   `layout_id` int(5) NOT NULL,
@@ -152,12 +164,12 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_layout_tour_links` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test_eventtools_clinics`
+-- Table structure for table `gr2012_eventtools_clinics`
 --
 
-DROP TABLE IF EXISTS `test_eventtools_clinics`;
+DROP TABLE IF EXISTS `gr2012_eventtools_clinics`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_clinics` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_clinics` (
   `id` int(5) NOT NULL auto_increment,
   `number` varchar(5) NOT NULL,
   `name` varchar(64) default '',
@@ -188,12 +200,12 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_clinics` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test_eventtools_misc_events`
+-- Table structure for table `gr2012_eventtools_misc_events`
 --
 
-DROP TABLE IF EXISTS `test_eventtools_misc_events`;
+DROP TABLE IF EXISTS `gr2012_eventtools_misc_events`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_misc_events` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_misc_events` (
   `id` int(5) NOT NULL auto_increment,
   `number` varchar(5) NOT NULL,
   `name` varchar(64) default '',
@@ -216,12 +228,12 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_misc_events` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test_eventtools_handicapped_values`
+-- Table structure for table `gr2012_eventtools_handicapped_values`
 --
 
-DROP TABLE IF EXISTS `test_eventtools_accessibility_codes`;
+DROP TABLE IF EXISTS `gr2012_eventtools_accessibility_codes`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_accessibility_codes` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_accessibility_codes` (
   `accessibility_code` int(3) NOT NULL auto_increment,
   `accessibility_name` varchar(40) NOT NULL,
   `accessibility_display` varchar(40) NOT NULL,
@@ -236,12 +248,12 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_accessibility_codes` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test_eventtools_tour_status_values`
+-- Table structure for table `gr2012_eventtools_tour_status_values`
 --
 
-DROP TABLE IF EXISTS `test_eventtools_event_status_values`;
+DROP TABLE IF EXISTS `gr2012_eventtools_event_status_values`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_event_status_values` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_event_status_values` (
   `event_status_id` int(5) NOT NULL auto_increment,
   `event_status_code` int(3) NOT NULL,
   `event_status_name` varchar(40) NOT NULL,
@@ -258,12 +270,12 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_event_status_values` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test_eventtools_clinic_locations`
+-- Table structure for table `gr2012_eventtools_clinic_locations`
 --
 
-DROP TABLE IF EXISTS `test_eventtools_clinic_locations`;
+DROP TABLE IF EXISTS `gr2012_eventtools_clinic_locations`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_clinic_locations` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_clinic_locations` (
   `id` int(5) NOT NULL auto_increment,
   `location_code` int(3) NOT NULL,
   `location_name` varchar(40) NOT NULL,
@@ -279,12 +291,12 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_clinic_locations` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test_eventtools_clinic_tags`
+-- Table structure for table `gr2012_eventtools_clinic_tags`
 --
 
-DROP TABLE IF EXISTS `test_eventtools_clinic_tags`;
+DROP TABLE IF EXISTS `gr2012_eventtools_clinic_tags`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_clinic_tags` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_clinic_tags` (
   `clinic_tag_num` int(11) NOT NULL auto_increment,
   `clinic_tag_clinic_number` varchar(5) NOT NULL,
   `tag_name` varchar(64) default '',
@@ -300,12 +312,12 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_clinic_tags` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test_eventtools_misc_event_tags`
+-- Table structure for table `gr2012_eventtools_misc_event_tags`
 --
 
-DROP TABLE IF EXISTS `test_eventtools_misc_event_tags`;
+DROP TABLE IF EXISTS `gr2012_eventtools_misc_event_tags`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_misc_event_tags` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_misc_event_tags` (
   `misc_event_tag_num` int(11) NOT NULL auto_increment,
   `misc_event_tag_misc_event_number` varchar(5) NOT NULL,
   `tag_name` varchar(64) default '',
@@ -321,12 +333,12 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_misc_event_tags` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test_eventtools_general_tours`
+-- Table structure for table `gr2012_eventtools_general_tours`
 --
 
-DROP TABLE IF EXISTS `test_eventtools_general_tours`;
+DROP TABLE IF EXISTS `gr2012_eventtools_general_tours`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_general_tours` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_general_tours` (
   `id` int(5) NOT NULL auto_increment,
   `number` varchar(5) NOT NULL,
   `name` varchar(64) default '<none>',
@@ -352,12 +364,12 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_general_tours` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test_eventtools_users`
+-- Table structure for table `gr2012_eventtools_users`
 --
 
-DROP TABLE IF EXISTS `test_eventtools_users`;
+DROP TABLE IF EXISTS `gr2012_eventtools_users`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_users` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_users` (
   `user_id` int(5) NOT NULL auto_increment,
   `user_name` varchar(25) NOT NULL,
   `user_pwd` varchar(25) NOT NULL,
@@ -374,12 +386,12 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_users` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test_eventtools_people`
+-- Table structure for table `gr2012_eventtools_people`
 --
 
-DROP TABLE IF EXISTS `test_eventtools_people`;
+DROP TABLE IF EXISTS `gr2012_eventtools_people`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_people` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_people` (
   `person_id` int(5) NOT NULL auto_increment,
   `person_firstname` varchar(16) default '',
   `person_lastname` varchar(32) default '',
@@ -397,12 +409,12 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_people` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test_eventtools_opsession`
+-- Table structure for table `gr2012_eventtools_opsession`
 --
 
-DROP TABLE IF EXISTS `test_eventtools_opsession`;
+DROP TABLE IF EXISTS `gr2012_eventtools_opsession`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_opsession` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_opsession` (
   `ops_id` int(5) NOT NULL auto_increment,
   `ops_layout_id` int(5),
   `start_date` datetime,
@@ -428,12 +440,12 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_opsession` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test_eventtools_opsession_req`
+-- Table structure for table `gr2012_eventtools_opsession_req`
 --
 
-DROP TABLE IF EXISTS `test_eventtools_opsession_req`;
+DROP TABLE IF EXISTS `gr2012_eventtools_opsession_req`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_opsession_req` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_opsession_req` (
   `opsreq_id` int(5) NOT NULL auto_increment,
   `opsreq_person_email` varchar(32),
   `opsreq_pri1` int(5),
@@ -457,14 +469,14 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_opsession_req` (
 
 -- --------------------------------------------------------
 --
--- Table structure for table `test_eventtools_opsreq_group`
+-- Table structure for table `gr2012_eventtools_opsreq_group`
 --
 -- Denotes an assignable group of attendees
 --
 
-DROP TABLE IF EXISTS `test_eventtools_opsreq_group`;
+DROP TABLE IF EXISTS `gr2012_eventtools_opsreq_group`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_opsreq_group` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_opsreq_group` (
   `opsreq_group_id` int(5) NOT NULL auto_increment,
   `opsreq_group_cycle_name` varchar(32),
 
@@ -477,14 +489,14 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_opsreq_group` (
 
 -- --------------------------------------------------------
 --
--- Table structure for table `test_eventtools_opsreq_group_req_link`
+-- Table structure for table `gr2012_eventtools_opsreq_group_req_link`
 --
 -- Links an assignable group of attendees to a single session request
 --
 
-DROP TABLE IF EXISTS `test_eventtools_opsreq_group_req_link`;
+DROP TABLE IF EXISTS `gr2012_eventtools_opsreq_group_req_link`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_opsreq_group_req_link` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_opsreq_group_req_link` (
   `opsreq_group_req_link_id` int(5) NOT NULL auto_increment,
   `opsreq_group_id` int(5),
   `opsreq_id` int(5),
@@ -499,18 +511,18 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_opsreq_group_req_link` (
 
 -- --------------------------------------------------------
 --
--- Table structure for table `test_eventtools_opsreq_req_status`
+-- Table structure for table `gr2012_eventtools_opsreq_req_status`
 --
 -- A specific layout request and status
----    opsreq_group_req_link_id     points to a specific reg&group link, hence request
----    req_num                      1-8 request number
----    ops_id                       operating session link
----    status                       0 none, 1 assigned, 2 locked out
+--    opsreq_group_req_link_id     points to a specific reg&group link, hence request
+--    req_num                      1-8 request number
+--    ops_id                       operating session link
+--    status                       0 none, 1 assigned, 2 locked out
 --
 
-DROP TABLE IF EXISTS `test_eventtools_opsreq_req_status`;
+DROP TABLE IF EXISTS `gr2012_eventtools_opsreq_req_status`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_opsreq_req_status` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_opsreq_req_status` (
   `opsreq_req_status_id` int(5) NOT NULL auto_increment,
   `opsreq_group_req_link_id` int(5),
   `req_num` int(2),
@@ -528,12 +540,12 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_opsreq_req_status` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test_eventtools_availability`
+-- Table structure for table `gr2012_eventtools_availability`
 --
 
-DROP TABLE IF EXISTS `test_eventtools_availability`;
+DROP TABLE IF EXISTS `gr2012_eventtools_availability`;
 
-CREATE TABLE IF NOT EXISTS `test_eventtools_availability` (
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_availability` (
   `availability_id` int(5) NOT NULL auto_increment,
   `availability_person_id` int(5) NOT NULL,
   `availability_comment` varchar(32) default '',
@@ -572,11 +584,11 @@ CREATE TABLE IF NOT EXISTS `test_eventtools_availability` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test_eventtools_changelog`
+-- Table structure for table `gr2012_eventtools_changelog`
 --
-DROP TABLE IF EXISTS `test_eventtools_changelog`;
+DROP TABLE IF EXISTS `gr2012_eventtools_changelog`;
 
-CREATE TABLE test_eventtools_changelog (
+CREATE TABLE gr2012_eventtools_changelog (
 	updated    TIMESTAMP 	  DEFAULT CURRENT_TIMESTAMP,
 	user       varchar(255)   default NULL,
 	host       varchar(255)   default NULL,
@@ -595,92 +607,92 @@ CREATE TABLE test_eventtools_changelog (
 --
 
 -- Layout tours, plus any contained layouts
-CREATE OR REPLACE VIEW test_eventtools_layout_tour_with_layouts
-AS SELECT test_eventtools_layout_tours.*, test_eventtools_layouts.*, 
-                test_eventtools_layout_tour_links.layout_tour_link_order, test_eventtools_event_status_values.*, 
-                test_eventtools_accessibility_codes.*
+CREATE OR REPLACE VIEW gr2012_eventtools_layout_tour_with_layouts
+AS SELECT gr2012_eventtools_layout_tours.*, gr2012_eventtools_layouts.*, 
+                gr2012_eventtools_layout_tour_links.layout_tour_link_order, gr2012_eventtools_event_status_values.*, 
+                gr2012_eventtools_accessibility_codes.*
         FROM ((
-                (test_eventtools_layout_tours
-                    LEFT JOIN test_eventtools_layout_tour_links
-                    ON test_eventtools_layout_tour_links.tour_number = test_eventtools_layout_tours.id
+                (gr2012_eventtools_layout_tours
+                    LEFT JOIN gr2012_eventtools_layout_tour_links
+                    ON gr2012_eventtools_layout_tour_links.tour_number = gr2012_eventtools_layout_tours.id
                 )  
-                    LEFT JOIN test_eventtools_layouts 
-                    ON test_eventtools_layouts.layout_id = test_eventtools_layout_tour_links.layout_id
+                    LEFT JOIN gr2012_eventtools_layouts 
+                    ON gr2012_eventtools_layouts.layout_id = gr2012_eventtools_layout_tour_links.layout_id
                 )
-                    LEFT JOIN test_eventtools_event_status_values
-                    ON test_eventtools_layout_tours.status_code = test_eventtools_event_status_values.event_status_code
+                    LEFT JOIN gr2012_eventtools_event_status_values
+                    ON gr2012_eventtools_layout_tours.status_code = gr2012_eventtools_event_status_values.event_status_code
                 )
-                    LEFT JOIN test_eventtools_accessibility_codes
+                    LEFT JOIN gr2012_eventtools_accessibility_codes
                     ON layout_accessibility = accessibility_code;
                 
 
 -- Layouts, plus any tours they're on, and accessibility
-CREATE OR REPLACE VIEW test_eventtools_layout_with_layout_tours
-AS  SELECT  test_eventtools_layout_tours.*,
-            test_eventtools_layouts.*, test_eventtools_accessibility_codes.*, test_eventtools_event_status_values.*
+CREATE OR REPLACE VIEW gr2012_eventtools_layout_with_layout_tours
+AS  SELECT  gr2012_eventtools_layout_tours.*,
+            gr2012_eventtools_layouts.*, gr2012_eventtools_accessibility_codes.*, gr2012_eventtools_event_status_values.*
     FROM  ((
-            (test_eventtools_layouts 
-                LEFT JOIN test_eventtools_layout_tour_links
-                ON test_eventtools_layouts.layout_id = test_eventtools_layout_tour_links.layout_id
+            (gr2012_eventtools_layouts 
+                LEFT JOIN gr2012_eventtools_layout_tour_links
+                ON gr2012_eventtools_layouts.layout_id = gr2012_eventtools_layout_tour_links.layout_id
             )  
-                LEFT JOIN test_eventtools_layout_tours
-                ON test_eventtools_layout_tour_links.tour_number = test_eventtools_layout_tours.id
+                LEFT JOIN gr2012_eventtools_layout_tours
+                ON gr2012_eventtools_layout_tour_links.tour_number = gr2012_eventtools_layout_tours.id
             )
-                LEFT JOIN test_eventtools_accessibility_codes
+                LEFT JOIN gr2012_eventtools_accessibility_codes
                 ON layout_accessibility = accessibility_code
             )
-                LEFT JOIN test_eventtools_event_status_values
-                ON test_eventtools_layouts.layout_status_code = test_eventtools_event_status_values.event_status_code;
+                LEFT JOIN gr2012_eventtools_event_status_values
+                ON gr2012_eventtools_layouts.layout_status_code = gr2012_eventtools_event_status_values.event_status_code;
             
 -- General tours, plus any contained status
-CREATE OR REPLACE VIEW test_eventtools_general_tour_with_status
-AS SELECT test_eventtools_general_tours.*, test_eventtools_event_status_values.*
-        FROM test_eventtools_general_tours
-            LEFT JOIN test_eventtools_event_status_values
-            ON test_eventtools_general_tours.status_code = test_eventtools_event_status_values.event_status_code;
+CREATE OR REPLACE VIEW gr2012_eventtools_general_tour_with_status
+AS SELECT gr2012_eventtools_general_tours.*, gr2012_eventtools_event_status_values.*
+        FROM gr2012_eventtools_general_tours
+            LEFT JOIN gr2012_eventtools_event_status_values
+            ON gr2012_eventtools_general_tours.status_code = gr2012_eventtools_event_status_values.event_status_code;
 
 
 -- Clinics, plus any applied tags
 
-CREATE OR REPLACE VIEW test_eventtools_clinics_with_tags
-AS SELECT test_eventtools_clinics.*, test_eventtools_clinic_tags.tag_name, test_eventtools_clinic_locations.location_name
+CREATE OR REPLACE VIEW gr2012_eventtools_clinics_with_tags
+AS SELECT gr2012_eventtools_clinics.*, gr2012_eventtools_clinic_tags.tag_name, gr2012_eventtools_clinic_locations.location_name
         FROM (
-            test_eventtools_clinics
-            LEFT JOIN test_eventtools_clinic_tags
-            ON test_eventtools_clinics.id = clinic_tag_clinic_number
+            gr2012_eventtools_clinics
+            LEFT JOIN gr2012_eventtools_clinic_tags
+            ON gr2012_eventtools_clinics.id = clinic_tag_clinic_number
             )
-            LEFT JOIN test_eventtools_clinic_locations
+            LEFT JOIN gr2012_eventtools_clinic_locations
             ON clinic_location_code = location_code
             ;
 
 
 -- Misc Events, plus any applied tags
 
-CREATE OR REPLACE VIEW test_eventtools_misc_events_with_tags
-AS SELECT test_eventtools_misc_events.*, test_eventtools_misc_event_tags.tag_name, test_eventtools_clinic_locations.location_name
+CREATE OR REPLACE VIEW gr2012_eventtools_misc_events_with_tags
+AS SELECT gr2012_eventtools_misc_events.*, gr2012_eventtools_misc_event_tags.tag_name, gr2012_eventtools_clinic_locations.location_name
         FROM (
-            test_eventtools_misc_events
-            LEFT JOIN test_eventtools_misc_event_tags
-            ON test_eventtools_misc_events.id = misc_event_tag_misc_event_number
+            gr2012_eventtools_misc_events
+            LEFT JOIN gr2012_eventtools_misc_event_tags
+            ON gr2012_eventtools_misc_events.id = misc_event_tag_misc_event_number
             )
-            LEFT JOIN test_eventtools_clinic_locations
+            LEFT JOIN gr2012_eventtools_clinic_locations
             ON misc_location_code = location_code
             ;
 
 
 -- Person, plus any availability tags
-CREATE OR REPLACE VIEW test_eventtools_person_with_availability
-AS SELECT * FROM test_eventtools_people LEFT JOIN test_eventtools_availability
-    ON test_eventtools_people.person_id = test_eventtools_availability.availability_person_id;
+CREATE OR REPLACE VIEW gr2012_eventtools_person_with_availability
+AS SELECT * FROM gr2012_eventtools_people LEFT JOIN gr2012_eventtools_availability
+    ON gr2012_eventtools_people.person_id = gr2012_eventtools_availability.availability_person_id;
 
 -- Op Session, plus layout info if present
-CREATE OR REPLACE VIEW test_eventtools_opsession_with_layouts
-AS SELECT * FROM test_eventtools_opsession LEFT JOIN test_eventtools_layouts
-    ON test_eventtools_opsession.ops_layout_id = test_eventtools_layouts.layout_id;
+CREATE OR REPLACE VIEW gr2012_eventtools_opsession_with_layouts
+AS SELECT * FROM gr2012_eventtools_opsession LEFT JOIN gr2012_eventtools_layouts
+    ON gr2012_eventtools_opsession.ops_layout_id = gr2012_eventtools_layouts.layout_id;
 
 
 -- Op Session name for use in requests
-CREATE OR REPLACE VIEW test_eventtools_opsession_name
+CREATE OR REPLACE VIEW gr2012_eventtools_opsession_name
 AS SELECT ops_id, start_date, presenting_time, spaces, distance, travel_time, location, ops_layout_id,
             IF((ops_layout_id2!=0),CONCAT(l1.layout_owner_lastname,' / ',l2.layout_owner_lastname),CONCAT(l1.layout_owner_lastname,' ',l1.layout_name)) AS show_name,
             l1.layout_owner_lastname AS layout_owner_lastname1, l2.layout_owner_lastname AS layout_owner_lastname2,
@@ -688,50 +700,50 @@ AS SELECT ops_id, start_date, presenting_time, spaces, distance, travel_time, lo
             l1.layout_name AS layout_name1, l2.layout_name AS layout_name2,
             l1.layout_id AS layout_id1, l2.layout_id AS layout_id2
     FROM (
-        test_eventtools_opsession LEFT JOIN test_eventtools_layouts l1
-        ON test_eventtools_opsession.ops_layout_id = l1.layout_id
+        gr2012_eventtools_opsession LEFT JOIN gr2012_eventtools_layouts l1
+        ON gr2012_eventtools_opsession.ops_layout_id = l1.layout_id
         )
-        LEFT JOIN test_eventtools_layouts l2
-        ON test_eventtools_opsession.ops_layout_id2 = l2.layout_id;
+        LEFT JOIN gr2012_eventtools_layouts l2
+        ON gr2012_eventtools_opsession.ops_layout_id2 = l2.layout_id;
 
-CREATE OR REPLACE VIEW test_eventtools_ops_group_names
-AS SELECT customers_firstname, customers_lastname, opsreq_person_email, test_eventtools_opsreq_group.opsreq_group_id, 
-            opsreq_group_cycle_name, opsreq_comment, test_eventtools_opsreq_group_req_link.opsreq_id,
+CREATE OR REPLACE VIEW gr2012_eventtools_ops_group_names
+AS SELECT customers_firstname, customers_lastname, opsreq_person_email, gr2012_eventtools_opsreq_group.opsreq_group_id, 
+            opsreq_group_cycle_name, opsreq_comment, gr2012_eventtools_opsreq_group_req_link.opsreq_id,
             opsreq_group_req_link_id, entry_city, entry_state, opsreq_number, opsreq_any
         FROM (((
-        test_eventtools_opsession_req LEFT JOIN test_customers
-        ON test_eventtools_opsession_req.opsreq_person_email = test_customers.customers_email_address
-        ) JOIN test_eventtools_opsreq_group_req_link
-        ON test_eventtools_opsession_req.opsreq_id = test_eventtools_opsreq_group_req_link.opsreq_id
-        ) JOIN test_eventtools_opsreq_group
-        ON test_eventtools_opsreq_group_req_link.opsreq_group_id = test_eventtools_opsreq_group.opsreq_group_id
-        ) LEFT JOIN test_address_book
-        ON test_customers.customers_default_address_id = test_address_book.address_book_id
+        gr2012_eventtools_opsession_req LEFT JOIN gr2012_customers
+        ON gr2012_eventtools_opsession_req.opsreq_person_email = gr2012_customers.customers_email_address
+        ) JOIN gr2012_eventtools_opsreq_group_req_link
+        ON gr2012_eventtools_opsession_req.opsreq_id = gr2012_eventtools_opsreq_group_req_link.opsreq_id
+        ) JOIN gr2012_eventtools_opsreq_group
+        ON gr2012_eventtools_opsreq_group_req_link.opsreq_group_id = gr2012_eventtools_opsreq_group.opsreq_group_id
+        ) LEFT JOIN gr2012_address_book
+        ON gr2012_customers.customers_default_address_id = gr2012_address_book.address_book_id
         ;
 
---- op session request assignment with session name info
-CREATE OR REPLACE VIEW test_eventtools_ops_group_session_assignments
-AS SELECT customers_firstname, customers_lastname, opsreq_person_email, test_eventtools_ops_group_names.opsreq_group_id, 
-            opsreq_group_cycle_name, opsreq_comment, test_eventtools_ops_group_names.opsreq_id, opsreq_req_status_id, status,
-            test_eventtools_ops_group_names.opsreq_group_req_link_id, req_num, test_eventtools_opsreq_req_status.ops_id,
+-- op session request assignment with session name info
+CREATE OR REPLACE VIEW gr2012_eventtools_ops_group_session_assignments
+AS SELECT customers_firstname, customers_lastname, opsreq_person_email, gr2012_eventtools_ops_group_names.opsreq_group_id, 
+            opsreq_group_cycle_name, opsreq_comment, gr2012_eventtools_ops_group_names.opsreq_id, opsreq_req_status_id, status,
+            gr2012_eventtools_ops_group_names.opsreq_group_req_link_id, req_num, gr2012_eventtools_opsreq_req_status.ops_id,
             start_date, spaces, show_name, entry_city, entry_state, opsreq_number, opsreq_any, ops_layout_id 
-    FROM (test_eventtools_ops_group_names
-        LEFT JOIN test_eventtools_opsreq_req_status
-        ON test_eventtools_ops_group_names.opsreq_group_req_link_id = test_eventtools_opsreq_req_status.opsreq_group_req_link_id
-        ) LEFT JOIN test_eventtools_opsession_name
-        ON test_eventtools_opsreq_req_status.ops_id = test_eventtools_opsession_name.ops_id
+    FROM (gr2012_eventtools_ops_group_names
+        LEFT JOIN gr2012_eventtools_opsreq_req_status
+        ON gr2012_eventtools_ops_group_names.opsreq_group_req_link_id = gr2012_eventtools_opsreq_req_status.opsreq_group_req_link_id
+        ) LEFT JOIN gr2012_eventtools_opsession_name
+        ON gr2012_eventtools_opsreq_req_status.ops_id = gr2012_eventtools_opsession_name.ops_id
     ;
 
 --
 -- Trigger ensures availability is always available for view
 --
--- DROP TRIGGER IF EXISTS test_eventtools_trigger_person_gets_availability;
+-- DROP TRIGGER IF EXISTS gr2012_eventtools_trigger_person_gets_availability;
 -- delimiter |
--- CREATE TRIGGER test_eventtools_trigger_person_gets_availability
--- AFTER INSERT ON test_eventtools_people
+-- CREATE TRIGGER gr2012_eventtools_trigger_person_gets_availability
+-- AFTER INSERT ON gr2012_eventtools_people
 -- FOR EACH ROW
 -- BEGIN
---     INSERT INTO test_eventtools_availability SET availability_person_id = NEW.person_id;
+--     INSERT INTO gr2012_eventtools_availability SET availability_person_id = NEW.person_id;
 -- END;
 -- |
 

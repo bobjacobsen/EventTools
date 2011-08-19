@@ -119,7 +119,7 @@ function format_all_layouts_as_table($url=NONE, $where=NONE, $order=NONE) {
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
     
-    if ($order==NONE) $order = "layout_owner_lastname, layout_owner_firstname, layout_num";
+    if ($order==NONE) $order = "layout_owner_lastname, layout_owner_firstname";
 
     if ($where != NONE) $where = "WHERE ".$where." AND ";
     else $where = "WHERE ";

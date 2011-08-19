@@ -151,12 +151,6 @@ $opts['fdd']['layout_id'] = array(
   'default'  => '0',
   'sort'     => true
 );
-$opts['fdd']['layout_num'] = array(
-  'name'     => 'Num',
-  'select'   => 'T',
-  'maxlen'   => 5,
-  'sort'     => true
-);
 $opts['fdd']['layout_owner_firstname'] = array(
   'name'     => 'Owner first name',
   'select'   => 'T',

@@ -38,7 +38,7 @@ if ($where != NONE)
 if ($order != NONE)
     $query = $query.' ORDER BY '.$order.' ';
 else
-    $query = $query.'ORDER BY layout_owner_lastname, layout_owner_firstname, layout_num';
+    $query = $query.'ORDER BY layout_owner_lastname, layout_owner_firstname';
 
 $query = $query."
     ;
