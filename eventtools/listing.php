@@ -15,7 +15,7 @@
 // used in e.g. format_all_layouts.php
 //
 function list_layout_heading($result,$i) {
-    echo '<h4>'.errorOnEmpty(mysql_result($result,$i,"layout_owner_firstname"),"first name")
+    echo '<h4>'.warnOnEmpty(mysql_result($result,$i,"layout_owner_firstname"),"first name")
                 .' '.errorOnEmpty(mysql_result($result,$i,"layout_owner_lastname"), "last name").'</h4>';
     echo 'layout name: '.errorOnEmpty(mysql_result($result,$i,"layout_name"),"name").'<br>';       
     echo 'short desc: '.warnOnEmpty(mysql_result($result,$i,"layout_short_description"),"short desc").'<br>';       
@@ -44,7 +44,7 @@ function list_layout_heading($result,$i) {
     echo 'wheelchair access:  '.mysql_result($result,$i,"layout_wheelchair_access").'<br>';  
     echo 'duckunder entry:  '.mysql_result($result,$i,"layout_duckunder_entry").'<br>';  
     echo 'owner url:  '.mysql_result($result,$i,"layout_owner_url").'<br>';  
-    echo 'first name:  '.errorOnEmpty(mysql_result($result,$i,"layout_owner_firstname"),"first name").'<br>';  
+    echo 'first name:  '.warnOnEmpty(mysql_result($result,$i,"layout_owner_firstname"),"first name").'<br>';  
     echo 'last name:  '.errorOnEmpty(mysql_result($result,$i,"layout_owner_lastname"),"last name").'<br>';  
     echo 'phone:  '.warnOnEmpty(mysql_result($result,$i,"layout_owner_phone"),"phone").'<br>';  
     echo 'call time:  '.mysql_result($result,$i,"layout_owner_call_time").'<br>';  
