@@ -116,14 +116,45 @@ values be entered in tables, for example for scale or gauge.
 If you're using that feature, enter the acceptable values using
 the following links.
 <table border="1">
-<tr><th>Constraints</th></tr>
+<tr><th>Character</th><th>Construction</th><th>Operation</th></tr>
 <?php
-if ($event_tools_constrain_scale)  echo '<tr><td><a href="edit_constrain_scale.php" >Valid Scales<a/></td></tr>';
-if ($event_tools_constrain_gauge)  echo '<tr><td><a href="edit_constrain_gauge.php" >Valid Gauges<a/></td></tr>';
-if ($event_tools_constrain_era)    echo '<tr><td><a href="edit_constrain_era.php"   >Valid Eras<a/></td></tr>';
-if ($event_tools_constrain_class)  echo '<tr><td><a href="edit_constrain_class.php" >Valid Railroad Classes<a/></td></tr>';
-if ($event_tools_constrain_theme)  echo '<tr><td><a href="edit_constrain_theme.php" >Valid Themes<a/></td></tr>';
-if ($event_tools_constrain_locale) echo '<tr><td><a href="edit_constrain_locale.php">Valid Locales<a/></td></tr>';
+
+echo '<tr><td>';
+if ($event_tools_constrain_scale)  echo '<a href="edit_constrain_scale.php" >Valid Scales</a>';
+echo '</td><td>';
+if ($event_tools_constrain_scenery)  echo '<a href="edit_constrain_scenery.php" >Scenery Completion</a>';
+echo '</td><td>';
+echo '</td></tr>';
+
+echo '<tr><td>';
+if ($event_tools_constrain_gauge)  echo '<a href="edit_constrain_gauge.php" >Valid Gauges</a>';
+echo '</td><td>';
+if ($event_tools_constrain_plan_type)  echo '<a href="edit_constrain_plan_type.php" >Plan Types</a>';
+echo '</tr>';
+
+echo '<tr><td>';
+if ($event_tools_constrain_era)    echo '<a href="edit_constrain_era.php"   >Valid Eras</a>';
+echo '</td><td>';
+echo '</td><td>';
+echo '</td></tr>';
+
+echo '<tr><td>';
+if ($event_tools_constrain_class)  echo '<a href="edit_constrain_class.php" >Valid Railroad Classes</a>';
+echo '</td><td>';
+echo '</td><td>';
+echo '</td></tr>';
+
+echo '<tr><td>';
+if ($event_tools_constrain_theme)  echo '<a href="edit_constrain_theme.php" >Valid Themes</a>';
+echo '</td><td>';
+echo '</td><td>';
+echo '</td></tr>';
+
+echo '<tr><td>';
+if ($event_tools_constrain_locale) echo '<a href="edit_constrain_locale.php">Valid Locales</a>';
+echo '</td><td>';
+echo '</td><td>';
+echo '</td></tr>';
 ?>
 </table>
 
