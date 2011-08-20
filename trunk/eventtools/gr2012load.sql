@@ -50,6 +50,58 @@ INSERT INTO `gr2012_eventtools_constrain_locale` (`constrain_value`) VALUES
 ('Pac. NW'),
 ('Other');
 
+INSERT INTO `gr2012_eventtools_constrain_scenery` (`constrain_value`) VALUES
+(''),
+('');
+
+INSERT INTO `gr2012_eventtools_constrain_plan_type` (`constrain_value`) VALUES
+(''),
+('');
+
+INSERT INTO `gr2012_eventtools_constrain_ops_scheme` (`constrain_value`) VALUES
+(''),
+('');
+
+INSERT INTO `gr2012_eventtools_constrain_control` (`constrain_value`) VALUES
+(''),
+('');
+
+INSERT INTO `gr2012_eventtools_constrain_fidelity` (`constrain_value`) VALUES
+(''),
+('');
+
+INSERT INTO `gr2012_eventtools_constrain_rigor` (`constrain_value`) VALUES
+(''),
+('');
+
+INSERT INTO `gr2012_eventtools_constrain_documentation` (`constrain_value`) VALUES
+(''),
+('');
+
+INSERT INTO `gr2012_eventtools_constrain_session_pace` (`constrain_value`) VALUES
+(''),
+('');
+
+INSERT INTO `gr2012_eventtools_constrain_car_forwarding` (`constrain_value`) VALUES
+(''),
+('');
+
+INSERT INTO `gr2012_eventtools_constrain_tone` (`constrain_value`) VALUES
+(''),
+('');
+
+INSERT INTO `gr2012_eventtools_constrain_dispatched_by1` (`constrain_value`) VALUES
+(''),
+('');
+
+INSERT INTO `gr2012_eventtools_constrain_dispatched_by2` (`constrain_value`) VALUES
+(''),
+('');
+
+INSERT INTO `gr2012_eventtools_constrain_communications` (`constrain_value`) VALUES
+(''),
+('');
+
 
 
 --
