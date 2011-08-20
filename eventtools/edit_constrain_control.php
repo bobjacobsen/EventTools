@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Edit Controls Constraint</title>
+	<title>Edit Control System Constraint</title>
 <style type="text/css">
 	hr.pme-hr		     { border: 0px solid; padding: 0px; margin: 0px; border-top-width: 1px; height: 1px; }
 	table.pme-main 	     { border: #004d9c 1px solid; border-collapse: collapse; border-spacing: 0px; width: 100%; }
@@ -20,7 +20,7 @@
 </style>
 </head>
 <body>
-<h3>Edit Controls Constraint</h3>
+<h3>Edit Control System Constraint</h3>
 <a href="index.php">Back to main page</a>
 <p>
 <?php
@@ -47,7 +47,7 @@ if (!$event_tools_user_email_log_skip) {
     $opts['notify']['prefix'] = $event_tools_notify_email_prefix;
 }
 
-$opts['tb'] = 'gr2012_eventtools_constrain_controls';
+$opts['tb'] = 'gr2012_eventtools_constrain_control';
 
 // Name of field which is the unique key
 $opts['key'] = 'constrain_id';
