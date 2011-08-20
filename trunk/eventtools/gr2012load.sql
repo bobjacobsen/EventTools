@@ -51,56 +51,99 @@ INSERT INTO `gr2012_eventtools_constrain_locale` (`constrain_value`) VALUES
 ('Other');
 
 INSERT INTO `gr2012_eventtools_constrain_scenery` (`constrain_value`) VALUES
-(''),
-('');
+('0%'),
+('20%'),
+('40%'),
+('60%'),
+('80%'),
+('100%');
 
 INSERT INTO `gr2012_eventtools_constrain_plan_type` (`constrain_value`) VALUES
-(''),
-('');
+('Single Level'),
+('Multi-level');
 
 INSERT INTO `gr2012_eventtools_constrain_ops_scheme` (`constrain_value`) VALUES
-(''),
-('');
+('Mainline Running'),
+('Various Types'),
+('Switching');
 
 INSERT INTO `gr2012_eventtools_constrain_control` (`constrain_value`) VALUES
-(''),
-('');
+('Lenz'),
+('NCE'),
+('Digitrax'),
+('DCC (unknown type)'),
+('Analog');
 
 INSERT INTO `gr2012_eventtools_constrain_fidelity` (`constrain_value`) VALUES
-(''),
-('');
+('Unknown'), 
+('Mix of Eras'), 
+('Evoke Era'),
+('Few Comp.'), 
+('Full');
 
 INSERT INTO `gr2012_eventtools_constrain_rigor` (`constrain_value`) VALUES
-(''),
-('');
+('Unknown'), 
+('Attempt'), 
+('Purposeful'),
+('Adheres'),
+('Tight');
 
 INSERT INTO `gr2012_eventtools_constrain_documentation` (`constrain_value`) VALUES
-(''),
-('');
+('Unknown'),
+('Moderate'), 
+('High');
 
 INSERT INTO `gr2012_eventtools_constrain_session_pace` (`constrain_value`) VALUES
-(''),
-('');
+('Unknown'), 
+('Sequence'), 
+('Fast Clock'), 
+('Real Time');
 
 INSERT INTO `gr2012_eventtools_constrain_car_forwarding` (`constrain_value`) VALUES
-(''),
-('');
+('Unknown'),
+('CC & WB'),
+('Switchlist'),
+('Computer'),
+('Tab on Car'),
+('Car-for-Car') ;
 
 INSERT INTO `gr2012_eventtools_constrain_tone` (`constrain_value`) VALUES
-(''),
-('');
+('Unknown'), 
+('Casual'), 
+('Disciplined');
 
 INSERT INTO `gr2012_eventtools_constrain_dispatched_by1` (`constrain_value`) VALUES
-(''),
-('');
+('Unknown'), 
+('TT&TO'), 
+('TWC'), 
+('DTC'),
+('Voice'), 
+('CTC'), 
+('Yard Limits'), 
+('251'), 
+('N/A');
 
 INSERT INTO `gr2012_eventtools_constrain_dispatched_by2` (`constrain_value`) VALUES
-(''),
-('');
+('Unknown'), 
+('TT&TO'), 
+('TWC'), 
+('DTC'),
+('Voice'), 
+('CTC'), 
+('Yard Limits'), 
+('251'), 
+('N/A');
 
 INSERT INTO `gr2012_eventtools_constrain_communications` (`constrain_value`) VALUES
-(''),
-('');
+('Unknown'), 
+('Voice'), 
+('Telephone'), 
+('5ch Radio'), 
+('Radio'), 
+('FRS'), 
+('Signals'), 
+('N/A'), 
+('TBD');
 
 
 

@@ -308,7 +308,7 @@ $opts['fdd']['layout_mainline_length'] = array(
   'sort'     => true
 );
 
-$opts['fdd']['layout_paln_type'] = displayConstrained('Plan Type', $event_tools_constrain_plan_type, $event_tools_db_prefix.'eventtools_constrain_plan_type');
+$opts['fdd']['layout_plan_type'] = displayConstrained('Plan Type', $event_tools_constrain_plan_type, $event_tools_db_prefix.'eventtools_constrain_plan_type');
 
 $opts['fdd']['layout_ops_scheme'] = displayConstrained('Ops Scheme', $event_tools_constrain_ops_scheme, $event_tools_db_prefix.'eventtools_constrain_ops_scheme');
 
@@ -340,78 +340,16 @@ $opts['fdd']['layout_photo_url'] = array(
   'sort'     => true
 );
 
-$opts['fdd']['layout_fidelity'] = array(
-  'name'     => 'Fidelity to Prototype',
-  'select'   => 'O',
-  'maxlen'   => 12,
-  'sort'     => true,
-  'default'  => 'Unknown',
-  'values'   => array('Unknown', 'Mix of Eras', 'Evoke Era','Few Comp.', 'Full') 
-);
-$opts['fdd']['layout_rigor'] = array(
-  'name'     => 'Rigor',
-  'select'   => 'O',
-  'maxlen'   => 12,
-  'sort'     => true,
-  'default'  => 'Unknown',
-  'values'   => array('Unknown', 'Attempt', 'Purposeful','Adheres','Tight') 
-);
-$opts['fdd']['layout_documentation'] = array(
-  'name'     => 'Documentation',
-  'select'   => 'O',
-  'maxlen'   => 12,
-  'sort'     => true,
-  'default'  => 'Unknown',
-  'values'   => array('Unknown', 'Moderate', 'High') 
-);
-$opts['fdd']['layout_session_pace'] = array(
-  'name'     => 'Session Pace',
-  'select'   => 'O',
-  'maxlen'   => 12,
-  'sort'     => true,
-  'default'  => 'Unknown',
-  'values'   => array('Unknown', 'Sequence', 'Fast Clock', 'Real Time') 
-);
-$opts['fdd']['layout_car_forwarding'] = array(
-  'name'     => 'Car Forwarding',
-  'select'   => 'O',
-  'maxlen'   => 12,
-  'sort'     => true,
-  'default'  => 'Unknown',
-  'values'   => array('Unknown', 'CC & WB', 'Switchlist', 'Computer', 'Tab on Car', 'Car-for-Car') 
-);
-$opts['fdd']['layout_tone'] = array(
-  'name'     => 'Tone',
-  'select'   => 'O',
-  'maxlen'   => 12,
-  'sort'     => true,
-  'default'  => 'Unknown',
-  'values'   => array('Unknown', 'Casual', 'Disciplined') 
-);
-$opts['fdd']['layout_dispatched_by1'] = array(
-  'name'     => 'Dispatched By (primary)',
-  'select'   => 'O',
-  'maxlen'   => 12,
-  'sort'     => true,
-  'default'  => 'Unknown',
-  'values'   => array('Unknown', 'TT&TO', 'TWC', 'DTC', 'Voice', 'CTC', 'Yard Limits', '251', 'N/A') 
-);
-$opts['fdd']['layout_dispatched_by2'] = array(
-  'name'     => 'Dispatched By (secondary)',
-  'select'   => 'O',
-  'maxlen'   => 12,
-  'sort'     => true,
-  'default'  => 'N/A',
-  'values'   => array('Unknown', 'TT&TO', 'TWC', 'DTC', 'Voice', 'CTC', 'Yard Limits', '251', 'N/A') 
-);
-$opts['fdd']['layout_communications'] = array(
-  'name'     => 'Communications',
-  'select'   => 'O',
-  'maxlen'   => 12,
-  'sort'     => true,
-  'default'  => 'Unknown',
-  'values'   => array('Unknown', 'Voice', 'Telephone', '5ch Radio', 'Radio', 'FRS', 'Signals', 'N/A', 'TBD') 
-);
+$opts['fdd']['layout_fidelity'] = displayConstrained('Fidelity to Prototype', $event_tools_constrain_fidelity, $event_tools_db_prefix.'eventtools_constrain_fidelity');
+$opts['fdd']['layout_rigor'] = displayConstrained('Rigor', $event_tools_constrain_rigor, $event_tools_db_prefix.'eventtools_constrain_rigor');
+$opts['fdd']['layout_documentation'] = displayConstrained('Documentation', $event_tools_constrain_documentation, $event_tools_db_prefix.'eventtools_constrain_documentation');
+$opts['fdd']['layout_pace'] = displayConstrained('Sesion Pace', $event_tools_constrain_pace, $event_tools_db_prefix.'eventtools_constrain_pace');
+$opts['fdd']['layout_car_forwarding'] = displayConstrained('Car Forwarding', $event_tools_constrain_car_forwarding, $event_tools_db_prefix.'eventtools_constrain_car_forwarding');
+$opts['fdd']['layout_tone'] = displayConstrained('Tone', $event_tools_constrain_tone, $event_tools_db_prefix.'eventtools_constrain_tone');
+$opts['fdd']['layout_dispatched_by1'] = displayConstrained('Dispatched By (primary)', $event_tools_constrain_dispatched_by1, $event_tools_db_prefix.'eventtools_constrain_dispatched_by1');
+$opts['fdd']['layout_dispatched_by2'] = displayConstrained('Dispatched By (secondary)', $event_tools_constrain_dispatched_by2, $event_tools_db_prefix.'eventtools_constrain_dispatched_by2');
+$opts['fdd']['layout_communications'] = displayConstrained('Communications', $event_tools_constrain_communications, $event_tools_db_prefix.'eventtools_constrain_communications');
+
 $opts['fdd']['layout_allow_photo'] = array(
   'name'     => 'Allow Photos',
   'select'   => 'O',
