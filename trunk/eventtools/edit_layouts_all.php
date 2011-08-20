@@ -26,6 +26,22 @@
 <p>
 <?php
 
+function displayConstrained($name, $column, $key, $constrain_table) {
+    $tempArray = 
+    array(
+      'name'     => $name,
+      'select'   => 'T',
+      'maxlen'   => 64,
+      'sort'     => true,
+      'nowrap'   => true
+    );
+    if ($key) {
+        $tempArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_'.$constrain_table, 
+                            'column' => 'constrain_value');
+    }
+    $opts['fdd'][$column] = $tempArray;
+}
+
 /*
  * IMPORTANT NOTE: This generated file contains only a subset of huge amount
  * of options that can be used with phpMyEdit. To get information about all
@@ -181,31 +197,9 @@ $opts['fdd']['layout_status_code'] = array(
   'trimlen|LF' => 36
 );
 
-$scaleArray = 
-array(
-  'name'     => 'Scale',
-  'select'   => 'D',
-  'maxlen'   => 25,
-  'sort'     => true
-);
-if ($event_tools_constrain_scale) {
-    $scaleArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_scale', 
-                        'column' => 'constrain_value');
-}
-$opts['fdd']['layout_scale'] = $scaleArray; 
+displayConstrained('Scale', 'layout_scale', $event_tools_constrain_scale, 'constrain_scale');
+displayConstrained('Gauge', 'layout_gauge', $event_tools_constrain_gauge, 'constrain_gauge');
 
-$gaugeArray = 
-array(
-  'name'     => 'Gauge',
-  'select'   => 'D',
-  'maxlen'   => 25,
-  'sort'     => true
-);
-if ($event_tools_constrain_scale) {
-    $gaugeArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_gauge', 
-                        'column' => 'constrain_value');
-}
-$opts['fdd']['layout_gauge'] = $gaugeArray; 
 
 $eraArray = 
 array(
@@ -487,10 +481,9 @@ $opts['fdd']['layout_communications'] = array(
 $opts['fdd']['layout_allow_photo'] = array(
   'name'     => 'Allow Photos',
   'select'   => 'O',
-  'maxlen'   => 1,
+  'maxlen'   => 2,
   'sort'     => true,
-  'default'  => 'Unknown',
-  'values2'   => array(''=>'Unknown', 'Y'=>'Yes', 'N'=>'No') 
+  'values'   => array('N','Y') 
 );
 $opts['fdd']['layout_mark_changed'] = array(
   'name'     => 'Changed?',
