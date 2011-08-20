@@ -197,31 +197,6 @@ $opts['fdd']['layout_status_code'] = array(
   'trimlen|LF' => 36
 );
 
-$opts['fdd']['layout_accessibility'] = array(
-  'name'     => 'Access',
-  'select'   => 'D',
-  'maxlen'   => 10,
-  'sort'     => true,
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_accessibility_codes', 
-                        'column' => 'accessibility_code',
-                        'description' => 'accessibility_name'),
-  'trimlen|LF' => 6,
-  'default'  => 6
-);
-$opts['fdd']['layout_wheelchair_access'] = array(
-  'name'     => 'Wheelchair access',
-  'select'   => 'O',
-  'maxlen'   => 2,
-  'sort'     => true,
-  'values'   => array('N','Y') 
-);
-$opts['fdd']['layout_duckunder_entry'] = array(
-  'name'     => 'Duck Entry',
-  'select'   => 'O',
-  'maxlen'   => 2,
-  'sort'     => true,
-  'values'   => array('N','Y') 
-);
 
 $opts['fdd']['layout_scale'] = displayConstrained('Scale', $event_tools_constrain_scale, $event_tools_db_prefix.'eventtools_constrain_scale');
 $opts['fdd']['layout_gauge'] = displayConstrained('Gauge', $event_tools_constrain_gauge, $event_tools_db_prefix.'eventtools_constrain_gauge');
