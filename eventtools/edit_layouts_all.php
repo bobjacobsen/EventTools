@@ -26,7 +26,7 @@
 <p>
 <?php
 
-function displayConstrained($name, $column, $key, $constrain_table) {
+function displayConstrained($name, $key, $constrain_table) {
     $tempArray = 
     array(
       'name'     => $name,
@@ -39,7 +39,7 @@ function displayConstrained($name, $column, $key, $constrain_table) {
         $tempArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_'.$constrain_table, 
                             'column' => 'constrain_value');
     }
-    $opts['fdd'][$column] = $tempArray;
+    return $tempArray;
 }
 
 /*
@@ -197,8 +197,8 @@ $opts['fdd']['layout_status_code'] = array(
   'trimlen|LF' => 36
 );
 
-displayConstrained('Scale', 'layout_scale', $event_tools_constrain_scale, 'constrain_scale');
-displayConstrained('Gauge', 'layout_gauge', $event_tools_constrain_gauge, 'constrain_gauge');
+$opts['fdd']['layout_scale'] = displayConstrained('Scale', $event_tools_constrain_scale, 'constrain_scale');
+$opts['fdd']['layout_gauge'] = displayConstrained('Gauge', $event_tools_constrain_gauge, 'constrain_gauge');
 
 
 $eraArray = 
