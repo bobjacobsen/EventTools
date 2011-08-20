@@ -132,7 +132,7 @@ if ($event_tools_constrain_gauge)  echo '<a href="edit_constrain_gauge.php" >Gau
 echo '</td><td>';
 if ($event_tools_constrain_plan_type)  echo '<a href="edit_constrain_plan_type.php" >Plan Types</a>';
 echo '</td><td>';
-if ($event_tools_constrain_fidelity)  echo '<a href="edit_constrain_fidelity.php" >Fidelity</a>';
+if ($event_tools_constrain_rigor)  echo '<a href="edit_constrain_rigor.php" >Rigor</a>';
 echo '</td></tr>';
 
 echo '<tr><td>';
@@ -140,31 +140,26 @@ if ($event_tools_constrain_era)    echo '<a href="edit_constrain_era.php"   >Era
 echo '</td><td>';
 if ($event_tools_constrain_control)  echo '<a href="edit_constrain_control.php" >Control Systems</a>';
 echo '</td><td>';
-if ($event_tools_constrain_rigor)  echo '<a href="edit_constrain_rigor.php" >Rigor</a>';
+if ($event_tools_constrain_documentation)  echo '<a href="edit_constrain_documentation.php" >Documentation</a>';
 echo '</td></tr>';
 
 echo '<tr><td>';
 if ($event_tools_constrain_class)  echo '<a href="edit_constrain_class.php" >Railroad Classes</a>';
 echo '</td><td>';
+if ($event_tools_constrain_fidelity)  echo '<a href="edit_constrain_fidelity.php" >Fidelity</a>';
 echo '</td><td>';
-if ($event_tools_constrain_documentation)  echo '<a href="edit_constrain_documentation.php" >Documentation</a>';
+if ($event_tools_constrain_session_pace)  echo '<a href="edit_constrain_session_pace.php" >Session Pace</a>';
 echo '</td></tr>';
 
 echo '<tr><td>';
 if ($event_tools_constrain_theme)  echo '<a href="edit_constrain_theme.php" >Themes</a>';
 echo '</td><td>';
 echo '</td><td>';
-if ($event_tools_constrain_session_pace)  echo '<a href="edit_constrain_session_pace.php" >Session Pace</a>';
-echo '</td></tr>';
-
-echo '<tr><td>';
-if ($event_tools_constrain_locale) echo '<a href="edit_constrain_locale.php">Locales</a>';
-echo '</td><td>';
-echo '</td><td>';
 if ($event_tools_constrain_car_forwarding)  echo '<a href="edit_constrain_car_forwarding.php" >Car Forwarding</a>';
 echo '</td></tr>';
 
 echo '<tr><td>';
+if ($event_tools_constrain_locale) echo '<a href="edit_constrain_locale.php">Locales</a>';
 echo '</td><td>';
 echo '</td><td>';
 if ($event_tools_constrain_tone)  echo '<a href="edit_constrain_tone.php" >Tone</a>';
