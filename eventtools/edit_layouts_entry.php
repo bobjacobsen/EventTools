@@ -206,6 +206,7 @@ $opts['fdd']['layout_theme'] = displayConstrained('Theme', $event_tools_constrai
 $opts['fdd']['layout_fidelity'] = displayConstrained('Fidelity to Prototype', $event_tools_constrain_fidelity, $event_tools_db_prefix.'eventtools_constrain_fidelity');
 $opts['fdd']['layout_locale'] = displayConstrained('Locale', $event_tools_constrain_locale, $event_tools_db_prefix.'eventtools_constrain_locale');
 $opts['fdd']['layout_plan_type'] = displayConstrained('Plan Type', $event_tools_constrain_plan_type, $event_tools_db_prefix.'eventtools_constrain_plan_type');
+$opts['fdd']['layout_scenery'] = displayConstrained('Scenery', $event_tools_constrain_scenery, $event_tools_db_prefix.'eventtools_constrain_scenery');
 $opts['fdd']['layout_communications'] = displayConstrained('Communications', $event_tools_constrain_communications, $event_tools_db_prefix.'eventtools_constrain_communications');
 $opts['fdd']['layout_dispatched_by1'] = displayConstrained('Dispatched By (primary)', $event_tools_constrain_dispatched_by1, $event_tools_db_prefix.'eventtools_constrain_dispatched_by1');
 $opts['fdd']['layout_control'] = displayConstrained('Control', $event_tools_constrain_control, $event_tools_db_prefix.'eventtools_constrain_control');
