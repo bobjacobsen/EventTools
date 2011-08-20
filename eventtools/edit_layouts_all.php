@@ -197,26 +197,6 @@ $opts['fdd']['layout_status_code'] = array(
   'trimlen|LF' => 36
 );
 
-$opts['fdd']['layout_scale'] = displayConstrained('Scale', $event_tools_constrain_scale, $event_tools_db_prefix.'eventtools_constrain_scale');
-$opts['fdd']['layout_gauge'] = displayConstrained('Gauge', $event_tools_constrain_gauge, $event_tools_db_prefix.'eventtools_constrain_gauge');
-
-$opts['fdd']['layout_era'] = displayConstrained('Era', $event_tools_constrain_era, $event_tools_db_prefix.'eventtools_constrain_era');
-$opts['fdd']['layout_class'] = displayConstrained('Class', $event_tools_constrain_class, $event_tools_db_prefix.'eventtools_constrain_class');
-$opts['fdd']['layout_theme'] = displayConstrained('Theme', $event_tools_constrain_theme, $event_tools_db_prefix.'eventtools_constrain_theme');
-$opts['fdd']['layout_locale'] = displayConstrained('Locale', $event_tools_constrain_locale, $event_tools_db_prefix.'eventtools_constrain_locale');
-
-
-$opts['fdd']['layout_size'] = array(
-  'name'     => 'Size',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true
-);
-
-$opts['fdd']['layout_scenery'] = displayConstrained('Scenery', $event_tools_constrain_scenery, $event_tools_db_prefix.'eventtools_constrain_scenery');
-
-$opts['fdd']['layout_control'] = displayConstrained('Control', $event_tools_constrain_control, $event_tools_db_prefix.'eventtools_constrain_control');
-
 $opts['fdd']['layout_accessibility'] = array(
   'name'     => 'Access',
   'select'   => 'D',
@@ -228,11 +208,19 @@ $opts['fdd']['layout_accessibility'] = array(
   'trimlen|LF' => 6,
   'default'  => 6
 );
-$opts['fdd']['layout_owner_url'] = array(
-  'name'     => 'Owner URL',
-  'select'   => 'T',
-  'maxlen'   => 128,
-  'sort'     => true
+$opts['fdd']['layout_wheelchair_access'] = array(
+  'name'     => 'Wheelchair access',
+  'select'   => 'O',
+  'maxlen'   => 2,
+  'sort'     => true,
+  'values'   => array('N','Y') 
+);
+$opts['fdd']['layout_duckunder_entry'] = array(
+  'name'     => 'Duck Entry',
+  'select'   => 'O',
+  'maxlen'   => 2,
+  'sort'     => true,
+  'values'   => array('N','Y') 
 );
 $opts['fdd']['layout_street_address'] = array(
   'name'     => 'Street address',
@@ -294,12 +282,29 @@ $opts['fdd']['layout_long_description'] = array(
   'nowrap|LF'   => false
 );
 
+$opts['fdd']['layout_scale'] = displayConstrained('Scale', $event_tools_constrain_scale, $event_tools_db_prefix.'eventtools_constrain_scale');
+$opts['fdd']['layout_gauge'] = displayConstrained('Gauge', $event_tools_constrain_gauge, $event_tools_db_prefix.'eventtools_constrain_gauge');
+
 $opts['fdd']['layout_prototype'] = array(
   'name'     => 'Prototype',
   'select'   => 'T',
   'maxlen'   => 64,
   'sort'     => true
 );
+$opts['fdd']['layout_era'] = displayConstrained('Era', $event_tools_constrain_era, $event_tools_db_prefix.'eventtools_constrain_era');
+$opts['fdd']['layout_class'] = displayConstrained('Class', $event_tools_constrain_class, $event_tools_db_prefix.'eventtools_constrain_class');
+$opts['fdd']['layout_theme'] = displayConstrained('Theme', $event_tools_constrain_theme, $event_tools_db_prefix.'eventtools_constrain_theme');
+$opts['fdd']['layout_locale'] = displayConstrained('Locale', $event_tools_constrain_locale, $event_tools_db_prefix.'eventtools_constrain_locale');
+
+
+$opts['fdd']['layout_size'] = array(
+  'name'     => 'Size',
+  'select'   => 'T',
+  'maxlen'   => 64,
+  'sort'     => true
+);
+
+$opts['fdd']['layout_plan_type'] = displayConstrained('Plan Type', $event_tools_constrain_plan_type, $event_tools_db_prefix.'eventtools_constrain_plan_type');
 
 $opts['fdd']['layout_mainline_length'] = array(
   'name'     => 'Mainline Length',
@@ -308,38 +313,10 @@ $opts['fdd']['layout_mainline_length'] = array(
   'sort'     => true
 );
 
-$opts['fdd']['layout_plan_type'] = displayConstrained('Plan Type', $event_tools_constrain_plan_type, $event_tools_db_prefix.'eventtools_constrain_plan_type');
+$opts['fdd']['layout_scenery'] = displayConstrained('Scenery', $event_tools_constrain_scenery, $event_tools_db_prefix.'eventtools_constrain_scenery');
+$opts['fdd']['layout_control'] = displayConstrained('Control', $event_tools_constrain_control, $event_tools_db_prefix.'eventtools_constrain_control');
 
 $opts['fdd']['layout_ops_scheme'] = displayConstrained('Ops Scheme', $event_tools_constrain_ops_scheme, $event_tools_db_prefix.'eventtools_constrain_ops_scheme');
-
-
-$opts['fdd']['layout_wheelchair_access'] = array(
-  'name'     => 'Wheelchair access',
-  'select'   => 'O',
-  'maxlen'   => 2,
-  'sort'     => true,
-  'values'   => array('N','Y') 
-);
-$opts['fdd']['layout_duckunder_entry'] = array(
-  'name'     => 'Duck Entry',
-  'select'   => 'O',
-  'maxlen'   => 2,
-  'sort'     => true,
-  'values'   => array('N','Y') 
-);
-$opts['fdd']['layout_local_url'] = array(
-  'name'     => 'Local URL',
-  'select'   => 'T',
-  'maxlen'   => 50,
-  'sort'     => true
-);
-$opts['fdd']['layout_photo_url'] = array(
-  'name'     => 'Photo URL',
-  'select'   => 'T',
-  'maxlen'   => 100,
-  'sort'     => true
-);
-
 $opts['fdd']['layout_fidelity'] = displayConstrained('Fidelity to Prototype', $event_tools_constrain_fidelity, $event_tools_db_prefix.'eventtools_constrain_fidelity');
 $opts['fdd']['layout_rigor'] = displayConstrained('Rigor', $event_tools_constrain_rigor, $event_tools_db_prefix.'eventtools_constrain_rigor');
 $opts['fdd']['layout_documentation'] = displayConstrained('Documentation', $event_tools_constrain_documentation, $event_tools_db_prefix.'eventtools_constrain_documentation');
@@ -357,6 +334,27 @@ $opts['fdd']['layout_allow_photo'] = array(
   'sort'     => true,
   'values'   => array('N','Y') 
 );
+
+$opts['fdd']['layout_owner_url'] = array(
+  'name'     => 'Owner URL',
+  'select'   => 'T',
+  'maxlen'   => 128,
+  'sort'     => true
+);
+$opts['fdd']['layout_local_url'] = array(
+  'name'     => 'Local URL',
+  'select'   => 'T',
+  'maxlen'   => 50,
+  'sort'     => true
+);
+$opts['fdd']['layout_photo_url'] = array(
+  'name'     => 'Photo URL',
+  'select'   => 'T',
+  'maxlen'   => 100,
+  'sort'     => true
+);
+
+
 $opts['fdd']['layout_mark_changed'] = array(
   'name'     => 'Changed?',
   'values'   => array('','Y'),
