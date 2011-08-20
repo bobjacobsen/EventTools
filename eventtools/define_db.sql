@@ -19,7 +19,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 
 DROP TABLE IF EXISTS `gr2012_eventtools_constrain_scale`;
-
 CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_scale` (
   `constrain_id` int(5) NOT NULL auto_increment,
   `constrain_value` varchar(25) NOT NULL,
@@ -28,7 +27,6 @@ CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_scale` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 DROP TABLE IF EXISTS `gr2012_eventtools_constrain_gauge`;
-
 CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_gauge` (
   `constrain_id` int(5) NOT NULL auto_increment,
   `constrain_value` varchar(25) NOT NULL,
@@ -37,7 +35,6 @@ CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_gauge` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 DROP TABLE IF EXISTS `gr2012_eventtools_constrain_era`;
-
 CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_era` (
   `constrain_id` int(5) NOT NULL auto_increment,
   `constrain_value` varchar(25) NOT NULL,
@@ -46,7 +43,6 @@ CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_era` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 DROP TABLE IF EXISTS `gr2012_eventtools_constrain_class`;
-
 CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_class` (
   `constrain_id` int(5) NOT NULL auto_increment,
   `constrain_value` varchar(25) NOT NULL,
@@ -55,7 +51,6 @@ CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_class` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 DROP TABLE IF EXISTS `gr2012_eventtools_constrain_theme`;
-
 CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_theme` (
   `constrain_id` int(5) NOT NULL auto_increment,
   `constrain_value` varchar(25) NOT NULL,
@@ -64,7 +59,6 @@ CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_theme` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 DROP TABLE IF EXISTS `gr2012_eventtools_constrain_locale`;
-
 CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_locale` (
   `constrain_id` int(5) NOT NULL auto_increment,
   `constrain_value` varchar(25) NOT NULL,
@@ -72,6 +66,109 @@ CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_locale` (
   KEY `idx_eventtools_constrain_value` (`constrain_value`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
+DROP TABLE IF EXISTS `gr2012_eventtools_constrain_scenery`;
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_scenery` (
+  `constrain_id` int(5) NOT NULL auto_increment,
+  `constrain_value` varchar(25) NOT NULL,
+  PRIMARY KEY  (`constrain_id`),
+  KEY `idx_eventtools_constrain_value` (`constrain_value`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+DROP TABLE IF EXISTS `gr2012_eventtools_constrain_plan_type`;
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_plan_type` (
+  `constrain_id` int(5) NOT NULL auto_increment,
+  `constrain_value` varchar(25) NOT NULL,
+  PRIMARY KEY  (`constrain_id`),
+  KEY `idx_eventtools_constrain_value` (`constrain_value`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+DROP TABLE IF EXISTS `gr2012_eventtools_constrain_ops_scheme`;
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_ops_scheme` (
+  `constrain_id` int(5) NOT NULL auto_increment,
+  `constrain_value` varchar(25) NOT NULL,
+  PRIMARY KEY  (`constrain_id`),
+  KEY `idx_eventtools_constrain_value` (`constrain_value`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+DROP TABLE IF EXISTS `gr2012_eventtools_constrain_control`;
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_control` (
+  `constrain_id` int(5) NOT NULL auto_increment,
+  `constrain_value` varchar(25) NOT NULL,
+  PRIMARY KEY  (`constrain_id`),
+  KEY `idx_eventtools_constrain_value` (`constrain_value`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+DROP TABLE IF EXISTS `gr2012_eventtools_constrain_fidelity`;
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_fidelity` (
+  `constrain_id` int(5) NOT NULL auto_increment,
+  `constrain_value` varchar(25) NOT NULL,
+  PRIMARY KEY  (`constrain_id`),
+  KEY `idx_eventtools_constrain_value` (`constrain_value`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+DROP TABLE IF EXISTS `gr2012_eventtools_constrain_rigor`;
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_rigor` (
+  `constrain_id` int(5) NOT NULL auto_increment,
+  `constrain_value` varchar(25) NOT NULL,
+  PRIMARY KEY  (`constrain_id`),
+  KEY `idx_eventtools_constrain_value` (`constrain_value`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+DROP TABLE IF EXISTS `gr2012_eventtools_constrain_documentation`;
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_documentation` (
+  `constrain_id` int(5) NOT NULL auto_increment,
+  `constrain_value` varchar(25) NOT NULL,
+  PRIMARY KEY  (`constrain_id`),
+  KEY `idx_eventtools_constrain_value` (`constrain_value`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+DROP TABLE IF EXISTS `gr2012_eventtools_constrain_session_pace`;
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_session_pace` (
+  `constrain_id` int(5) NOT NULL auto_increment,
+  `constrain_value` varchar(25) NOT NULL,
+  PRIMARY KEY  (`constrain_id`),
+  KEY `idx_eventtools_constrain_value` (`constrain_value`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+DROP TABLE IF EXISTS `gr2012_eventtools_constrain_car_forwarding`;
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_car_forwarding` (
+  `constrain_id` int(5) NOT NULL auto_increment,
+  `constrain_value` varchar(25) NOT NULL,
+  PRIMARY KEY  (`constrain_id`),
+  KEY `idx_eventtools_constrain_value` (`constrain_value`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+DROP TABLE IF EXISTS `gr2012_eventtools_constrain_tone`;
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_tone` (
+  `constrain_id` int(5) NOT NULL auto_increment,
+  `constrain_value` varchar(25) NOT NULL,
+  PRIMARY KEY  (`constrain_id`),
+  KEY `idx_eventtools_constrain_value` (`constrain_value`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+DROP TABLE IF EXISTS `gr2012_eventtools_constrain_dispatched_by1`;
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_dispatched_by1` (
+  `constrain_id` int(5) NOT NULL auto_increment,
+  `constrain_value` varchar(25) NOT NULL,
+  PRIMARY KEY  (`constrain_id`),
+  KEY `idx_eventtools_constrain_value` (`constrain_value`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+DROP TABLE IF EXISTS `gr2012_eventtools_constrain_dispatched_by2`;
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_dispatched_by2` (
+  `constrain_id` int(5) NOT NULL auto_increment,
+  `constrain_value` varchar(25) NOT NULL,
+  PRIMARY KEY  (`constrain_id`),
+  KEY `idx_eventtools_constrain_value` (`constrain_value`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+DROP TABLE IF EXISTS `gr2012_eventtools_constrain_communications`;
+CREATE TABLE IF NOT EXISTS `gr2012_eventtools_constrain_communications` (
+  `constrain_id` int(5) NOT NULL auto_increment,
+  `constrain_value` varchar(25) NOT NULL,
+  PRIMARY KEY  (`constrain_id`),
+  KEY `idx_eventtools_constrain_value` (`constrain_value`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Table structure for table `gr2012_eventtools_users`

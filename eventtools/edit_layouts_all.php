@@ -200,62 +200,11 @@ $opts['fdd']['layout_status_code'] = array(
 $opts['fdd']['layout_scale'] = displayConstrained('Scale', $event_tools_constrain_scale, $event_tools_db_prefix.'eventtools_constrain_scale');
 $opts['fdd']['layout_gauge'] = displayConstrained('Gauge', $event_tools_constrain_gauge, $event_tools_db_prefix.'eventtools_constrain_gauge');
 
+$opts['fdd']['layout_era'] = displayConstrained('Era', $event_tools_constrain_era, $event_tools_db_prefix.'eventtools_constrain_era');
+$opts['fdd']['layout_class'] = displayConstrained('Class', $event_tools_constrain_class, $event_tools_db_prefix.'eventtools_constrain_class');
+$opts['fdd']['layout_theme'] = displayConstrained('Theme', $event_tools_constrain_theme, $event_tools_db_prefix.'eventtools_constrain_theme');
+$opts['fdd']['layout_locale'] = displayConstrained('Locale', $event_tools_constrain_locale, $event_tools_db_prefix.'eventtools_constrain_locale');
 
-$eraArray = 
-array(
-  'name'     => 'Era',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true,
-  'nowrap'   => true
-);
-if ($event_tools_constrain_era) {
-    $eraArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_era', 
-                        'column' => 'constrain_value');
-}
-$opts['fdd']['layout_era'] = $eraArray;
-
-$classArray = 
-array(
-  'name'     => 'Class',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true,
-  'nowrap'   => true
-);
-if ($event_tools_constrain_class) {
-    $classArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_class', 
-                        'column' => 'constrain_value');
-}
-$opts['fdd']['layout_class'] = $classArray;
-
-$themeArray = 
-array(
-  'name'     => 'Theme',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true,
-  'nowrap'   => true
-);
-if ($event_tools_constrain_theme) {
-    $themeArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_theme', 
-                        'column' => 'constrain_value');
-}
-$opts['fdd']['layout_theme'] = $themeArray;
-
-$localeArray = 
-array(
-  'name'     => 'Locale',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true,
-  'nowrap'   => true
-);
-if ($event_tools_constrain_locale) {
-    $localeArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_locale', 
-                        'column' => 'constrain_value');
-}
-$opts['fdd']['layout_locale'] = $localeArray;
 
 $opts['fdd']['layout_size'] = array(
   'name'     => 'Size',
@@ -263,18 +212,11 @@ $opts['fdd']['layout_size'] = array(
   'maxlen'   => 64,
   'sort'     => true
 );
-$opts['fdd']['layout_scenery'] = array(
-  'name'     => 'Scenery',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true
-);
-$opts['fdd']['layout_control'] = array(
-  'name'     => 'Control',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true
-);
+
+$opts['fdd']['layout_scenery'] = displayConstrained('Scenery', $event_tools_constrain_scenery, $event_tools_db_prefix.'eventtools_constrain_scenery');
+
+$opts['fdd']['layout_control'] = displayConstrained('Control', $event_tools_constrain_control, $event_tools_db_prefix.'eventtools_constrain_control');
+
 $opts['fdd']['layout_accessibility'] = array(
   'name'     => 'Access',
   'select'   => 'D',
@@ -310,10 +252,28 @@ $opts['fdd']['layout_state'] = array(
   'maxlen'   => 2,
   'sort'     => true
 );
+$opts['fdd']['layout_postcode'] = array(
+  'name'     => 'Zip code',
+  'select'   => 'T',
+  'maxlen'   => 10,
+  'sort'     => true
+);
+$opts['fdd']['layout_owner_email'] = array(
+  'name'     => 'Owner Email',
+  'select'   => 'T',
+  'maxlen'   => 32,
+  'sort'     => true
+);
 $opts['fdd']['layout_owner_phone'] = array(
   'name'     => 'Owner phone',
   'select'   => 'T',
   'maxlen'   => 16,
+  'sort'     => true
+);
+$opts['fdd']['layout_owner_call_time'] = array(
+  'name'     => 'Call time',
+  'select'   => 'T',
+  'maxlen'   => 32,
   'sort'     => true
 );
 $opts['fdd']['layout_short_description'] = array(
@@ -347,38 +307,12 @@ $opts['fdd']['layout_mainline_length'] = array(
   'maxlen'   => 64,
   'sort'     => true
 );
-$opts['fdd']['layout_plan_type'] = array(
-  'name'     => 'Plan Type',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true
-);
-$opts['fdd']['layout_ops_scheme'] = array(
-  'name'     => 'Ops Scheme',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true
-);
+
+$opts['fdd']['layout_paln_type'] = displayConstrained('Plan Type', $event_tools_constrain_plan_type, $event_tools_db_prefix.'eventtools_constrain_plan_type');
+
+$opts['fdd']['layout_ops_scheme'] = displayConstrained('Ops Scheme', $event_tools_constrain_ops_scheme, $event_tools_db_prefix.'eventtools_constrain_ops_scheme');
 
 
-$opts['fdd']['layout_postcode'] = array(
-  'name'     => 'Zip code',
-  'select'   => 'T',
-  'maxlen'   => 10,
-  'sort'     => true
-);
-$opts['fdd']['layout_owner_email'] = array(
-  'name'     => 'Owner Email',
-  'select'   => 'T',
-  'maxlen'   => 32,
-  'sort'     => true
-);
-$opts['fdd']['layout_owner_call_time'] = array(
-  'name'     => 'Call time',
-  'select'   => 'T',
-  'maxlen'   => 32,
-  'sort'     => true
-);
 $opts['fdd']['layout_wheelchair_access'] = array(
   'name'     => 'Wheelchair access',
   'select'   => 'O',
