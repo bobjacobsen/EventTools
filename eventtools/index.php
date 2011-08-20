@@ -138,7 +138,7 @@ echo '</td></tr>';
 echo '<tr><td>';
 if ($event_tools_constrain_era)    echo '<a href="edit_constrain_era.php"   >Eras</a>';
 echo '</td><td>';
-if ($event_tools_constrain_controls)  echo '<a href="edit_constrain_controls.php" >Controls</a>';
+if ($event_tools_constrain_control)  echo '<a href="edit_constrain_control.php" >Control Systems</a>';
 echo '</td><td>';
 if ($event_tools_constrain_rigor)  echo '<a href="edit_constrain_rigor.php" >Rigor</a>';
 echo '</td></tr>';
