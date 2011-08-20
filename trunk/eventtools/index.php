@@ -173,7 +173,7 @@ echo '</td></tr>';
 echo '<tr><td>';
 echo '</td><td>';
 echo '</td><td>';
-if ($event_tools_constrain_dispatched_by1)  echo '<a href="edit_constrain_dispatched_by2.php" >Dispatching (Primary)</a>';
+if ($event_tools_constrain_dispatched_by1)  echo '<a href="edit_constrain_dispatched_by1.php" >Dispatching (Primary)</a>';
 echo '</td></tr>';
 
 echo '<tr><td>';
