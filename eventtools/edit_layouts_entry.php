@@ -4,13 +4,14 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Edit Layouts</title>
+	<title>Edit Layouts (Short Form)</title>
 <style type="text/css">
 	hr.pme-hr		     { border: 0px solid; padding: 0px; margin: 0px; border-top-width: 1px; height: 1px; }
 	table.pme-main 	     { border: #004d9c 1px solid; border-collapse: collapse; border-spacing: 0px; width: 100%; }
 	table.pme-navigation { border: #004d9c 0px solid; border-collapse: collapse; border-spacing: 0px; width: 100%; }
 	td.pme-navigation-0, td.pme-navigation-1 { white-space: nowrap; }
-	th.pme-header	     { border: #004d9c 1px solid; padding: 4px; background: #add8e6; }
+	th.pme-header
+	    { border: #004d9c 1px solid; padding: 4px; background: #add8e6; }
 	td.pme-key-0, td.pme-value-0, td.pme-help-0, td.pme-navigation-0, td.pme-cell-0,
 	td.pme-key-1, td.pme-value-1, td.pme-help-0, td.pme-navigation-1, td.pme-cell-1,
 	td.pme-sortinfo, td.pme-filter { border: #004d9c 1px solid; padding: 3px; }
@@ -20,10 +21,26 @@
 </style>
 </head>
 <body>
-<h3>Edit Layouts</h3>
+<h3>Edit Layouts (Short Form)</h3>
 <a href="index.php">Back to main page</a>
 <p>
 <?php
+
+function displayConstrained($name, $key, $constrain_table) {
+    $tempArray = 
+    array(
+      'name'     => $name,
+      'select'   => 'T',
+      'maxlen'   => 64,
+      'sort'     => true,
+      'nowrap'   => true
+    );
+    if ($key) {
+        $tempArray['values'] = array('table' => $constrain_table, 
+                            'column' => 'constrain_value');
+    }
+    return $tempArray;
+}
 
 /*
  * IMPORTANT NOTE: This generated file contains only a subset of huge amount
@@ -145,8 +162,8 @@ appear in generated list. Here are some most used field options documented.
 $opts['fdd']['layout_id'] = array(
   'name'     => 'ID',
   'select'   => 'T',
-  'options'  => 'AVCPDR', // auto increment
-  'maxlen'   => 5,
+  'options'  => 'AVCPDRL', // auto increment
+  'maxlen'   => 11,
   'default'  => '0',
   'sort'     => true
 );
@@ -179,37 +196,7 @@ $opts['fdd']['layout_status_code'] = array(
                         'description' => 'event_status_name'),
   'trimlen|LF' => 36
 );
-$scaleArray = 
-array(
-  'name'     => 'Scale',
-  'select'   => 'D',
-  'maxlen'   => 25,
-  'sort'     => true
-);
-if ($event_tools_constrain_scale) {
-    $scaleArray['values'] = array('table' => $event_tools_db_prefix.'eventtools_constrain_scale', 
-                        'column' => 'constrain_scale_value');
-}
-$opts['fdd']['layout_scale'] = $scaleArray; 
 
-$opts['fdd']['layout_size'] = array(
-  'name'     => 'Size',
-  'select'   => 'T',
-  'maxlen'   => 32,
-  'sort'     => true
-);
-$opts['fdd']['layout_scenery'] = array(
-  'name'     => 'Scenery',
-  'select'   => 'T',
-  'maxlen'   => 20,
-  'sort'     => true
-);
-$opts['fdd']['layout_control'] = array(
-  'name'     => 'Control',
-  'select'   => 'T',
-  'maxlen'   => 32,
-  'sort'     => true
-);
 $opts['fdd']['layout_accessibility'] = array(
   'name'     => 'Access',
   'select'   => 'D',
@@ -218,55 +205,52 @@ $opts['fdd']['layout_accessibility'] = array(
   'values'   => array('table' => $event_tools_db_prefix.'eventtools_accessibility_codes', 
                         'column' => 'accessibility_code',
                         'description' => 'accessibility_name'),
+  'trimlen|LF' => 6,
   'default'  => 6
 );
-$opts['fdd']['layout_owner_url'] = array(
-  'name'     => 'Owner URL',
-  'select'   => 'T',
-  'maxlen'   => 50,
-  'sort'     => true
+$opts['fdd']['layout_wheelchair_access'] = array(
+  'name'     => 'Wheelchair access',
+  'select'   => 'O',
+  'maxlen'   => 2,
+  'sort'     => true,
+  'values'   => array('N','Y') 
 );
-$opts['fdd']['layout_street_address'] = array(
-  'name'     => 'Street address',
+$opts['fdd']['layout_duckunder_entry'] = array(
+  'name'     => 'Duck Entry',
+  'select'   => 'O',
+  'maxlen'   => 2,
+  'sort'     => true,
+  'values'   => array('N','Y') 
+);
+
+$opts['fdd']['layout_scale'] = displayConstrained('Scale', $event_tools_constrain_scale, $event_tools_db_prefix.'eventtools_constrain_scale');
+$opts['fdd']['layout_gauge'] = displayConstrained('Gauge', $event_tools_constrain_gauge, $event_tools_db_prefix.'eventtools_constrain_gauge');
+$opts['fdd']['layout_era'] = displayConstrained('Era', $event_tools_constrain_era, $event_tools_db_prefix.'eventtools_constrain_era');
+$opts['fdd']['layout_class'] = displayConstrained('Class', $event_tools_constrain_class, $event_tools_db_prefix.'eventtools_constrain_class');
+$opts['fdd']['layout_theme'] = displayConstrained('Theme', $event_tools_constrain_theme, $event_tools_db_prefix.'eventtools_constrain_theme');
+$opts['fdd']['layout_fidelity'] = displayConstrained('Fidelity to Prototype', $event_tools_constrain_fidelity, $event_tools_db_prefix.'eventtools_constrain_fidelity');
+$opts['fdd']['layout_locale'] = displayConstrained('Locale', $event_tools_constrain_locale, $event_tools_db_prefix.'eventtools_constrain_locale');
+$opts['fdd']['layout_plan_type'] = displayConstrained('Plan Type', $event_tools_constrain_plan_type, $event_tools_db_prefix.'eventtools_constrain_plan_type');
+$opts['fdd']['layout_communications'] = displayConstrained('Communications', $event_tools_constrain_communications, $event_tools_db_prefix.'eventtools_constrain_communications');
+$opts['fdd']['layout_dispatched_by1'] = displayConstrained('Dispatched By (primary)', $event_tools_constrain_dispatched_by1, $event_tools_db_prefix.'eventtools_constrain_dispatched_by1');
+$opts['fdd']['layout_control'] = displayConstrained('Control', $event_tools_constrain_control, $event_tools_db_prefix.'eventtools_constrain_control');
+
+
+$opts['fdd']['layout_size'] = array(
+  'name'     => 'Size',
   'select'   => 'T',
   'maxlen'   => 64,
   'sort'     => true
 );
-$opts['fdd']['layout_city'] = array(
-  'name'     => 'City',
-  'select'   => 'T',
-  'maxlen'   => 32,
-  'sort'     => true
-);
-$opts['fdd']['layout_state'] = array(
-  'name'     => 'State',
+
+$opts['fdd']['layout_allow_photo'] = array(
+  'name'     => 'Allow Photos',
   'select'   => 'O',
   'maxlen'   => 2,
-  'sort'     => true
-);
-$opts['fdd']['layout_owner_phone'] = array(
-  'name'     => 'Owner phone',
-  'select'   => 'T',
-  'maxlen'   => 16,
-  'sort'     => true
-);
-$opts['fdd']['layout_short_description'] = array(
-  'name'     => 'Short Description',
-  'select'   => 'T',
-  'maxlen'   => 150,
-  'sort'     => true
-);
-$opts['fdd']['layout_long_description'] = array(
-  'name|LF'  => '(Start of) Description, click view for rest',
-  'name'     => 'Full Description',
-  'select'   => 'T',
-  'maxlen'   => 5000,
   'sort'     => true,
-  'help'     => "Don't worry about formatting, we'll handle that",
-  'textarea' => array('rows' => 20, 'cols' => 120),
-  'trimlen|LF' => 64,
-  'nowrap|LF'   => false
+  'values'   => array('N','Y') 
 );
+
 
 // Now important call to phpMyEdit
 require_once 'phpMyEdit.class.php';
