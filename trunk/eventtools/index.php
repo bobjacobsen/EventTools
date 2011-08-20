@@ -120,40 +120,72 @@ the following links.
 <?php
 
 echo '<tr><td>';
-if ($event_tools_constrain_scale)  echo '<a href="edit_constrain_scale.php" >Valid Scales</a>';
+if ($event_tools_constrain_scale)  echo '<a href="edit_constrain_scale.php" >Scales</a>';
 echo '</td><td>';
 if ($event_tools_constrain_scenery)  echo '<a href="edit_constrain_scenery.php" >Scenery Completion</a>';
 echo '</td><td>';
+if ($event_tools_constrain_ops_scheme)  echo '<a href="edit_constrain_ops_scheme.php" >Ops Scheme</a>';
 echo '</td></tr>';
 
 echo '<tr><td>';
-if ($event_tools_constrain_gauge)  echo '<a href="edit_constrain_gauge.php" >Valid Gauges</a>';
+if ($event_tools_constrain_gauge)  echo '<a href="edit_constrain_gauge.php" >Gauges</a>';
 echo '</td><td>';
 if ($event_tools_constrain_plan_type)  echo '<a href="edit_constrain_plan_type.php" >Plan Types</a>';
-echo '</tr>';
-
-echo '<tr><td>';
-if ($event_tools_constrain_era)    echo '<a href="edit_constrain_era.php"   >Valid Eras</a>';
 echo '</td><td>';
-echo '</td><td>';
+if ($event_tools_constrain_fidelity)  echo '<a href="edit_constrain_fidelity.php" >Fidelity</a>';
 echo '</td></tr>';
 
 echo '<tr><td>';
-if ($event_tools_constrain_class)  echo '<a href="edit_constrain_class.php" >Valid Railroad Classes</a>';
+if ($event_tools_constrain_era)    echo '<a href="edit_constrain_era.php"   >Eras</a>';
 echo '</td><td>';
+if ($event_tools_constrain_controls)  echo '<a href="edit_constrain_controls.php" >Controls</a>';
 echo '</td><td>';
+if ($event_tools_constrain_rigor)  echo '<a href="edit_constrain_rigor.php" >Rigor</a>';
 echo '</td></tr>';
 
 echo '<tr><td>';
-if ($event_tools_constrain_theme)  echo '<a href="edit_constrain_theme.php" >Valid Themes</a>';
+if ($event_tools_constrain_class)  echo '<a href="edit_constrain_class.php" >Railroad Classes</a>';
 echo '</td><td>';
 echo '</td><td>';
+if ($event_tools_constrain_documentation)  echo '<a href="edit_constrain_documentation.php" >Documentation</a>';
 echo '</td></tr>';
 
 echo '<tr><td>';
-if ($event_tools_constrain_locale) echo '<a href="edit_constrain_locale.php">Valid Locales</a>';
+if ($event_tools_constrain_theme)  echo '<a href="edit_constrain_theme.php" >Themes</a>';
 echo '</td><td>';
 echo '</td><td>';
+if ($event_tools_constrain_session_pace)  echo '<a href="edit_constrain_session_pace.php" >Session Pace</a>';
+echo '</td></tr>';
+
+echo '<tr><td>';
+if ($event_tools_constrain_locale) echo '<a href="edit_constrain_locale.php">Locales</a>';
+echo '</td><td>';
+echo '</td><td>';
+if ($event_tools_constrain_car_forwarding)  echo '<a href="edit_constrain_car_forwarding.php" >Car Forwarding</a>';
+echo '</td></tr>';
+
+echo '<tr><td>';
+echo '</td><td>';
+echo '</td><td>';
+if ($event_tools_constrain_tone)  echo '<a href="edit_constrain_tone.php" >Tone</a>';
+echo '</td></tr>';
+
+echo '<tr><td>';
+echo '</td><td>';
+echo '</td><td>';
+if ($event_tools_constrain_dispatched_by1)  echo '<a href="edit_constrain_dispatched_by2.php" >Dispatching (Primary)</a>';
+echo '</td></tr>';
+
+echo '<tr><td>';
+echo '</td><td>';
+echo '</td><td>';
+if ($event_tools_constrain_dispatched_by2)  echo '<a href="edit_constrain_dispatched_by2.php" >Dispatching (secondary)</a>';
+echo '</td></tr>';
+
+echo '<tr><td>';
+echo '</td><td>';
+echo '</td><td>';
+if ($event_tools_constrain_communications)  echo '<a href="edit_constrain_communications.php" >Communications</a>';
 echo '</td></tr>';
 ?>
 </table>
