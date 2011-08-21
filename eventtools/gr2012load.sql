@@ -157,7 +157,7 @@ INSERT INTO `gr2012_eventtools_accessibility_codes` (`accessibility_code`, `acce
 (3, '(3) Average house (1-2 steps)', 'Average house (1-2 steps)', '', NULL),
 (4, '(4) No hazards', 'No hazards', '', NULL),
 (5, '(5) Special adaptations for handicapped', 'Special adaptations for handicapped', '', NULL),
-(6, '(6) Unknown/not entered', 'Accessibility unknown/not entered', '', NULL);
+(0, '(0) Unknown/not entered', 'Accessibility unknown/not entered', '', NULL);
 
 --
 -- Loading data for table `prod_eventtools_event_status_values`
