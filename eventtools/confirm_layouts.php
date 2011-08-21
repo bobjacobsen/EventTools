@@ -241,7 +241,7 @@ $opts['fdd']['layout_accessibility'] = array(
                         'column' => 'accessibility_code',
                         'description' => 'accessibility_name'),
   'trimlen|LF' => 6,
-  'default'  => 6
+  'default'  => 0
 );
 $opts['fdd']['layout_owner_url'] = array(
   'name'     => 'Layout URL',
