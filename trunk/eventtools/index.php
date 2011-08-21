@@ -9,7 +9,7 @@ echo "<html>
 <body>
 <h1>".$event_tools_event_name." Event Tools</h1>
 
-Provides access to Event Tools for tours and clinics.
+EventTools pages for tours and clinics.
 
 "?>
 
@@ -103,10 +103,15 @@ Provides access to Event Tools for tours and clinics.
 
 </table>
 <p>
+The next section lets you edit the possible status and handicapped access values.
+Changing the text associated with a key will change all existing entries
+from the old text to the new text. Add another key instead of changing
+an existing one if you want to leave existing events unchanged.
 <table border="1">
 <tr><th>General Edits</th>
 <td>
 <a href="edit_location_keys.php ">Edit Location Keys<a/><br/>
+<a href="edit_handicap_access_keys.php ">Edit Handicap Access Keys<a/><br/>
 </td>
 </tr></table>
 
@@ -186,17 +191,8 @@ echo '</td></tr>';
 </table>
 
 <p>
-<table border="1">
-<tr><th>General Displays</th>
-<td>
-<a href="index_advanced_section.php">Index Advanced Section Tours<a/><br/>
-<a href="format_advanced_section.php">All Advanced Section Tours<a/><p/>
-<a href="calendar_form.php">Download Events Calendar<a/><p/>
-<a href="calendar/show_all_cal.php">Full Interactive Calendar<a/>
-</td>
-</tr></table>
-
-<p>
+The following links provide formatted information for inclusion in the 
+printed program.
 <table border="1">
 <tr><th>Program Printing</th>
 <td>
@@ -210,7 +206,17 @@ echo '</td></tr>';
 </tr></table>
 
 <p>
+The following links are to pages that provide information for specific purposes.
+<table border="1">
+<tr><th>Special Displays</th>
+<td>
+<a href="index_advanced_section.php">Index Advanced Section Tours<a/><br/>
+<a href="format_advanced_section.php">All Advanced Section Tours<a/><p/>
+<a href="calendar_form.php">Download Events Calendar<a/><p/>
+<a href="calendar/show_all_cal.php">Full Interactive Calendar<a/><p/>
 <a href="calendar_guidebook_form.php">Download for Guidebook install<a/>
+</td>
+</tr></table>
 
 <p>
 For more information on using EventTools, please see the
