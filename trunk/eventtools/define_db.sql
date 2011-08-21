@@ -279,6 +279,7 @@ CREATE TABLE IF NOT EXISTS `gr2012_eventtools_layout_tours` (
   `tour_bus_type` varchar(16)  default '',
   `tour_buses` int(5)  default '0',
   `tour_mileage` int(5)  default '0',
+  `tour_self_guide` char(1) default NULL,
 
   `mark_changed` varchar(1) default '',
   `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,

@@ -206,7 +206,7 @@ $opts['fdd']['layout_accessibility'] = array(
                         'column' => 'accessibility_code',
                         'description' => 'accessibility_name'),
   'trimlen|LF' => 6,
-  'default'  => 6
+  'default'  => 0
 );
 $opts['fdd']['layout_wheelchair_access'] = array(
   'name'     => 'Wheelchair access',

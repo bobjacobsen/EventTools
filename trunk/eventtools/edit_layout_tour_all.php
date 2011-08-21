@@ -215,6 +215,13 @@ $opts['fdd']['tour_seats'] = array(
   'default'  => '0',
   'sort'     => true
 );
+$opts['fdd']['tour_self_guide'] = array(
+  'name'     => 'Self Guided?',
+  'select'   => 'O',
+  'maxlen'   => 2,
+  'sort'     => true,
+  'values'   => array('N','Y') 
+);
 $opts['fdd']['tour_bus_type'] = array(
   'name'     => 'Bus Type',
   'select'   => 'T',

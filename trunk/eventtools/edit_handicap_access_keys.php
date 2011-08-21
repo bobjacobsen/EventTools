@@ -4,14 +4,13 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Edit Layouts</title>
+	<title>Edit Handicapped Access Keys</title>
 <style type="text/css">
 	hr.pme-hr		     { border: 0px solid; padding: 0px; margin: 0px; border-top-width: 1px; height: 1px; }
 	table.pme-main 	     { border: #004d9c 1px solid; border-collapse: collapse; border-spacing: 0px; width: 100%; }
 	table.pme-navigation { border: #004d9c 0px solid; border-collapse: collapse; border-spacing: 0px; width: 100%; }
 	td.pme-navigation-0, td.pme-navigation-1 { white-space: nowrap; }
-	th.pme-header
-	    { border: #004d9c 1px solid; padding: 4px; background: #add8e6; }
+	th.pme-header	     { border: #004d9c 1px solid; padding: 4px; background: #add8e6; }
 	td.pme-key-0, td.pme-value-0, td.pme-help-0, td.pme-navigation-0, td.pme-cell-0,
 	td.pme-key-1, td.pme-value-1, td.pme-help-0, td.pme-navigation-1, td.pme-cell-1,
 	td.pme-sortinfo, td.pme-filter { border: #004d9c 1px solid; padding: 3px; }
@@ -21,7 +20,7 @@
 </style>
 </head>
 <body>
-<h3>Edit Layouts</h3>
+<h3>Edit Handicapped Access Keys</h3>
 <a href="index.php">Back to main page</a>
 <p>
 <?php
@@ -48,16 +47,16 @@ if (!$event_tools_user_email_log_skip) {
     $opts['notify']['prefix'] = $event_tools_notify_email_prefix;
 }
 
-$opts['tb'] = $event_tools_db_prefix .'eventtools_layouts';
+$opts['tb'] = $event_tools_db_prefix .'eventtools_accessibility_codes';
 
 // Name of field which is the unique key
-$opts['key'] = 'layout_id';
+$opts['key'] = 'id';
 
 // Type of key field (int/real/string/date etc.)
 $opts['key_type'] = 'int';
 
 // Sorting field(s)
-$opts['sort_field'] = array('layout_owner_lastname');
+$opts['sort_field'] = array('id');
 
 // Number of records to display on the screen
 // Value of -1 lists all records in a table
@@ -143,194 +142,30 @@ appear in generated list. Here are some most used field options documented.
   descriptions fields are also possible. Check documentation for this.
 */
 
-$opts['fdd']['layout_id'] = array(
-  'name'     => 'ID',
+$opts['fdd']['accessibility_code'] = array(
+  'name'     => 'Code',
   'select'   => 'T',
   'options'  => 'AVCPDR', // auto increment
-  'maxlen'   => 11,
+  'maxlen'   => 5,
   'default'  => '0',
   'sort'     => true
 );
-$opts['fdd']['layout_owner_firstname'] = array(
-  'name'     => 'Owner first name',
-  'select'   => 'T',
-  'maxlen'   => 16,
-  'sort'     => true
-);
-$opts['fdd']['layout_owner_lastname'] = array(
-  'name'     => 'Owner last name',
-  'select'   => 'T',
-  'maxlen'   => 32,
-  'sort'     => true
-);
-$opts['fdd']['layout_street_address'] = array(
-  'name'     => 'Street address',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true
-);
-$opts['fdd']['layout_city'] = array(
-  'name'     => 'City',
-  'select'   => 'T',
-  'maxlen'   => 32,
-  'sort'     => true
-);
-$opts['fdd']['layout_state'] = array(
-  'name'     => 'State',
-  'select'   => 'T',
-  'maxlen'   => 2,
-  'sort'     => true
-);
-$opts['fdd']['layout_postcode'] = array(
-  'name'     => 'Zip code',
-  'select'   => 'T',
-  'maxlen'   => 10,
-  'sort'     => true
-);
-$opts['fdd']['layout_owner_email'] = array(
-  'name'     => 'Owner Email',
-  'select'   => 'T',
-  'maxlen'   => 32,
-  'sort'     => true
-);
-$opts['fdd']['layout_owner_phone'] = array(
-  'name'     => 'Owner phone',
-  'select'   => 'T',
-  'maxlen'   => 16,
-  'sort'     => true
-);
-$opts['fdd']['layout_owner_call_time'] = array(
-  'name'     => 'Call time',
-  'select'   => 'T',
-  'maxlen'   => 32,
-  'sort'     => true
-);
-$opts['fdd']['layout_name'] = array(
+$opts['fdd']['accessibility_name'] = array(
   'name'     => 'Name',
   'select'   => 'T',
-  'maxlen'   => 64,
+  'maxlen'   => 40,
   'sort'     => true
 );
-$opts['fdd']['layout_prototype'] = array(
-  'name'     => 'Prototype',
+$opts['fdd']['accessibility_display'] = array(
+  'name'     => 'Displayed Text',
   'select'   => 'T',
-  'maxlen'   => 64,
+  'maxlen'   => 40,
   'sort'     => true
 );
-$opts['fdd']['layout_era'] = array(
-  'name'     => 'Era',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true,
-  'nowrap'   => true
-);
-$opts['fdd']['layout_size'] = array(
-  'name'     => 'Size',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true
-);
-$opts['fdd']['layout_scale'] = array(
-  'name'     => 'Scale',
-  'select'   => 'T',
-  'maxlen'   => 20,
-  'sort'     => true
-);
-$opts['fdd']['layout_mainline_length'] = array(
-  'name'     => 'Mainline Length',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true
-);
-$opts['fdd']['layout_scenery'] = array(
-  'name'     => 'Scenery',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true
-);
-$opts['fdd']['layout_plan_type'] = array(
-  'name'     => 'Plan Type',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true
-);
-$opts['fdd']['layout_ops_scheme'] = array(
-  'name'     => 'Ops Scheme',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true
-);
-$opts['fdd']['layout_control'] = array(
-  'name'     => 'Control',
-  'select'   => 'T',
-  'maxlen'   => 64,
-  'sort'     => true
-);
-$opts['fdd']['layout_owner_url'] = array(
-  'name'     => 'Owner URL',
-  'select'   => 'T',
-  'maxlen'   => 128,
-  'sort'     => true
-);
-$opts['fdd']['layout_long_description'] = array(
-  'name|LF'  => '(Start of) Description, click view for rest',
-  'name'     => 'Long Description',
-  'select'   => 'T',
-  'maxlen'   => 5000,
-  'sort'     => true,
-  'help'     => "Don't worry about formatting, we'll handle that",
-  'textarea' => array('rows' => 20, 'cols' => 120),
-  'trimlen|LF' => 64,
-  'nowrap|LF'   => false
-);
-$opts['fdd']['layout_wheelchair_access'] = array(
-  'name'     => 'Wheelchair access',
-  'select'   => 'O',
-  'maxlen'   => 2,
-  'sort'     => true,
-  'values'   => array('N','Y') 
-);
-$opts['fdd']['layout_duckunder_entry'] = array(
-  'name'     => 'Duck Entry',
-  'select'   => 'O',
-  'maxlen'   => 2,
-  'sort'     => true,
-  'values'   => array('N','Y') 
-);
-
-
-$opts['fdd']['layout_accessibility'] = array(
-  'name'     => 'Access',
-  'select'   => 'D',
-  'maxlen'   => 10,
-  'sort'     => true,
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_accessibility_codes', 
-                        'column' => 'accessibility_code',
-                        'description' => 'accessibility_name'),
-  'trimlen|LF' => 6,
-  'default'  => 0
-);
-$opts['fdd']['layout_status_code'] = array(
-  'name'     => 'Status',
-  'select'   => 'D',
-  'maxlen'   => 36,
-  'sort'     => true,
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_event_status_values', 
-                        'column' => 'event_status_code',
-                        'orderby' => 'event_status_code',
-                        'description' => 'event_status_name'),
-  'trimlen|LF' => 36
-);
-
-
 
 // Now important call to phpMyEdit
 require_once 'phpMyEdit.class.php';
 new phpMyEdit($opts);
-
-// to do slide-show mode, for e.g. quick change
-//require_once 'extensions/phpMyEdit-slide.class.php';
-//new phpMyEdit_slide($opts);
 
 ?>
 
