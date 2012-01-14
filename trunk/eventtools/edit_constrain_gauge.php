@@ -47,7 +47,7 @@ if (!$event_tools_user_email_log_skip) {
     $opts['notify']['prefix'] = $event_tools_notify_email_prefix;
 }
 
-$opts['tb'] = 'gr2012_eventtools_constrain_gauge';
+$opts['tb'] = $event_tools_db_prefix.'eventtools_constrain_gauge';
 
 // Name of field which is the unique key
 $opts['key'] = 'constrain_id';
