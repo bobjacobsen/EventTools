@@ -2,7 +2,8 @@
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
--- Database: `x2011west`
+-- Database: `database`
+-- Prefix:   `prefix_`
 --
 
 -- --------------------------------------------------------
@@ -14,12 +15,12 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `gr2012_eventtools_users`
+-- Table structure for table `prefix_eventtools_users`
 --
 
-DROP TABLE IF EXISTS `gr2012_customers`;
+DROP TABLE IF EXISTS `prefix_customers`;
 
-CREATE TABLE IF NOT EXISTS `gr2012_customers` (
+CREATE TABLE IF NOT EXISTS `prefix_customers` (
   `customers_id` int(11) NOT NULL auto_increment,
   `customers_gender` char(1) NOT NULL default '',
   `customers_firstname` varchar(32) NOT NULL default '',
@@ -62,9 +63,9 @@ CREATE TABLE IF NOT EXISTS `gr2012_customers` (
   KEY `idx_newsletter_zen` (`customers_newsletter`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1428 ;
 
-DROP TABLE IF EXISTS `gr2012_address_book`;
+DROP TABLE IF EXISTS `prefix_address_book`;
 
-CREATE TABLE IF NOT EXISTS `gr2012_address_book` (
+CREATE TABLE IF NOT EXISTS `prefix_address_book` (
   `address_book_id` int(11) NOT NULL auto_increment,
   `customers_id` int(11) NOT NULL default '0',
   `entry_gender` char(1) NOT NULL default '',
