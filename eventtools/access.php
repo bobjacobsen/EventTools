@@ -22,6 +22,15 @@ $opts['logtable'] = $event_tools_db_prefix.'eventtools_changelog';
 $event_tools_notify_email_address = 'x2011west@pacbell.net';
 $event_tools_notify_email_prefix = $event_tools_event_name;
 
+// optional components - TRUE means present
+
+$event_tools_option_general_tours       = TRUE
+$event_tools_option_layout_tours        = FALSE
+$event_tools_option_other_events        = TRUE
+$event_tools_option_layouts             = TRUE
+$event_tools_option_clinics             = TRUE
+$event_tools_option_op_sessions         = TRUE
+
 
 // to constrain various info in entry/edit pages
 // to only the values in database tables

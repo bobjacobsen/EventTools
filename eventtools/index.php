@@ -19,12 +19,30 @@ EventTools pages for tours and clinics.
 <tr><th></th><th>General Tours</th><th>Layout Tours</th><th>Other Events</th><th>Layouts</th><th>Clinics</th><th>Op Sessions</th></tr>
 <tr>
     <th>Enter/Change Content</th>
-    <td><a href="edit_general_tour_all.php">Enter/Change</a></td>
-    <td><a href="edit_layout_tour_all.php">Enter/Change</a></td>
-    <td><a href="edit_misc.php">Enter/Change</a></td>
-    <td><a href="edit_layouts_all.php">Enter/Change</a></td>
-    <td><a href="edit_clinics.php">Enter/Change</a></td>
-    <td><a href="edit_ops_add_layout.php">Enter/Change</a></td>
+    <td><?php
+        if (!$event_tools_option_general_tours) echo '
+        <a href="edit_general_tour_all.php">Enter/Change</a>
+        '?></td>
+    <td><?php
+        if (!$event_tools_option_general_tours) echo '
+        <a href="edit_layout_tour_all.php">Enter/Change</a>
+        '?></td>
+    <td><?php
+        if (!$event_tools_option_general_tours) echo '
+        <a href="edit_misc.php">Enter/Change</a>
+        '?></td>
+    <td><?php
+        if (!$event_tools_option_general_tours) echo '
+        <a href="edit_layouts_all.php">Enter/Change</a>
+        '?></td>
+    <td><?php
+        if (!$event_tools_option_general_tours) echo '
+        <a href="edit_clinics.php">Enter/Change</a>
+        '?></td>
+    <td><?php
+        if (!$event_tools_option_general_tours) echo '
+        <a href="edit_ops_add_layout.php">Enter/Change</a>
+        '?></td>
 </tr><tr>
     <th>Other Edits</th>
     <td></td>
@@ -102,6 +120,24 @@ EventTools pages for tours and clinics.
 </td>
 
 </table>
+
+<?php
+if (!$event_tools_option_general_tours ||
+    !$event_tools_option_layout_tours ||
+    !$event_tools_option_other_events ||
+    !$event_tools_option_layouts ||
+    !$event_tools_option_clinics ||
+    !$event_tools_option_op_sessions ) {
+    
+    if (!$event_tools_option_general_tours) echo "General Tours feature is disabled.<br/>";    
+    if (!$event_tools_option_layout_tours) echo "Layout Tours feature is disabled.<br/>";    
+    if (!$event_tools_option_other_events) echo "Other Events feature is disabled.<br/>";    
+    if (!$event_tools_option_layouts) echo "Layouts feature is disabled.<br/>";    
+    if (!$event_tools_option_clinics) echo "Clinics feature is disabled.<br/>";    
+    if (!$event_tools_option_op_sessions) echo "Op Session feature is disabled.<br/>";    
+}
+?>
+  
 <p>
 The next section lets you edit the possible status and handicapped access values.
 Changing the text associated with a key will change all existing entries
