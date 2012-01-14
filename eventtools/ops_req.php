@@ -5,62 +5,63 @@
     $REMOTE_USER = $user;  // for phpMyEdit
     if ($user == '') {
         // fail
-        header('WWW-Authenticate: Basic realm="X2011west Op Session Request (enter your email address for name)"');
+        header('WWW-Authenticate: Basic realm="'.$event_tools_event_name.' Op Session Request (enter your '.$event_tools_event_name.' email address for name)"');
         header('HTTP/1.0 401 Unauthorized');
     }
     
-    if (! (strpos($user, "@") && strpos($user, ".")) ) {
-        header('WWW-Authenticate: Basic realm="X2011west Op Session Request (be sure to enter your email address for name)"');
-        header('HTTP/1.0 401 Unauthorized');
-        echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-		    "http://www.w3.org/TR/html4/loose.dtd">
-            <html>
-            <head>
-            <title>Operating Session Request - Error</title>
-            </head>
-            <body>
-            <h2>Operating Session Request - Error</h2>
-            You must provide a valid email address
-            as part of entering your request.
-            Please hit the back button on your browser and 
-            try again.
-            </body>
-            ';
-        return;
-    }
+//     if (! (strpos($user, "@") && strpos($user, ".")) ) {
+//         header('WWW-Authenticate: Basic realm="'.$event_tools_event_name.' Op Session Request (enter your '.$event_tools_event_name.' email address for name)"');
+//         header('HTTP/1.0 401 Unauthorized');
+//         echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+// 		    "http://www.w3.org/TR/html4/loose.dtd">
+//             <html>
+//             <head>
+//             <title>Operating Session Request - Error</title>
+//             </head>
+//             <body>
+//             <h2>Operating Session Request - Error</h2>
+//             You must provide a valid email address
+//             as part of entering your request.
+//             Please hit the back button on your browser and 
+//             try again.['.$user.']</body>
+//             ';
+//         return;
+//     }
     
     global $opts, $event_tools_db_prefix;
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
 
-
-    // OK, now check if account in cart
-    $query = "SELECT * 
-            FROM ".$event_tools_db_prefix ."customers
-            WHERE customers_email_address = '".$REMOTE_USER."';
-    ";
-
-    $result=mysql_query($query);
-    $num=mysql_numrows($result);
-
-    if ( $num == 0) {
-        header('WWW-Authenticate: Basic realm="X2011west Op Session Request (be sure to enter your email address for name)"');
-        header('HTTP/1.0 401 Unauthorized');
-        echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-		    "http://www.w3.org/TR/html4/loose.dtd">
-            <html>
-            <head>
-            <title>Operating Session Request - Error</title>
-            </head>
-            <body>
-            <h2>Operating Session Request - Error</h2>
-            You must provide the email address you
-            used for your account on the X2011 West online store.
-            </body>
-            ';
-        return;
+    if ($eventtools_require_customer_id) {
+        
+        // OK, now check if account in cart
+        $query = "SELECT * 
+                FROM ".$event_tools_db_prefix ."customers
+                WHERE customers_email_address = '".$REMOTE_USER."';
+        ";
+    
+        $result=mysql_query($query);
+        $num=mysql_numrows($result);
+    
+        if ( $num == 0) {
+            header('WWW-Authenticate: Basic realm="'.$event_tools_event_name.' Op Session Request (enter your '.$event_tools_event_name.' email address for name)"');
+            header('HTTP/1.0 401 Unauthorized');
+            echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/html4/loose.dtd">
+                <html>
+                <head>
+                <title>Operating Session Request - Error</title>
+                </head>
+                <body>
+                <h2>Operating Session Request - Error</h2>
+                You must provide the email address you
+                used for your '.$event_tools_event_name.' account.
+                </body>
+                ';
+            return;
+        }
     }
-
+    
     // OK, now check if ops req record exists
     $query = "SELECT * 
             FROM ".$event_tools_db_prefix ."eventtools_opsession_req
@@ -103,13 +104,10 @@
 </style>
 </head>
 <body>
-<div id="x2011-logo"><a href="../index.html"><img alt="Extra 2011 West logo" src="../images/X2011_Logo.jpg" width="205" height="68" align="right"></a></div>
+<div id="logo"><a href="../index.html"><img alt="Convention logo" src="logo.jpg" width="205" height="68" align="right"></a></div>
 <h2>Operating Session Request</h2>
 
-On this page, you can view the requests you are making for OPSIG operating sessions at the X2011 West convention.
-<p>
-You do not need to be an OPSIG member to request and take part in OPSIG operations sessions, but you
-do need to be registered for the convention.
+On this page, you can view the requests you are making for operating sessions.
 <p>
 To make a new request if you have not made one yet, or to change requests you have already made, 
 click the "Change" button at the bottom of this page.  
@@ -120,8 +118,6 @@ and select your first priority for an operating session.
 Continue in this manner until you have selected all the sessions you want to attend ranked by priority, 
 and then click "Save". To change an existing request, click on the drop down arrow next to that request, 
 and select your new choice.  When you are finished, click "Save".  Clicking "Cancel" will leave your existing requests unchanged.
-<p>
-You will be able to make changes to your requests up until approximately April 15th.
 <p>
 
 <?php
@@ -473,57 +469,12 @@ $query = "SELECT *
 $result=mysql_query($query);
 $num=mysql_numrows($result);
 
-global $eventtools_warn_loud;
-$eventtools_warn_loud = FALSE;
-
-function checkForFull($id, $result) {
-    global $eventtools_warn_loud;
-    if (         
-        mysql_result($result,0,"opsreq_pri1") == $id ||
-        mysql_result($result,0,"opsreq_pri2") == $id ||
-        mysql_result($result,0,"opsreq_pri3") == $id ||
-        mysql_result($result,0,"opsreq_pri4") == $id ||
-        mysql_result($result,0,"opsreq_pri5") == $id ||
-        mysql_result($result,0,"opsreq_pri6") == $id ||
-        mysql_result($result,0,"opsreq_pri7") == $id ||
-        mysql_result($result,0,"opsreq_pri8") == $id ) $eventtools_warn_loud = TRUE;
-}
-
-checkForFull(55, $result);  // Clemens July 4
-checkForFull(69, $result);  // Clemens July 4
-checkForFull(70, $result);  // Clemens July 7PM
-checkForFull(12, $result);  // Dias/Burgess
-checkForFull(14, $result);  // Gulley July 5
-checkForFull(13, $result);  // Gulley July 7
-checkForFull(22, $result);  // Houston
-checkForFull(23, $result);  // Kaufman 
-
-
-if ($eventtools_warn_loud) {
-    echo '<b><font color="red" size="4">';
-}
-echo "The following operating sessions are already oversubscribed.  If you request one of these,
-    you may still get it, but your odds are better if you request other sessions.
-    <ul>
-    <li>Clemens, both sessions on July 4 and the July 7 afternoon session
-    <li>Dias/Burgess 
-    <li>Gulley, both sessions
-    <li>Houston, July 5th session
-    <li>Kaufman on Thursday July 7th
-    </ul>"
-    ;
-    
-if ($eventtools_warn_loud) {
-    echo '</font></b>';
-}
 
 echo '<p>
 
-    For more information on operating sessions at X2011 West, please
+    For more information on operating sessions at '.$event_tools_event_name.', please
     see the
-    <a href="http://x2011west.org/opsig.html">X2011 West OPSIG page</a>.
-    If you have any trouble, please 
-    <a href="mailto:x2011west@pacbell.net">email the X2011 West web organizers</a>.
+    <a href="/">'.$event_tools_event_name.' page</a>.
     <p>';
 
 ?>

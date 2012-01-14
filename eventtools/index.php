@@ -148,8 +148,17 @@ if (!$event_tools_option_general_tours ||
     if (!$event_tools_option_clinics) echo "Clinics feature is disabled.<br/>";    
     if (!$event_tools_option_op_sessions) echo "Op Session feature is disabled.<br/>";    
 }
+
+
+if ($event_tools_option_zen_cart_used) {
+    echo '<p>Attendee list is being maintained in Zen Cart.</p>';
+} else {
+    echo '<p><table border="1"><tr><td><a href="edit_zen_repl_customer.php">Add/Edit attendees.</a></td></tr></table>';
+}
+
 ?>
-  
+
+
 <p>
 The next section lets you edit the possible status and handicapped access values.
 Changing the text associated with a key will change all existing entries

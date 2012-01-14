@@ -14,12 +14,12 @@ global $eventtools_require_authenticate, $eventtools_require_user,
 // user ID, access is granted.  If not, not.
 //
 
-if ($eventtools_require_authenticate  || $eventtools_require_user ) {
+if ($eventtools_require_user_authenticate  || $eventtools_require_user_id ) {
     // required to get user name
     $user = $_SERVER['PHP_AUTH_USER'];
     $REMOTE_USER = $user;  // for phpMyEdit
 
-    if ($eventtools_require_authenticate) {
+    if ($eventtools_require_user_authenticate) {
         // required to check
         
         $query="
