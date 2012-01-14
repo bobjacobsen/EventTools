@@ -16,112 +16,124 @@ EventTools pages for tours and clinics.
 <p>
 
 <table border="1">
-<tr><th></th><th>General Tours</th><th>Layout Tours</th><th>Other Events</th><th>Layouts</th><th>Clinics</th><th>Op Sessions</th></tr>
+<?php
+echo "
+<tr><th></th>";
+
+if ($event_tools_option_general_tours ) echo '<th>General Tours</th>';
+if ($event_tools_option_layout_tours)   echo '<th>Layout Tours</th>';
+if ($event_tools_option_other_events)   echo '<th>Other Events</th>';
+if ($event_tools_option_layouts)        echo '<th>Layouts</th>';
+if ($event_tools_option_clinics)        echo '<th>Clinics</th>';
+if ($event_tools_option_op_sessions)    echo '<th>Op Sessions</th>';
+
+echo "
+</tr>
 <tr>
     <th>Enter/Change Content</th>
-    <td><?php
-        if (!$event_tools_option_general_tours) echo '
-        <a href="edit_general_tour_all.php">Enter/Change</a>
-        '?></td>
-    <td><?php
-        if (!$event_tools_option_general_tours) echo '
-        <a href="edit_layout_tour_all.php">Enter/Change</a>
-        '?></td>
-    <td><?php
-        if (!$event_tools_option_general_tours) echo '
-        <a href="edit_misc.php">Enter/Change</a>
-        '?></td>
-    <td><?php
-        if (!$event_tools_option_general_tours) echo '
-        <a href="edit_layouts_all.php">Enter/Change</a>
-        '?></td>
-    <td><?php
-        if (!$event_tools_option_general_tours) echo '
-        <a href="edit_clinics.php">Enter/Change</a>
-        '?></td>
-    <td><?php
-        if (!$event_tools_option_general_tours) echo '
-        <a href="edit_ops_add_layout.php">Enter/Change</a>
-        '?></td>
+";
+
+if ($event_tools_option_general_tours ) echo '<td><a href="edit_general_tour_all.php">Enter/Change</a></td>';
+if ($event_tools_option_layout_tours)   echo '<td><a href="edit_layout_tour_all.php">Enter/Change</a></td>';
+if ($event_tools_option_other_events)   echo '<td><a href="edit_misc.php">Enter/Change</a></td>';
+if ($event_tools_option_layouts)        echo '<td><a href="edit_layouts.php">Enter/Change</a></td>';
+if ($event_tools_option_clinics)        echo '<td><a href="edit_clinics.php">Enter/Change</a></td>';
+if ($event_tools_option_op_sessions)    echo '<td><a href="edit_ops_add_layout.php">Enter/Change</a></td>';
+
+echo '
 </tr><tr>
     <th>Other Edits</th>
-    <td></td>
-    <td><a href="edit_layout_tour_add_layout.php">Add Layouts To Tour</a></td>
-    <td><a href="edit_misc_event_tags.php">Add or remove tags</a></td>
-    <td><a href="edit_layouts_entry.php">Quick Entry</a></td>
-    <td><a href="edit_clinic_tags.php">Add or remove tags</a></td>
-    <td><a href="edit_ops_all.php">Enter/Change User Requests</a></td>
-</tr><tr>
-    <th>Review Content</th>
-    <td><a href="list_all_general_tours.php">List</a></td>
-    <td><a href="list_all_layout_tours.php">List</a></td>
-    <td><a href="list_all_misc_events.php">List</a></td>
-    <td><a href="list_all_layouts.php">List</a></td>
-    <td><a href="list_all_clinics.php">List</a></td>
-    <td></td>
-</tr><tr>
-    <th>Index Example</th>
-    <td><a href="index_general_tours.php">Index</a></td>
-    <td><a href="index_layout_tours.php">Index</a></td>
-    <td><a href="index_misc_events.php">Index</a></td>
-    <td><a href="index_layouts.php">Index</a></td></td>
-    <td><a href="index_clinics.php">Index</a></td>
-    <td><a href="index_ops.php">Index</a></td>
-</tr><tr>
-    <th>Format Example</th>
-    <td><a href="format_all_general_tours.php">Formatted View</a></td>
-    <td><a href="format_all_layout_tours.php">Formatted View</a></td>
-    <td><a href="format_all_misc_events.php">Formatted View</td>
-    <td><a href="format_all_layouts.php">Formatted View</a></td>
-    <td><a href="format_all_clinics.php">Formatted View</td>
-    <td></td>
-</tr><tr>
-    <th>Test Pages</th>
-    <td><a href="../generalTable.php">General Table</a><br/>
+';
+
+if ($event_tools_option_general_tours ) echo '<td></td>';
+if ($event_tools_option_layout_tours)   echo '<td><a href="edit_layout_tour_add_layout.php">Add Layouts To Tour</a></td>';
+if ($event_tools_option_other_events)   echo '<td><a href="edit_misc_event_tags.php">Add or remove tags</a></td>';
+if ($event_tools_option_layouts)        echo '<td><a href="edit_layouts_entry.php">Quick Entry</a></td>';
+if ($event_tools_option_clinics)        echo '<td><a href="edit_clinic_tags.php">Add or remove tags</a></td>';
+if ($event_tools_option_op_sessions)    echo '<td><a href="edit_ops_all.php">Enter/Change User Requests</a></td>';
+
+echo '</tr><tr>
+    <th>Review Content</th>';
+    
+if ($event_tools_option_general_tours ) echo '<td><a href="list_all_general_tours.php">List</a></td>';
+if ($event_tools_option_layout_tours)   echo '<td><a href="list_all_layout_tours.php">List</a></td>';
+if ($event_tools_option_other_events)   echo '<td><a href="list_all_misc_events.php">List</a></td>';
+if ($event_tools_option_layouts)        echo '<td><a href="list_all_layouts.php">List</a></td>';
+if ($event_tools_option_clinics)        echo '<td><a href="list_all_clinics.php">List</a></td>';
+if ($event_tools_option_op_sessions)    echo '<td></td>';
+
+echo '</tr><tr>
+    <th>Index Example</th>';
+    
+if ($event_tools_option_general_tours ) echo '<td><a href="index_general_tours.php">Index</a></td>';
+if ($event_tools_option_layout_tours)   echo '<td><a href="index_layout_tours.php">Index</a></td>';
+if ($event_tools_option_other_events)   echo '<td><a href="index_misc_events.php">Index</a></td>';
+if ($event_tools_option_layouts)        echo '<td><a href="index_layouts.php">Index</a></td></td>';
+if ($event_tools_option_clinics)        echo '<td><a href="index_clinics.php">Index</a></td>';
+if ($event_tools_option_op_sessions)    echo '<td><a href="index_ops.php">Index</a></td>';
+
+echo '</tr><tr>
+    <th>Format Example</th>';
+    
+if ($event_tools_option_general_tours ) echo '<td><a href="format_all_general_tours.php">Formatted View</a></td>';
+if ($event_tools_option_layout_tours)   echo '<td><a href="format_all_layout_tours.php">Formatted View</a></td>';
+if ($event_tools_option_other_events)   echo '<td><a href="format_all_misc_events.php">Formatted View</td>';
+if ($event_tools_option_layouts)        echo '<td><a href="format_all_layouts.php">Formatted View</a></td>';
+if ($event_tools_option_clinics)        echo '<td><a href="format_all_clinics.php">Formatted View</td>';
+if ($event_tools_option_op_sessions)    echo '<td></td>';
+
+
+echo '</tr><tr>
+    <th>Test Pages</th>';
+
+if ($event_tools_option_general_tours ) echo '<td><a href="../generalTable.php">General Table</a><br/>
         <a href="../generalIndex.php">General Index</a>
-    </td>
-    <td><a href="../layoutToursTable.php">Layout Tour Table</a><br/>
+    </td>';
+if ($event_tools_option_layout_tours)   echo '<td><a href="../layoutToursTable.php">Layout Tour Table</a><br/>
         <a href="../layoutToursIndex.php">Layout Tour Index</a>
-    </td>
-    <td><a href="../miscEventsTable.php">Misc Event Table</a><br/>
+    </td>';
+if ($event_tools_option_other_events)   echo '<td><a href="../miscEventsTable.php">Misc Event Table</a><br/>
         <a href="../miscEventsIndex.php">Misc Event Index</a>
-    </td>
-    <td><a href="../layoutsTable.php">Layouts Table</a><br/>
+    </td>';
+if ($event_tools_option_layouts)        echo '<td><a href="../layoutsTable.php">Layouts Table</a><br/>
         <a href="../layoutsIndex.php">Layouts Index</a>
-    </td>
-    <td><a href="../clinicsTable.php">Clinics Table</a><br/>
+    </td>';
+if ($event_tools_option_clinics)        echo '<td><a href="../clinicsTable.php">Clinics Table</a><br/>
         <a href="../clinicsIndex.php">Clinics Index</a>
-    </td>
-    <td><a href="ops_req.php">User session request</a></td>
-</tr><tr>
-    <th>Other Displays</th>
-    <td>
+    </td>';
+if ($event_tools_option_op_sessions)    echo '<td><a href="ops_req.php">User session request</a></td>';
+
+echo '</tr><tr>
+    <th>Other Displays</th>';
+
+if ($event_tools_option_general_tours ) echo '<td>
         <a href="calendar/show_general_tour_cal.php">Interactive General/Proto Tour Calendar<a/>
-    </td>
-    <td>
+    </td>';
+if ($event_tools_option_layout_tours)   echo '<td>
         <a href="map_layout_tour.php?tour=L501">Tour Maps (put tour number in URL)<a/><p>
         <a href="calendar/show_layout_tour_cal.php">Interactive Layout Tour Calendar<a/>
-    </td>
-    <td><a href="format_misc_by_loc.php">Misc Events Grouped by Location<a/><p>
+    </td>';
+if ($event_tools_option_other_events)   echo '<td><a href="format_misc_by_loc.php">Misc Events Grouped by Location<a/><p>
         <a href="calendar/show_misc_events_cal.php">Interactive Misc Events Calendar<a/>
-    </td>
-    <td>
-    </td>
-    <td><a href="format_clinics_by_loc.php">Clinics Grouped by Location<a/><p>
+    </td>';
+if ($event_tools_option_layouts)        echo '<td>
+    </td>';
+if ($event_tools_option_clinics)        echo '<td><a href="format_clinics_by_loc.php">Clinics Grouped by Location<a/><p>
         <a href="calendar/show_clinics_cal.php">Interactive Clinics Calendar<a/>
-    </td>
-    <td><a href="ops_req_summary.php">Request Summary<a/><p>
+    </td>';
+if ($event_tools_option_op_sessions)    echo '<td><a href="ops_req_summary.php">Request Summary<a/><p>
     <a href="format_all_ops.php">Operating Layout Table</a><p>
     <a href="format_ops_by_day.php">Operating Sessions vs Day</a><p> 
     <a href="ops_assign_group.php">Start Assignments with Grouping</a>  <p>  
     <a href="ops_list_group.php">Email list for cycle</a>    <p>    
     <a href="ops_print_summary.php">Printable Session Rosters</a>    <p>
-    </td>
-</td>
+    </td>';
+    
+echo '</td>
 
 </table>
+';
 
-<?php
 if (!$event_tools_option_general_tours ||
     !$event_tools_option_layout_tours ||
     !$event_tools_option_other_events ||
