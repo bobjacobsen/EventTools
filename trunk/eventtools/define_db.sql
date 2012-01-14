@@ -2,15 +2,19 @@
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
--- Database: `x2011west`
+-- Database: `database`
 -- Prefix:   `prefix_`
 --
 
 -- --------------------------------------------------------
 
 -- 
--- You can do a bulk replace of 'prefix_eventtools_'
--- to conver to 'prod_eventtools_' and vice versa
+-- You can do a bulk replace of 'prefix_'
+-- to convert to your local prefix.
+--
+-- Either the Zen Cart tables must exist, or
+-- you should run the define_zen_repl.sql file
+-- before this one.
 --
 
 -- --------------------------------------------------------

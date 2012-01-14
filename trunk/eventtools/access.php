@@ -2,27 +2,28 @@
 
 // provide database access constants for phpMyEdit
 // default values - only these should show in SVN
-$opts['hn'] = 'localhost';
-$opts['un'] = 'user';
-$opts['pw'] = 'password';
+$opts['hn'] = '127.0.0.1';  // MySQL host name
+$opts['un'] = 'root';       // MySQL user name
+$opts['pw'] = '';           // MySQL password
 
-$opts['db'] = 'database';
-$event_tools_db_prefix = 'prefix_';
+$opts['db'] = 'database';               // database name to reference
+$event_tools_db_prefix = 'prefix_';     // prefix on all table names
 
 
 // Basic event name for e.g. page headers
 $event_tools_event_name = "(Uncustomised)";
 
-// Require user name, authentification?
+// Require user ID, authentification?
 $eventtools_require_user = TRUE;
 $eventtools_require_authenticate = FALSE;
 
-// to get entries logged & reported via email
+// to get new and changed entries logged & reported via email, uncomment these lines
 $opts['logtable'] = $event_tools_db_prefix.'eventtools_changelog';
 $event_tools_notify_email_address = 'x2011west@pacbell.net';
 $event_tools_notify_email_prefix = $event_tools_event_name;
 
-// optional components - TRUE means present
+
+// optional components - TRUE means present (default)
 
 $event_tools_option_general_tours       = FALSE;
 $event_tools_option_layout_tours        = FALSE;
@@ -32,8 +33,8 @@ $event_tools_option_clinics             = FALSE;
 $event_tools_option_op_sessions         = TRUE;
 
 
-// to constrain various info in entry/edit pages
-// to only the values in database tables
+// To constrain various info in entry/edit pages
+// to only the values in database tables, set the following to TRUE
 
 $event_tools_constrain_scale            = TRUE;
 $event_tools_constrain_gauge            = TRUE;
@@ -56,7 +57,6 @@ $event_tools_constrain_dispatched_by1   = TRUE;
 $event_tools_constrain_dispatched_by2   = TRUE;
 $event_tools_constrain_communications   = TRUE;
 
-
 // What's the minimum status to show the entry as OK in table, index?
 $event_tools_show_min_value = 0;
 
@@ -68,7 +68,10 @@ $event_tools_replace_on_data_error = FALSE;  // TRUE replace with text, FALSE le
 $event_tools_href_add_on = ' target="_blank" ';
 
 
-// how to get the connected to optional Zen Cart
+// Connected to Zen Cart?
+$event_tools_option_zen_cart_used       = FALSE;
+
+// how to generate a link to optional Zen Cart
 $eventtools_cartlink = "http://127.0.0.1/localcart";
 
 
