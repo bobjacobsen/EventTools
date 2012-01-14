@@ -24,12 +24,12 @@ $event_tools_notify_email_prefix = $event_tools_event_name;
 
 // optional components - TRUE means present
 
-$event_tools_option_general_tours       = TRUE
-$event_tools_option_layout_tours        = FALSE
-$event_tools_option_other_events        = TRUE
-$event_tools_option_layouts             = TRUE
-$event_tools_option_clinics             = TRUE
-$event_tools_option_op_sessions         = TRUE
+$event_tools_option_general_tours       = FALSE;
+$event_tools_option_layout_tours        = FALSE;
+$event_tools_option_other_events        = FALSE;
+$event_tools_option_layouts             = TRUE;
+$event_tools_option_clinics             = FALSE;
+$event_tools_option_op_sessions         = TRUE;
 
 
 // to constrain various info in entry/edit pages
