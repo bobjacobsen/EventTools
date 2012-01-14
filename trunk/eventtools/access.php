@@ -13,9 +13,13 @@ $event_tools_db_prefix = 'prefix_';     // prefix on all table names
 // Basic event name for e.g. page headers
 $event_tools_event_name = "(Uncustomised)";
 
-// Require user ID, authentification?
-$eventtools_require_user = TRUE;
-$eventtools_require_authenticate = FALSE;
+// Require EventTools user ID match, password authentification?
+$eventtools_require_user_id             = TRUE;
+$eventtools_require_user_authenticate   = FALSE;
+
+// Require customer ID match, password authentification?
+$eventtools_require_customer_id         = TRUE;        // TRUE checks account exists
+$eventtools_require_customer_authenticate = FALSE;
 
 // to get new and changed entries logged & reported via email, uncomment these lines
 $opts['logtable'] = $event_tools_db_prefix.'eventtools_changelog';
