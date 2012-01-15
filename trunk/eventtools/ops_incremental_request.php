@@ -1,4 +1,4 @@
-
+<?php
 // this is PHP to log
 // the contents of the $_REQUEST array called out by
 // the values array.
@@ -15,5 +15,5 @@ foreach ( $values as $k ) {
     $value = $_REQUEST[ $k ];
     mysql_query("INSERT INTO ".$event_tools_db_prefix."eventtools_user_request_entry (email, key, value) VALUES ('".$_REQUEST[ "email" ]."','".$k."','".$value."');");    
 }
-
+?>
 
