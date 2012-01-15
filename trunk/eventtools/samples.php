@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>X2011West EventTools Sample Queries</title>
+	<title>EventTools Sample Queries</title>
 </head>
 <body>
-<h1>X2011West EventTools Sample Queries</h1>
+<h1>EventTools Sample Queries</h1>
 
 The following are small examples of forms for selecting various things.
 <p>

@@ -3,13 +3,13 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>X2011West Operating Sessions</title>
+    <title>Operating Sessions</title>
 
     <link href="layouts.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
-<h1>X2011West Operating Sessions</h1>  
+<h1>Operating Sessions</h1>  
 <a href="index.php">Back to main page</a>
 <p>
 

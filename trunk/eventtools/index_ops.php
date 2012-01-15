@@ -3,13 +3,13 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>X2011West Operating Session Index</title>
+    <title>Operating Session Index</title>
 
     <link href="tours.css" rel="stylesheet" type="text/css" />    
 
 </head>
 <body>
-<h2>X2011West Operating Session Index</h2>  
+<h2>Operating Session Index</h2>  
 <a href="index.php">Back to main page</a>
 <p>
 

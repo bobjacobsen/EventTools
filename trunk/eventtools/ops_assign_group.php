@@ -4,12 +4,12 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>X2011West Op Session Groups</title>
+    <title>Op Session Groups</title>
     
 
 </head>
 <body>
-<h1>X2011West Op Session Groups</h1>  
+<h1>Op Session Groups</h1>  
 <a href="index.php">Back to main page</a><p/>
 
 <?php

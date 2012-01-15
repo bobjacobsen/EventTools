@@ -9,30 +9,30 @@
         header('HTTP/1.0 401 Unauthorized');
     }
     
-//     if (! (strpos($user, "@") && strpos($user, ".")) ) {
-//         header('WWW-Authenticate: Basic realm="'.$event_tools_event_name.' Op Session Request (enter your '.$event_tools_event_name.' email address for name)"');
-//         header('HTTP/1.0 401 Unauthorized');
-//         echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-// 		    "http://www.w3.org/TR/html4/loose.dtd">
-//             <html>
-//             <head>
-//             <title>Operating Session Request - Error</title>
-//             </head>
-//             <body>
-//             <h2>Operating Session Request - Error</h2>
-//             You must provide a valid email address
-//             as part of entering your request.
-//             Please hit the back button on your browser and 
-//             try again.['.$user.']</body>
-//             ';
-//         return;
-//     }
+    if (! (strpos($user, "@") && strpos($user, ".")) ) {
+        header('WWW-Authenticate: Basic realm="'.$event_tools_event_name.' Op Session Request (enter your '.$event_tools_event_name.' email address for name)"');
+        header('HTTP/1.0 401 Unauthorized');
+        echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+		    "http://www.w3.org/TR/html4/loose.dtd">
+            <html>
+            <head>
+            <title>Operating Session Request - Error</title>
+            </head>
+            <body>
+            <h2>Operating Session Request - Error</h2>
+            You must provide a valid email address
+            as part of entering your request.
+            Please hit the back button on your browser and 
+            try again.</body>
+            ';
+        return;
+    }
     
     global $opts, $event_tools_db_prefix;
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
 
-    if ($eventtools_require_customer_id) {
+    if ($event_tools_require_customer_id) {
         
         // OK, now check if account in cart
         $query = "SELECT * 

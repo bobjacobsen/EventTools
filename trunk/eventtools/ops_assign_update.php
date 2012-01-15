@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>X2011West Op Session Update Requests</title>
+    <title>Op Session Update Requests</title>
     <style type="text/css">
         span.released { background: #ffffff; }
         span.assigned { background: #b0b0ff; }
@@ -16,7 +16,7 @@
     </style>
 </head>
 <body>
-<h1>X2011West Op Session Update Requests</h1>  
+<h1>Op Session Update Requests</h1>  
 <a href="index.php">Back to main page</a><p/>
 
 <?php

@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>X2011West Op Session Roster</title>
+    <title>Op Session Roster</title>
     <style type="text/css">
         div.session { margin-top: 3em; font-weight:bold; font-size: 18pt; font-family: Ariel; }
         span.date { font-weight:bold; font-size: 18pt; font-family: Ariel; }
@@ -27,7 +27,7 @@ parse_str($_SERVER["QUERY_STRING"], $args);
 
 // first, see if there's a "?cy=" or "?start=" in the arguments
 if (! ($args["cy"]) ) {
-    echo '<h1>X2011West Op Session Roster</h1>';
+    echo '<h1>'.$event_tools_event_name.' Op Session Roster</h1>';
     echo '<a href="index.php">Back to main page</a><p/>';
     echo '<form method="get" action="ops_print_summary.php">
         Cycle Name: <input  name="cy"></textarea>
