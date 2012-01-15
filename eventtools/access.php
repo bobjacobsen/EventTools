@@ -37,29 +37,29 @@ $event_tools_option_clinics             = FALSE;
 $event_tools_option_op_sessions         = TRUE;
 
 
-// To constrain various info in entry/edit pages
+// To constrain various info in layout entry/edit pages
 // to only the values in database tables, set the following to TRUE
 
-$event_tools_constrain_scale            = TRUE;
-$event_tools_constrain_gauge            = TRUE;
-$event_tools_constrain_era              = TRUE;
-$event_tools_constrain_class            = TRUE;
-$event_tools_constrain_theme            = TRUE;
-$event_tools_constrain_locale           = TRUE;
+$event_tools_constrain_scale            = FALSE;
+$event_tools_constrain_gauge            = FALSE;
+$event_tools_constrain_era              = FALSE;
+$event_tools_constrain_class            = FALSE;
+$event_tools_constrain_theme            = FALSE;
+$event_tools_constrain_locale           = FALSE;
 
-$event_tools_constrain_scenery          = TRUE;
-$event_tools_constrain_plan_type        = TRUE;
-$event_tools_constrain_ops_scheme       = TRUE;
-$event_tools_constrain_control          = TRUE;
-$event_tools_constrain_fidelity         = TRUE;
-$event_tools_constrain_rigor            = TRUE;
-$event_tools_constrain_documentation    = TRUE;
-$event_tools_constrain_session_pace     = TRUE;
-$event_tools_constrain_car_forwarding   = TRUE;
-$event_tools_constrain_tone             = TRUE;
-$event_tools_constrain_dispatched_by1   = TRUE;
-$event_tools_constrain_dispatched_by2   = TRUE;
-$event_tools_constrain_communications   = TRUE;
+$event_tools_constrain_scenery          = FALSE;
+$event_tools_constrain_plan_type        = FALSE;
+$event_tools_constrain_ops_scheme       = FALSE;
+$event_tools_constrain_control          = FALSE;
+$event_tools_constrain_fidelity         = FALSE;
+$event_tools_constrain_rigor            = FALSE;
+$event_tools_constrain_documentation    = FALSE;
+$event_tools_constrain_session_pace     = FALSE;
+$event_tools_constrain_car_forwarding   = FALSE;
+$event_tools_constrain_tone             = FALSE;
+$event_tools_constrain_dispatched_by1   = FALSE;
+$event_tools_constrain_dispatched_by2   = FALSE;
+$event_tools_constrain_communications   = FALSE;
 
 // What's the minimum status to show the entry as OK in table, index?
 $event_tools_show_min_value = 0;
