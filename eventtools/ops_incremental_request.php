@@ -15,7 +15,7 @@ $email = $_REQUEST[ "email" ];
 foreach ( $values as $k ) {
     $value = $_REQUEST[ $k ];
     echo " insert(".$k.",".$email.",".$value.") ";
-    echo "INSERT INTO ".$event_tools_db_prefix."eventtools_user_request_entry (email, key, value) VALUES ('".$email."','".$k."','".$value."');";
+    echo "INSERT INTO ".$event_tools_db_prefix."eventtools_user_request_entry (`email`, `key`, `value`) VALUES ('".$email."','".$k."','".$value."');";
     echo " r=".mysql_insert_id()." "; 
 }
 ?>
