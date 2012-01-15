@@ -86,20 +86,15 @@ if ($event_tools_option_op_sessions)    echo '<td></td>';
 echo '</tr><tr>
     <th>Test Pages</th>';
 
-if ($event_tools_option_general_tours ) echo '<td><a href="../generalTable.php">General Table</a><br/>
-        <a href="../generalIndex.php">General Index</a>
+if ($event_tools_option_general_tours ) echo '<td>
     </td>';
-if ($event_tools_option_layout_tours)   echo '<td><a href="../layoutToursTable.php">Layout Tour Table</a><br/>
-        <a href="../layoutToursIndex.php">Layout Tour Index</a>
+if ($event_tools_option_layout_tours)   echo '<td>
     </td>';
-if ($event_tools_option_other_events)   echo '<td><a href="../miscEventsTable.php">Misc Event Table</a><br/>
-        <a href="../miscEventsIndex.php">Misc Event Index</a>
+if ($event_tools_option_other_events)   echo '<td>
     </td>';
-if ($event_tools_option_layouts)        echo '<td><a href="../layoutsTable.php">Layouts Table</a><br/>
-        <a href="../layoutsIndex.php">Layouts Index</a>
+if ($event_tools_option_layouts)        echo '<td>
     </td>';
-if ($event_tools_option_clinics)        echo '<td><a href="../clinicsTable.php">Clinics Table</a><br/>
-        <a href="../clinicsIndex.php">Clinics Index</a>
+if ($event_tools_option_clinics)        echo '<td>
     </td>';
 if ($event_tools_option_op_sessions)    echo '<td><a href="ops_req.php">User session request</a></td>';
 
