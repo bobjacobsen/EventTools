@@ -36,7 +36,7 @@ echo "
 if ($event_tools_option_general_tours ) echo '<td><a href="edit_general_tour_all.php">Enter/Change</a></td>';
 if ($event_tools_option_layout_tours)   echo '<td><a href="edit_layout_tour_all.php">Enter/Change</a></td>';
 if ($event_tools_option_other_events)   echo '<td><a href="edit_misc.php">Enter/Change</a></td>';
-if ($event_tools_option_layouts)        echo '<td><a href="edit_layouts.php">Enter/Change</a></td>';
+if ($event_tools_option_layouts)        echo '<td><a href="edit_layouts_all.php">Enter/Change</a></td>';
 if ($event_tools_option_clinics)        echo '<td><a href="edit_clinics.php">Enter/Change</a></td>';
 if ($event_tools_option_op_sessions)    echo '<td><a href="edit_ops_add_layout.php">Enter/Change</a></td>';
 
