@@ -4,6 +4,7 @@
 // the values array.
 
 echo "doing request";
+global $values;
 
 require_once('eventtools/access.php'); 
 
@@ -14,6 +15,7 @@ mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
 $email = $_REQUEST[ "email" ];
 
 foreach ( $values as $k ) {
+    echo " increment(".$k.") ";
     $value = $_REQUEST[ $k ];
     mysql_query("INSERT INTO ".$event_tools_db_prefix."eventtools_user_request_entry (email, key, value) VALUES ('".$_REQUEST[ "email" ]."','".$k."','".$value."');");    
 }
