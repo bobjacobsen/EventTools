@@ -1481,9 +1481,9 @@ class General_Tours_as_3Table extends Tours_as_3Table {
 abstract class Tours_as_8Table implements Event_Formatter {
 
     public function show_status_or_link($result,$i) {
-        global $event_tools_db_prefix, $eventtools_cartlink, $eventtools_lookup_flag, $eventtools_lookup_result;
-        if (!$eventtools_lookup_flag) {
-            $eventtools_lookup_flag = TRUE;
+        global $event_tools_db_prefix, $event_tools_cartlink, $event_tools_lookup_flag, $event_tools_lookup_result;
+        if (!$event_tools_lookup_flag) {
+            $event_tools_lookup_flag = TRUE;
             
             // load a cache between model/tour_number and product ID
             $select = "
@@ -1495,16 +1495,13 @@ abstract class Tours_as_8Table implements Event_Formatter {
             // ugly hack: Turn off links (instead of checking Zen DB product status)
             $product_lookup_result=mysql_query($select);
             //while ($row = mysql_fetch_assoc($product_lookup_result)) {
-            //    $eventtools_lookup_result[$row['products_model']] = $row['products_id'];
+            //    $event_tools_lookup_result[$row['products_model']] = $row['products_id'];
             //}
             
-            // ugly hack: Manually enter GNQ -> (Nonquet item)
-            //$eventtools_lookup_result['GNQ'] = '67';
-            
         }
-        $product = $eventtools_lookup_result[mysql_result($result,$i,"number")];
+        $product = $event_tools_lookup_result[mysql_result($result,$i,"number")];
         if (mysql_result($result,$i,"event_status_code") == '60' && $product != NULL) {
-            return '<a class="status_link" href="'.$eventtools_cartlink.'/index.php?main_page=product_info&products_id='
+            return '<a class="status_link" href="'.$event_tools_cartlink.'/index.php?main_page=product_info&products_id='
                 .$product.'">'
                 .mysql_result($result,$i,"event_status_display")
                 .'</a>';

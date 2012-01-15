@@ -30,7 +30,7 @@ $i=0;
 $lastmajorkey = mysql_result($result,$i,"show_name").mysql_result($result,$i,"start_date");
 
 $part1 = "
-First, let me thank you again for agreeing to host op session(s) for the OPSIG for the NMRA national convention.  Without your participation this event, especially of this magnitude, would just not happen. 
+First, let me thank you again for agreeing to host op session(s).  Without your participation this event, especially of this magnitude, would just not happen. 
  
 In this email you will find the names and email addresses of the convention attendees assigned to your op session(s).  Please feel free to contact them and send them any operating documents or information you may want them to review before they arrive on your doorstep.  Please be aware that there are likely to be some last minute changes in assignments due to the real world - I will let you know of any changes that occur prior the the convention itself.
  
@@ -39,7 +39,7 @@ Some of your sessions are not full at this time.  Based on the experience at pri
 Please get in touch with me if you have any questions,
  
 Jim Providenza
-X2011W OPSIG Coordinator
+Op Session Coordinator
 ------------------------
 
 ";
@@ -59,7 +59,7 @@ while ($i < $num) {
         $to = mysql_result($result,$i,"layout_owner_email");
         //$to = "rgj1927@pacbell.net";
         
-        $subject = "X2011 West Operating Session Assignments";
+        $subject = "Operating Session Assignments";
         
         $headers = "from: rrjim@aol.com\nbcc: rrjim@aol.com, rgj1927@pacbell.net";
         //$headers = "from: jacobsen@berkeley.edu";

@@ -4,18 +4,18 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>X2011 West Op Session Request Summary</title>
+	<title>Op Session Request Summary</title>
 </head>
 <body>
-<h3>X2011 West Op Session Request Summary</h3>
+<h3>Op Session Request Summary</h3>
 <a href="index.php">Back to main page</a>
 <p>
 <?php
 
 // -------------------------------------------------------------------------
-// Part of EventTools, a package for managing X2011west information
+// Part of EventTools, a package for managing convention information
 //
-// By Bob Jacobsen, rgj1927@pacbell.net, Copyright 2010, 2011
+// By Bob Jacobsen, rgj1927@pacbell.net, Copyright 2010, 2011, 2012
 // -------------------------------------------------------------------------
 
 //
@@ -27,7 +27,6 @@
 
 $min_status = 40;                  // min status included; 40 is "under construction", 60 is "approved"
 $update_quantity =  FALSE;         // TRUE to update quantity, FALSE to leave unchanged
-$URL_lead = "x2011west.org/";      // path to eventtools user pages; omit http://, end with /
 
 // -------------------------------------------------------------------------
 

@@ -3,13 +3,13 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>X2011West Operating Sessions vs Day</title>
+    <title>Operating Sessions vs Day</title>
 
     <link href="layouts.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
-<h2>X2011West Operating Session vs Day</h2>  
+<h2>Operating Session vs Day</h2>  
 <a href="index.php">Back to main page</a>
 <p>
 

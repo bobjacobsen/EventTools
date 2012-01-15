@@ -27,7 +27,7 @@ $i=0;
 $lastmajorkey = mysql_result($result,$i,"opsreq_person_email");
 
 $part1 = "
-Here are your OPSIG operating session assignments for X2011W.  Please look them over and if there are any problems please reply to this email to let me know and we will try to resolve it.
+Here are your operating session assignments for '.$event_tools_event_name.'.  Please look them over and if there are any problems please reply to this email to let me know and we will try to resolve it.
 
 I’m happy to tell you that 88% of folks got their first choice session; 99% of those who asked for more than 3 sessions got two of their top three choices.
 

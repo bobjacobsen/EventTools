@@ -104,9 +104,9 @@ function index_ops($url, $where=NONE, $order=NONE,$formatter=NULL) {
 //
 
 function show_status_link_or_cost($result,$i) {
-    global $event_tools_db_prefix, $eventtools_cartlink, $eventtools_lookup_flag, $eventtools_lookup_result;
-    if (!$eventtools_lookup_flag) {
-        $eventtools_lookup_flag = TRUE;
+    global $event_tools_db_prefix, $event_tools_cartlink, $event_tools_lookup_flag, $event_tools_lookup_result;
+    if (!$event_tools_lookup_flag) {
+        $event_tools_lookup_flag = TRUE;
         
         // load a cache between model/tour_number and product ID
         $select = "
@@ -117,12 +117,9 @@ function show_status_link_or_cost($result,$i) {
 
         $product_lookup_result=mysql_query($select);
         while ($row = mysql_fetch_assoc($product_lookup_result)) {
-            $eventtools_lookup_result[$row['products_model']] = $row['products_id'];
+            $event_tools_lookup_result[$row['products_model']] = $row['products_id'];
         }
-        
-        // ugly hack: Manually enter GNQ -> (Nonquet item)
-        $eventtools_lookup_result['GNQ'] = '67';
-        
+                
     }
 
     if (((float)mysql_result($result,$i,"tour_price"))>=0) {
@@ -134,9 +131,9 @@ function show_status_link_or_cost($result,$i) {
             $cost = "<span class=\"et-error-missing\">TBA</span>";
     }
 
-    $product = $eventtools_lookup_result[mysql_result($result,$i,"number")];
+    $product = $event_tools_lookup_result[mysql_result($result,$i,"number")];
     if (mysql_result($result,$i,"event_status_code") == '60' && $product != NULL) {
-        return '<a href="'.$eventtools_cartlink.'/index.php?main_page=product_info&products_id='
+        return '<a href="'.$event_tools_cartlink.'/index.php?main_page=product_info&products_id='
             .$product.'">'
             .$cost
             .'</a>';

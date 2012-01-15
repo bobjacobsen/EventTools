@@ -14,12 +14,12 @@ $event_tools_db_prefix = 'prefix_';     // prefix on all table names
 $event_tools_event_name = "(Uncustomised)";
 
 // Require EventTools user ID match, password authentification?
-$eventtools_require_user_id             = TRUE;
-$eventtools_require_user_authenticate   = FALSE;
+$event_tools_require_user_id             = TRUE;
+$event_tools_require_user_authenticate   = FALSE;
 
 // Require customer ID match, password authentification?
-$eventtools_require_customer_id         = TRUE;        // TRUE checks account exists
-$eventtools_require_customer_authenticate = FALSE;
+$event_tools_require_customer_id         = TRUE;        // TRUE checks account exists
+$event_tools_require_customer_authenticate = FALSE;
 
 // to get new and changed entries logged & reported via email, uncomment these lines
 $opts['logtable'] = $event_tools_db_prefix.'eventtools_changelog';
@@ -76,7 +76,7 @@ $event_tools_href_add_on = ' target="_blank" ';
 $event_tools_option_zen_cart_used       = FALSE;
 
 // how to generate a link to optional Zen Cart
-$eventtools_cartlink = "http://127.0.0.1/localcart";
+$event_tools_cartlink = "http://127.0.0.1/localcart";
 
 
 ?>
