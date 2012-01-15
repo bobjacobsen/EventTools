@@ -3,7 +3,6 @@
 // the contents of the $_REQUEST array called out by
 // the values array.
 
-echo "doing request";
 global $values;
 
 global $opts, $event_tools_db_prefix;
