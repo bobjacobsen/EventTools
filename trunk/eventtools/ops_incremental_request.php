@@ -48,7 +48,9 @@ $reqs = check_for_value($values, "5", $reqs);
 $reqs = check_for_value($values, "6", $reqs);
 
 print " length ".count($reqs);
-for ( $reqs as $k ) { print " ".$k." "; }
+for ( $reqs as $k ) { 
+    print " ".$k." "; 
+}
 
 ?>
 
