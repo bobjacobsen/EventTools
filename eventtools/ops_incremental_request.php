@@ -6,7 +6,7 @@
 function check_for_value($values, $check, $reqs)
 {
     // look through values array, checking the layout items for a match with a specific value
-    print "<br/>check ";
+    // print "<br/>check ";
     foreach ( $values as $k ) {
         if (substr($k, 0, 2) === "v_") { // is a layout
             $value = $_REQUEST[ $k ];
@@ -46,7 +46,7 @@ check_for_value($values, "4", $reqs);
 check_for_value($values, "5", $reqs);
 check_for_value($values, "6", $reqs);
 
-print $reqs;
+print " length ".count($reqs);
 
 ?>
 
