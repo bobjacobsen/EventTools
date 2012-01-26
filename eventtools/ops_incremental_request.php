@@ -74,15 +74,21 @@ $layoutindex["v_houston"] = 24;
 $layoutindex["v_merrin"] = 25;
 $layoutindex["v_williams"] = 26;
 
-// convert res to numbers
+// convert reqs to numbers
 $reqs_num = array();
 foreach ( $reqs as $k ) {
     $reqs_num[] = $layoutindex[$k];
 }
 
-foreach ( $reqs_num as $k ) {
-    print " ".$k." ";
-}
+//foreach ( $reqs_num as $k ) {
+//    print " ".$k." ";
+//}
+
+// and finally do an insert
+$op = "INSERT INTO ".$event_tools_db_prefix."eventtools_opsession_req (`opsreq_person_email`, `opsreq_pri1`, `opsreq_pri2`, `opsreq_pri3`, `opsreq_pri4`, `opsreq_pri5`, `opsreq_pri6`, `opsreq_pri7`, `opsreq_pri8`, `opsreq_comment`) VALUES "
+    ."('".$email."','".$reqs_num[0]."','".$reqs_num[1]."','".$reqs_num[2]."','".$reqs_num[3]."','".$reqs_num[4]."','".$reqs_num[5]."','".$reqs_num[6]."','".$reqs_num[7]."','".$_REQUEST[ "comments" ]."');";
+print '[ '.$op.' ] ';
+mysql_query($op);
 
 ?>
 
