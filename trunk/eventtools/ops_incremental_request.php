@@ -8,6 +8,7 @@ function check_for_value($values, $check, $reqs)
     // look through values array, checking the layout items for a match with a specific value
     print "<br/>check ";
     foreach ( $values as $k ) {
+        print "see ".$k." ";
         if (substr($k, 0, 2) === "v_") { // is a layout
             print " checking ".$k." ";
             $value = $_REQUEST[ $k ];
