@@ -3,7 +3,7 @@
 // the contents of the $_REQUEST array called out by
 // the values array.
 
-function check_for_value(values, check, reqs)
+function check_for_value($values, $check, $reqs)
 {
     // look through values array, checking the layout items for a match with a specific value
     foreach ( $values as $k ) {
