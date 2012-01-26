@@ -11,11 +11,12 @@ function check_for_value($values, $check, $reqs)
         if (substr($k, 0, 2) === "v_") { // is a layout
             $value = $_REQUEST[ $k ];
             if ($value == $check) { // got it, add layout to requests
-                $reqs[] = $value;
+                $reqs[] = $k;
                 print " (hit on ".$value.") ";
             }
         }
     }
+    return $reqs;
 }
 
 global $values;
@@ -38,13 +39,13 @@ foreach ( $values as $k ) {
 $reqs = array();
 
 // run the requests
-check_for_value($values, "on", $reqs);
-check_for_value($values, "1", $reqs);
-check_for_value($values, "2", $reqs);
-check_for_value($values, "3", $reqs);
-check_for_value($values, "4", $reqs);
-check_for_value($values, "5", $reqs);
-check_for_value($values, "6", $reqs);
+$reqs = check_for_value($values, "on", $reqs);
+$reqs = check_for_value($values, "1", $reqs);
+$reqs = check_for_value($values, "2", $reqs);
+$reqs = check_for_value($values, "3", $reqs);
+$reqs = check_for_value($values, "4", $reqs);
+$reqs = check_for_value($values, "5", $reqs);
+$reqs = check_for_value($values, "6", $reqs);
 
 print " length ".count($reqs);
 
