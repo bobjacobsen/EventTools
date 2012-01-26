@@ -9,6 +9,7 @@ function check_for_value($values, $check, $reqs)
     print "<br/>check ";
     foreach ( $values as $k ) {
         if (substr($k, 0, 2) === "v_") { // is a layout
+            print " checking ".$k." ";
             $value = $_REQUEST[ $k ];
             if ($value == $check) { // got it, add layout to requests
                 $reqs[] = $value;
