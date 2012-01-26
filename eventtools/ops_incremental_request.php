@@ -40,13 +40,13 @@ foreach ( $values as $k ) {
 $reqs = array();
 
 // run the requests
-check_for_value(values, "on", reqs);
-check_for_value(values, "1", reqs);
-check_for_value(values, "2", reqs);
-check_for_value(values, "3", reqs);
-check_for_value(values, "4", reqs);
-check_for_value(values, "5", reqs);
-check_for_value(values, "6", reqs);
+check_for_value($values, "on", $reqs);
+check_for_value($values, "1", $reqs);
+check_for_value($values, "2", $reqs);
+check_for_value($values, "3", $reqs);
+check_for_value($values, "4", $reqs);
+check_for_value($values, "5", $reqs);
+check_for_value($values, "6", $reqs);
 
 print reqs;
 
