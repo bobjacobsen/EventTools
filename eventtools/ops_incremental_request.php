@@ -47,10 +47,41 @@ $reqs = check_for_value($values, "4", $reqs);
 $reqs = check_for_value($values, "5", $reqs);
 $reqs = check_for_value($values, "6", $reqs);
 
-print " length ".count($reqs);
+// so reqs now is an ordered list of requests
 
-foreach ( $reqs as $k ) { 
-    print " ".$k." "; 
+// create the transfer list
+$layoutindex = array();
+$layoutindex["v_adams"] = 7;
+$layoutindex["v_bowdidge"] = 28;
+$layoutindex["v_burgessdias"] = 8;
+$layoutindex["v_calcentral"] = 9;
+$layoutindex["v_fortin"] = 10;
+$layoutindex["v_kaufman"] = 11;
+$layoutindex["v_mcgee"] = 12;
+$layoutindex["v_marzeni"] = 13;
+$layoutindex["v_neumann"] = 14;
+$layoutindex["v_parksbo"] = 29;
+$layoutindex["v_parkswm"] = 15;
+$layoutindex["v_paul"] = 16;
+$layoutindex["v_providenza"] = 17;
+$layoutindex["v_radkey"] = 18;
+$layoutindex["v_schnur"] = 19;
+$layoutindex["v_svl"] = 20;
+$layoutindex["v_vail"] = 21;
+$layoutindex["v_weiss"] = 22;
+$layoutindex["v_hayeszach"] = 23;
+$layoutindex["v_houston"] = 24;
+$layoutindex["v_merrin"] = 25;
+$layoutindex["v_williams"] = 26;
+
+// convert res to numbers
+$reqs_num = array();
+foreach ( $reqs as $k ) {
+    $reqs_num[] = $layoutindex[$k];
+}
+
+foreach ( $reqs_num as $k ) {
+    print " ".$k." ";
 }
 
 ?>
