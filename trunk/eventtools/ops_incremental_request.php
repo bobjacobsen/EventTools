@@ -12,7 +12,7 @@ function check_for_value($values, $check, $reqs)
             $value = $_REQUEST[ $k ];
             if ($value == $check) { // got it, add layout to requests
                 $reqs[] = $k;
-                print " (hit on ".$value.") ";
+                //print " (hit on ".$value.") ";
             }
         }
     }
@@ -48,6 +48,7 @@ $reqs = check_for_value($values, "5", $reqs);
 $reqs = check_for_value($values, "6", $reqs);
 
 print " length ".count($reqs);
+for ( $reqs as $k ) { print " ".$k." "; }
 
 ?>
 
