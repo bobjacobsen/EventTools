@@ -27,7 +27,12 @@ function insert_multiple_ops_request_structure($cycle, $reqs) {
             && (mysql_result($reqs,$i,"opsreq_pri5") <= "1")
             && (mysql_result($reqs,$i,"opsreq_pri6") <= "1")
             && (mysql_result($reqs,$i,"opsreq_pri7") <= "1")
-            && (mysql_result($reqs,$i,"opsreq_pri8") <= "1") ) {
+            && (mysql_result($reqs,$i,"opsreq_pri8") <= "1") 
+            && (mysql_result($reqs,$i,"opsreq_pri9") <= "1") 
+            && (mysql_result($reqs,$i,"opsreq_pri10") <= "1") 
+            && (mysql_result($reqs,$i,"opsreq_pri11") <= "1") 
+            && (mysql_result($reqs,$i,"opsreq_pri12") <= "1") 
+            ) {
                 echo "Skip ".mysql_result($reqs,$i,"opsreq_person_email")."<br/>";
                 continue;
         }
@@ -68,6 +73,10 @@ function insert_one_ops_request_structure($cycle, $reqs, $i) {
     mysql_query("INSERT INTO ".$event_tools_db_prefix."eventtools_opsreq_req_status (opsreq_group_req_link_id, req_num, ops_id) VALUES ('".$id."','6','".mysql_result($reqs,$i,"opsreq_pri6")."');");
     mysql_query("INSERT INTO ".$event_tools_db_prefix."eventtools_opsreq_req_status (opsreq_group_req_link_id, req_num, ops_id) VALUES ('".$id."','7','".mysql_result($reqs,$i,"opsreq_pri7")."');");
     mysql_query("INSERT INTO ".$event_tools_db_prefix."eventtools_opsreq_req_status (opsreq_group_req_link_id, req_num, ops_id) VALUES ('".$id."','8','".mysql_result($reqs,$i,"opsreq_pri8")."');");
+    mysql_query("INSERT INTO ".$event_tools_db_prefix."eventtools_opsreq_req_status (opsreq_group_req_link_id, req_num, ops_id) VALUES ('".$id."','9','".mysql_result($reqs,$i,"opsreq_pri9")."');");
+    mysql_query("INSERT INTO ".$event_tools_db_prefix."eventtools_opsreq_req_status (opsreq_group_req_link_id, req_num, ops_id) VALUES ('".$id."','10','".mysql_result($reqs,$i,"opsreq_pri10")."');");
+    mysql_query("INSERT INTO ".$event_tools_db_prefix."eventtools_opsreq_req_status (opsreq_group_req_link_id, req_num, ops_id) VALUES ('".$id."','11','".mysql_result($reqs,$i,"opsreq_pri11")."');");
+    mysql_query("INSERT INTO ".$event_tools_db_prefix."eventtools_opsreq_req_status (opsreq_group_req_link_id, req_num, ops_id) VALUES ('".$id."','12','".mysql_result($reqs,$i,"opsreq_pri12")."');");
 
 }
 

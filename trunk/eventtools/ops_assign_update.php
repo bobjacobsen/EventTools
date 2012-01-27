@@ -178,7 +178,12 @@ while ($i < $nums && $j < $numd) {
             || (mysql_result($reqs,$i,"opsreq_pri5") > "1")
             || (mysql_result($reqs,$i,"opsreq_pri6") > "1")
             || (mysql_result($reqs,$i,"opsreq_pri7") > "1")
-            || (mysql_result($reqs,$i,"opsreq_pri8") > "1") ) {
+            || (mysql_result($reqs,$i,"opsreq_pri8") > "1")
+            || (mysql_result($reqs,$i,"opsreq_pri9") > "1")
+            || (mysql_result($reqs,$i,"opsreq_pri10") > "1")
+            || (mysql_result($reqs,$i,"opsreq_pri11") > "1")
+            || (mysql_result($reqs,$i,"opsreq_pri12") > "1")
+             ) {
 
             echo '<table><tr>';
             echo '<td><form method="get" action="ops_assign_update.php"><input type="hidden" name="cy" value="'.$cycle.'">
@@ -211,7 +216,12 @@ while ($i < $nums) {
             || (mysql_result($reqs,$i,"opsreq_pri5") > "1")
             || (mysql_result($reqs,$i,"opsreq_pri6") > "1")
             || (mysql_result($reqs,$i,"opsreq_pri7") > "1")
-            || (mysql_result($reqs,$i,"opsreq_pri8") > "1") ) {
+            || (mysql_result($reqs,$i,"opsreq_pri8") > "1")
+            || (mysql_result($reqs,$i,"opsreq_pri9") > "1")
+            || (mysql_result($reqs,$i,"opsreq_pri10") > "1")
+            || (mysql_result($reqs,$i,"opsreq_pri11") > "1")
+            || (mysql_result($reqs,$i,"opsreq_pri12") > "1")
+             ) {
         echo '<table><tr>';
         echo '<td><form method="get" action="ops_assign_update.php"><input type="hidden" name="cy" value="'.$cycle.'">
               <input type="hidden" name="id" value="'.mysql_result($reqs,$i,"opsreq_person_email").'"><input type="submit" name="op" value="Add"/></form></td>';
@@ -254,7 +264,8 @@ $query="
             opsreq_group_cycle_name, opsreq_comment, ".$event_tools_db_prefix."eventtools_opsreq_group_req_link.opsreq_id,
             opsreq_group_req_link_id, entry_city, entry_state, opsreq_req_status_id,
             ops_id, req_num, start_date, show_name, forced,
-            opsreq_pri1, opsreq_pri2, opsreq_pri3, opsreq_pri4, opsreq_pri5, opsreq_pri6, opsreq_pri7, opsreq_pri8
+            opsreq_pri1, opsreq_pri2, opsreq_pri3, opsreq_pri4, opsreq_pri5, opsreq_pri6, opsreq_pri7, opsreq_pri8,
+            opsreq_pri9, opsreq_pri10, opsreq_pri11, opsreq_pri12
         FROM (((((
         ".$event_tools_db_prefix."eventtools_opsession_req LEFT JOIN ".$event_tools_db_prefix."customers
         ON ".$event_tools_db_prefix."eventtools_opsession_req.opsreq_person_email = ".$event_tools_db_prefix."customers.customers_email_address
@@ -300,6 +311,18 @@ for ($i = 0; $i < $num; $i++) {
             break;
         case "8":
             show_update_request_line($result,$i,$cycle,$show_name,$start_date,"opsreq_pri8");
+            break;
+        case "9":
+            show_update_request_line($result,$i,$cycle,$show_name,$start_date,"opsreq_pri9");
+            break;
+        case "10":
+            show_update_request_line($result,$i,$cycle,$show_name,$start_date,"opsreq_pri10");
+            break;
+        case "11":
+            show_update_request_line($result,$i,$cycle,$show_name,$start_date,"opsreq_pri11");
+            break;
+        case "12":
+            show_update_request_line($result,$i,$cycle,$show_name,$start_date,"opsreq_pri12");
             break;
     }
 }
