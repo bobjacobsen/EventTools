@@ -359,6 +359,98 @@ $opts['fdd']['opsreq_pri8'] = array(
                             )
                         )
 );
+$opts['fdd']['opsreq_pri9'] = array(
+  'name'     => '9th priority',
+  'select'   => 'T',
+  'maxlen'   => 5,
+  'sort'     => true,
+  'default'  => 'None',
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
+                        'column' => 'ops_id',
+                        'orderby' => 'start_date',
+                        'description' => array(
+                                'columns' => array(
+                                                'layout_owner_lastname',
+                                                'layout_name',
+                                                'presenting_time' 
+                                                ),
+                                'divs' => array(
+                                                ' ',
+                                                ' ',
+                                                ''
+                                                )
+                            )
+                        )
+);
+$opts['fdd']['opsreq_pri10'] = array(
+  'name'     => '10th priority',
+  'select'   => 'T',
+  'maxlen'   => 5,
+  'sort'     => true,
+  'default'  => 'None',
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
+                        'column' => 'ops_id',
+                        'orderby' => 'start_date',
+                        'description' => array(
+                                'columns' => array(
+                                                'layout_owner_lastname',
+                                                'layout_name',
+                                                'presenting_time' 
+                                                ),
+                                'divs' => array(
+                                                ' ',
+                                                ' ',
+                                                ''
+                                                )
+                            )
+                        )
+);
+$opts['fdd']['opsreq_pri11'] = array(
+  'name'     => '11th priority',
+  'select'   => 'T',
+  'maxlen'   => 5,
+  'sort'     => true,
+  'default'  => 'None',
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
+                        'column' => 'ops_id',
+                        'orderby' => 'start_date',
+                        'description' => array(
+                                'columns' => array(
+                                                'layout_owner_lastname',
+                                                'layout_name',
+                                                'presenting_time' 
+                                                ),
+                                'divs' => array(
+                                                ' ',
+                                                ' ',
+                                                ''
+                                                )
+                            )
+                        )
+);
+$opts['fdd']['opsreq_pri12'] = array(
+  'name'     => '12th priority',
+  'select'   => 'T',
+  'maxlen'   => 5,
+  'sort'     => true,
+  'default'  => 'None',
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
+                        'column' => 'ops_id',
+                        'orderby' => 'start_date',
+                        'description' => array(
+                                'columns' => array(
+                                                'layout_owner_lastname',
+                                                'layout_name',
+                                                'presenting_time' 
+                                                ),
+                                'divs' => array(
+                                                ' ',
+                                                ' ',
+                                                ''
+                                                )
+                            )
+                        )
+);
 $opts['fdd']['opsreq_any'] = array(
   'name'     => "Any session OK, not just priorities?",
   'select'   => 'T',
@@ -371,7 +463,7 @@ $opts['fdd']['opsreq_number'] = array(
   'select'   => 'T',
   'maxlen'   => 5,
   'sort'     => true,
-  'values'   => array('1','2','3','4','5','6','7','8')
+  'values'   => array('1','2','3','4','5','6','7','8','9','10','11','12')
 );
 $opts['fdd']['opsreq_comment'] = array(
   'name'     => 'Any comments?',
