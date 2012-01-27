@@ -49,7 +49,7 @@ function setbuttons($cycle,$stat,$id,$tag) {
 
 function setfilled($email,$regnum) {
     global $reqnum_by_rqstr, $status_by_rqstr;
-    for ($j = 1; $j < 9; $j++) {
+    for ($j = 1; $j < 13; $j++) {
         if ($reqnum_by_rqstr[$email][$j] == $regnum) {
             $status_by_rqstr[$email][$j] = STATUS_FULL;
             return;
@@ -154,7 +154,7 @@ function updatenavigation() {
         $statusid = array();
         $status = array();
     
-        for ($j = 1; $j<9; $j++) {
+        for ($j = 1; $j<13; $j++) {
             $nums[$j] = mysql_result($result,$i,"req_num");
             $names[$j] = mysql_result($result,$i,"show_name");
     
@@ -601,7 +601,7 @@ foreach ($rqstr_email as $email) {
     $row = $reqname_by_rqstr[$email];
     // count assignments
     $count = 0;
-    for ($j = 1; $j<9; $j++) {
+    for ($j = 1; $j<13; $j++) {
         if ( ($status_by_rqstr[$email][$j] == "1") && ($row[$j] != "") ) $count++;
     }
     // display output
@@ -609,7 +609,7 @@ foreach ($rqstr_email as $email) {
     if ($group_user_count[$rqstr_group[$email]] > 1) echo '<br/>Group of '.$group_user_count[$rqstr_group[$email]];
     echo '<br/>Up to '.$rqstr_req_size[$email].', has '.$count.', any='.$rqstr_req_any[$email];
     echo '</td>';
-    for ($j = 1; $j<9; $j++) {
+    for ($j = 1; $j<13; $j++) {
         echo '<td>';
         if ( ($status_by_rqstr[$email][$j] != "") && ($row[$j] != "") ) {
             $stat = $status_by_rqstr[$email][$j];
