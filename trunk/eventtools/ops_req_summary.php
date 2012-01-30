@@ -135,7 +135,7 @@ echo '<table border="1">';
 echo '<tr><th>Layout</th><th>Start</th><th>Spots</th><th>Sum</th><th>1st</th><th>2nd</th><th>3rd</th><th>4th</th><th>5th</th><th>6th</th><th>7th</th><th>8th</th><th>9th</th><th>10th</th><th>11th</th><th>12th</th></tr>';
 
 $i = 0;
-$grandtotal = array(0,0,0,0,0,0,0,0,0,0);
+$grandtotal = array(0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 
 while ($i < $numSessions) {
     $key = mysql_result($resultSessions,$i,"ops_id");
@@ -173,7 +173,7 @@ while ($i < $numSessions) {
 
 echo '<tr><th>Sum over rows</th><th></th>';
 $j = 0;
-while ($j < 10) {
+while ($j < 12+2) {
     echo '<td>'.$grandtotal[$j].'</td>';
     $j++;
 }
