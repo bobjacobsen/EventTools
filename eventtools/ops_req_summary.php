@@ -90,7 +90,11 @@ if ($args["session"]) {
         opsreq_pri5 = "'.$args["session"].'" OR 
         opsreq_pri6 = "'.$args["session"].'" OR 
         opsreq_pri7 = "'.$args["session"].'" OR 
-        opsreq_pri8 = "'.$args["session"].'" 
+        opsreq_pri8 = "'.$args["session"].'" OR 
+        opsreq_pri9 = "'.$args["session"].'" OR 
+        opsreq_pri10 = "'.$args["session"].'" OR 
+        opsreq_pri11 = "'.$args["session"].'" OR 
+        opsreq_pri12 = "'.$args["session"].'" 
         ';
 }
 
@@ -118,13 +122,17 @@ while ($i < $numReqs) {
     score(5, mysql_result($resultReqs,$i,"opsreq_pri6"));
     score(6, mysql_result($resultReqs,$i,"opsreq_pri7"));
     score(7, mysql_result($resultReqs,$i,"opsreq_pri8"));
+    score(8, mysql_result($resultReqs,$i,"opsreq_pri9"));
+    score(9, mysql_result($resultReqs,$i,"opsreq_pri10"));
+    score(10, mysql_result($resultReqs,$i,"opsreq_pri11"));
+    score(11, mysql_result($resultReqs,$i,"opsreq_pri12"));
     $i++;
 }
 
 
 // print table
 echo '<table border="1">';
-echo '<tr><th>Layout</th><th>Start</th><th>Spots</th><th>Sum</th><th>1st</th><th>2nd</th><th>3rd</th><th>4th</th><th>5th</th><th>6th</th><th>7th</th><th>8th</th></tr>';
+echo '<tr><th>Layout</th><th>Start</th><th>Spots</th><th>Sum</th><th>1st</th><th>2nd</th><th>3rd</th><th>4th</th><th>5th</th><th>6th</th><th>7th</th><th>8th</th><th>9th</th><th>10th</th><th>11th</th><th>12th</th></tr>';
 
 $i = 0;
 $grandtotal = array(0,0,0,0,0,0,0,0,0,0);
@@ -143,7 +151,7 @@ while ($i < $numSessions) {
 
     $j = 0;
     $sum = 0;
-    while ($j < 8) {
+    while ($j < 12) {
         $sum = $sum + $stats[$key][$j];
         $j++;
     }
@@ -151,7 +159,7 @@ while ($i < $numSessions) {
     if ($include) $grandtotal[1] += $sum;
     
     $j = 0;
-    while ($j < 8) {
+    while ($j < 12) {
         echo '<td align="right">';
         if ($stats[$key][$j] != 0) {
             echo $stats[$key][$j];
