@@ -172,7 +172,7 @@ $opts['fdd']['opsreq_pri1'] = array(
                         'orderby' => 'start_date',
                         'description' => array(
                                 'columns' => array(
-                                                'presenting_time', 
+                                                'start_date', 
                                                 'layout_owner_firstname',
                                                 'layout_owner_lastname',
                                                 'layout_name'
@@ -347,6 +347,7 @@ $opts['fdd']['opsreq_pri8'] = array(
                         'orderby' => 'start_date',
                         'description' => array(
                                 'columns' => array(
+                                                'start_date', 
                                                 'layout_owner_lastname',
                                                 'layout_name',
                                                 'presenting_time' 
@@ -370,6 +371,7 @@ $opts['fdd']['opsreq_pri9'] = array(
                         'orderby' => 'start_date',
                         'description' => array(
                                 'columns' => array(
+                                                'start_date', 
                                                 'layout_owner_lastname',
                                                 'layout_name',
                                                 'presenting_time' 
@@ -393,6 +395,7 @@ $opts['fdd']['opsreq_pri10'] = array(
                         'orderby' => 'start_date',
                         'description' => array(
                                 'columns' => array(
+                                                'start_date', 
                                                 'layout_owner_lastname',
                                                 'layout_name',
                                                 'presenting_time' 
@@ -416,6 +419,7 @@ $opts['fdd']['opsreq_pri11'] = array(
                         'orderby' => 'start_date',
                         'description' => array(
                                 'columns' => array(
+                                                'start_date', 
                                                 'layout_owner_lastname',
                                                 'layout_name',
                                                 'presenting_time' 
@@ -439,6 +443,7 @@ $opts['fdd']['opsreq_pri12'] = array(
                         'orderby' => 'start_date',
                         'description' => array(
                                 'columns' => array(
+                                                'start_date', 
                                                 'layout_owner_lastname',
                                                 'layout_name',
                                                 'presenting_time' 
