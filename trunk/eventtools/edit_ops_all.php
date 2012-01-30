@@ -173,7 +173,6 @@ $opts['fdd']['opsreq_pri1'] = array(
                         'description' => array(
                                 'columns' => array(
                                                 'start_date', 
-                                                'layout_owner_firstname',
                                                 'layout_owner_lastname',
                                                 'layout_name'
                                                 ),
@@ -198,7 +197,6 @@ $opts['fdd']['opsreq_pri2'] = array(
                         'description' => array(
                                 'columns' => array(
                                                 'start_date', 
-                                                'layout_owner_firstname',
                                                 'layout_owner_lastname',
                                                 'layout_name'
                                                 ),
@@ -223,7 +221,6 @@ $opts['fdd']['opsreq_pri3'] = array(
                         'description' => array(
                                 'columns' => array(
                                                 'start_date', 
-                                                'layout_owner_firstname',
                                                 'layout_owner_lastname',
                                                 'layout_name'
                                                 ),
@@ -248,7 +245,6 @@ $opts['fdd']['opsreq_pri4'] = array(
                         'description' => array(
                                 'columns' => array(
                                                 'start_date', 
-                                                'layout_owner_firstname',
                                                 'layout_owner_lastname',
                                                 'layout_name'
                                                 ),
@@ -273,7 +269,6 @@ $opts['fdd']['opsreq_pri5'] = array(
                         'description' => array(
                                 'columns' => array(
                                                 'start_date', 
-                                                'layout_owner_firstname',
                                                 'layout_owner_lastname',
                                                 'layout_name'
                                                 ),
@@ -298,7 +293,6 @@ $opts['fdd']['opsreq_pri6'] = array(
                         'description' => array(
                                 'columns' => array(
                                                 'start_date', 
-                                                'layout_owner_firstname',
                                                 'layout_owner_lastname',
                                                 'layout_name'
                                                 ),
@@ -323,7 +317,6 @@ $opts['fdd']['opsreq_pri7'] = array(
                         'description' => array(
                                 'columns' => array(
                                                 'start_date', 
-                                                'layout_owner_firstname',
                                                 'layout_owner_lastname',
                                                 'layout_name'
                                                 ),
@@ -349,8 +342,7 @@ $opts['fdd']['opsreq_pri8'] = array(
                                 'columns' => array(
                                                 'start_date', 
                                                 'layout_owner_lastname',
-                                                'layout_name',
-                                                'presenting_time' 
+                                                'layout_name'
                                                 ),
                                 'divs' => array(
                                                 ' ',
@@ -373,8 +365,7 @@ $opts['fdd']['opsreq_pri9'] = array(
                                 'columns' => array(
                                                 'start_date', 
                                                 'layout_owner_lastname',
-                                                'layout_name',
-                                                'presenting_time' 
+                                                'layout_name'
                                                 ),
                                 'divs' => array(
                                                 ' ',
@@ -397,8 +388,7 @@ $opts['fdd']['opsreq_pri10'] = array(
                                 'columns' => array(
                                                 'start_date', 
                                                 'layout_owner_lastname',
-                                                'layout_name',
-                                                'presenting_time' 
+                                                'layout_name'
                                                 ),
                                 'divs' => array(
                                                 ' ',
@@ -421,8 +411,7 @@ $opts['fdd']['opsreq_pri11'] = array(
                                 'columns' => array(
                                                 'start_date', 
                                                 'layout_owner_lastname',
-                                                'layout_name',
-                                                'presenting_time' 
+                                                'layout_name'
                                                 ),
                                 'divs' => array(
                                                 ' ',
@@ -445,8 +434,7 @@ $opts['fdd']['opsreq_pri12'] = array(
                                 'columns' => array(
                                                 'start_date', 
                                                 'layout_owner_lastname',
-                                                'layout_name',
-                                                'presenting_time' 
+                                                'layout_name'
                                                 ),
                                 'divs' => array(
                                                 ' ',
