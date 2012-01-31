@@ -444,6 +444,30 @@ $opts['fdd']['opsreq_pri12'] = array(
                             )
                         )
 );
+$opts['fdd']['opsreq_opt1'] = array(
+  'name'     => 'Opt1: dinner',
+  'select'   => 'T',
+  'maxlen'   => 1,
+  'sort'     => true
+);
+$opts['fdd']['opsreq_opt2'] = array(
+  'name'     => 'Opt2: As game',
+  'select'   => 'T',
+  'maxlen'   => 1,
+  'sort'     => true
+);
+$opts['fdd']['opsreq_opt3'] = array(
+  'name'     => 'Opt13: Giants game',
+  'select'   => 'T',
+  'maxlen'   => 1,
+  'sort'     => true
+);
+$opts['fdd']['opsreq_opt4'] = array(
+  'name'     => 'Opt4: N/A',
+  'select'   => 'T',
+  'maxlen'   => 1,
+  'sort'     => true
+);
 $opts['fdd']['opsreq_any'] = array(
   'name'     => "Any session OK, not just priorities?",
   'select'   => 'T',
