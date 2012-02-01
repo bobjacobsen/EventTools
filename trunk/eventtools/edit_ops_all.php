@@ -445,25 +445,25 @@ $opts['fdd']['opsreq_pri12'] = array(
                         )
 );
 $opts['fdd']['opsreq_opt1'] = array(
-  'name'     => 'Opt1: dinner',
+  'name'     => $event_tools_op_session_opt1_name,
   'select'   => 'T',
   'maxlen'   => 1,
   'sort'     => true
 );
 $opts['fdd']['opsreq_opt2'] = array(
-  'name'     => 'Opt2: As game',
+  'name'     => $event_tools_op_session_opt2_name,
   'select'   => 'T',
   'maxlen'   => 1,
   'sort'     => true
 );
 $opts['fdd']['opsreq_opt3'] = array(
-  'name'     => 'Opt13: Giants game',
+  'name'     => $event_tools_op_session_opt3_name,
   'select'   => 'T',
   'maxlen'   => 1,
   'sort'     => true
 );
 $opts['fdd']['opsreq_opt4'] = array(
-  'name'     => 'Opt4: N/A',
+  'name'     => $event_tools_op_session_opt4_name,
   'select'   => 'T',
   'maxlen'   => 1,
   'sort'     => true
