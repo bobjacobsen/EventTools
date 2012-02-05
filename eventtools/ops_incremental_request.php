@@ -39,7 +39,6 @@ foreach ( $values as $k ) {
 $reqs = array();
 
 // run the requests - need one for each priority that is given on page
-$reqs = check_for_value($values, "on", $reqs);
 $reqs = check_for_value($values, "1", $reqs);
 $reqs = check_for_value($values, "2", $reqs);
 $reqs = check_for_value($values, "3", $reqs);
@@ -49,6 +48,7 @@ $reqs = check_for_value($values, "6", $reqs);
 $reqs = check_for_value($values, "7", $reqs);
 $reqs = check_for_value($values, "8", $reqs);
 $reqs = check_for_value($values, "9", $reqs);
+$reqs = check_for_value($values, "on", $reqs);
 
 // so reqs now is an ordered list of requests
 
