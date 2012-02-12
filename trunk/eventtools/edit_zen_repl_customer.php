@@ -168,6 +168,18 @@ $opts['fdd']['customers_email_address'] = array(
   'maxlen'   => 96,
   'sort'     => true
 );
+$opts['fdd']['customers_telephone'] = array(
+  'name'     => 'Telephone',
+  'select'   => 'T',
+  'maxlen'   => 32,
+  'sort'     => true
+);
+$opts['fdd']['customers_cellphone'] = array(
+  'name'     => 'Cell Phone',
+  'select'   => 'T',
+  'maxlen'   => 32,
+  'sort'     => true
+);
 
 // Now important call to phpMyEdit
 require_once 'phpMyEdit.class.php';
