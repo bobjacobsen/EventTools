@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `prefix_customers` (
   `customers_paypal_ec` tinyint(1) unsigned NOT NULL default '0',
   `customers_x2011_associated_num` varchar(60) default NULL,
   PRIMARY KEY  (`customers_id`),
-  KEY `idx_email_address_zen` (`customers_email_address`),
+  UNIQUE KEY `idx_email_address_zen` (`customers_email_address`),
   KEY `idx_referral_zen` (`customers_referral`(10)),
   KEY `idx_grp_pricing_zen` (`customers_group_pricing`),
   KEY `idx_nick_zen` (`customers_nick`),
