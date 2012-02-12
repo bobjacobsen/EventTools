@@ -65,8 +65,12 @@ $opts['inc'] = 15;
 // Options you wish to give the users
 // A - add,  C - change, P - copy, V - view, D - delete,
 // F - filter, I - initial sort suppressed
-$opts['options'] = 'ACPVDF';
-
+if ($event_tools_option_zen_cart_used) {
+    // if zen cart in use, only allow changes through it, not this
+    $opts['options'] = 'VF';
+} else {
+    $opts['options'] = 'ACPVDF';
+}
 // Number of lines to display on multiple selection filters
 $opts['multiple'] = '4';
 
