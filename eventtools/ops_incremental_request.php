@@ -87,11 +87,17 @@ foreach ( $reqs as $k ) {
 //    print " ".$k." ";
 //}
 
-// and finally do an insert
+// do an insert of the request
 $op = "REPLACE INTO ".$event_tools_db_prefix."eventtools_opsession_req (`opsreq_person_email`, `opsreq_pri1`, `opsreq_pri2`, `opsreq_pri3`, `opsreq_pri4`, `opsreq_pri5`, `opsreq_pri6`, `opsreq_pri7`, `opsreq_pri8`, `opsreq_pri9`, `opsreq_pri10`, `opsreq_pri11`, `opsreq_pri12`, `opsreq_opt1`, `opsreq_opt2`, `opsreq_opt3`, `opsreq_comment`) VALUES "
     ."('".$email."','".$reqs_num[0]."','".$reqs_num[1]."','".$reqs_num[2]."','".$reqs_num[3]."','".$reqs_num[4]."','".$reqs_num[5]."','".$reqs_num[6]."','".$reqs_num[7]."','".$reqs_num[8]."','".$reqs_num[9]."','".$reqs_num[10]."','".$reqs_num[11]."','".$_REQUEST['dinner']."','".$_REQUEST['qballgame']."','".$_REQUEST['gballgame']."','".$_REQUEST[ "comments" ]."');";
 //print '[ '.$op.' ] ';
 mysql_query($op);
+
+// do an insert of the user
+$user = "REPLACE INTO ".$event_tools_db_prefix."prefix_customers (`opsreq_person_email`, `customers_firstname`, `customers_lastname`, `customers_telephone`, `customers_cellphone`) VALUES "
+    ."('".$email."','".$fname."','".$lname."','".$phone."','".$cell."');";
+//print '[ '.$user.' ] ';
+mysql_query($user);
 
 ?>
 
