@@ -95,8 +95,8 @@ mysql_query($op);
 
 // do an insert of the user
 $user = "REPLACE INTO ".$event_tools_db_prefix."customers (`opsreq_person_email`, `customers_firstname`, `customers_lastname`, `customers_telephone`, `customers_cellphone`) VALUES "
-    ."('".$email."','".$fname."','".$lname."','".$phone."','".$cell."');";
-print '[ '.$user.' ] ';
+    ."('".$email."','".$_REQUEST["fname"]."','".$_REQUEST["lname"]."','".$_REQUEST["phone"]."','".$_REQUEST["cell"]."');";
+//print '[ '.$user.' ] ';
 mysql_query($user);
 
 ?>
