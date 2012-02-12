@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `prefix_customers` (
   `customers_nick` varchar(96) NOT NULL default '',
   `customers_default_address_id` int(11) NOT NULL default '0',
   `customers_telephone` varchar(32) NOT NULL default '',
+  `customers_cellphone` varchar(32) NOT NULL default '',
   `customers_fax` varchar(32) default NULL,
   `customers_x2011_nmra_num` varchar(8) default NULL,
   `customers_x2011_reg_num` varchar(8) default NULL,
