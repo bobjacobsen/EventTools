@@ -8,18 +8,18 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 -- 
--- You can do a bulk replace of 'test_eventtools_'
--- to convert to 'test_eventtools_' and vice versa
+-- You can do a bulk replace of 'prefix_eventtools_'
+-- to convert to 'prefix_eventtools_' and vice versa
 --
 
 -- --------------------------------------------------------
 
 --
--- Loading data for table `test_eventtools_event_status_values`
+-- Loading data for table `prefix_eventtools_event_status_values`
 --
 
-DELETE FROM `test_eventtools_event_status_values`; 
-INSERT INTO `test_eventtools_event_status_values` (`event_status_id`, `event_status_code`, `event_status_name`, `event_status_display`) VALUES
+DELETE FROM `prefix_eventtools_event_status_values`; 
+INSERT INTO `prefix_eventtools_event_status_values` (`event_status_id`, `event_status_code`, `event_status_name`, `event_status_display`) VALUES
 (7, 0, '(0) Unknown', '(unknown)'),
 (8, 1, '(1) Some data entered', '(incomplete)'),
 (9, 2, '(2) Waiting approval', '(wait approval)'),
@@ -31,11 +31,11 @@ INSERT INTO `test_eventtools_event_status_values` (`event_status_id`, `event_sta
 -- --------------------------------------------------------
 
 --
--- Loading data for table `test_eventtools_handicapped_values`
+-- Loading data for table `prefix_eventtools_handicapped_values`
 --
 
-DELETE FROM `test_eventtools_accessibility_codes`;
-INSERT INTO `test_eventtools_accessibility_codes` (`accessibility_code`, `accessibility_name`, `accessibility_display`) VALUES
+DELETE FROM `prefix_eventtools_accessibility_codes`;
+INSERT INTO `prefix_eventtools_accessibility_codes` (`accessibility_code`, `accessibility_name`, `accessibility_display`) VALUES
 (1, '(1) Handicapped hostile', 'Handicapped hostile'),
 (2, '(2) Several steps and/or duck-under(s)', 'Several steps and/or duck-under(s)'),
 (3, '(3) Average house (1-2 steps)', 'Average house (1-2 steps)'),
@@ -46,11 +46,11 @@ INSERT INTO `test_eventtools_accessibility_codes` (`accessibility_code`, `access
 -- --------------------------------------------------------
 
 --
--- Loading data for table `test_eventtools_clinic_locations`
+-- Loading data for table `prefix_eventtools_clinic_locations`
 --
 
-DELETE FROM `test_eventtools_clinic_locations`;
-INSERT INTO `test_eventtools_clinic_locations` (`id`, `location_code`, `location_name`) VALUES
+DELETE FROM `prefix_eventtools_clinic_locations`;
+INSERT INTO `prefix_eventtools_clinic_locations` (`id`, `location_code`, `location_name`) VALUES
 (7, 0, '(0) Unknown'),
 (8, 1, 'Room 1'),
 (9, 2, 'Room 2'),
