@@ -158,7 +158,7 @@ for ($i = 0; $i < $num; ) {
     }
     $rowstring = $rowstring.'</td><td>';
 
-    $rowstring = $rowstring.'XXXXXX';  // we'll replace that XXXXXXX below
+    $rowstring = $rowstring.'XXXXXX';  // we'll replace that XXXXXXX with an ^ in some cases below
 
     $rowstring = $rowstring.'</td><td>';
     for ($k = $i; $k < $j; $k++) {
@@ -199,7 +199,7 @@ for ($i = 0; $i < $num; ) {
         ;
     ";
     $sess=mysql_query($query);
-    $n = min(mysql_numrows($sess),8);
+    $n = min(mysql_numrows($sess),12);
     $key = "";
     for ($k = 0; $k < $n ; $k++) {
         $key=$key.mysql_result($sess,$k,"ops_id")." ";
