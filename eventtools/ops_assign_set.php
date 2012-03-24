@@ -103,6 +103,78 @@ function setstatus($id, $status) {  // set status record $id to $status, then al
     }
 }
 
+function transfer_unassigned($toDate, $fromDate, $showName, $cycle) {
+    // fromID is the opsreq_req_status_id 
+    // goal is to take requests R1..Rn from user U1..Un currently on layout L date D1, and 
+    // link it to layout L date D2 instead. Status is not changed and only unassigned are moved.
+    //
+    // This is done by changing the opsreq_id from the one for L-D1 to the one for L-D2
+    // in the relevant prefix_eventtools_opsreq_req_status record, which is
+    // turn is found from join on
+    // prefix_eventtools_ops_group_names.opsreq_group_req_link_id 
+    //         = prefix_eventtools_opsreq_req_status.opsreq_group_req_link_id
+    
+    echo "Transfer requests for ".$showName." at ".$fromDate." to ".$toDate.'<br>';
+    
+    // query for "to" session
+    global $event_tools_db_prefix, $cycle;
+    $query="
+        SELECT  *
+        FROM ".$event_tools_db_prefix."eventtools_opsession_name
+        WHERE show_name = '".$showName."'
+            AND start_date = '".$toDate."'
+        ;
+    ";
+    $result=mysql_query($query);
+    $num = mysql_numrows($result);
+    if ($num != 1) {
+        echo "failed; did not find exactly 1 target, but ".$num;
+        return;
+    }
+    //echo "Moving to id ".mysql_result($result,0,"ops_id")."<br>";
+    $toID = mysql_result($result,0,"ops_id");
+    
+    // query for the right requests
+    $query="
+        SELECT  *
+        FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
+        WHERE opsreq_group_cycle_name = '".$cycle."'
+            AND show_name = '".$showName."'
+            AND start_date = '".$fromDate."'
+            AND status = '".STATUS_RELEASED."'
+        ;
+    ";
+    //echo $query;
+    $result=mysql_query($query);
+    $num = mysql_numrows($result);
+    //echo "found: ".$num;
+
+    $first = True;
+    for ($i = 0; $i < $num; $i++) {
+        if ($first) echo "Moving ";
+        else echo ", ";
+        $first = False;
+        echo mysql_result($result,$i,"customers_lastname");
+        
+        // do the move
+        //echo "(".mysql_result($result,$i,"ops_id").")";
+        //echo "[".mysql_result($result,$i,"opsreq_group_req_link_id")."]";
+
+        $query = "UPDATE ".$event_tools_db_prefix."eventtools_opsreq_req_status
+                    SET ops_id='".$toID."'
+                    WHERE opsreq_group_req_link_id = '".mysql_result($result,$i,"opsreq_group_req_link_id")."'
+                        AND opsreq_req_status_id = '".mysql_result($result,$i,"opsreq_req_status_id")."'
+                        AND req_num = '".mysql_result($result,$i,"req_num")."'
+                    ;";
+        //echo '<p>'.$query.'<p>';
+        mysql_query($query);
+
+
+    }
+    echo "<br>";
+
+}
+
 function updatenavigation() {
     global $reqnum_by_rqstr, $reqname_by_rqstr, $strtdate_by_rqstr, $statusid_by_rqstr, $status_by_rqstr;
     global $rqstr_name, $rqstr_group, $rqstr_address, $rqstr_email, $rqstr_group_size, $rqstr_req_size, $rqstr_req_any;
@@ -328,6 +400,11 @@ echo '</form>';
 // start processing tags
 if ( $args["from"] ) {
     copy_to_new_cycle($args["from"], $cycle);
+}
+
+if ( $args["transfer"] ) {
+    // Transfer from one session to another
+    transfer_unassigned($args["transfer"], $args["from_date"], $args["show_name"], $cycle);
 }
 
 if ( $args["insert"] ) {
@@ -632,6 +709,17 @@ echo '</table>';
 
 echo '<p/>';
 
+// get list of sessions for move buttons
+$query="
+    SELECT  *
+    FROM ".$event_tools_db_prefix."eventtools_opsession_name
+    ORDER BY show_name, start_date
+    ;
+";
+$r_sessions = mysql_query($query);
+$n_sessions = mysql_numrows($r_sessions);
+
+
 // now do a table of people by op session
 echo '<h3>By Session</h3>';
 echo '<table border="1">';
@@ -682,14 +770,27 @@ for ($i=0; $i<$num; ) {
         echo '<br/>';
         echo $count1.'/'.$count0.'/'.mysql_result($result,$i,"spaces");
         // button to add?
+        echo '<form method="get" action="ops_assign_set.php#'.'s'.$tagnum.'">';
+        echo '<input type="hidden" name="cy" value="'.$cycle.'">
+              <input type="hidden" name="id" value="'.mysql_result($result,$firstindex,"opsreq_req_status_id").'">
+              <input type="hidden" name="pri" value="'.$firstpri.'">';
         if (($pricnt > 0) && ($pricnt <= (mysql_result($result,$i,"spaces") - $count1))) {
-            echo '<form method="get" action="ops_assign_set.php#'.'s'.$tagnum.'">
-                  <input type="hidden" name="cy" value="'.$cycle.'">
-                  <input type="hidden" name="id" value="'.mysql_result($result,$firstindex,"opsreq_req_status_id").'">
-                  <input type="hidden" name="pri" value="'.$firstpri.'">
-                  <input type="submit" name="grp" value="P"/></form>';
+            echo '<input type="submit" name="grp" value="P"/>';
         }
-        echo '</td><td>';
+        $header = False;
+        for ($session = 0; $session < $n_sessions; $session++) { 
+            if (mysql_result($r_sessions, $session, "show_name") == mysql_result($result,$i,"show_name")
+                    && mysql_result($r_sessions, $session, "start_date") != mysql_result($result,$i,"start_date") ) {
+                if (! $header) {
+                    echo 'Move to: ';
+                    echo '<input type="hidden" name="show_name" value="'.mysql_result($result,$i,"show_name").'">';
+                    echo '<input type="hidden" name="from_date" value="'.mysql_result($result,$i,"start_date").'">';
+                    $header = True;
+                }
+                echo '<input type="submit" name="transfer" value="'.mysql_result($r_sessions, $session, "start_date").'"><br>';
+            }
+        }
+        echo '</form></td><td>';
         
         $status = $status_by_rqstr[mysql_result($result,$i,"opsreq_person_email")][mysql_result($result,$i,"req_num")];
         setspan($status);
