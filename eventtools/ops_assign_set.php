@@ -429,9 +429,13 @@ if ( $args["insert"] ) {
         $id = 0;
         for ($i = 0; $i < $num; $i++) {
             if ( mysql_result($result,$i,"ops_id") == $ops_id ) {
-                echo "<b>Force assignment of existing request</b><p>";
+                echo '<b>Force assignment of existing request to  '.mysql_result($result,$i,"show_name").' '.mysql_result($result,$i,"start_date").'</b>';
                 setstatus(mysql_result($result,$i,"opsreq_req_status_id"),'1');
                 $O = FALSE;
+                echo '<form method="get" action="ops_assign_set.php#sess'.mysql_result($result,$i,"show_name").'">
+                    <button type="submit" name="refresh" value="y">Go to '.mysql_result($result,$i,"show_name").' '.mysql_result($result,$i,"start_date").'</button>';
+                echo '<input type="hidden" name="cy" value="'.$cycle.'">';
+                echo "</form><P>";
                 break;
             } else if ( mysql_result($result,$i,"status") == "0" ) {
                 // match the last unassigned or empty request
@@ -441,14 +445,33 @@ if ( $args["insert"] ) {
         // check if that did the job, or if we need a new one
         if ($O & $id != 0) {
             // have to create one for this. 
-            echo '<b>Created status link and force assignment: [opsreq_group_req_link: '.mysql_result($result,0,"opsreq_group_id").' '.mysql_result($result,0,"opsreq_id").']';
-            echo '[opsreq_req_status: '.mysql_result($result,0,"ops_id").' '.$lastfree.']</b>';
-            $query = "UPDATE ".$event_tools_db_prefix."eventtools_opsreq_req_status
+            $query2 = "UPDATE ".$event_tools_db_prefix."eventtools_opsreq_req_status
                         SET status='".STATUS_ASSIGNED."', ops_id='".$ops_id."', forced='1'
                         WHERE opsreq_req_status_id = '".$id."'
                         ;";
-            //echo '<p>'.$query.'<p>';
-            mysql_query($query);
+            //echo '<p>'.$query2.'<p>';
+            mysql_query($query2);
+
+            // get info to show
+            $query="
+                SELECT *
+                FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
+                WHERE opsreq_group_cycle_name = '".$cycle."'
+                AND opsreq_person_email = '".$args["operator"]."'
+                AND ops_id = '".$ops_id."'
+                ;
+            ";
+            //echo $query;
+            $result=mysql_query($query);
+            $num = mysql_numrows($result);
+            
+            echo '<b>Created new request and forced assignment to '.mysql_result($result,0,"show_name").' '.mysql_result($result,0,"start_date").'</b> ';
+            //echo '[opsreq_group_req_link: '.mysql_result($result,0,"opsreq_group_id").' '.mysql_result($result,0,"opsreq_id").']';
+            //echo '[opsreq_req_status: '.mysql_result($result,0,"ops_id").' '.$lastfree.']';
+            echo '<form method="get" action="ops_assign_set.php#sess'.mysql_result($result,0,"show_name").'">
+                    <button type="submit" name="refresh" value="y">Go to '.mysql_result($result,0,"show_name").' '.mysql_result($result,0,"start_date").'</button>';
+            echo '<input type="hidden" name="cy" value="'.$cycle.'">';
+            echo "</form><p>";
         }
     } else {
         echo '<br/><b>Failed to find operator/session for insert</b><br/>';
@@ -765,6 +788,7 @@ for ($i=0; $i<$num; ) {
         // make row
         echo '<tr><td class="session">';
         echo '<a name="'.'s'.$tagnum.'">';
+        echo '<a name="'.'sess'.mysql_result($result,$i,"show_name").'">';
         echo mysql_result($result,$i,"show_name").'<br/>'.mysql_result($result,$i,"start_date");
         // include counts
         echo '<br/>';
