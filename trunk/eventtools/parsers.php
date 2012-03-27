@@ -48,7 +48,7 @@ function where_add_tag($args, $where=NONE) {
 // date=n  tours, clinics starting on July n
 function where_add_date($args, $where=NONE) {
     if ($args["date"]) {
-        $r = " start_date LIKE '2011-07-0".$args["date"]."%'";
+        $r = " start_date LIKE '2011-".$args["date"]."%'";
         if ($where != NONE) return $where." AND ".$r;
         else return $r;
     } else {
@@ -111,7 +111,7 @@ function where_add_layoutname($args, $where=NONE) {
     }
 }
 
-// name=AA  layoutname
+// layoutname=AA  layoutname
 function where_add_owner($args, $where=NONE) {
     if ($args["owner"]) {
         $r = " layout_owner_firstname LIKE '%".$args["owner"]."%' OR layout_owner_lastname LIKE '%".$args["owner"]."%' ";
@@ -155,7 +155,18 @@ function where_add_scale($args, $where=NONE) {
     }
 }
 
-// scale=AA  layouts or layout tours with prototype like AA
+// gauge=AA  layouts or layout tours with scale like AA
+function where_add_gauge($args, $where=NONE) {
+    if ($args["gauge"]) {
+        $r = " CONCAT(CONCAT(\" \",layout_gauge),\" \") REGEXP BINARY ' ".$args["gauge"]." '";
+        if ($where != NONE) return $where." AND ".$r;
+        else return $r;
+    } else {
+        return $where;
+    }
+}
+
+// prototype=AA  layouts or layout tours with prototype like AA
 function where_add_prototype($args, $where=NONE) {
     if ($args["prototype"]) {
         $r = " layout_prototype LIKE '%".$args["prototype"]."%'";
@@ -300,6 +311,72 @@ function where_add_general_tour_type($args, $where=NONE) {
     return $where;
 }
 
+// control=AA  layouts or layout tours with control name like AA
+function where_add_control($args, $where=NONE) {
+    if ($args["control"]) {
+        $r = " layout_control LIKE '%".$args["control"]."%'";
+        if ($where != NONE) return $where." AND ".$r;
+        else return $r;
+    } else {
+        return $where;
+    }
+}
+
+// era=AA  layouts or layout tours with era name like AA
+function where_add_era($args, $where=NONE) {
+    if ($args["era"]) {
+        $r = " layout_era LIKE '%".$args["era"]."%'";
+        if ($where != NONE) return $where." AND ".$r;
+        else return $r;
+    } else {
+        return $where;
+    }
+}
+
+// class=AA  layouts or layout tours with era name like AA
+function where_add_class($args, $where=NONE) {
+    if ($args["class"]) {
+        $r = " layout_class LIKE '%".$args["class"]."%'";
+        if ($where != NONE) return $where." AND ".$r;
+        else return $r;
+    } else {
+        return $where;
+    }
+}
+
+// theme=AA  layouts or layout tours with era name like AA
+function where_add_theme($args, $where=NONE) {
+    if ($args["theme"]) {
+        $r = " layout_theme LIKE '%".$args["theme"]."%'";
+        if ($where != NONE) return $where." AND ".$r;
+        else return $r;
+    } else {
+        return $where;
+    }
+}
+
+// scenery=AA  layouts or layout tours with scenery like AA
+function where_add_scenery($args, $where=NONE) {
+    if ($args["scenery"]) {
+        $r = " layout_scenery LIKE '%".$args["scenery"]."%'";
+        if ($where != NONE) return $where." AND ".$r;
+        else return $r;
+    } else {
+        return $where;
+    }
+}
+
+// size=AA  layouts or layout tours with size like AA
+function where_add_size($args, $where=NONE) {
+    if ($args["size"]) {
+        $r = " layout_size LIKE '%".$args["size"]."%'";
+        if ($where != NONE) return $where." AND ".$r;
+        else return $r;
+    } else {
+        return $where;
+    }
+}
+
 // where=    Use last, if you want people to be able to provide
 //           their own 'where' string
 function where_add_where($args, $where=NONE) {
@@ -396,8 +473,17 @@ function parse_layout_query() {
     $where = where_add_date($args, $where);
     $where = where_add_access($args, $where);
     $where = where_add_match_layout($args, $where);
-    $where = where_add_where($args, $where);
     $where = where_add_owner($args, $where);
+
+    $where = where_add_control($args, $where);
+    $where = where_add_gauge($args, $where);
+    $where = where_add_era($args, $where);
+    $where = where_add_class($args, $where);
+    $where = where_add_theme($args, $where);
+    $where = where_add_scenery($args, $where);
+    $where = where_add_size($args, $where);
+    
+    $where = where_add_where($args, $where);
     //echo $where;
     return $where;
 }
