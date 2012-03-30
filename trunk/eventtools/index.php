@@ -121,6 +121,7 @@ if ($event_tools_option_op_sessions)    echo '<td><a href="ops_req_summary.php">
     <a href="format_ops_by_day.php">Operating Sessions vs Day</a><p> 
     <a href="ops_assign_group.php">Start Assignments with Grouping</a>  <p>  
     <a href="ops_list_group.php">Email list for cycle</a>    <p>    
+    <a href="ops_print_by_layout.php">Session Rosters</a>    <p>
     <a href="ops_print_summary.php">Printable Session Rosters</a>    <p>
     </td>';
     
