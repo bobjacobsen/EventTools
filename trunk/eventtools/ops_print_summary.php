@@ -31,7 +31,7 @@ if (! ($args["cy"]) ) {
     echo '<a href="index.php">Back to main page</a><p/>';
     echo '<form method="get" action="ops_print_summary.php">
         Cycle Name: <input  name="cy"></textarea>
-        Date (blank or 1,2,3,... in July): <input  name="date"></textarea>
+        Date (blank or day-of-month, e.g. 25): <input  name="date"></textarea>
         <button type="submit">Start</button>
         </form>
     ';
@@ -41,8 +41,9 @@ if (! ($args["cy"]) ) {
 $cycle = $args["cy"];
 $date = $args["date"];
 $where = "";
-if ($date != NONE) {
-    $where = ' AND start_date LIKE "2011-07-'.substr('0'.$date,-2).'%" ';
+if ($date != NONE && $date != "") {
+    if (strlen($date) == 1) $date = '0'.$date;
+    $where = ' AND start_date LIKE "2012-04-'.substr($date,-2).'%" ';
 }
 
 // open db
@@ -61,7 +62,7 @@ $query="
     ;
 ";
 
-//echo $query;
+echo $query;
 $result=mysql_query($query);
 $num = mysql_numrows($result);
 
