@@ -62,7 +62,7 @@ $query="
     ;
 ";
 
-echo $query;
+//echo $query;
 $result=mysql_query($query);
 $num = mysql_numrows($result);
 
