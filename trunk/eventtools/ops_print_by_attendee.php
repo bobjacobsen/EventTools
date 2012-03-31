@@ -22,7 +22,7 @@ parse_str($_SERVER["QUERY_STRING"], $args);
 if (! ($args["cy"]) ) {
     echo '<h1>'.$event_tools_event_name.' Op Session Roster</h1>';
     echo '<a href="index.php">Back to main page</a><p/>';
-    echo '<form method="get" action="ops_print_by_layout.php">
+    echo '<form method="get" action="ops_print_by_attendee.php">
         Cycle Name: <input  name="cy"></textarea>
         Date (blank or day-of-month, e.g. 25): <input  name="date"></textarea>
         <button type="submit">Start</button>
