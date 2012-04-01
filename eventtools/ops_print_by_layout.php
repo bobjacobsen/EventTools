@@ -6,6 +6,14 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Op Session Roster</title>
     <style type="text/css">
+        @media print
+        {
+          table { page-break-after:auto }
+          tr    { page-break-inside:avoid; page-break-after:auto }
+          td    { page-break-inside:avoid; page-break-after:auto }
+          thead { display:table-header-group }
+          tfoot { display:table-footer-group }
+        }
     </style>
 </head>
 <body>
