@@ -27,18 +27,13 @@ $i=0;
 $lastmajorkey = mysql_result($result,$i,"opsreq_person_email");
 
 $part1 = "
-Here are your operating session assignments for '.$event_tools_event_name.'.  Please look them over and if there are any problems please reply to this email to let me know and we will try to resolve it.
+Here are your operating session assignments for ".$event_tools_event_name.".  Please look them over and if there are any problems please reply to this email to let me know and we will try to resolve it.
 
-I’m happy to tell you that 88% of folks got their first choice session; 99% of those who asked for more than 3 sessions got two of their top three choices.
-
-A fair number of you indicated you would attend other sessions if ones you had asked for were not available.  There were about a dozen people who we have assigned sessions to based on this.  Again, if there is a problem with these assignments please reply to this email to let me know.
-
-There are about 20% of the operating slots still open.  About 20 of these slots are during the Advanced Section sessions, including Marenzi, Osborn, Parks, Paul and Silicon Valley Lines.  If you can make one of these sessions please let me know. 
+Our Registrar, Larry Altbaum will be sending you additional information regarding other activities including the Saturday dinner.
 
 Jim Providenza
-X2011W OPSIG Coordinator
-------------------------
-
+ProRail 2012 Scheduler
+----------------------
 
 ";
 
@@ -57,7 +52,7 @@ while ($i < $num) {
         $to = mysql_result($result,$i,"opsreq_person_email");
         //$to = "rgj1927@pacbell.net";
         
-        $subject = "X2011 West Operating Session Assignments";
+        $subject = $event_tools_event_name." Operating Session Assignments";
         
         $headers = "from: rrjim@aol.com\nbcc: rrjim@aol.com, rgj1927@pacbell.net";
         //$headers = "from: jacobsen@berkeley.edu";
