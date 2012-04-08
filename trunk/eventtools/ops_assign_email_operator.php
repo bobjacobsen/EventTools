@@ -5,6 +5,9 @@
 require_once('access.php');
 require_once('utilities.php');
 
+// parse out arguments
+parse_str($_SERVER["QUERY_STRING"], $args);
+
 // for cycle defined
 if (! ($args["cy"]) ) {
     echo "This is the page for emailing to the operators.<p/>";
