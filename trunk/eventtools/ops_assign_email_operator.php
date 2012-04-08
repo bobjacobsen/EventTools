@@ -72,6 +72,8 @@ $lastmajorkey = mysql_result($result,$i,"opsreq_person_email");
 $part1 = "
 Here are your operating session assignments for ".$event_tools_event_name.".  Please look them over and if there are any problems please reply to this email to let me know and we will try to resolve it.
 
+As always, there is a possibility that cancellations will force us to make adjustments to session assignments.  If we need to change one of your assignments, I will let you know.
+
 Our Registrar, Larry Altbaum will be sending you additional information regarding other activities including the Saturday dinner.
 
 Jim Providenza
