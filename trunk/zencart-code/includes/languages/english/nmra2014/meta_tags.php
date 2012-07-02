@@ -8,10 +8,10 @@
  */
 
 // page title
-define('TITLE', 'NMRA2013');
+define('TITLE', 'NMRA 2013');
 
 // Site Tagline
-define('SITE_TAGLINE', 'The Peachtree Express');
+define('SITE_TAGLINE', 'Cleveland');
 
 // Custom Keywords
 define('CUSTOM_KEYWORDS', 'ecommerce, open source, shop, online shopping');
