@@ -8,7 +8,7 @@
  */
 
 // page title
-define('TITLE', 'NMRA 2013');
+define('TITLE', 'NMRA 2014');
 
 // Site Tagline
 define('SITE_TAGLINE', 'Cleveland');
