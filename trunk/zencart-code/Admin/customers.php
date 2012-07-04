@@ -1178,6 +1178,20 @@ if (($_GET['page'] == '' or $_GET['page'] == '1') and $_GET['cID'] != '') {
               </tr>
             </table></td>
 <?php
+
+// BOF Set variables for login_as_customer module
+  $place_order_button = 'includes/languages/english/images/buttons/button_placeorder.gif';
+  $login_as_customer = 'index.php?main_page=login_as_customer';
+  if (ENABLE_SSL_CATALOG == 'true') {
+$url = HTTPS_SERVER . DIR_WS_HTTPS_CATALOG;
+} elseif (ENABLE_SSL_CATALOG == 'false') {
+$url = HTTP_SERVER .  DIR_WS_CATALOG; 
+}
+  $p_url = $url;
+  $p_url .= $login_as_customer;
+  
+//EOF Set Variables for login_as_customer module
+
   $heading = array();
   $contents = array();
 
@@ -1202,6 +1216,25 @@ if (($_GET['page'] == '' or $_GET['page'] == '1') and $_GET['cID'] != '') {
         $heading[] = array('text' => '<b>' . TABLE_HEADING_ID . $cInfo->customers_id . ' ' . $cInfo->customers_firstname . ' ' . $cInfo->customers_lastname . '</b>');
 
         $contents[] = array('align' => 'center', 'text' => '<a href="' . zen_href_link(FILENAME_CUSTOMERS, zen_get_all_get_params(array('cID', 'action', 'search')) . 'cID=' . $cInfo->customers_id . '&action=edit', 'NONSSL') . '">' . zen_image_button('button_edit.gif', IMAGE_EDIT) . '</a> <a href="' . zen_href_link(FILENAME_CUSTOMERS, zen_get_all_get_params(array('cID', 'action', 'search')) . 'cID=' . $cInfo->customers_id . '&action=confirm', 'NONSSL') . '">' . zen_image_button('button_delete.gif', IMAGE_DELETE) . '</a><br />' . ($customers_orders->RecordCount() != 0 ? '<a href="' . zen_href_link(FILENAME_ORDERS, 'cID=' . $cInfo->customers_id, 'NONSSL') . '">' . zen_image_button('button_orders.gif', IMAGE_ORDERS) . '</a>' : '') . ' <a href="' . zen_href_link(FILENAME_MAIL, 'origin=customers.php&mode=NONSSL&selected_box=tools&customer=' . $cInfo->customers_email_address.'&cID=' . $cInfo->customers_id, 'NONSSL') . '">' . zen_image_button('button_email.gif', IMAGE_EMAIL) . '</a>');
+		
+		// BOF login_as_customer module
+		$contents[] = array('text' => '<div align="center"><form target="_blank" name="login" action="' . $p_url . '" method="post">
+<input type="hidden" name="firstname" id="firstname" value="' . $cInfo->customers_firstname . '">
+<input type="hidden" name="lastname" id="lastname" value="' . $cInfo->customers_lastname . '">
+<input type="hidden" name="cid" id="cid" value="' . $cInfo->customers_id . '">
+<input type="hidden" name="address" id="address" value="' . $cInfo->entry_street_address . '">
+<input type="hidden" name="city" id="city" value="' . $cInfo->entry_city . '">
+<input type="hidden" name="cstate" id="cstate" value="' . $customer_state . '">
+<input type="hidden" name="zipcode" id="zipcode" value="' . $cInfo->entry_postcode . '">
+<input type="hidden" name="company" id="company" value="' . $cInfo->entry_company . '">
+<input type="hidden" name="phone" id="phone" value="' . $cInfo->customers_telephone . '">
+<input type="hidden" name="s_url" id="s_url" value="' . $url . '">
+<input type="hidden" name="email_addr" id="login-email-address" value="' . $cInfo->customers_email_address . '">
+<input type="hidden" name="password" id="login-password" value="' . MASTER_PASS . '">
+<input type="image" src="' . $place_order_button . '">
+</form></div>');
+		//EOF login_as_customer module
+		
         $contents[] = array('text' => '<br />' . TEXT_DATE_ACCOUNT_CREATED . ' ' . zen_date_short($cInfo->date_account_created));
         $contents[] = array('text' => '<br />' . TEXT_DATE_ACCOUNT_LAST_MODIFIED . ' ' . zen_date_short($cInfo->date_account_last_modified));
         $contents[] = array('text' => '<br />' . TEXT_INFO_DATE_LAST_LOGON . ' '  . zen_date_short($cInfo->date_last_logon));
