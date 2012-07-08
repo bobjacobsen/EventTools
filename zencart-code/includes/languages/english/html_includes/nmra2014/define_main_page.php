@@ -1,5 +1,3 @@
-This is the front page; please add convention-specific text!
-
-<p>This content is located in the file at: <code> /languages/english/html_includes/YOUR_TEMPLATE/define_main_page.php</code></p>
-<p>You can quickly edit this content via Admin->Tools->Define Pages Editor, and select define_main_page from the pulldown.</p>
-<p><strong>NOTE: Always backup the files in<code> /languages/english/html_includes/your_template</code></strong></p>
+<p/>
+<h2 class="greeting">If this is your first time visiting our store, or if you haven't registered for the convention yet, please start by selecting your 
+<a href="index.php?main_page=index&cPath=2">primary registration</a>.</h2>
