@@ -22,7 +22,7 @@ define('HEADING_ORDER_COMMENTS', 'Special Instructions or Order Comments');
 // no comments entered
 define('NO_COMMENTS_TEXT', 'None');
 define('TITLE_CONTINUE_CHECKOUT_PROCEDURE', '<strong>Final Step</strong>');
-define('TEXT_CONTINUE_CHECKOUT_PROCEDURE', '- click the button to complete you order. Thank you!');
+define('TEXT_CONTINUE_CHECKOUT_PROCEDURE', '- click the button to complete your order. Thank you!');
 
 define('OUT_OF_STOCK_CAN_CHECKOUT', 'Products marked with ' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . ' are out of stock.<br />Items not in stock will be placed on backorder.');
 
