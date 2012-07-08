@@ -1,2 +1,3 @@
-<p><strong>Custom 404 Error Page with Site Map Sample Text ...</strong></p>
-<p>Put your custom "page not found" message here.  You can change this text in the Define Pages Editor located under Tools in the Admin.</p>
+<p><strong>Page Not Found</strong></p>
+<p>We're sorry, but we didn't find the page your looking for. Perhaps there's a problem with the link you followed.</p>
+<p>Click <a href="/conventions/store">here</a> to go back to the main page of the convention store.</p>
