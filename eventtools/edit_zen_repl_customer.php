@@ -69,7 +69,7 @@ if ($event_tools_option_zen_cart_used) {
     // if zen cart in use, only allow changes through it, not this
     $opts['options'] = 'VF';
 } else {
-    $opts['options'] = 'ACPVDF';
+    $opts['options'] = 'ACVDF';
 }
 // Number of lines to display on multiple selection filters
 $opts['multiple'] = '4';
@@ -187,7 +187,7 @@ $opts['fdd']['customers_cellphone'] = array(
 $opts['fdd']['customers_create_date'] = array(
   'name'     => 'Entry Created',
   'select'   => 'T',
-  'options'  => 'APH',
+  'options'  => 'AH',
   'default'  => date('Y-m-d H:i:s'),
   'maxlen'   => 32,
   'sort'     => true
