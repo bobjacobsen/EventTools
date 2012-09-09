@@ -184,6 +184,14 @@ $opts['fdd']['customers_cellphone'] = array(
   'maxlen'   => 32,
   'sort'     => true
 );
+$opts['fdd']['customers_create_date'] = array(
+  'name'     => 'Entry Created',
+  'select'   => 'T',
+  'options'  => 'VR', // read only
+  'default'  => date('Y-m-d H:i:s'),
+  'maxlen'   => 32,
+  'sort'     => true
+);
 
 // Now important call to phpMyEdit
 require_once 'phpMyEdit.class.php';
