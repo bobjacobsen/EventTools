@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS `prefix_customers` (
   `customers_cellphone` varchar(32) NOT NULL default '',
   `customers_fax` varchar(32) default NULL,
   `customers_x2011_nmra_num` varchar(8) default NULL,
+  `customers_x2011_nmra_expires` date default NULL,
   `customers_x2011_reg_num` varchar(8) default NULL,
   `customers_x2011_ldsig_num` varchar(32) default NULL,
   `customers_x2011_opsig_num` varchar(32) default NULL,
@@ -56,6 +57,8 @@ CREATE TABLE IF NOT EXISTS `prefix_customers` (
   `customers_paypal_payerid` varchar(20) NOT NULL default '',
   `customers_paypal_ec` tinyint(1) unsigned NOT NULL default '0',
   `customers_x2011_associated_num` varchar(60) default NULL,
+  `customers_create_date` datetime,
+  `customers_updated_date` timestamp ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY  (`customers_id`),
   UNIQUE KEY `idx_email_address_zen` (`customers_email_address`),
   KEY `idx_referral_zen` (`customers_referral`(10)),
@@ -64,6 +67,7 @@ CREATE TABLE IF NOT EXISTS `prefix_customers` (
   KEY `idx_newsletter_zen` (`customers_newsletter`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1428 ;
 
+    
 DROP TABLE IF EXISTS `prefix_address_book`;
 
 CREATE TABLE IF NOT EXISTS `prefix_address_book` (
