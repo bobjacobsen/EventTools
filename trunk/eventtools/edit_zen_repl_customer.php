@@ -192,13 +192,6 @@ $opts['fdd']['customers_create_date'] = array(
   'maxlen'   => 32,
   'sort'     => true
 );
-$opts['fdd']['customers_create_date'] = array(
-  'name'     => 'Entry Created',
-  'select'   => 'T',
-  'options'  => 'VR', // read only
-  'maxlen'   => 32,
-  'sort'     => true
-);
 
 // Now important call to phpMyEdit
 require_once 'phpMyEdit.class.php';
