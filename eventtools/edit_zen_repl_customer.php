@@ -187,8 +187,15 @@ $opts['fdd']['customers_cellphone'] = array(
 $opts['fdd']['customers_create_date'] = array(
   'name'     => 'Entry Created',
   'select'   => 'T',
-  'options'  => 'VR', // read only
+  'options'  => 'AH',
   'default'  => date('Y-m-d H:i:s'),
+  'maxlen'   => 32,
+  'sort'     => true
+);
+$opts['fdd']['customers_create_date'] = array(
+  'name'     => 'Entry Created',
+  'select'   => 'T',
+  'options'  => 'VR', // read only
   'maxlen'   => 32,
   'sort'     => true
 );
