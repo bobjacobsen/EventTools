@@ -28,8 +28,8 @@ mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
 $email = $_REQUEST[ "email" ];
 
 // do an insert of the user
-$user = "REPLACE INTO ".$event_tools_db_prefix."customers (`customers_email_address`, `customers_firstname`, `customers_lastname`, `customers_telephone`, `customers_cellphone`) VALUES "
-    ."('".$email."','".$_REQUEST["fname"]."','".$_REQUEST["lname"]."','".$_REQUEST["phone"]."','".$_REQUEST["cell"]."');";
+$user = "REPLACE INTO ".$event_tools_db_prefix."customers (`customers_email_address`, `customers_firstname`, `customers_lastname`, `customers_telephone`, `customers_cellphone`, `customers_create_date`) VALUES "
+    ."('".$email."','".$_REQUEST["fname"]."','".$_REQUEST["lname"]."','".$_REQUEST["phone"]."','".$_REQUEST["cell"]."',now());";
 //print '[ '.$user.' ] ';
 mysql_query($user);
 
