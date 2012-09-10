@@ -37,7 +37,7 @@ mysql_query($user);
 $findu = "SELECT * FROM ".$event_tools_db_prefix."customers (`customers_id`) WHERE clinic_presenter_email = '".$email.";";
 //print '[ '.$findu.' ] ';
 mysql_query($findu);
-//print "found ".mysql_result($reqs,$i,"customers_id")."</p>";
+print "<p>found ".mysql_result($reqs,$i,"customers_id")."</p>";
 
 $address = "REPLACE INTO ".$event_tools_db_prefix."address_book (`customers_id`, `entry_city`, `entry_state`) VALUES "
     ."('".$id."','".$_REQUEST["city"]."','".$_REQUEST["state"]."';";
