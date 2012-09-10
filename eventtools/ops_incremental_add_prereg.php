@@ -41,7 +41,7 @@ $reqs = mysql_query($findu);
 
 $address = "REPLACE INTO ".$event_tools_db_prefix."address_book (`customers_id`, `entry_city`, `entry_state`) VALUES "
     ."('".mysql_result($reqs,$i,"customers_id")."','".$_REQUEST["city"]."','".$_REQUEST["state"]."';";
-//print '[ '.$address.' ] ';
+print '[ '.$address.' ] ';
 mysql_query($address);
 
 ?>
