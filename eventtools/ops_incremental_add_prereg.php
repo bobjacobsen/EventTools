@@ -35,14 +35,14 @@ mysql_query($user);
 
 // do an insert of the address block
 $findu = "SELECT customers_id FROM ".$event_tools_db_prefix."customers WHERE customers_email_address = '".$email."';";
-print '[ '.$findu.' ] ';
+//print '[ '.$findu.' ] ';
 $reqs = mysql_query($findu);
-print "<p>found ".mysql_result($reqs,$i,"customers_id")."</p>";
+//print "<p>found ".mysql_result($reqs,$i,"customers_id")."</p>";
 
 $address = "REPLACE INTO ".$event_tools_db_prefix."address_book (`customers_id`, `entry_city`, `entry_state`) VALUES "
-    ."('".$id."','".$_REQUEST["city"]."','".$_REQUEST["state"]."';";
+    ."('".mysql_result($reqs,$i,"customers_id")."','".$_REQUEST["city"]."','".$_REQUEST["state"]."';";
 //print '[ '.$address.' ] ';
-//mysql_query($address);
+mysql_query($address);
 
 ?>
 
