@@ -34,7 +34,7 @@ $user = "REPLACE INTO ".$event_tools_db_prefix."customers (`customers_email_addr
 mysql_query($user);
 
 // do an insert of the address block
-$findu = "SELECT * FROM ".$event_tools_db_prefix."customers (`customers_id`) WHERE customers_email_address = '".$email.";";
+$findu = "SELECT * FROM ".$event_tools_db_prefix."customers (`customers_id`) WHERE customers_email_address = '".$email.'";";
 print '[ '.$findu.' ] ';
 mysql_query($findu);
 print "<p>found ".mysql_result($reqs,$i,"customers_id")."</p>";
