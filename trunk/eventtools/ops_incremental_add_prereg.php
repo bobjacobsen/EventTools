@@ -27,11 +27,26 @@ mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
 
 $email = $_REQUEST[ "email" ];
 
-// do an insert of the user
-$user = "REPLACE INTO ".$event_tools_db_prefix."customers (`customers_email_address`, `customers_firstname`, `customers_lastname`, `customers_telephone`, `customers_cellphone`, `customers_create_date`) VALUES "
-    ."('".$email."','".$_REQUEST["fname"]."','".$_REQUEST["lname"]."','".$_REQUEST["phone"]."','".$_REQUEST["cell"]."',now());";
-//print '[ '.$user.' ] ';
-mysql_query($user);
+// see if the user already exists
+$findu = "SELECT customers_id FROM ".$event_tools_db_prefix."customers WHERE customers_email_address = '".$email."';";
+$reqs = mysql_query($findu);
+
+if (mysql_num_rows($reqs) == 0) {
+ 
+    // do an insert of the user
+    $user = "REPLACE INTO ".$event_tools_db_prefix."customers (`customers_email_address`, `customers_firstname`, `customers_lastname`, `customers_telephone`, `customers_cellphone`, `customers_create_date`) VALUES "
+        ."('".$email."','".$_REQUEST["fname"]."','".$_REQUEST["lname"]."','".$_REQUEST["phone"]."','".$_REQUEST["cell"]."',now());";
+    //print '[ '.$user.' ] ';
+    mysql_query($user);
+
+} else {
+
+    // do an update of the user
+    $user = "UPDATE ".$event_tools_db_prefix."customers SET customers_firstname ='".$_REQUEST["fname"].", customers_lastname ='".$_REQUEST["lname"].", customers_telephone ='".$_REQUEST["phone"].", customers_cellphone ='".$_REQUEST["cell"]."  WHERE customers_email_address = '".$email."'
+    print '[ '.$user.' ] ';
+    mysql_query($user);
+
+}
 
 // do an insert of the address block
 $findu = "SELECT customers_id FROM ".$event_tools_db_prefix."customers WHERE customers_email_address = '".$email."';";
