@@ -246,6 +246,12 @@ $opts['fdd']['layout_postcode'] = array(
   'maxlen'   => 10,
   'sort'     => true
 );
+$opts['fdd']['layout_distance'] = array(
+  'name'     => 'Distance',
+  'select'   => 'T',
+  'maxlen'   => 5,
+  'sort'     => true
+);
 $opts['fdd']['layout_owner_email'] = array(
   'name'     => 'Owner Email',
   'select'   => 'T',
