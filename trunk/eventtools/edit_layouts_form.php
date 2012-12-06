@@ -266,6 +266,12 @@ $opts['fdd']['layout_control'] = array(
   'maxlen'   => 64,
   'sort'     => true
 );
+$opts['fdd']['layout_num_ops'] = array(
+  'name'     => 'Num Operators',
+  'select'   => 'T',
+  'maxlen'   => 5,
+  'sort'     => true
+);
 $opts['fdd']['layout_owner_url'] = array(
   'name'     => 'Owner URL',
   'select'   => 'T',

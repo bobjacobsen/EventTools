@@ -220,6 +220,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_layouts` (
   `layout_plan_type` varchar(64) default NULL,
   `layout_ops_scheme` varchar(64) default NULL,
   `layout_control` varchar(64) default NULL,
+  `layout_num_ops` varchar(5) default NULL,
   `layout_allow_photo` char(1) default NULL,
   
   `layout_accessibility` int(3) default NULL,

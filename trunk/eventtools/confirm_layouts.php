@@ -232,6 +232,12 @@ $opts['fdd']['layout_control'] = array(
   'help'     => 'DC, DCC type, computer, ...',
   'sort'     => true
 );
+$opts['fdd']['layout_num_ops'] = array(
+  'name'     => 'Num Operators',
+  'select'   => 'T',
+  'maxlen'   => 5,
+  'sort'     => true
+);
 $opts['fdd']['layout_accessibility'] = array(
   'name'     => 'Accessibility',
   'select'   => 'D',
