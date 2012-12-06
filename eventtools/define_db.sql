@@ -239,6 +239,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_layouts` (
   `layout_city` varchar(32) default '',
   `layout_state` char(2) default '',
   `layout_postcode` varchar(14) default '',
+  `layout_distance` varchar(25) default '',
 
   `layout_local_url` varchar(50) default '',
   

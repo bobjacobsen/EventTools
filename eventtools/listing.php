@@ -55,6 +55,7 @@ function list_layout_heading($result,$i) {
     echo 'city:  '.errorOnEmpty(mysql_result($result,$i,"layout_city"),"city").'<br>';  
     echo 'state:  '.errorOnEmpty(mysql_result($result,$i,"layout_state"),"state").'<br>';  
     echo 'post code:  '.warnOnEmpty(mysql_result($result,$i,"layout_postcode"),"zip").'<br>';  
+    echo 'distance:  '.warnOnEmpty(mysql_result($result,$i,"layout_distance"),"distance").'<br>';  
     echo '<br>';
     echo 'Fidelity to prototype:  '.mysql_result($result,$i,"layout_fidelity").'<br>';  
     echo 'Rigor:  '.mysql_result($result,$i,"layout_rigor").'<br>';  
