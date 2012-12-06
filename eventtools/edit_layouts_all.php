@@ -327,6 +327,13 @@ $opts['fdd']['layout_dispatched_by1'] = displayConstrained('Dispatched By (prima
 $opts['fdd']['layout_dispatched_by2'] = displayConstrained('Dispatched By (secondary)', $event_tools_constrain_dispatched_by2, $event_tools_db_prefix.'eventtools_constrain_dispatched_by2');
 $opts['fdd']['layout_communications'] = displayConstrained('Communications', $event_tools_constrain_communications, $event_tools_db_prefix.'eventtools_constrain_communications');
 
+$opts['fdd']['layout_num_ops'] = array(
+  'name'     => 'Num Operators',
+  'select'   => 'T',
+  'maxlen'   => 5,
+  'sort'     => true
+);
+
 $opts['fdd']['layout_allow_photo'] = array(
   'name'     => 'Allow Photos',
   'select'   => 'O',

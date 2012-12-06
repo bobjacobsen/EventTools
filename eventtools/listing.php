@@ -40,6 +40,7 @@ function list_layout_heading($result,$i) {
     echo 'plan type:  '.warnOnEmpty(mysql_result($result,$i,"layout_plan_type"),"plan type").'<br>';  
     echo 'ops scheme:  '.warnOnEmpty(mysql_result($result,$i,"layout_ops_scheme"),"ops scheme").'<br>';  
     echo 'control:  '.warnOnEmpty(mysql_result($result,$i,"layout_control"),"control").'<br>';  
+    echo 'num ops:  '.warnOnEmpty(mysql_result($result,$i,"layout_num_ops"),"numops").'<br>';  
     echo 'accessibility:  '.warnOnEmpty(mysql_result($result,$i,"accessibility_name"),"accessible").'<br>';  
     echo 'wheelchair access:  '.mysql_result($result,$i,"layout_wheelchair_access").'<br>';  
     echo 'duckunder entry:  '.mysql_result($result,$i,"layout_duckunder_entry").'<br>';  
