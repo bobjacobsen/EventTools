@@ -167,7 +167,7 @@ see the <a href="index.php">main page</a> for access to those.
         }
         simple_table('layouts', 
             array('layout_owner_lastname', 'layout_owner_firstname', 'layout_photo_url', 'layout_name', 'layout_distance', 'layout_num_ops', 'layout_control', 'layout_dispatched_by1'), 
-            "`layout_status_code` >= 3 ");
+            "`layout_status_code` >= 60 ");
     ?>
 </table>
 
