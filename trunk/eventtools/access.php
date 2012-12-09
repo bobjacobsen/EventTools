@@ -78,10 +78,14 @@ $event_tools_option_zen_cart_used       = FALSE;
 // how to generate a link to optional Zen Cart
 $event_tools_cartlink = "http://127.0.0.1/localcart";
 
-// Names for optional fields 1-4 in op session requests
+// Names for optional fields 1-8 in op session requests
 $event_tools_op_session_opt1_name   = 'Dinner';
-$event_tools_op_session_opt2_name   = 'As Game';
-$event_tools_op_session_opt3_name   = 'Giants Game';
+$event_tools_op_session_opt2_name   = 'Opt2';
+$event_tools_op_session_opt3_name   = 'Opt3';
 $event_tools_op_session_opt4_name   = 'Opt4';
+$event_tools_op_session_opt5_name   = 'Opt5';
+$event_tools_op_session_opt6_name   = 'Opt6';
+$event_tools_op_session_opt7_name   = 'Opt7';
+$event_tools_op_session_opt8_name   = 'Opt8';
 
 ?>
