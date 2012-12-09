@@ -127,12 +127,12 @@ function simple_table($table_name, $var_names, $where=NONE, $order=NONE) {
         ORDER BY ".$order."
         ;
     ";
-    echo $query;
+    //echo $query;
     $result=mysql_query($query);
     
     $i=0;
     $num=mysql_numrows($result);
-    echo $num;
+    //echo $num;
     
     while ($i < $num) {
         $j = 0;
