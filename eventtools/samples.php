@@ -145,6 +145,7 @@ see the <a href="index.php">main page</a> for access to those.
 
 <hr>
 <!-- Sample of free-form table -->
+Sample of free-form layout table
 <table border="1">
     <?php  
         require_once('access.php'); require_once('utilities.php'); require_once('formatting.php');
@@ -157,6 +158,12 @@ see the <a href="index.php">main page</a> for access to those.
                 return;
             } else if ($name == 'layout_photo_url') {
                 $val = '<a href="'.$row[$name].'">Description & Photos</a>';
+            } else if ($name == 'layout_dispatched_by1') {
+                if (strlen($row['layout_dispatched_by2']) > 0) {
+                    $val = errorOnEmpty(htmlspecialchars($row["layout_dispatched_by1"]."/".$row["layout_dispatched_by2"]),"dispatch");
+                }
+            } else if ($name == 'layout_dispatched_by2') {
+                return;
             }
             echo "  <td>\n";
             echo "    <span class=\"et-".$name."\">\n";
@@ -166,10 +173,20 @@ see the <a href="index.php">main page</a> for access to those.
             echo "  </td>\n";
         }
         simple_table('layouts', 
-            array('layout_owner_lastname', 'layout_owner_firstname', 'layout_photo_url', 'layout_name', 'layout_scale', 'layout_distance', 'layout_num_ops', 'layout_control', 'layout_dispatched_by1'), 
-            "`layout_status_code` >= 60 ");
+            array('layout_owner_lastname', 'layout_owner_firstname', 'layout_photo_url', 'layout_name', 'layout_scale', 'layout_distance', 'layout_num_ops', 'layout_control', 'layout_dispatched_by1', 'layout_dispatched_by2'), 
+            "`layout_status_code` >= 50 ");
     ?>
 </table>
+
+<hr>
+<!-- Sample of free-form table -->
+Sample of op session free-form entry
+<form method="get"><table border="1">
+    <?php  
+        require_once('access.php'); require_once('utilities.php'); require_once('ops_req_tools.php');
+        create_request_entries(8);
+    ?>
+</table><button type="submit">Check URL</button></form>
 
 
 </body>
