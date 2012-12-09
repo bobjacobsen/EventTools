@@ -34,7 +34,10 @@ INSERT INTO `prefix_eventtools_event_status_values` (`event_status_id`, `event_s
 (10, 3, '(3) Approved, no cart link', ''),
 (11, 4, '(4) Visible, cart link shown', '(cart link)'),
 (12, 5, '(5) Sold Out', 'Sold Out'),
-(13, 6, '(6) Cancelled', 'Cancelled');
+(13, 6, '(6) Cancelled', 'Cancelled'),
+(14, 40, '(40) Not available', 'Not Available'),
+(15, 50, '(50) Offered as bonus session', 'Bonus'),
+(16, 60, '(60) Offering Session(s)', 'Sessions');
 
 -- --------------------------------------------------------
 
