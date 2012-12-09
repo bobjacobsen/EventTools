@@ -2,7 +2,8 @@
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
--- Database: `x2011west`
+-- Database: `database`
+-- Prefix:   `prefix_`
 --
 
 -- --------------------------------------------------------
@@ -11,6 +12,13 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- You can do a bulk replace of 'prefix_eventtools_'
 -- to convert to 'prefix_eventtools_' and vice versa
 --
+-- Load some starting defaults for various
+-- EventTools tables. 
+--
+-- For a sample database, see the example_load.db file
+--
+-- Running this is the last step in setting
+-- up the EventTools databases.
 
 -- --------------------------------------------------------
 
@@ -52,19 +60,161 @@ INSERT INTO `prefix_eventtools_accessibility_codes` (`accessibility_code`, `acce
 DELETE FROM `prefix_eventtools_clinic_locations`;
 INSERT INTO `prefix_eventtools_clinic_locations` (`id`, `location_code`, `location_name`) VALUES
 (7, 0, '(0) Unknown'),
-(8, 1, 'Room 1'),
-(9, 2, 'Room 2'),
-(10, 3, 'Room 3'),
-(11, 4, 'Room 4'),
-(12, 5, 'Room 5'),
-(13, 6, 'Room 6'),
-(14, 7, 'Room 7'),
-(15, 8, 'Room 8'),
-(16, 9, 'Non-Rail'),
-(17, 10, 'Auction Room'),
-(18, 11, 'Convention Center'),
 (19, 12, 'TBA');
 
 -- --------------------------------------------------------
--- --------------------------------------------------------
+
+--
+-- Loading default data for constraint tables
+--
+
+INSERT INTO `prefix_eventtools_constrain_scale` (`constrain_value`) VALUES
+('Z'),
+('S'),
+('HO'),
+('G/F'),
+('O'),
+('N');
+
+INSERT INTO `prefix_eventtools_constrain_gauge` (`constrain_value`) VALUES
+('Std.'),
+('N2'),
+('N30'),
+('N3'),
+('Dual');
+
+INSERT INTO `prefix_eventtools_constrain_era` (`constrain_value`) VALUES
+('Early'),
+('Golden Age'),
+('Transition'),
+('First Gen.'),
+('Mining'),
+('Other');
+
+INSERT INTO `prefix_eventtools_constrain_class` (`constrain_value`) VALUES
+('Mainline'),
+('Bridge Line'),
+('Short Line'),
+('Branch Line'),
+('Industrial'),
+('Other');
+
+INSERT INTO `prefix_eventtools_constrain_theme` (`constrain_value`) VALUES
+('Gen. Freight'),
+('Coal'),
+('Logging'),
+('Passenger'),
+('Mining'),
+('Other');
+
+INSERT INTO `prefix_eventtools_constrain_locale` (`constrain_value`) VALUES
+('East'),
+('West'),
+('Midwest'),
+('North'),
+('South'),
+('Pac. NW'),
+('Other');
+
+INSERT INTO `prefix_eventtools_constrain_scenery` (`constrain_value`) VALUES
+('0%'),
+('20%'),
+('40%'),
+('60%'),
+('80%'),
+('100%');
+
+INSERT INTO `prefix_eventtools_constrain_plan_type` (`constrain_value`) VALUES
+('Single Level'),
+('Multi-level');
+
+INSERT INTO `prefix_eventtools_constrain_ops_scheme` (`constrain_value`) VALUES
+('Mainline Running'),
+('Various Types'),
+('Switching');
+
+INSERT INTO `prefix_eventtools_constrain_control` (`constrain_value`) VALUES
+('Lenz'),
+('NCE'),
+('Digitrax'),
+('DCC (unknown type)'),
+('Analog');
+
+INSERT INTO `prefix_eventtools_constrain_fidelity` (`constrain_value`) VALUES
+('Unknown'), 
+('Mix of Eras'), 
+('Evoke Era'),
+('Few Comp.'), 
+('Full');
+
+INSERT INTO `prefix_eventtools_constrain_rigor` (`constrain_value`) VALUES
+('Unknown'), 
+('Attempt'), 
+('Purposeful'),
+('Adheres'),
+('Tight');
+
+INSERT INTO `prefix_eventtools_constrain_documentation` (`constrain_value`) VALUES
+('Unknown'),
+('Moderate'), 
+('High');
+
+INSERT INTO `prefix_eventtools_constrain_session_pace` (`constrain_value`) VALUES
+('Unknown'), 
+('Sequence'), 
+('Fast Clock'), 
+('Real Time');
+
+INSERT INTO `prefix_eventtools_constrain_car_forwarding` (`constrain_value`) VALUES
+('Unknown'),
+('CC & WB'),
+('Switchlist'),
+('Computer'),
+('Tab on Car'),
+('Car-for-Car') ;
+
+INSERT INTO `prefix_eventtools_constrain_tone` (`constrain_value`) VALUES
+('Unknown'), 
+('Casual'), 
+('Disciplined');
+
+INSERT INTO `prefix_eventtools_constrain_dispatched_by1` (`constrain_value`) VALUES
+('Unknown'), 
+('TT&TO'), 
+('TWC'), 
+('DTC'),
+('Voice'), 
+('CTC'), 
+('Yard Limits'), 
+('251'), 
+('N/A');
+
+INSERT INTO `prefix_eventtools_constrain_dispatched_by2` (`constrain_value`) VALUES
+('Unknown'), 
+('TT&TO'), 
+('TWC'), 
+('DTC'),
+('Voice'), 
+('CTC'), 
+('Yard Limits'), 
+('251'), 
+('N/A');
+
+INSERT INTO `prefix_eventtools_constrain_communications` (`constrain_value`) VALUES
+('Unknown'), 
+('Voice'), 
+('Telephone'), 
+('5ch Radio'), 
+('Radio'), 
+('FRS'), 
+('Signals'), 
+('N/A'), 
+('TBD');
+
+--
+-- Loading data for table `prefix_eventtools_users`
+--
+
+INSERT INTO `prefix_eventtools_users` (`user_id`, `user_name`, `user_pwd`, `user_key`, `user_email_log_skip`) VALUES
+(8, 'jacobsen@berkeley.edu', '', '*', '1');
 
