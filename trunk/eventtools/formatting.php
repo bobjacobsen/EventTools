@@ -108,6 +108,48 @@ function format_all_general_tours_as_8table($where=NONE, $order=NONE, $url=NONE,
     format_as_table($formatter, $where, $order);
 }
 
+function simple_table($table_name, $var_names, $where=NONE, $order=NONE) {
+    global $opts, $event_tools_db_prefix, $event_tools_href_add_on;
+    global $event_tools_show_min_value;
+
+    mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
+    @mysql_select_db($opts['db']) or die( "Unable to select database");
+    
+    if ($order==NONE) $order = "layout_owner_lastname, layout_owner_firstname";
+
+    if ($where != NONE) $where = "WHERE ".$where." ";
+    else $where = " ";
+    
+    $query="
+        SELECT  *
+        FROM ".$event_tools_db_prefix."eventtools_".$table_name."
+        ".$where."
+        ORDER BY ".$order."
+        ;
+    ";
+    echo $query;
+    $result=mysql_query($query);
+    
+    $i=0;
+    $num=mysql_numrows($result);
+    echo $num;
+    
+    while ($i < $num) {
+        $j = 0;
+        echo "<tr>\n";
+        $row = mysql_fetch_assoc($result);
+
+        while ($j < count($var_names)) {
+    
+            simple_table_format_cell($j, $row, $var_names[$j]);
+    
+            $j++;
+        }
+        echo "</tr>\n";
+        $i++;
+    }    
+}
+
 // 
 // Listing of layouts, including the sublist of layout tours they're on
 //

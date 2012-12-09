@@ -143,6 +143,34 @@ see the <a href="index.php">main page</a> for access to those.
     <input name="number" type="text" size="6" maxlength="5" value="P401" />
 </form>
 
+<hr>
+<!-- Sample of free-form table -->
+<table border="1">
+    <?php  
+        require_once('access.php'); require_once('utilities.php'); require_once('formatting.php');
+        function simple_table_format_cell($index, $row, $name) {
+            $val = errorOnEmpty(htmlspecialchars($row[$name]),$name);
+            // special cases
+            if ($name == 'layout_owner_lastname') {
+                $val = errorOnEmpty(htmlspecialchars($row["layout_owner_firstname"]." ".$row["layout_owner_lastname"]),"name");
+            } else if ($name == 'layout_owner_firstname') {
+                return;
+            } else if ($name == 'layout_photo_url') {
+                $val = '<a href="'.$row[$name].'">Description & Photos</a>';
+            }
+            echo "  <td>\n";
+            echo "    <span class=\"et-".$name."\">\n";
+            echo "      <a name=\"".$row[$name]."\"></a>\n";
+            echo "     ".$val;
+            echo "      </span> \n";
+            echo "  </td>\n";
+        }
+        simple_table('layouts', 
+            array('layout_owner_lastname', 'layout_owner_firstname', 'layout_photo_url', 'layout_name', 'layout_distance', 'layout_num_ops', 'layout_control', 'layout_dispatched_by1'), 
+            "`layout_status_code` >= 3 ");
+    ?>
+</table>
+
 
 </body>
 </html>
