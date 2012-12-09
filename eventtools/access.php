@@ -23,7 +23,7 @@ $event_tools_require_customer_authenticate = FALSE;
 
 // to get new and changed entries logged & reported via email, uncomment these lines
 $opts['logtable'] = $event_tools_db_prefix.'eventtools_changelog';
-$event_tools_notify_email_address = 'x2011west@pacbell.net';
+$event_tools_notify_email_address = 'rgj1927@pacbell.net';
 $event_tools_notify_email_prefix = $event_tools_event_name;
 
 
