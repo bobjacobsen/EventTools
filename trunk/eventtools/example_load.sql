@@ -1,5 +1,5 @@
 --
--- Loading data for constraint tables
+-- Loading default data for constraint tables
 --
 
 INSERT INTO `prefix_eventtools_constrain_scale` (`constrain_value`) VALUES
@@ -178,6 +178,5 @@ INSERT INTO `prefix_eventtools_event_status_values` (`event_status_id`, `event_s
 --
 
 INSERT INTO `prefix_eventtools_users` (`user_id`, `user_name`, `user_pwd`, `user_key`, `user_email_log_skip`) VALUES
-(8, 'jacobsen@berkeley.edu', '', '*', '1'),
-(23, 'ramsler@charter.net', '', '', '0');
+(8, 'jacobsen@berkeley.edu', '', '*', '1');
 
