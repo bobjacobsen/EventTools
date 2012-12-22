@@ -113,7 +113,7 @@ AS SELECT * FROM prefix_eventtools_opsession LEFT JOIN prefix_eventtools_layouts
 
 -- Op Session name for use in requests
 CREATE OR REPLACE VIEW prefix_eventtools_opsession_name
-AS SELECT ops_id, start_date, presenting_time, spaces, distance, travel_time, location, ops_layout_id,
+AS SELECT ops_id, start_date, presenting_time, spaces, distance, travel_time, location, ops_layout_id, status_code, 
             IF((ops_layout_id2!=0),CONCAT(l1.layout_owner_lastname,' / ',l2.layout_owner_lastname),CONCAT(l1.layout_owner_lastname,' ',l1.layout_name)) AS show_name,
             l1.layout_owner_lastname AS layout_owner_lastname1, l2.layout_owner_lastname AS layout_owner_lastname2,
             l1.layout_owner_firstname AS layout_owner_firstname1, l2.layout_owner_firstname AS layout_owner_firstname2,
