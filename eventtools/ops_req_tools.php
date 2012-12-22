@@ -82,7 +82,7 @@ function create_option_entries() {
 function create_option_entry($short, $long, $var) {
     if ($short == NONE) return;
     if ($short == '') return;
-    echo '<tr><td colspan=2><input type="checkbox" name="'.$var.'">&nbsp;'."\n";
+    echo '<tr><td colspan=2><input type="checkbox" value="Y" name="'.$var.'">&nbsp;'."\n";
     echo $long;
     echo "</td></tr>\n";
 }
