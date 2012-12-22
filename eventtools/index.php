@@ -280,7 +280,12 @@ most recent draft of the
 <p>
 For EventTools background information, please see the 
 most recent draft of the 
-<a href="EventToolsAdmin.odt">EventTools Administration Guide</a>.
+<a href="EventToolsAdmin.pdf">EventTools Administration Guide</a>.
+
+<p>
+For information on using EventTools at an operating meet, please see the 
+most recent draft of the 
+<a href="EventToolsOps.pdf">EventTools Op Sessions Guide</a>.
 
 <p>
 For example query code, see the <a href="samples.php">samples page</a>.
