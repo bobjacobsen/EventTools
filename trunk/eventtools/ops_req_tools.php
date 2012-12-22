@@ -61,6 +61,15 @@ function create_request_entries($max_pri, $where=NONE, $order=NONE ) {
 // for options
 // 
 function create_option_entries() {
+    global $event_tools_op_session_opt1_name, $event_tools_op_session_opt1_long_name;
+    global $event_tools_op_session_opt2_name, $event_tools_op_session_opt2_long_name;
+    global $event_tools_op_session_opt3_name, $event_tools_op_session_opt3_long_name;
+    global $event_tools_op_session_opt4_name, $event_tools_op_session_opt4_long_name;
+    global $event_tools_op_session_opt5_name, $event_tools_op_session_opt5_long_name;
+    global $event_tools_op_session_opt6_name, $event_tools_op_session_opt6_long_name;
+    global $event_tools_op_session_opt7_name, $event_tools_op_session_opt7_long_name;
+    global $event_tools_op_session_opt8_name, $event_tools_op_session_opt8_long_name;
+    
     create_option_entry($event_tools_op_session_opt1_name, $event_tools_op_session_opt1_long_name, 'opt1');
     create_option_entry($event_tools_op_session_opt2_name, $event_tools_op_session_opt2_long_name, 'opt2');
     create_option_entry($event_tools_op_session_opt3_name, $event_tools_op_session_opt3_long_name, 'opt3');
