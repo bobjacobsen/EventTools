@@ -79,8 +79,8 @@ $event_tools_option_zen_cart_used       = FALSE;
 $event_tools_cartlink = "http://127.0.0.1/localcart";
 
 // Names for optional fields 1-8 in op session requests
-$event_tools_op_session_opt1_name        = 'Dinner';
-$event_tools_op_session_opt1_long_name   = 'Dinner';
+$event_tools_op_session_opt1_name        = 'Opt1';
+$event_tools_op_session_opt1_long_name   = 'Option 1';
 $event_tools_op_session_opt2_name        = 'Opt2';
 $event_tools_op_session_opt2_long_name   = 'Option 2';
 $event_tools_op_session_opt3_name        = 'Opt3';
