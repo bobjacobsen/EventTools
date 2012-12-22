@@ -42,7 +42,7 @@ function create_request_entries($max_pri, $where=NONE, $order=NONE ) {
         echo "<tr>\n";
         $row = mysql_fetch_assoc($result);
 
-        echo '<tr><td><select name=os_'.$row[ops_id].'>';
+        echo '<tr><td><select name=v_'.$row[ops_id].'>';
         $k = 1;
         echo '<option value=""></option>';
         while ($k <= $max_pri) {
