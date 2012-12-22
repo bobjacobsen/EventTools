@@ -30,7 +30,7 @@ function create_request_entries($max_pri, $where=NONE, $order=NONE ) {
         ORDER BY ".$order."
         ;
     ";
-    echo $query;
+    //echo $query;
     $result=mysql_query($query);
     
     $i=0;
