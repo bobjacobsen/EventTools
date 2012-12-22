@@ -3,6 +3,19 @@
 // the contents of the $_REQUEST array called out by
 // the values array.
 
+// Specific values expected in $_REQUEST, e.g. $_REQUEST[ "email" ]
+//  email (primary key)
+//  fname
+//  lname
+//  phone
+//  cell
+//  street
+//  city
+//  state
+//  zip
+//    opt1 - opt8
+//    v_###   a request for a session (### is the session, value is priority)
+
 function check_for_value($values, $check, $reqs)
 {
     // look through values array, checking the layout items for a match with a specific value
