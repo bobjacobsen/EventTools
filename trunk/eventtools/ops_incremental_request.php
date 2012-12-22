@@ -20,7 +20,7 @@ function check_for_value($values, $check, $reqs)
 {
     // look through values array, checking the layout items for a match with a specific value
     // print "<br/>check ";
-    foreach ( $values as $k ) {
+    foreach ( array_keys($_REQUEST) as $k ) {
         if (substr($k, 0, 2) === "v_") { // is a layout
             $value = $_REQUEST[ $k ];
             if ($value == $check) { // got it, add layout to requests
