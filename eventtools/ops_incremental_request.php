@@ -25,7 +25,7 @@ function check_for_value($values, $check, $reqs)
             $value = $_REQUEST[ $k ];
             if ($value == $check) { // got it, add layout to requests
                 $reqs[] = substr($k,2);
-                print " (hit on ".$value.") ";
+                print " (hit on ".$value." w ".substr($k,2).") ";
             }
         }
     }
