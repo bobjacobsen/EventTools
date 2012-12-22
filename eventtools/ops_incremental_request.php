@@ -25,7 +25,7 @@ function check_for_value($values, $check, $reqs)
             $value = $_REQUEST[ $k ];
             if ($value == $check) { // got it, add layout to requests
                 $reqs[] = substr($k,2);
-                print " (hit on ".$value." w ".substr($k,2).") ";
+                //print " (hit on ".$value." w ".substr($k,2).") ";
             }
         }
     }
@@ -62,7 +62,7 @@ $reqs = check_for_value($values, "12", $reqs);
 // do an insert of the request
 $op = "REPLACE INTO ".$event_tools_db_prefix."eventtools_opsession_req (`opsreq_person_email`, `opsreq_pri1`, `opsreq_pri2`, `opsreq_pri3`, `opsreq_pri4`, `opsreq_pri5`, `opsreq_pri6`, `opsreq_pri7`, `opsreq_pri8`, `opsreq_pri9`, `opsreq_pri10`, `opsreq_pri11`, `opsreq_pri12`, `opsreq_opt1`, `opsreq_opt2`, `opsreq_opt3`, `opsreq_opt4`, `opsreq_opt5`, `opsreq_opt6`, `opsreq_opt7`, `opsreq_opt8`, `opsreq_comment`) VALUES "
     ."('".$email."','".$reqs[0]."','".$reqs[1]."','".$reqs[2]."','".$reqs[3]."','".$reqs[4]."','".$reqs[5]."','".$reqs[6]."','".$reqs[7]."','".$reqs[8]."','".$reqs[9]."','".$reqs[10]."','".$reqs[11]."','".$_REQUEST['opt1']."','".$_REQUEST['opt2']."','".$_REQUEST['opt3']."','".$_REQUEST['opt4']."','".$_REQUEST['opt5']."','".$_REQUEST['opt6']."','".$_REQUEST['opt7']."','".$_REQUEST['opt8']."','".$_REQUEST[ "comments" ]."');";
-print 'Request [ '.$op.' ] <p>';
+//print 'Request [ '.$op.' ] <p>';
 mysql_query($op);
 
 // do an insert of the user
@@ -70,6 +70,12 @@ $user = "REPLACE INTO ".$event_tools_db_prefix."customers (`customers_email_addr
     ."('".$email."','".$_REQUEST["fname"]."','".$_REQUEST["lname"]."','".$_REQUEST["phone"]."','".$_REQUEST["cell"]."');";
 print 'User [ '.$user.' ] <p>';
 mysql_query($user);
+
+$id = mysql_insert_id();
+$addr = "REPLACE INTO ".$event_tools_db_prefix."address_book (`customers_id`, `entry_street_address`, `entry_city`, `entry_state`, `entry_postcode`) VALUES "
+    ."('".$id."','".$_REQUEST["street"]."','".$_REQUEST["city"]."','".$_REQUEST["state"]."','".$_REQUEST["zip"]."');";
+print 'Addr [ '.$addr.' ] <p>';
+mysql_query($addr);
 
 ?>
 
