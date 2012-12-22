@@ -14,11 +14,6 @@
 function create_request_entries($max_pri, $where=NONE, $order=NONE ) {
     global $opts, $event_tools_db_prefix, $event_tools_href_add_on;
     global $event_tools_show_min_value;
-
-    echo "debug";
-    echo $opts['hn'];
-    echo $opts['un'];
-    echo $opts['pw'];
     
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
