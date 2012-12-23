@@ -365,4 +365,21 @@ function get_event_numbers($table) {
     return $results;
 }
 
+// -------------------------------------------------------------------------
+//
+// Logging utilities
+//
+
+// useful for a complete dump to e.g. a log file or email
+function get_request_args($prefix, $endItem) {
+    $retval = $prefix;
+
+    foreach ( array_keys($_REQUEST) as $k ) {
+        $value = $_REQUEST[ $k ];
+        $retval = $retval.$k."=".$value.$endItem;
+    }
+    return $retval;
+}
+
+
 ?>
