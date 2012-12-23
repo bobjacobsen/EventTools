@@ -68,13 +68,13 @@ mysql_query($op);
 // do an insert of the user
 $user = "REPLACE INTO ".$event_tools_db_prefix."customers (`customers_email_address`, `customers_firstname`, `customers_lastname`, `customers_telephone`, `customers_cellphone`) VALUES "
     ."('".$email."','".$_REQUEST["fname"]."','".$_REQUEST["lname"]."','".$_REQUEST["phone"]."','".$_REQUEST["cell"]."');";
-print 'User [ '.$user.' ] <p>';
+//print 'User [ '.$user.' ] <p>';
 mysql_query($user);
 
 $id = mysql_insert_id();
 $addr = "REPLACE INTO ".$event_tools_db_prefix."address_book (`customers_id`, `entry_street_address`, `entry_city`, `entry_state`, `entry_postcode`) VALUES "
     ."('".$id."','".$_REQUEST["street"]."','".$_REQUEST["city"]."','".$_REQUEST["state"]."','".$_REQUEST["zip"]."');";
-print 'Addr [ '.$addr.' ] <p>';
+//print 'Addr [ '.$addr.' ] <p>';
 mysql_query($addr);
 
 ?>
