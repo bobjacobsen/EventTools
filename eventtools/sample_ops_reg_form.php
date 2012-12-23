@@ -28,8 +28,8 @@
 
 	// send email with info
 
-    // change the email address on the next line
-	$to = "rgj1927@pacbell.net";
+    // If needed, change the email address on the next line
+	$to = $event_tools_notify_email_address;
 	
 	$subject = "Bayrails Registration FYI ".$_REQUEST["fname"]." ".$_REQUEST["lname"];
 	$headers = sprintf("From:  BayRails V Registration Form <Registrar@BayRails.com>\r\n");
