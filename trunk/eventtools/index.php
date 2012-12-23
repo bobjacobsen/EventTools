@@ -96,7 +96,7 @@ if ($event_tools_option_layouts)        echo '<td>
     </td>';
 if ($event_tools_option_clinics)        echo '<td>
     </td>';
-if ($event_tools_option_op_sessions)    echo '<td><a href="ops_req.php">User session request</a></td>';
+if ($event_tools_option_op_sessions)    echo '<td><a href="ops_req.php">User edit session request</a></td>';
 
 echo '</tr><tr>
     <th>Other Displays</th>';
