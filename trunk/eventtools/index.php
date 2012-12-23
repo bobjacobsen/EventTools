@@ -289,6 +289,8 @@ most recent draft of the
 
 <p>
 For example query code, see the <a href="samples.php">samples page</a>.
+<p>
+For a sample registration page, see the <a href="sample_ops_reg_form.php">op session sample page</a>.
 
 <p>
 EventTools was written and is maintained by Bob Jacobsen, 
