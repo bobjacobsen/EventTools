@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Op Session Add Session</title>
+	<title>Edit Operating Sessions</title>
 <style type="text/css">
 	hr.pme-hr		     { border: 0px solid; padding: 0px; margin: 0px; border-top-width: 1px; height: 1px; }
 	table.pme-main 	     { border: #004d9c 1px solid; border-collapse: collapse; border-spacing: 0px; width: 100%; }
@@ -20,7 +20,7 @@
 </style>
 </head>
 <body>
-<h3>Op Session Add Session</h3>
+<h3>Edit Operating Sessions</h3>
 <a href="index.php">Back to main page</a>
 <p>
 <?php
