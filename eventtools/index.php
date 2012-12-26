@@ -112,6 +112,7 @@ if ($event_tools_option_other_events)   echo '<td><a href="format_misc_by_loc.ph
         <a href="calendar/show_misc_events_cal.php">Interactive Misc Events Calendar<a/>
     </td>';
 if ($event_tools_option_layouts)        echo '<td>
+    <a href="map_layouts.php?minstatus=50">Map of all layouts</a><br/>(status in URL)<p>
     </td>';
 if ($event_tools_option_clinics)        echo '<td><a href="format_clinics_by_loc.php">Clinics Grouped by Location<a/><p>
         <a href="calendar/show_clinics_cal.php">Interactive Clinics Calendar<a/>
