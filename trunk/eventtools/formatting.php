@@ -601,7 +601,7 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE) {
     if ($order==NONE) $order = " layout_owner_lastname1, start_date ";
     else $order = " layout_owner_lastname1, start_date, ".$order;
         
-    if ($where==NONE) $where = "";
+    if ($where==NONE) $where = " ";
     
     $query="
         SELECT  *
@@ -629,21 +629,30 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE) {
     echo "<table border=\"1\" class=\"et-ops-by-day-table\">\n";
     
     // generate table headings from first, last date
-    $first_string = mysql_result($result,0,"start_date");
-    $last_string = mysql_result($result,0,"start_date");
+    $first_string = "2100-12-31 00:00:00";
+    $last_string =  "1999-01-01 00:00:00";
     for ($j=0; $j<$num; $j++) {
         if (mysql_result($result,$j,"start_date") < $first_string) $first_string = mysql_result($result,$j,"start_date");
         if (mysql_result($result,$j,"start_date") > $last_string) $last_string = mysql_result($result,$j,"start_date");
     }
+    //echo 'dates: '.$first_string.' '.$last_string.'<p>';
+    // following assumes that event doesn't cross end of year
     $first_date = DateTime::createFromFormat('Y-m-d H:i:s', $first_string);
     $last_date = DateTime::createFromFormat('Y-m-d H:i:s', $last_string);
     $days = (intval($last_date->format('z'))-intval($first_date->format('z')));
-    echo 'days: '.$days.'<p>';
+    //echo 'days: '.$days.'<p>';
+    if ($days < 1) {
+       echo "Some session dates are probably wrong, found ".$first_string." through ".$last_string."; is status parameter right?<p>";
+    }    
+    if ($days > 10) {
+       $days = 10;  // limit to width; more probably due to bad dates
+       echo "Some session dates are probably wrong, found ".$first_string." through ".$last_string."; is status parameter right?<p>";
+    }
     $headings = array(); // like [Wed 03, Thu 04]
     $dates = array();    // like [2008-01-03, 2008-01-04]
     $day = $first_date;
     for ($j=0; $j<=$days; $j++) {
-        $headings[] = $day->format('D').' '.$day->format('d');
+        $headings[] = $day->format('D').'<br>'.$day->format('Y-m-d');
         $dates[] = $day->format('Y-m-d');
         $day->add(new DateInterval('P1D'));
     }    
@@ -651,7 +660,7 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE) {
     echo '<tr>
         <th>Host</th>
         <th>Railroad</th>
-        <th>Time/Distance</th>
+        <th>Distance/Time</th>
         <th>Crew</th>';
         for ($i = 0; $i < count($headings); $i++) {
             echo '<th>'.$headings[$i].'</th>';
