@@ -49,7 +49,7 @@ $query="
         FROM ".$event_tools_db_prefix."eventtools_layouts
         WHERE layout_name LIKE \"%".$layout."%\";
     ";
-echo $query;
+//echo $query;
 $result=mysql_query($query);
 
 global $event_tools_central_addr;
