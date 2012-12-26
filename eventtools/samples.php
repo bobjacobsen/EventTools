@@ -179,14 +179,6 @@ see the <a href="index.php">main page</a> for access to those.
 </table>
 
 <hr>
-<!-- Sample of free-form table -->
-Sample of op session free-form entry
-<form method="get"><table border="1">
-    <?php  
-        require_once('access.php'); require_once('utilities.php'); require_once('ops_req_tools.php');
-        create_request_entries(10);
-    ?>
-</table><button type="submit">Check URL</button></form>
 
 
 </body>
