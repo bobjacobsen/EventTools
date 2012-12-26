@@ -628,8 +628,8 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE) {
     echo "\n";
     echo "<table border=\"1\" class=\"et-ops-by-day-table\">\n";
     
-    $headings = array('Wed 25', 'Thu 26', 'Fri 27', 'Sat 28', 'Sun 29');
-    $dates = array('2012-04-25','2012-04-26','2012-04-27','2012-04-28','2012-04-29');
+    $headings = array('Wed 13', 'Thu 14', 'Fri 15', 'Sat 16', 'Sun 17');
+    $dates = array('2013-03-13','2013-03-14','2013-03-15','2013-03-16','2013-03-17');
     
     echo '<tr>
         <th>Host</th>

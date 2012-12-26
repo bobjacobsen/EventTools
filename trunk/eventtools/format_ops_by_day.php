@@ -27,7 +27,7 @@ $event_tools_replace_on_data_error = TRUE;  // TRUE replace with text, FALSE lea
 $where = parse_layout_query();
 $order = parse_order();
 
-format_all_ops_by_day("http://www.x2011west.org/layoutsTable.php?layoutid=", $where, $order);
+format_all_ops_by_day("edit_layouts_all.php?layoutid=", $where, $order);
 
 ?>
 </body>
