@@ -628,9 +628,26 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE) {
     echo "\n";
     echo "<table border=\"1\" class=\"et-ops-by-day-table\">\n";
     
-    $headings = array('Wed 13', 'Thu 14', 'Fri 15', 'Sat 16', 'Sun 17');
-    $dates = array('2013-03-13','2013-03-14','2013-03-15','2013-03-16','2013-03-17');
-    
+    // generate table headings from first, last date
+    $first_string = mysql_result($result,0,"start_date");
+    $last_string = mysql_result($result,0,"start_date");
+    for ($j=0; $j<$num; $j++) {
+        if (mysql_result($result,$j,"start_date") < $first_string) $first_string = mysql_result($result,$j,"start_date");
+        if (mysql_result($result,$j,"start_date") > $last_string) $last_string = mysql_result($result,$j,"start_date");
+    }
+    $first_date = DateTime::createFromFormat('Y-m-d H:i:s', $first_string);
+    $last_date = DateTime::createFromFormat('Y-m-d H:i:s', $last_string);
+    $days = (intval($last_date->format('z'))-intval($first_date->format('z')));
+    echo 'days: '.$days.'<p>';
+    $headings = array(); //[Wed 03, Thu 04]
+    $dates = array();    // 2008-01-03, 2008-01-04
+    $day = $first_date;
+    for ($j=0; $j<=$days; $j++) {
+        $headings[] = $day->format('D').' '.$day->format('d');
+        $dates[] = $day->format('Y-m-d');
+        $day->add(new DateInterval('P1D'));
+    }    
+        
     echo '<tr>
         <th>Host</th>
         <th>Railroad</th>
