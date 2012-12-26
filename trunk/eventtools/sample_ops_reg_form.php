@@ -31,8 +31,8 @@
     // If needed, change the email address on the next line
 	$to = $event_tools_notify_email_address;
 	
-	$subject = "Bayrails Registration FYI ".$_REQUEST["fname"]." ".$_REQUEST["lname"];
-	$headers = sprintf("From:  BayRails V Registration Form <Registrar@BayRails.com>\r\n");
+	$subject = $event_tools_event_name." Registration FYI ".$_REQUEST["fname"]." ".$_REQUEST["lname"];
+	$headers = sprintf("From:  ".$event_tools_event_name." Registration Form <Registrar@BayRails.com>\r\n");
 	$message = sprintf("%s %s has registered\r\n\r\n", $_REQUEST["fname"], $_REQUEST["lname"]);
 	$message .= "A tabular version can be found at http://www.bayrails.com/eventtools/edit_ops_all.php\r\n\r\n";
 
@@ -79,12 +79,18 @@ function formcomplete() {
 
 // show the HTML form
 function showform( $message ) {
+    global $event_tools_event_name;
+    
 	 print $message;
 	 $page =  <<<END
 
     <html>
     <body>
-	<h2>Register for BayRails V</h2>
+	<h2>Register for 
+END;
+	print $page.$event_tools_event_name;
+	 $page =  <<<END
+</h2>
 
 	<form action="" method="get">
 	<table border=1 class="VisTable">
