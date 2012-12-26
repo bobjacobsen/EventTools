@@ -71,6 +71,11 @@ $event_tools_replace_on_data_error = FALSE;  // TRUE replace with text, FALSE le
 // What should be added to external links?
 $event_tools_href_add_on = ' target="_blank" ';
 
+// Convention central point (e.g. hotel) for mapping, distances; Google must understand
+$event_tools_central_addr = "1230+J+Street";
+$event_tools_central_city = "Sacramento";
+$event_tools_central_state = "CA";
+$event_tools_central_postcode = "95814";
 
 // Connected to Zen Cart?
 $event_tools_option_zen_cart_used       = FALSE;
