@@ -119,7 +119,7 @@ if ($event_tools_option_clinics)        echo '<td><a href="format_clinics_by_loc
     </td>';
 if ($event_tools_option_op_sessions)    echo '<td><a href="ops_req_summary.php">Request Summary<a/><p>
     <a href="format_all_ops.php">Operating Layout Table</a><p>
-    <a href="format_ops_by_day.php">Operating Sessions vs Day</a><p> 
+    <a href="format_ops_by_day.php?where=status_code%3E40">Operating Sessions vs Day</a><p> 
     <a href="ops_assign_group.php">Start Assignments with Grouping</a>  <p>  
     <a href="ops_list_group.php">Email list for cycle</a>    <p>    
     <a href="ops_print_by_layout.php">Session Rosters</a>    <p>
