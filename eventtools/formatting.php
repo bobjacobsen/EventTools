@@ -639,8 +639,8 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE) {
     $last_date = DateTime::createFromFormat('Y-m-d H:i:s', $last_string);
     $days = (intval($last_date->format('z'))-intval($first_date->format('z')));
     echo 'days: '.$days.'<p>';
-    $headings = array(); //[Wed 03, Thu 04]
-    $dates = array();    // 2008-01-03, 2008-01-04
+    $headings = array(); // like [Wed 03, Thu 04]
+    $dates = array();    // like [2008-01-03, 2008-01-04]
     $day = $first_date;
     for ($j=0; $j<=$days; $j++) {
         $headings[] = $day->format('D').' '.$day->format('d');
