@@ -21,11 +21,10 @@
 	$datastring = get_request_args(date("m/d/y g:i a T",$now),";")."\r\n";
 	if (!$fp = fopen("datafile.dtf", "a")) {
 	   print "Cannot open \"datafile.dtf\"\n";
-	   exit;
-	}
-	fwrite( $fp, $datastring );
-	fclose( $fp );
-
+	} else {
+	   fwrite( $fp, $datastring );
+	   fclose( $fp );
+    }
 	// send email with info
 
     // If needed, change the email address on the next line
