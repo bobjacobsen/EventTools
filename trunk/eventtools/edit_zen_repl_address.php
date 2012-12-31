@@ -108,6 +108,8 @@ $opts['filters'] = "section_id = 9";
 $opts['filters'] = "PMEtable0.sessions_count > 200";
 */
 
+$opts['filters'] = "customers_id in (SELECT customers_id from ".$event_tools_db_prefix.'customers'.")";
+
 /* Field definitions
    
 Fields will be displayed left to right on the screen in the order in which they
@@ -152,18 +154,6 @@ $opts['fdd']['customers_id'] = array(
   'options'  => 'AVCPDR', // auto increment
   'maxlen'   => 5,
   'default'  => '0',
-  'sort'     => true
-);
-$opts['fdd']['entry_firstname'] = array(
-  'name'     => 'First Name',
-  'select'   => 'T',
-  'maxlen'   => 32,
-  'sort'     => true
-);
-$opts['fdd']['entry_lastname'] = array(
-  'name'     => 'Last Name',
-  'select'   => 'T',
-  'maxlen'   => 32,
   'sort'     => true
 );
 $opts['fdd']['entry_street_address'] = array(
