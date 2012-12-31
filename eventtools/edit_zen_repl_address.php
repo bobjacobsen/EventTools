@@ -108,7 +108,7 @@ $opts['filters'] = "section_id = 9";
 $opts['filters'] = "PMEtable0.sessions_count > 200";
 */
 
-$opts['filters'] = "customers_id in (SELECT customers_id from ".$event_tools_db_prefix.'customers'.")";
+$opts['filters'] = "PMEtable0.customers_id IN (SELECT customers_id from ".$event_tools_db_prefix.'customers'.")";
 
 /* Field definitions
    
@@ -148,13 +148,34 @@ appear in generated list. Here are some most used field options documented.
   descriptions fields are also possible. Check documentation for this.
 */
 
-$opts['fdd']['customers_id'] = array(
-  'name'     => 'Customer ID',
+$opts['fdd']['address_book_id'] = array(
+  'name'     => 'Addr ID',
   'select'   => 'T',
   'options'  => 'AVCPDR', // auto increment
   'maxlen'   => 5,
   'default'  => '0',
   'sort'     => true
+);
+$opts['fdd']['customers_id'] = array(
+  'name'     => 'Email',
+  'select'   => 'T',
+  'options'  => 'LAVCDR',
+  'maxlen'   => 5,
+  'sort'     => true,
+  'default'  => 'None',
+  'values'   => array('table' => $event_tools_db_prefix.'customers', 
+                        'column' => 'customers_id',
+                        'description' => array(
+                                'columns' => array(
+                                                'customers_firstname',
+                                                'customers_lastname',
+                                                'customers_email_address'
+                                                ),
+                                'divs' => array(
+                                                ' ',' (',')'
+                                                )
+                            )
+                        )
 );
 $opts['fdd']['entry_street_address'] = array(
   'name'     => 'Street Address',
