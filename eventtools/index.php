@@ -155,10 +155,11 @@ if ($event_tools_option_zen_cart_used) {
 } else {
     echo '<p>';
     echo '<table border="1">';
-    echo '<tr><th>Attendees</th></tr>';
-    echo '<tr><td><a href="edit_zen_repl_customer.php">Add/Edit contact info</a></td></tr>';
-    echo '<tr><td><a href="edit_zen_repl_address.php">Add/Edit addresses</a></td></tr>';
-    echo '</table>';
+    echo '<tr><th>Attendees</th><td>';
+    echo '<a href="edit_zen_repl_customer.php">Add/Edit contact info</a><br/>';
+    echo '<a href="edit_zen_repl_address.php">Add/Edit addresses</a><p>';
+    echo '<a href="index_attendees.php">Table of info</a><br>';
+    echo '</td></tr></table>';
 }
 
 ?>
