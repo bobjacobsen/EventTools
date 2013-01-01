@@ -168,6 +168,7 @@ $opts['fdd']['opsreq_person_email'] = array(
   'maxlen'   => 25,
   'sort'     => true,
   'default'  => 'None',
+  'escape'   => false,
   'values'   => array('table' => $event_tools_db_prefix.'customers', 
                         'column' => 'customers_email_address',
                         'description' => array(
