@@ -161,6 +161,27 @@ $opts['fdd']['opsreq_person_email'] = array(
   'maxlen'   => 32,
   'sort'     => true
 );
+$opts['fdd']['opsreq_person_email'] = array(
+  'name'     => 'Requestor',
+  'select'   => 'T',
+  'options'  => 'LAVCDR',
+  'maxlen'   => 25,
+  'sort'     => true,
+  'default'  => 'None',
+  'values'   => array('table' => $event_tools_db_prefix.'customers', 
+                        'column' => 'customers_email_address',
+                        'description' => array(
+                                'columns' => array(
+                                                'customers_firstname',
+                                                'customers_lastname',
+                                                'customers_email_address'
+                                                ),
+                                'divs' => array(
+                                                ' ',' (',')'
+                                                )
+                            )
+                        )
+);
 $opts['fdd']['opsreq_pri1'] = array(
   'name'     => '1st priority',
   'select'   => 'T',
