@@ -56,7 +56,7 @@ $opts['key'] = 'customers_id';
 $opts['key_type'] = 'int';
 
 // Sorting field(s)
-$opts['sort_field'] = array('constrain_value');
+$opts['sort_field'] = array('customers_lastname');
 
 // Number of records to display on the screen
 // Value of -1 lists all records in a table
