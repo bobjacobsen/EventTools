@@ -41,7 +41,7 @@
         
         parse_str($_SERVER["QUERY_STRING"], $args);
         $order = $args["order"];
-        if ($order == NONE || $order == '') $order = 'customers_email_address';
+        if ($order == NONE || $order == '') $order = 'customers_lastname';
         
         echo '<table border="1">';
         echo '<tr>
