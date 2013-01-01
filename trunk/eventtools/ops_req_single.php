@@ -185,7 +185,7 @@ $opts['fdd']['customers_firstname'] = array(
   'maxlen'   => 32,
   'sort'     => true
 );
-$opts['fdd']['customers_firstname'] = array(
+$opts['fdd']['customers_lastname'] = array(
   'name'     => 'Last name',
   'select'   => 'T',
   'options'  => 'LVR',
