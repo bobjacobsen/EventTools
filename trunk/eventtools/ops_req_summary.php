@@ -98,13 +98,16 @@ if ($args["session"]) {
         ';
 }
 
+require_once('parsers.php');
+$order = parse_order();
+if ($order == NONE) $order = "customers_lastname";
 $query="
     SELECT *
         FROM ( 
         ".$event_tools_db_prefix."eventtools_opsession_req LEFT JOIN ".$event_tools_db_prefix."customers
         ON ".$event_tools_db_prefix."eventtools_opsession_req.opsreq_person_email = ".$event_tools_db_prefix."customers.customers_email_address
         ) 
-        ".$where." ORDER BY customers_lastname
+        ".$where." ORDER BY ".$order."
         ;
     ";
 //echo $query;
@@ -187,19 +190,27 @@ echo '<h3>Requestors</h3>';
 $i = 0;
 
 echo '<table border="1">';
-echo '<tr><th>First</th><th>Last</th><th>Reg</th><th>Email</th><th>First Date</th><th>Last Date</th></tr>';
+echo '<tr>';
+echo '<th><a href="ops_req_summary.php?order=cfirstname">First</a></th>';
+echo '<th><a href="ops_req_summary.php?order=clastname">Last</a></th>';
+echo '<th><a href="ops_req_summary.php?order=email">Email</a></th>';
+echo '<th><a href="ops_req_summary.php?order=create">Created Date</a></th>';
+echo '<th><a href="ops_req_summary.php?order=update">Updated Date</a></th>';
+echo '</tr>';
 
 while ($i < $numReqs) {
     echo '<tr>';
     echo  '<td>'.mysql_result($resultReqs,$i,"customers_firstname").'</td>';
     echo  '<td>'.mysql_result($resultReqs,$i,"customers_lastname").'</td>';
-    echo  '<td>';
-        if (("".mysql_result($resultReqs,$i,"customers_x2011_reg_num")) != "")
-            echo mysql_result($resultReqs,$i,"customers_x2011_reg_num");
-    echo '</td>';
     echo  '<td>'.mysql_result($resultReqs,$i,"opsreq_person_email").'</td>';
-    echo '<td/>';
-    echo '<td/>';
+    echo  '<td>';
+        if (("".mysql_result($resultReqs,$i,"customers_create_date")) != "")
+            echo mysql_result($resultReqs,$i,"customers_create_date");
+    echo '</td>';
+    echo  '<td>';
+        if (("".mysql_result($resultReqs,$i,"customers_updated_date")) != "0000-00-00 00:00:00")
+            echo mysql_result($resultReqs,$i,"customers_updated_date");
+    echo '</td>';
     echo '</tr>';
     $i++;
 }
