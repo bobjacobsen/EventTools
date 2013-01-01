@@ -66,7 +66,7 @@
             ORDER BY ".$order."
             ;
         ";
-        echo $query;
+        //echo $query;
 
         table_from_query( $query, 
             array('customers_firstname', 'customers_lastname', 'customers_email_address', 'entry_street_address', 'entry_city', 'entry_state', 'entry_postcode', 'customers_telephone', 'customers_cellphone')
