@@ -104,7 +104,7 @@ $query="
         ".$event_tools_db_prefix."eventtools_opsession_req LEFT JOIN ".$event_tools_db_prefix."customers
         ON ".$event_tools_db_prefix."eventtools_opsession_req.opsreq_person_email = ".$event_tools_db_prefix."customers.customers_email_address
         ) 
-        ".$where."
+        ".$where." ORDER BY customers_lastname
         ;
     ";
 //echo $query;
