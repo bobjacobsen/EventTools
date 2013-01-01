@@ -45,15 +45,15 @@
         
         echo '<table border="1">';
         echo '<tr>
-            <th><a href="index_attendees?order=customers_firstname">First</a></th>
-            <th><a href="index_attendees?order=customers_lastname">Last</a></th>
-            <th><a href="index_attendees?order=customers_email_address">Email</a></th>
-            <th><a href="index_attendees?order=entry_street_address">Street</a></th>
-            <th><a href="index_attendees?order=entry_city">City</a></th>
-            <th><a href="index_attendees?order=entry_state">State</a></th>
-            <th><a href="index_attendees?order=entry_postcode">Zip</a></th>
-            <th><a href="index_attendees?order=customers_telephone">Phone</a></th>
-            <th><a href="index_attendees?order=customers_cellphone">Cell</a></th>
+            <th><a href="index_attendees.php?order=customers_firstname">First</a></th>
+            <th><a href="index_attendees.php?order=customers_lastname">Last</a></th>
+            <th><a href="index_attendees.php?order=customers_email_address">Email</a></th>
+            <th><a href="index_attendees.php?order=entry_street_address">Street</a></th>
+            <th><a href="index_attendees.php?order=entry_city">City</a></th>
+            <th><a href="index_attendees.php?order=entry_state">State</a></th>
+            <th><a href="index_attendees.php?order=entry_postcode">Zip</a></th>
+            <th><a href="index_attendees.php?order=customers_telephone">Phone</a></th>
+            <th><a href="index_attendees.php?order=customers_cellphone">Cell</a></th>
             </tr>';
         
         $table = $event_tools_db_prefix.'customers LEFT JOIN '.$event_tools_db_prefix.'address_book
