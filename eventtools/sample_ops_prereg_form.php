@@ -33,7 +33,7 @@
 	$subject = $event_tools_event_name." Registration FYI ".$_REQUEST["fname"]." ".$_REQUEST["lname"];
 	$headers = sprintf("From:  ".$event_tools_event_name." Registration Form <Registrar@BayRails.com>\r\n");
 	$message = sprintf("%s %s has registered\r\n\r\n", $_REQUEST["fname"], $_REQUEST["lname"]);
-	$message .= "A tabular version can be found at http://www.bayrails.com/eventtools/edit_ops_all.php\r\n\r\n";
+	$message .= "A tabular version can be found at http://www.bayrails.com/eventtools/ops_req_single.php?email=".$_REQUEST["email"]."\r\n\r\n";
 
     // add fill dump
 	$message .= get_request_args(date("m/d/y g:i a T",$now)."\r\n","\r\n");
