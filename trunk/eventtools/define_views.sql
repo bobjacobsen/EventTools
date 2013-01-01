@@ -154,6 +154,17 @@ AS SELECT customers_firstname, customers_lastname, opsreq_person_email, prefix_e
         ON prefix_eventtools_opsreq_req_status.ops_id = prefix_eventtools_opsession_name.ops_id
     ;
 
+CREATE OR REPLACE VIEW prefix_eventtools_opsession_req_with_user_info
+AS SELECT prefix_eventtools_opsession_req.*,  prefix_customers.*, 
+            prefix_address_book.entry_street_address, prefix_address_book.entry_city, prefix_address_book.entry_state, prefix_address_book.entry_postcode
+        FROM (
+        prefix_eventtools_opsession_req LEFT JOIN prefix_customers
+        ON prefix_eventtools_opsession_req.opsreq_person_email = prefix_customers.customers_email_address
+        ) LEFT JOIN prefix_address_book
+        ON prefix_customers.customers_id = prefix_address_book.customers_id
+        ;
+
+
 --
 -- Trigger ensures availability is always available for view
 --
