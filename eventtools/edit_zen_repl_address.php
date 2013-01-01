@@ -160,7 +160,7 @@ $opts['fdd']['customers_id'] = array(
   'name'     => 'Email',
   'select'   => 'T',
   'options'  => 'LAVCDR',
-  'maxlen'   => 5,
+  'maxlen'   => 25,
   'sort'     => true,
   'default'  => 'None',
   'values'   => array('table' => $event_tools_db_prefix.'customers', 
