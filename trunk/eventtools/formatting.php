@@ -109,12 +109,8 @@ function format_all_general_tours_as_8table($where=NONE, $order=NONE, $url=NONE,
 }
 
 function simple_table($table_name, $var_names, $where=NONE, $order=NONE) {
-    global $opts, $event_tools_db_prefix, $event_tools_href_add_on;
-    global $event_tools_show_min_value;
+    global $opts, $event_tools_db_prefix;
 
-    mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
-    @mysql_select_db($opts['db']) or die( "Unable to select database");
-    
     if ($order==NONE) $order = "layout_owner_lastname, layout_owner_firstname";
 
     if ($where != NONE) $where = "WHERE ".$where." ";
@@ -127,6 +123,17 @@ function simple_table($table_name, $var_names, $where=NONE, $order=NONE) {
         ORDER BY ".$order."
         ;
     ";
+    //echo $query;
+
+    table_from_query($query, $var_names);
+}
+
+function table_from_query($query, $var_names) {
+    global $opts, $event_tools_db_prefix;
+
+    mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
+    @mysql_select_db($opts['db']) or die( "Unable to select database");
+    
     //echo $query;
     $result=mysql_query($query);
     

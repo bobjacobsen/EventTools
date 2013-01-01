@@ -55,10 +55,21 @@
             <th><a href="index_attendees?order=customers_telephone">Phone</a></th>
             <th><a href="index_attendees?order=customers_cellphone">Cell</a></th>
             </tr>';
+        
+        $table = $event_tools_db_prefix.'customers LEFT JOIN '.$event_tools_db_prefix.'address_book
+                ON '.$event_tools_db_prefix.'customers.customers_id = '.$event_tools_db_prefix.'address_book.customers_id
+            ';
             
-        simple_table('opsession_req_with_user_info', 
-            array('customers_firstname', 'customers_lastname', 'customers_email_address', 'entry_street_address', 'entry_city', 'entry_state', 'entry_postcode', 'customers_telephone', 'customers_cellphone'),
-            NONE, $order
+        $query="
+            SELECT  *
+            FROM ".$table."
+            ORDER BY ".$order."
+            ;
+        ";
+        echo $query;
+
+        table_from_query( $query, 
+            array('customers_firstname', 'customers_lastname', 'customers_email_address', 'entry_street_address', 'entry_city', 'entry_state', 'entry_postcode', 'customers_telephone', 'customers_cellphone')
         );
         echo '</table>';
 ?>
