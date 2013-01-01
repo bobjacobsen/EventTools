@@ -505,6 +505,11 @@ function parse_order() {
         if ($args["order"] == "owner") return " layout_owner_firstname, layout_owner_lastname ";
         if ($args["order"] == "lastname") return " layout_owner_lastname ";
         if ($args["order"] == "layoutname") return " layout_name ";
+        if ($args["order"] == "create") return " customers_create_date ";
+        if ($args["order"] == "update") return " customers_updated_date ";
+        if ($args["order"] == "clastname") return " customers_lastname ";
+        if ($args["order"] == "cfirstname") return " customers_firstname ";
+        if ($args["order"] == "email") return " customers_email_address ";
         return NONE;
     } else {
         return NONE;
