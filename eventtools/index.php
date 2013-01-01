@@ -118,7 +118,8 @@ if ($event_tools_option_layouts)        echo '<td>
 if ($event_tools_option_clinics)        echo '<td><a href="format_clinics_by_loc.php">Clinics Grouped by Location<a/><p>
         <a href="calendar/show_clinics_cal.php">Interactive Clinics Calendar<a/>
     </td>';
-if ($event_tools_option_op_sessions)    echo '<td><a href="ops_req_summary.php">Request Summary<a/><p>
+if ($event_tools_option_op_sessions)    echo '<td><a href="ops_req_summary.php">Requests Summary<a/><p>
+    <a href="ops_req_single.php">Single Request<a/><p>
     <a href="format_all_ops.php">Operating Layout Table</a><p>
     <a href="format_ops_by_day.php?where=status_code%3E40">Operating Sessions vs Day</a><p> 
     <a href="ops_assign_group.php">Start Assignments with Grouping</a>  <p>  
