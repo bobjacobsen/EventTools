@@ -233,7 +233,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_layouts` (
   `layout_owner_lastname` varchar(32) default '',
   `layout_owner_phone` varchar(16) default '',
   `layout_owner_call_time` varchar(32) default '',
-  `layout_owner_email` varchar(32) default '',
+  `layout_owner_email` varchar(96) default '',
   
   `layout_street_address` varchar(64) default '',
   `layout_city` varchar(32) default '',
@@ -340,7 +340,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_clinics` (
   `clinic_presenter` varchar(48) default '',
   `clinic_location_code` int(5) default 0,
   `clinic_url` varchar(64) default '',
-  `clinic_presenter_email` varchar(64) default '',
+  `clinic_presenter_email` varchar(96) default '',
   `comment` varchar(500) default '',
   `clinic_ok` varchar(2) default '',
   `clinic_presenter_cell_number` varchar(15) default '',
@@ -555,7 +555,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_people` (
   `person_lastname` varchar(32) default '',
   `person_phone` varchar(16) default '',
   `person_call_time` varchar(32) default '',
-  `person_email` varchar(32) default '',
+  `person_email` varchar(96) default '',
 
   `mark_changed` varchar(1) default '',
   `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
@@ -605,7 +605,7 @@ DROP TABLE IF EXISTS `prefix_eventtools_opsession_req`;
 
 CREATE TABLE IF NOT EXISTS `prefix_eventtools_opsession_req` (
   `opsreq_id` int(5) NOT NULL auto_increment,
-  `opsreq_person_email` varchar(32),
+  `opsreq_person_email` varchar(96),
   `opsreq_pri1` int(5),
   `opsreq_pri2` int(5),
   `opsreq_pri3` int(5),
