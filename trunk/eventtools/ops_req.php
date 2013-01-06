@@ -104,7 +104,6 @@
 </style>
 </head>
 <body>
-<div id="logo"><a href="../index.html"><img alt="Convention logo" src="logo.jpg" width="205" height="68" align="right"></a></div>
 <h2>Operating Session Request</h2>
 
 On this page, you can view the requests you are making for operating sessions.
@@ -510,6 +509,62 @@ $opts['fdd']['opsreq_pri12'] = array(
                             )
                         )
 );
+if (($event_tools_op_session_opt1_name !=NONE) && ($event_tools_op_session_opt1_name != '')) 
+    $opts['fdd']['opsreq_opt1'] = array(
+      'name'     => $event_tools_op_session_opt1_name,
+      'select'   => 'T',
+      'maxlen'   => 1,
+      'sort'     => true
+    );
+if (($event_tools_op_session_opt2_name !=NONE) && ($event_tools_op_session_opt2_name != ''))
+    $opts['fdd']['opsreq_opt2'] = array(
+      'name'     => $event_tools_op_session_opt2_name,
+      'select'   => 'T',
+      'maxlen'   => 1,
+      'sort'     => true
+    );
+if (($event_tools_op_session_opt3_name !=NONE) && ($event_tools_op_session_opt3_name != ''))
+    $opts['fdd']['opsreq_opt3'] = array(
+      'name'     => $event_tools_op_session_opt3_name,
+      'select'   => 'T',
+      'maxlen'   => 1,
+      'sort'     => true
+    );
+if (($event_tools_op_session_opt4_name !=NONE) && ($event_tools_op_session_opt4_name != '')) 
+    $opts['fdd']['opsreq_opt4'] = array(
+      'name'     => $event_tools_op_session_opt4_name,
+      'select'   => 'T',
+      'maxlen'   => 1,
+      'sort'     => true
+    );
+if (($event_tools_op_session_opt5_name !=NONE) && ($event_tools_op_session_opt5_name != ''))
+    $opts['fdd']['opsreq_opt5'] = array(
+      'name'     => $event_tools_op_session_opt5_name,
+      'select'   => 'T',
+      'maxlen'   => 1,
+      'sort'     => true
+    );
+if (($event_tools_op_session_opt66_name !=NONE) && ($event_tools_op_session_opt6_name != '')) 
+    $opts['fdd']['opsreq_opt6'] = array(
+      'name'     => $event_tools_op_session_opt6_name,
+      'select'   => 'T',
+      'maxlen'   => 1,
+      'sort'     => true
+    );
+if (($event_tools_op_session_opt7_name !=NONE) && ($event_tools_op_session_opt7_name != ''))
+    $opts['fdd']['opsreq_opt7'] = array(
+      'name'     => $event_tools_op_session_opt7_name,
+      'select'   => 'T',
+      'maxlen'   => 1,
+      'sort'     => true
+    );
+if (($event_tools_op_session_opt8_name !=NONE) && ($event_tools_op_session_opt8_name != ''))
+    $opts['fdd']['opsreq_opt8'] = array(
+      'name'     => $event_tools_op_session_opt8_name,
+      'select'   => 'T',
+      'maxlen'   => 1,
+      'sort'     => true
+    );
 $opts['fdd']['opsreq_any'] = array(
   'name'     => "Any session OK, not just priorities?",
   'select'   => 'T',
