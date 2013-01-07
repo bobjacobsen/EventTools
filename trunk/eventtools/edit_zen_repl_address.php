@@ -196,7 +196,7 @@ $opts['fdd']['entry_state'] = array(
   'sort'     => true
 );
 $opts['fdd']['entry_postcode'] = array(
-  'name'     => 'State',
+  'name'     => 'Zip',
   'select'   => 'T',
   'maxlen'   => 10,
   'sort'     => true
