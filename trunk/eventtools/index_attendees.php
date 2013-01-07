@@ -54,6 +54,7 @@
             <th><a href="index_attendees.php?order=entry_postcode">Zip</a></th>
             <th><a href="index_attendees.php?order=customers_telephone">Phone</a></th>
             <th><a href="index_attendees.php?order=customers_cellphone">Cell</a></th>
+            <th><a href="index_attendees.php?order=customers_create_date">Created</a></th>
             </tr>';
         
         $table = $event_tools_db_prefix.'customers LEFT JOIN '.$event_tools_db_prefix.'address_book
@@ -69,7 +70,7 @@
         //echo $query;
 
         table_from_query( $query, 
-            array('customers_firstname', 'customers_lastname', 'customers_email_address', 'entry_street_address', 'entry_city', 'entry_state', 'entry_postcode', 'customers_telephone', 'customers_cellphone')
+            array('customers_firstname', 'customers_lastname', 'customers_email_address', 'entry_street_address', 'entry_city', 'entry_state', 'entry_postcode', 'customers_telephone', 'customers_cellphone', 'customers_create_date')
         );
         echo '</table>';
 ?>
