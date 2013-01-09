@@ -184,7 +184,7 @@ $opts['fdd']['opsreq_person_email'] = array(
                         )
 );
 $opts['fdd']['opsreq_pri1'] = array(
-  'name'     => '1st priority',
+  'name'     => '1st priority request',
   'select'   => 'T',
   'maxlen'   => 5,
   'sort'     => true,
@@ -208,7 +208,7 @@ $opts['fdd']['opsreq_pri1'] = array(
                         )
 );
 $opts['fdd']['opsreq_pri2'] = array(
-  'name'     => '2nd priority',
+  'name'     => '2nd priority request',
   'select'   => 'T',
   'maxlen'   => 5,
   'sort'     => true,
@@ -232,7 +232,7 @@ $opts['fdd']['opsreq_pri2'] = array(
                         )
 );
 $opts['fdd']['opsreq_pri3'] = array(
-  'name'     => '3rd priority',
+  'name'     => '3rd priority request',
   'select'   => 'T',
   'maxlen'   => 5,
   'sort'     => true,
@@ -256,7 +256,7 @@ $opts['fdd']['opsreq_pri3'] = array(
                         )
 );
 $opts['fdd']['opsreq_pri4'] = array(
-  'name'     => '4th priority',
+  'name'     => '4th priority request',
   'select'   => 'T',
   'maxlen'   => 5,
   'sort'     => true,
@@ -280,7 +280,7 @@ $opts['fdd']['opsreq_pri4'] = array(
                         )
 );
 $opts['fdd']['opsreq_pri5'] = array(
-  'name'     => '5th priority',
+  'name'     => '5th priority request',
   'select'   => 'T',
   'maxlen'   => 5,
   'sort'     => true,
@@ -304,7 +304,7 @@ $opts['fdd']['opsreq_pri5'] = array(
                         )
 );
 $opts['fdd']['opsreq_pri6'] = array(
-  'name'     => '6th priority',
+  'name'     => '6th priority request',
   'select'   => 'T',
   'maxlen'   => 5,
   'sort'     => true,
@@ -328,7 +328,7 @@ $opts['fdd']['opsreq_pri6'] = array(
                         )
 );
 $opts['fdd']['opsreq_pri7'] = array(
-  'name'     => '7th priority',
+  'name'     => '7th priority request',
   'select'   => 'T',
   'maxlen'   => 5,
   'sort'     => true,
@@ -352,7 +352,7 @@ $opts['fdd']['opsreq_pri7'] = array(
                         )
 );
 $opts['fdd']['opsreq_pri8'] = array(
-  'name'     => '8th priority',
+  'name'     => '8th priority request',
   'select'   => 'T',
   'maxlen'   => 5,
   'sort'     => true,
@@ -375,7 +375,7 @@ $opts['fdd']['opsreq_pri8'] = array(
                         )
 );
 $opts['fdd']['opsreq_pri9'] = array(
-  'name'     => '9th priority',
+  'name'     => '9th priority request',
   'select'   => 'T',
   'maxlen'   => 5,
   'sort'     => true,
@@ -398,7 +398,7 @@ $opts['fdd']['opsreq_pri9'] = array(
                         )
 );
 $opts['fdd']['opsreq_pri10'] = array(
-  'name'     => '10th priority',
+  'name'     => '10th priority request',
   'select'   => 'T',
   'maxlen'   => 5,
   'sort'     => true,
@@ -421,7 +421,7 @@ $opts['fdd']['opsreq_pri10'] = array(
                         )
 );
 $opts['fdd']['opsreq_pri11'] = array(
-  'name'     => '11th priority',
+  'name'     => '11th priority request',
   'select'   => 'T',
   'maxlen'   => 5,
   'sort'     => true,
@@ -444,7 +444,7 @@ $opts['fdd']['opsreq_pri11'] = array(
                         )
 );
 $opts['fdd']['opsreq_pri12'] = array(
-  'name'     => '12th priority',
+  'name'     => '12th priority request',
   'select'   => 'T',
   'maxlen'   => 5,
   'sort'     => true,
@@ -465,6 +465,12 @@ $opts['fdd']['opsreq_pri12'] = array(
                                                 )
                             )
                         )
+);
+$opts['fdd']['opsreq_priority'] = array(
+  'name'     => 'Request group (0 first)',
+  'select'   => 'T',
+  'maxlen'   => 5,
+  'sort'     => true
 );
 $opts['fdd']['opsreq_opt1'] = array(
   'name'     => $event_tools_op_session_opt1_name,
