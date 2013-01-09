@@ -85,7 +85,7 @@ if (mysql_num_rows($reqs) == 0) {
 } else {
 
     // yes, do an update of the user
-    $user = "UPDATE ".$event_tools_db_prefix."customers SET customers_firstname ='".clean_text($_REQUEST["fname"])."', customers_lastname ='".clean_text($_REQUEST["lname"])."', customers_telephone ='".clean_text($_REQUEST["phone"])."', customers_cellphone ='".clean_text($_REQUEST["cell"])."' WHERE customers_email_address = '".clean_text($email)."'";
+    $user = "UPDATE ".$event_tools_db_prefix."customers SET customers_firstname ='".clean_text($_REQUEST["fname"])."', customers_lastname ='".clean_text($_REQUEST["lname"])."', customers_telephone ='".clean_text($_REQUEST["phone"])."', customers_cellphone ='".clean_text($_REQUEST["cell"])."', customers_updated_date=now() WHERE customers_email_address = '".clean_text($email)."'";
     //print '[ '.$user.' ] ';
     mysql_query($user);
 
