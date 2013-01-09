@@ -27,13 +27,13 @@ function setbuttons($cycle,$stat,$id,$tag) {
     echo '<table><tr>';
     if ( ($stat == STATUS_RELEASED) || ($stat == STATUS_DISABLED ) )
         echo '<td><form method="get" action="ops_assign_set.php#'.$tag.'"><input type="hidden" name="cy" value="'.$cycle.'">
-              <input type="hidden" name="id" value="'.$id.'"><input type="submit" name="op" value="A"/></form></td>';
+              <input type="hidden" name="id" value="'.$id.'"><input type="submit" name="op" value="A" title="A buttons add the operator to the session"/></form></td>';
     if ( $stat != STATUS_DISABLED )
         echo '<td><form method="get" action="ops_assign_set.php#'.$tag.'"><input type="hidden" name="cy" value="'.$cycle.'">
-              <input type="hidden" name="id" value="'.$id.'"><input type="submit" name="op" value="D"/></form></td>';
+              <input type="hidden" name="id" value="'.$id.'"><input type="submit" name="op" value="D" title="D buttons mark the operator as not eligible for the session"/></form></td>';
     if ( ($stat == STATUS_ASSIGNED) || ($stat == STATUS_DISABLED ) )
         echo '<td><form method="get" action="ops_assign_set.php#'.$tag.'"><input type="hidden" name="cy" value="'.$cycle.'">
-              <input type="hidden" name="id" value="'.$id.'"><input type="submit" name="op" value="R"/></form></td>';
+              <input type="hidden" name="id" value="'.$id.'"><input type="submit" name="op" value="R" title="R buttons remove the operator from the session"/></form></td>';
     if ( $stat == STATUS_CONFLICT) // send via force warning
         echo '<td><form method="get" action="ops_assign_warn_jam.php#'.$tag.'"><input type="hidden" name="cy" value="'.$cycle.'">
               <input type="hidden" name="id" value="'.$id.'">
@@ -366,9 +366,9 @@ while ($i < $num) {
 }
 
 echo '<form method="get" action="ops_assign_set.php">
-    <button type="submit" name="insert" value="y">Add operator to session</button>';
+    <button type="submit" name="insert" value="y" title="Select operator and session before clicking button to force assignment">Add operator to session</button>';
 echo '<input type="hidden" name="cy" value="'.$cycle.'">';
-echo '<select name="operator">';
+echo '<select name="operator" title="Select operator and session before clicking button to force assignment">';
 $query="
     SELECT DISTINCT customers_firstname, customers_lastname, opsreq_person_email
     FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
@@ -382,7 +382,7 @@ for ($i = 0; $i < $num; $i++) {
     echo '<option value="'.mysql_result($result,$i,"opsreq_person_email").'">'.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").' &lt;'.mysql_result($result,$i,"opsreq_person_email").'&gt;'."</option>";
 }
 echo '</select>';
-echo '<select name="session">';
+echo '<select name="session" title="Select operator and session before clicking button to force assignment">';
 $query="
     SELECT DISTINCT ops_id, show_name, start_date
     FROM ".$event_tools_db_prefix."eventtools_opsession_name
@@ -799,7 +799,7 @@ for ($i=0; $i<$num; ) {
               <input type="hidden" name="id" value="'.mysql_result($result,$firstindex,"opsreq_req_status_id").'">
               <input type="hidden" name="pri" value="'.$firstpri.'">';
         if (($pricnt > 0) && ($pricnt <= (mysql_result($result,$i,"spaces") - $count1))) {
-            echo '<input type="submit" name="grp" value="P"/>';
+            echo '<input type="submit" name="grp" value="P" title="P buttons"/>';
         }
         $header = False;
         for ($session = 0; $session < $n_sessions; $session++) { 
@@ -811,7 +811,7 @@ for ($i=0; $i<$num; ) {
                     echo '<input type="hidden" name="from_date" value="'.mysql_result($result,$i,"start_date").'">';
                     $header = True;
                 }
-                echo '<input type="submit" name="transfer" value="'.mysql_result($r_sessions, $session, "start_date").'"><br>';
+                echo '<input type="submit" title="Move unassigned requests to this session" name="transfer" value="'.mysql_result($r_sessions, $session, "start_date").'"><br>';
             }
         }
         echo '</form></td><td>';
@@ -856,7 +856,7 @@ echo '</table><p/>';
 echo '<form method="get" action="ops_assign_set.php">
       <input type="hidden" name="cy" value="'.$cycle.'">
       <input type="hidden" name="pri" value="'.$lowpri.'">
-      <input type="submit" name="best" value="Fill Best Priority '.$lowpri.'"/></form>';
+      <input type="submit" name="best" value="Fill Best Priority '.$lowpri.'" title="Assign as many priority '.$lowpri.' requests as possible" /></form>';
 
 ?>
 </body>
