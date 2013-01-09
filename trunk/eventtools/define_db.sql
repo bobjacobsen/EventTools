@@ -632,6 +632,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_opsession_req` (
 
   `mark_changed` varchar(1) default '',
   `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `opsreq_priority` int(5) default '0',
 
   PRIMARY KEY  (`opsreq_id`),
   UNIQUE KEY `idx_eventtools_opsreq_person_email` (`opsreq_person_email`)
