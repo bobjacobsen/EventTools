@@ -15,7 +15,9 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Should not lose existing date, but make
 -- sure you have a good backup first.
-
+--
+-- $Revision$
+--
 -- --------------------------------------------------------
 
 --
