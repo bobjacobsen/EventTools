@@ -13,6 +13,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- 
 -- To be used if an SVN update changes any .sql files
 --
+-- After this, you MUST rerun the define_views.sql file
+--
 -- Should not lose existing date, but make
 -- sure you have a good backup first.
 --
@@ -48,4 +50,8 @@ ALTER TABLE `prefix_eventtools_opsession_req` ADD   `opsreq_opt5`            cha
 ALTER TABLE `prefix_eventtools_opsession_req` ADD   `opsreq_opt6`            char(1);
 ALTER TABLE `prefix_eventtools_opsession_req` ADD   `opsreq_opt7`            char(1);
 ALTER TABLE `prefix_eventtools_opsession_req` ADD   `opsreq_opt8`            char(1);
+
+-- --------------------------------------------------------
+-- After this, you MUST rerun the define_views.sql file
+-- --------------------------------------------------------
 
