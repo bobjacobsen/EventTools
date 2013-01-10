@@ -196,6 +196,7 @@ echo '<th><a href="ops_req_summary.php?order=clastname">Last</a></th>';
 echo '<th><a href="ops_req_summary.php?order=email">Email</a></th>';
 echo '<th><a href="ops_req_summary.php?order=create">Created Date</a></th>';
 echo '<th><a href="ops_req_summary.php?order=update">Updated Date</a></th>';
+echo '<th><a href="ops_req_summary.php?order=update">Assignment<br/>Group</a></th>';
 echo '</tr>';
 
 while ($i < $numReqs) {
@@ -211,6 +212,7 @@ while ($i < $numReqs) {
         if (("".mysql_result($resultReqs,$i,"customers_updated_date")) != "0000-00-00 00:00:00")
             echo mysql_result($resultReqs,$i,"customers_updated_date");
     echo '</td>';
+    echo  '<td align="center">'.mysql_result($resultReqs,$i,"opsreq_priority").'</td>';
     echo '</tr>';
     $i++;
 }
