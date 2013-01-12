@@ -467,7 +467,7 @@ $opts['fdd']['opsreq_pri12'] = array(
                         )
 );
 $opts['fdd']['opsreq_priority'] = array(
-  'name'     => 'Request group (0 first)',
+  'name'     => 'Attendee Category (0 last)',
   'select'   => 'T',
   'maxlen'   => 5,
   'sort'     => true
