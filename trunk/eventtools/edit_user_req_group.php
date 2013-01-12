@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Edit Operating Session Request Priority</title>
+	<title>Edit Attendee Category Number</title>
 <style type="text/css">
 	hr.pme-hr		     { border: 0px solid; padding: 0px; margin: 0px; border-top-width: 1px; height: 1px; }
 	table.pme-main 	     { border: #004d9c 1px solid; border-collapse: collapse; border-spacing: 0px; width: 100%; }
@@ -20,7 +20,7 @@
 </style>
 </head>
 <body>
-<h3>Edit Operating Session Request Priority</h3>
+<h3>Edit Attendee Category Number</h3>
 <a href="index.php">Back to main page</a>
 <p>
 
@@ -156,7 +156,7 @@ $opts['fdd']['opsreq_id'] = array(
   'sort'     => true
 );
 $opts['fdd']['opsreq_priority'] = array(
-  'name'     => 'Request group (0 first)',
+  'name'     => 'Category (high first, 0 last)',
   'select'   => 'T',
   'maxlen'   => 5,
   'sort'     => true

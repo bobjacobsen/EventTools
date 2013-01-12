@@ -196,7 +196,7 @@ echo '<th><a href="ops_req_summary.php?order=clastname">Last</a></th>';
 echo '<th><a href="ops_req_summary.php?order=email">Email</a></th>';
 echo '<th><a href="ops_req_summary.php?order=create">Created Date</a></th>';
 echo '<th><a href="ops_req_summary.php?order=update">Updated Date</a></th>';
-echo '<th><a href="ops_req_summary.php?order=update">Assignment<br/>Group</a></th>';
+echo '<th><a href="ops_req_summary.php?order=category">Attendee<br/>Category</a></th>';
 echo '</tr>';
 
 while ($i < $numReqs) {

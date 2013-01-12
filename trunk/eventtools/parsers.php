@@ -510,7 +510,7 @@ function parse_order() {
         if ($args["order"] == "clastname") return " customers_lastname ";
         if ($args["order"] == "cfirstname") return " customers_firstname ";
         if ($args["order"] == "email") return " customers_email_address ";
-        if ($args["order"] == "group") return " opsreq_priority ";
+        if ($args["order"] == "category") return " opsreq_priority ";
         return NONE;
     } else {
         return NONE;
