@@ -792,21 +792,21 @@ for ($i=0; $i<$num; ) {
         echo mysql_result($result,$i,"show_name").'<br/>'.mysql_result($result,$i,"start_date");
         // include counts
         echo '<br/>';
-        echo $count1.'/'.$count0.'/'.mysql_result($result,$i,"spaces");
         // button to add?
         echo '<form method="get" action="ops_assign_set.php#'.'s'.$tagnum.'">';
+        echo '<div title="Number operators assigned / requests left / remaining slots">'.$count1.'/'.$count0.'/'.mysql_result($result,$i,"spaces").'</div>';  // report counts
         echo '<input type="hidden" name="cy" value="'.$cycle.'">
               <input type="hidden" name="id" value="'.mysql_result($result,$firstindex,"opsreq_req_status_id").'">
               <input type="hidden" name="pri" value="'.$firstpri.'">';
         if (($pricnt > 0) && ($pricnt <= (mysql_result($result,$i,"spaces") - $count1))) {
-            echo '<input type="submit" name="grp" value="P" title="P buttons"/>';
+            echo '<input type="submit" name="grp" value="P" title="P buttons assign the next priority remaining requests for this layout."/><br/>';
         }
         $header = False;
         for ($session = 0; $session < $n_sessions; $session++) { 
             if (mysql_result($r_sessions, $session, "show_name") == mysql_result($result,$i,"show_name")
                     && mysql_result($r_sessions, $session, "start_date") != mysql_result($result,$i,"start_date") ) {
                 if (! $header) {
-                    echo 'Move to: ';
+                    echo 'Move to: <br/>';
                     echo '<input type="hidden" name="show_name" value="'.mysql_result($result,$i,"show_name").'">';
                     echo '<input type="hidden" name="from_date" value="'.mysql_result($result,$i,"start_date").'">';
                     $header = True;
