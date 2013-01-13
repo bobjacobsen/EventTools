@@ -26,7 +26,7 @@ $opts['logtable'] = $event_tools_db_prefix.'eventtools_changelog';
 $event_tools_notify_email_address = 'rgj1927@pacbell.net';
 $event_tools_notify_email_prefix = $event_tools_event_name;
 
-// sample forms list a Registrar for notification
+// Registrar email for notification from (sample) pre-registration and registration forms
 $event_tools_registrar_email_address = 'rgj1927@pacbell.net';
 $event_tools_registrar_email_prefix = $event_tools_event_name;
 
