@@ -28,12 +28,12 @@
 	// send email with info
 
     // If needed, change the email address on the next line
-	$to = $event_tools_notify_email_address;
+	$to = $event_tools_registrar_email_address;
 	
 	$subject = $event_tools_event_name." Registration FYI ".$_REQUEST["fname"]." ".$_REQUEST["lname"];
-	$headers = sprintf("From:  ".$event_tools_event_name." Registration Form <Registrar@BayRails.com>\r\n");
+	$headers = sprintf("From:  ".$event_tools_event_name." Registration Form <".$to.">\r\n");
 	$message = sprintf("%s %s has registered\r\n\r\n", $_REQUEST["fname"], $_REQUEST["lname"]);
-	$message .= "A tabular version can be found at http://www.bayrails.com/eventtools/ops_req_single.php?email=".$_REQUEST["email"]."\r\n\r\n";
+	$message .= "A tabular version can be found at http://".$_SERVER['SERVER_NAME']."/eventtools/ops_req_single.php?email=".$_REQUEST["email"]."\r\n\r\n";
 
     // add fill dump
 	$message .= get_request_args(date("m/d/y g:i a T",$now)."\r\n","\r\n");
@@ -45,14 +45,10 @@
 	require( 'ops_incremental_request.php');
 
 	// show confirmation on page
-	$page = <<<END
-	<h1>Thank you for Registering for BayRails V</h1>
-	Your info has been emailed to $to, stored and will be processed shortly.<br><br>
-	You can expect to hear from us within the next few days, and if you think you've been forgotten or
-	are being ignored, please feel free to send a direct email plea to $to .<br><br>
-	
-END;
-	print $page;
+	print "<h1>Thank you for Registering for ".$event_tools_event_name."</h1>\n";
+	print "Your info has been emailed to ".$to.", stored and will be processed shortly.<br><br>\n";
+	print "You can expect to hear from us within the next few days, and if you think you've been forgotten or\n";
+	print "are being ignored, please feel free to send a direct email plea to ".$to." .<br><br>\n";
 
 	// end of code here
 
