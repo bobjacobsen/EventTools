@@ -20,7 +20,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Operating Session Request</title>
+	<title>Single Attendee Record</title>
 <style type="text/css">
 	hr.pme-hr		     { border: 0px solid; padding: 0px; margin: 0px; border-top-width: 1px; height: 1px; }
 	table.pme-main 	     { border: #004d9c 1px solid; border-collapse: collapse; border-spacing: 0px; width: 100%; }
@@ -37,7 +37,7 @@
 </style>
 </head>
 <body>
-<h2>Operating Session Request</h2>
+<h2>Single Attendee Record</h2>
 
 <a href="index.php">Back to main page</a><p>
 <?php
