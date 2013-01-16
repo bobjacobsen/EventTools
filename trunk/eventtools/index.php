@@ -159,7 +159,7 @@ if ($event_tools_option_zen_cart_used) {
     echo '<a href="edit_zen_repl_customer.php">View/Edit contact info</a><br/>';
     echo '<a href="edit_zen_repl_address.php">View/Edit addresses</a><p>';
     echo '<a href="index_attendees.php">Table of info</a><p>';
-    echo '<a href="edit_user_req_group.php">View/Edit attendee category numbers</a><p>';
+    if ($event_tools_ops_session_by_category) echo '<a href="edit_user_req_group.php">View/Edit attendee category numbers</a><p>';
     echo '</td></tr></table>';
 }
 
