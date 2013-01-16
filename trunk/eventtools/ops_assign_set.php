@@ -261,7 +261,7 @@ function updatenavigation() {
         SELECT  *
         FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
         WHERE opsreq_group_cycle_name = '".$cycle."'
-        ORDER BY show_name, start_date, req_num, customers_lastname, opsreq_person_email
+        ORDER BY show_name, start_date, req_num, opsreq_priority DESC, customers_lastname, opsreq_person_email
         ;
     ";
     $result=mysql_query($query);
@@ -838,6 +838,7 @@ for ($i=0; $i<$num; ) {
         }
         echo '</form></td><td>';
         
+        // Display row of people requesting this session, in order 
         $status = $status_by_rqstr[mysql_result($result,$i,"opsreq_person_email")][mysql_result($result,$i,"req_num")];
         setspan($status);
         echo '<a name="'.'y'.mysql_result($result,$i,"opsreq_req_status_id").'"/>';
