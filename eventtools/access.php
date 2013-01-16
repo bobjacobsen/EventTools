@@ -87,7 +87,7 @@ $event_tools_option_zen_cart_used       = FALSE;
 $event_tools_cartlink = "http://127.0.0.1/localcart";
 
 // Include support for doing op-session requests by category? 
-$event_tools_ops_session_by_category     = FALSE;
+$event_tools_ops_session_by_category     = TRUE;
 
 // Names for optional fields 1-8 in op session requests
 $event_tools_op_session_opt1_name        = 'Opt1';
