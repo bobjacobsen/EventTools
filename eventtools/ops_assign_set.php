@@ -177,7 +177,7 @@ function transfer_unassigned($toDate, $fromDate, $showName, $cycle) {
 
 function updatenavigation() {
     global $reqnum_by_rqstr, $reqname_by_rqstr, $strtdate_by_rqstr, $statusid_by_rqstr, $status_by_rqstr;
-    global $rqstr_name, $rqstr_group, $rqstr_address, $rqstr_email, $rqstr_group_size, $rqstr_req_size, $rqstr_req_any;
+    global $rqstr_name, $rqstr_group, $rqstr_address, $rqstr_category, $rqstr_email, $rqstr_group_size, $rqstr_req_size, $rqstr_req_any;
     global $group_user_count;
     global $empty_slots_by_session;
     global $event_tools_db_prefix, $cycle;
@@ -202,6 +202,7 @@ function updatenavigation() {
     $rqstr_name = array();  // for presentation name by rqstr email
     $rqstr_group = array(); // for group number by rqstr email
     $rqstr_address = array(); // for address (city, state) by rqstr email
+    $rqstr_category = array(); // for category (selection priority) by rqstr email
     $rqstr_group_size  = array(); // for group size by rqstr email
     $rqstr_req_size  = array(); // for number of requests by rqstr email
     $rqstr_req_any  = array(); // accept any sessions by rqstr email
@@ -216,6 +217,7 @@ function updatenavigation() {
         $rqstr_name[$email] = mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").'<br/>'.mysql_result($result,$i,"opsreq_person_email");
         $rqstr_group[$email] = mysql_result($result,$i,"opsreq_group_id");
         $rqstr_address[$email] = mysql_result($result,$i,"entry_city").', '.mysql_result($result,$i,"entry_state");
+        $rqstr_category[$email] = mysql_result($result,$i,"opsreq_priority");
         $rqstr_group_size[$email] = $group_user_count[mysql_result($result,$i,"opsreq_group_id")];
         $rqstr_req_size[$email] = mysql_result($result,$i,"opsreq_number");
         $rqstr_req_any[$email] = mysql_result($result,$i,"opsreq_any");
@@ -517,7 +519,7 @@ for ($i = 0; $i < $num; ) {
 // preload navigation
 
 global $reqnum_by_rqstr, $reqname_by_rqstr, $strtdate_by_rqstr, $statusid_by_rqstr, $status_by_rqstr;
-global $rqstr_name, $rqstr_group, $rqstr_address, $rqstr_email, $rqstr_group_size, $rqstr_req_size, $rqstr_req_any;
+global $rqstr_name, $rqstr_group, $rqstr_address, $rqstr_category, $rqstr_email, $rqstr_group_size, $rqstr_req_size, $rqstr_req_any;
 global $empty_slots_by_session;
 
 // set the initial navigation info
@@ -527,7 +529,7 @@ $num = mysql_numrows($result);
 // handle group operations after the temporary 
 // status (conflicts, etc) has been set
 
-if ( $args["grp"] ) {
+if ( $args["grp"] ) { // assign remaining top priority in requesting session
     //cy=gggg&id=7737&pri=1&op=P#s637
     $id =  $args["id"];  // one item; there will be more through the group
     $pri = $args["pri"];
@@ -596,6 +598,22 @@ if ( $args["best"] ) {
     }
     echo 'Will attempt to place '.count($users).' requests: ';
     foreach ($users as $u) echo ' '.$u.' '; echo '<br/>';
+    
+    // order the users by their category (prefix_eventtools_opsession_req.opsreq_priority) and time (prefix_customers.customers_create_date)
+    $q2 = "SELECT opsreq_priority, opsreq_person_email ".
+                "FROM ".$event_tools_db_prefix."eventtools_opsession_req_with_user_info ".
+                "ORDER BY opsreq_priority DESC, customers_create_date;";
+    //echo '<p>'.$q2.'<p>';
+    $q2r = mysql_query($q2);
+    $users_ordered = array();
+    for ($j = 0; $j<mysql_numrows($q2r); $j++) {
+        if (in_array(mysql_result($q2r,$j,"opsreq_person_email"), $users)) $users_ordered[] = mysql_result($q2r,$j,"opsreq_person_email");
+    }
+    $users = $users_ordered;
+    echo 'Order of attempts: ';
+    foreach ($users as $u) echo ' '.$u.' '; echo '<br/>';
+    
+    echo '<p>';
     
     // loop until can't do anything
     while (TRUE) {
@@ -707,7 +725,11 @@ foreach ($rqstr_email as $email) {
     // display output
     echo '<tr><td><a name="'.'p'.$tagnum.'">'.$rqstr_name[$email].'<br/>'.$rqstr_address[$email];
     if ($group_user_count[$rqstr_group[$email]] > 1) echo '<br/>Group of '.$group_user_count[$rqstr_group[$email]];
-    echo '<br/>Up to '.$rqstr_req_size[$email].', has '.$count.', any='.$rqstr_req_any[$email];
+    if ($event_tools_ops_session_by_category) echo ' ('.$rqstr_category[$email].')';
+    echo '<br/>';
+    echo 'Has '.$count.' assigned';
+    if ($rqstr_req_size[$email]!='') echo ', Up to '.$rqstr_req_size[$email];
+    if ($rqstr_req_any[$email]!='') echo ', any='.$rqstr_req_any[$email];
     echo '</td>';
     for ($j = 1; $j<13; $j++) {
         echo '<td>';
@@ -822,6 +844,7 @@ for ($i=0; $i<$num; ) {
         echo '<a href="ops_assign_set.php?cy='.$cycle.'#i'.mysql_result($result,$i,"opsreq_req_status_id").'">';
         echo mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").'<br/>'.mysql_result($result,$i,"opsreq_person_email").'</a>';
         echo '<br/>'.mysql_result($result,$i,"entry_city").', '.mysql_result($result,$i,"entry_state");
+        if ($event_tools_ops_session_by_category) echo ' ('.$rqstr_category[mysql_result($result,$i,"opsreq_person_email")].')';
         echo '<br/>'.' [Pri: '.mysql_result($result,$i,"req_num").']';
         $count = $group_user_count[$rqstr_group[mysql_result($result,$i,"opsreq_person_email")]];
         if ($count > 1) echo " Group of ".$count;
@@ -839,6 +862,7 @@ for ($i=0; $i<$num; ) {
             echo '<a href="ops_assign_set.php?cy='.$cycle.'#i'.mysql_result($result,$i,"opsreq_req_status_id").'">';
             echo mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").'<br/>'.mysql_result($result,$i,"opsreq_person_email").'</a>';
             echo '<br/>'.mysql_result($result,$i,"entry_city").', '.mysql_result($result,$i,"entry_state");
+            if ($event_tools_ops_session_by_category) echo ' ('.$rqstr_category[mysql_result($result,$i,"opsreq_person_email")].')';
             echo '<br/>'.' [Pri: '.mysql_result($result,$i,"req_num").']';
             $count = $group_user_count[$rqstr_group[mysql_result($result,$i,"opsreq_person_email")]];
             if ($count > 1) echo " Group of ".$count;
