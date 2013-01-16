@@ -127,7 +127,7 @@ AS SELECT ops_id, start_date, presenting_time, spaces, distance, travel_time, lo
         ON prefix_eventtools_opsession.ops_layout_id2 = l2.layout_id;
 
 CREATE OR REPLACE VIEW prefix_eventtools_ops_group_names
-AS SELECT customers_firstname, customers_lastname, opsreq_person_email, prefix_eventtools_opsreq_group.opsreq_group_id, 
+AS SELECT customers_firstname, customers_lastname, opsreq_person_email, opsreq_priority, prefix_eventtools_opsreq_group.opsreq_group_id, 
             opsreq_group_cycle_name, opsreq_comment, prefix_eventtools_opsreq_group_req_link.opsreq_id,
             opsreq_group_req_link_id, entry_city, entry_state, opsreq_number, opsreq_any
         FROM (((
@@ -143,7 +143,8 @@ AS SELECT customers_firstname, customers_lastname, opsreq_person_email, prefix_e
 
 -- op session request assignment with session name info
 CREATE OR REPLACE VIEW prefix_eventtools_ops_group_session_assignments
-AS SELECT customers_firstname, customers_lastname, opsreq_person_email, prefix_eventtools_ops_group_names.opsreq_group_id, 
+AS SELECT customers_firstname, customers_lastname, 
+            opsreq_person_email, opsreq_priority, prefix_eventtools_ops_group_names.opsreq_group_id, 
             opsreq_group_cycle_name, opsreq_comment, prefix_eventtools_ops_group_names.opsreq_id, opsreq_req_status_id, status,
             prefix_eventtools_ops_group_names.opsreq_group_req_link_id, req_num, prefix_eventtools_opsreq_req_status.ops_id,
             start_date, spaces, show_name, entry_city, entry_state, opsreq_number, opsreq_any, ops_layout_id 
