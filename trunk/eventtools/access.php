@@ -86,6 +86,9 @@ $event_tools_option_zen_cart_used       = FALSE;
 // how to generate a link to optional Zen Cart
 $event_tools_cartlink = "http://127.0.0.1/localcart";
 
+// Include support for doing op-session requests by category? 
+$event_tools_ops_session_by_category     = FALSE;
+
 // Names for optional fields 1-8 in op session requests
 $event_tools_op_session_opt1_name        = 'Opt1';
 $event_tools_op_session_opt1_long_name   = 'Option 1';
