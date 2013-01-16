@@ -10,7 +10,11 @@ The following are small examples of forms for selecting various things.
 <p>
 There are also example selection forms in some of the "formatting" and "index" example pages,
 see the <a href="index.php">main page</a> for access to those.
-
+<p>
+Note that the sample code includes PHP 'require' and 'require_once'
+statements that reference files in the EventTools directory.  If you
+move the sample file to another directory, you'll have to update the file 
+paths in these statements.
 <hr>
 <form method="get" action="format_all_clinics.php">
     <button type="submit">Table of clinics with tag:</button>

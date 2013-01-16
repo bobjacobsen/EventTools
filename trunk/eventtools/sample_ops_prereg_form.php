@@ -1,4 +1,10 @@
 <?
+
+// Note that the sample code includes PHP 'require' and 'require_once'
+// statements that reference files in the EventTools directory.  If you
+// move the sample file to another directory, you'll have to update the file 
+// paths in these statements.
+
 	require_once('access.php'); 
 	require('utilities.php'); 
 
