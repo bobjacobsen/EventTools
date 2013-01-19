@@ -619,6 +619,7 @@ if ( $args["best"] ) {
             $layout = $layout_number_by_session[$session];
             echo '('.$email.'/'.$session.'/'.$layout.')';
             foreach ($layout_number_by_session as $ses_next => $layout_next) {
+                echo '['.$ses_next.'/'.$layout_next.']';
                 if (($layout_next == $layout ) && ($ses_next != $session)) {
                     // alternate session, check space
                     echo '['.$layout.']';
