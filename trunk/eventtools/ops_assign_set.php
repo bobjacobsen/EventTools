@@ -259,7 +259,25 @@ function updatenavigation() {
         $status_by_rqstr[$email] = $status;
     }
     
-    // query by op session
+    // query all op sessions
+    $layout_number_by_session = array(); // layout ID by session name (show_name.start_date)
+    $strtdate_by_session = array();      // start date by session name (show_name.start_date)
+    $query="
+        SELECT  *
+        FROM ".$event_tools_db_prefix."eventtools_opsession_name
+        ORDER BY show_name, start_date
+        ;
+    ";
+    $result=mysql_query($query);
+    $num = mysql_numrows($result);
+    for ($i=0; $i<$num; $i++ ) {
+        if (mysql_result($result,$i,"show_name") != "") {
+            $layout_number_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$j,"start_date")] = mysql_result($result,$i,"ops_layout_id");
+            $strtdate_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$j,"start_date")] = mysql_result($result,$j,"start_date");
+        }
+    }
+        
+    // query by op session with assignments
     $query="
         SELECT  *
         FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
@@ -528,7 +546,7 @@ for ($i = 0; $i < $num; ) {
 
 global $reqnum_by_rqstr, $reqname_by_rqstr, $strtdate_by_rqstr, $statusid_by_rqstr, $status_by_rqstr;
 global $rqstr_name, $rqstr_group, $rqstr_address, $rqstr_category, $rqstr_email, $rqstr_group_size, $rqstr_req_size, $rqstr_req_any;
-global $empty_slots_by_session, $layout_number_by_session,$strtdate_by_session;
+global $empty_slots_by_session, $layout_number_by_session, $strtdate_by_session;
 
 // set the initial navigation info
 $result = updatenavigation();
