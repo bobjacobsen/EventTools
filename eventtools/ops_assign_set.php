@@ -276,7 +276,12 @@ function updatenavigation() {
             $strtdate_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$j,"start_date")] = mysql_result($result,$j,"start_date");
         }
     }
-        
+    echo '<br>Dump layout_number_by_session: ';
+    foreach ($layout_number_by_session as $ses_next => $layout_next) {
+        echo '['.$ses_next.'/'.$layout_next.']';
+    }
+    echo '<br>';
+     
     // query by op session with assignments
     $query="
         SELECT  *
