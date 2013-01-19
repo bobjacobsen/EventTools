@@ -193,11 +193,11 @@ function updatenavigation() {
     $result=mysql_query($query);
     $num = mysql_numrows($result);
 
-    $reqnum_by_rqstr = array();  // array of req_num requests [1:8] by rqstr email
-    $reqname_by_rqstr = array();  // array of req_name requests [1:8] by rqstr email
-    $strtdate_by_rqstr = array();  // array of start_date requests [1:8] by rqstr email
-    $statusid_by_rqstr = array();  // array of opsreq_req_status_id requests [1:8] by rqstr email
-    $status_by_rqstr = array();  // array of opsreq_req_status_id requests [1:8] by rqstr email
+    $reqnum_by_rqstr = array();  // array of req_num requests [1:n] by rqstr email
+    $reqname_by_rqstr = array();  // array of req_name requests [1:n] by rqstr email
+    $strtdate_by_rqstr = array();  // array of start_date requests [1:n] by rqstr email
+    $statusid_by_rqstr = array();  // array of opsreq_req_status_id requests [1:n] by rqstr email
+    $status_by_rqstr = array();  // array of opsreq_req_status_id requests [1:n] by rqstr email
     
     $rqstr_name = array();  // for presentation name by rqstr email
     $rqstr_group = array(); // for group number by rqstr email
@@ -268,7 +268,9 @@ function updatenavigation() {
     $num = mysql_numrows($result);
     
     // scan for full sessions and disable requests
-    $empty_slots_by_session = array();
+    $empty_slots_by_session = array();   // count of empty slots by session name (show_name.start_date)
+    $layout_number_by_session = array(); // layout ID by session name (show_name.start_date)
+    
     for ($i=0; $i<$num; $i++ ) {
         if (mysql_result($result,$i,"show_name") != "") {
             // count number of assignments (status = STATUS_ASSIGNED)
@@ -281,6 +283,7 @@ function updatenavigation() {
                 if (mysql_result($result,$j,"status") == STATUS_ASSIGNED) $count1++;
             }
             $empty_slots_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$j,"start_date")] = 0+mysql_result($result,$i,"spaces") - $count1;
+            $layout_number_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$j,"start_date")] = mysql_result($result,$i,"ops_layout_id");
             //echo "Recomputed empty slots for ".mysql_result($result,$i,"show_name")." as ".$empty_slots_by_session[mysql_result($result,$i,"show_name")]."<br/>";
 
             // have count, check for over
@@ -520,7 +523,7 @@ for ($i = 0; $i < $num; ) {
 
 global $reqnum_by_rqstr, $reqname_by_rqstr, $strtdate_by_rqstr, $statusid_by_rqstr, $status_by_rqstr;
 global $rqstr_name, $rqstr_group, $rqstr_address, $rqstr_category, $rqstr_email, $rqstr_group_size, $rqstr_req_size, $rqstr_req_any;
-global $empty_slots_by_session;
+global $empty_slots_by_session, $layout_number_by_session;
 
 // set the initial navigation info
 $result = updatenavigation();
@@ -617,6 +620,20 @@ if ( $args["best"] ) {
     
     // loop until can't do anything
     while (TRUE) {
+        // if doing by-layout assignment, and requested section is full and alternate section has space, move request
+        if ($event_tools_ops_session_assign_by_layout) {
+            foreach ($users as $key => $email) {
+                // skip if not valid request
+                if ($reqname_by_rqstr[$email][$pri] == "") continue;
+                // check for not session full or conflicted 
+                if (!( ($status_by_rqstr[$email][$pri] == STATUS_FULL) || ($status_by_rqstr[$email][$pri] == STATU_CONFLICT) )) continue;
+                // yes, check for another available session with same layout
+                //$layout = $layout_number_by_session[];
+                // found, move request over and repeat
+                echo 'Move request of '.$email.' to alternate session  from '.$reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri].' layout '.$layout_number_by_session[$reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri]].'<br/>';;
+                continue 2; // repeat from start
+            }
+        }
         // find and satisfy requests without a N+1th choice, then continue
         foreach ($users as $key => $email) {
             if ( ($status_by_rqstr[$email][1+$pri] == "0") && ($reqname_by_rqstr[$email][1+$pri] != "") ) {
@@ -626,7 +643,7 @@ if ( $args["best"] ) {
             // check space
             if ( $rqstr_group_size[$email] > $empty_slots_by_session[$reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri]] ) {
                 echo 'Skip '.$email.' because group needs '.$rqstr_group_size[$email].' spots but only '.$empty_slots_by_session[$reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri]].' available, no 2nd choice<br/>';
-                continue;
+                continue;  // next user
             }
             // found one
             echo 'Assign '.$email.' to '.$reqname_by_rqstr[$email][$pri].' '.$strtdate_by_rqstr[$email][$pri].' (no 2nd)<br/>';
