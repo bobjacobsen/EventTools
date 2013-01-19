@@ -641,6 +641,10 @@ if ( $args["best"] ) {
     
     echo '<p>';
 
+    foreach ($layout_number_by_session as $ses_next => $layout_next) {
+        echo '['.$ses_next.']=='.$layout_next.';';
+    }; echo '<p>';
+    
     // loop until can't do anything
     while (TRUE) {
         // if doing by-layout assignment, and requested section is full and alternate section has space, move request
@@ -651,9 +655,9 @@ if ( $args["best"] ) {
                 // check for not session full or conflicted 
                 if (!( ($status_by_rqstr[$email][$pri] == STATUS_FULL) || ($status_by_rqstr[$email][$pri] == STATU_CONFLICT) )) continue;
                 // yes, check for another available session with same layout
-                echo '('.$email.')';
                 $session = $reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri];
                 $layout = $layout_number_by_session[$session];
+                echo '('.$email.'/'.$session.'/'.$layout.')';
                 foreach ($layout_number_by_session as $ses_next => $layout_next) {
                     if (($layout_next == $layout ) && ($ses_next != $session)) {
                         // alternate session, check space
