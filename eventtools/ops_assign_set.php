@@ -179,7 +179,7 @@ function updatenavigation() {
     global $reqnum_by_rqstr, $reqname_by_rqstr, $strtdate_by_rqstr, $statusid_by_rqstr, $status_by_rqstr;
     global $rqstr_name, $rqstr_group, $rqstr_address, $rqstr_category, $rqstr_email, $rqstr_group_size, $rqstr_req_size, $rqstr_req_any;
     global $group_user_count;
-    global $empty_slots_by_session;
+    global $empty_slots_by_session, $layout_number_by_session;
     global $event_tools_db_prefix, $cycle;
     
     $query="
@@ -617,7 +617,7 @@ if ( $args["best"] ) {
     foreach ($users as $u) echo ' '.$u.' '; echo '<br/>';
     
     echo '<p>';
-    if ($event_tools_ops_session_assign_by_layout) echo "selected TRUE"; else echo "selected FALSE";
+
     // loop until can't do anything
     while (TRUE) {
         // if doing by-layout assignment, and requested section is full and alternate section has space, move request
@@ -631,7 +631,6 @@ if ( $args["best"] ) {
                 //$layout = $layout_number_by_session[];
                 // found, move request over and repeat
                 echo 'Move request of '.$email.' to alternate session  from '.$reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri].' layout '.$layout_number_by_session[$reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri]].'<br/>';;
-                continue 2; // repeat from start
             }
         }
         // find and satisfy requests without a N+1th choice, then continue
