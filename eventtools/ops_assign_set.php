@@ -273,6 +273,7 @@ function updatenavigation() {
     $num = mysql_numrows($result);
     echo '<br>'.$num.'<br>';
     for ($i=0; $i<$num; $i++ ) {
+        echo '['.mysql_result($result,$i,"show_name").'/'.mysql_result($result,$j,"start_date").'/'.mysql_result($result,$i,"ops_layout_id").']';
         if (mysql_result($result,$i,"show_name") != "") {
             $layout_number_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$j,"start_date")] = mysql_result($result,$i,"ops_layout_id");
             $strtdate_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$j,"start_date")] = mysql_result($result,$j,"start_date");
