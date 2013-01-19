@@ -14,6 +14,7 @@
 function create_request_entries($max_pri, $where=NONE, $order=NONE ) {
     global $opts, $event_tools_db_prefix, $event_tools_href_add_on;
     global $event_tools_show_min_value;
+    global $event_tools_ops_session_assign_by_layout;
     
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
@@ -36,23 +37,28 @@ function create_request_entries($max_pri, $where=NONE, $order=NONE ) {
     $i=0;
     $num=mysql_numrows($result);
     //echo $num;
+    $last_show_name = "";
     
     while ($i < $num) {
-        $j = 0;
-        echo "<tr>\n";
         $row = mysql_fetch_assoc($result);
+        // if by layout, don't show duplicates
+        if ( (! $event_tools_ops_session_assign_by_layout ) || ($row["show_name"] != $last_show_name)) {
 
-        echo '<tr><td><select name=v_'.$row[ops_id].'>';
-        $k = 1;
-        echo '<option value=""></option>';
-        while ($k <= $max_pri) {
-            echo '<option value="'.$k.'">'.$k.'</option>';
-            $k++;
+            echo '<tr><td><select name=v_'.$row[ops_id].'>';
+            $k = 1;
+            echo '<option value=""></option>';
+            while ($k <= $max_pri) {
+                echo '<option value="'.$k.'">'.$k.'</option>';
+                $k++;
+            }
+            echo "</select>\n";
+            echo $row["show_name"];
+            if (! $event_tools_ops_session_assign_by_layout ) {
+                echo " ".$row["start_date"];
+            }
+            echo "</td></tr>\n";
         }
-        echo "</select>\n";
-        echo $row["show_name"];
-        echo "</td></tr>\n";
-        
+        $last_show_name = $row["show_name"];
         $i++;
     }    
 }
