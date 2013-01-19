@@ -178,7 +178,7 @@ function transfer_unassigned($toDate, $fromDate, $showName, $cycle, $email=NONE)
 
 
     }
-    echo "<br>";
+    if ($email == NONE) echo "<br>";
 
 }
 
