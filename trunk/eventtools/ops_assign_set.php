@@ -103,7 +103,7 @@ function setstatus($id, $status) {  // set status record $id to $status, then al
     }
 }
 
-function transfer_unassigned($toDate, $fromDate, $showName, $cycle) {
+function transfer_unassigned($toDate, $fromDate, $showName, $cycle, $email=NONE) {
     // fromID is the opsreq_req_status_id 
     // goal is to take requests R1..Rn from user U1..Un currently on layout L date D1, and 
     // link it to layout L date D2 instead. Status is not changed and only unassigned are moved.
@@ -123,8 +123,8 @@ function transfer_unassigned($toDate, $fromDate, $showName, $cycle) {
         FROM ".$event_tools_db_prefix."eventtools_opsession_name
         WHERE show_name = '".$showName."'
             AND start_date = '".$toDate."'
-        ;
-    ";
+        ;";
+    
     $result=mysql_query($query);
     $num = mysql_numrows($result);
     if ($num != 1) {
@@ -142,8 +142,11 @@ function transfer_unassigned($toDate, $fromDate, $showName, $cycle) {
             AND show_name = '".$showName."'
             AND start_date = '".$fromDate."'
             AND status = '".STATUS_RELEASED."'
-        ;
     ";
+    if ($email != NONE) {
+        $query = $query." AND opsreq_person_email = '".$email."' ";
+    }
+    $query = $query.';';
     //echo $query;
     $result=mysql_query($query);
     $num = mysql_numrows($result);
@@ -179,7 +182,7 @@ function updatenavigation() {
     global $reqnum_by_rqstr, $reqname_by_rqstr, $strtdate_by_rqstr, $statusid_by_rqstr, $status_by_rqstr;
     global $rqstr_name, $rqstr_group, $rqstr_address, $rqstr_category, $rqstr_email, $rqstr_group_size, $rqstr_req_size, $rqstr_req_any;
     global $group_user_count;
-    global $empty_slots_by_session, $layout_number_by_session;
+    global $empty_slots_by_session, $layout_number_by_session,$strtdate_by_session;
     global $event_tools_db_prefix, $cycle;
     
     $query="
@@ -270,6 +273,7 @@ function updatenavigation() {
     // scan for full sessions and disable requests
     $empty_slots_by_session = array();   // count of empty slots by session name (show_name.start_date)
     $layout_number_by_session = array(); // layout ID by session name (show_name.start_date)
+    $strtdate_by_session = array();      // start date by session name (show_name.start_date)
     
     for ($i=0; $i<$num; $i++ ) {
         if (mysql_result($result,$i,"show_name") != "") {
@@ -283,8 +287,9 @@ function updatenavigation() {
                 if (mysql_result($result,$j,"status") == STATUS_ASSIGNED) $count1++;
             }
             $empty_slots_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$j,"start_date")] = 0+mysql_result($result,$i,"spaces") - $count1;
-            $layout_number_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$j,"start_date")] = mysql_result($result,$i,"ops_layout_id");
             //echo "Recomputed empty slots for ".mysql_result($result,$i,"show_name")." as ".$empty_slots_by_session[mysql_result($result,$i,"show_name")]."<br/>";
+            $layout_number_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$j,"start_date")] = mysql_result($result,$i,"ops_layout_id");
+            $strtdate_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$j,"start_date")] = mysql_result($result,$j,"start_date");
 
             // have count, check for over
             if ($count1 >= (0+mysql_result($result,$i,"spaces")) ) {
@@ -523,7 +528,7 @@ for ($i = 0; $i < $num; ) {
 
 global $reqnum_by_rqstr, $reqname_by_rqstr, $strtdate_by_rqstr, $statusid_by_rqstr, $status_by_rqstr;
 global $rqstr_name, $rqstr_group, $rqstr_address, $rqstr_category, $rqstr_email, $rqstr_group_size, $rqstr_req_size, $rqstr_req_any;
-global $empty_slots_by_session, $layout_number_by_session;
+global $empty_slots_by_session, $layout_number_by_session,$strtdate_by_session;
 
 // set the initial navigation info
 $result = updatenavigation();
@@ -628,9 +633,21 @@ if ( $args["best"] ) {
                 // check for not session full or conflicted 
                 if (!( ($status_by_rqstr[$email][$pri] == STATUS_FULL) || ($status_by_rqstr[$email][$pri] == STATU_CONFLICT) )) continue;
                 // yes, check for another available session with same layout
-                //$layout = $layout_number_by_session[];
-                // found, move request over and repeat
-                echo 'Move request of '.$email.' to alternate session  from '.$reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri].' layout '.$layout_number_by_session[$reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri]].'<br/>';;
+                $session = $reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri];
+                $layout = $layout_number_by_session[$session];
+                foreach ($layout_number_by_session as $ses_next => $layout_next) {
+                    if (($layout_next == $layout ) && ($ses_next != $session)) {
+                        // alternate session, check space
+                        if ($empty_slots_by_session[$ses_next] > 0) {
+                            // found, move request over and repeat
+                            echo 'Move request of '.$email.' to alternate session  from '.$reqname_by_rqstr[$email][$pri].' ('.$strtdate_by_rqstr[$email][$pri].') layout '.$layout;
+                            echo ' to '.$ses_next.' ('.$strtdate_by_session[$ses_next].') in cycle '.$cycle.'<br/>';
+                            //transfer_unassigned($toDate, $fromDate, $showName, $cycle, $email);
+                            //$result = updatenavigation();
+                            //$num = mysql_numrows($result);
+                        }
+                    }
+                }
             }
         }
         // find and satisfy requests without a N+1th choice, then continue
