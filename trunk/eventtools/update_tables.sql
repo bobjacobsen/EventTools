@@ -26,8 +26,18 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `prefix_eventtools_users`
 --
 
+--
+-- To check for missing default address links:
+-- SELECT * FROM prefix_customers LEFT JOIN prefix_address_book USING (customers_id);
+--   (optionally with) WHERE customers_default_address_id = NULL;
+--
+-- To correct those:
+-- UPDATE (prefix_customers LEFT JOIN prefix_address_book USING (customers_id)) SET customers_default_address_id = address_book_id;
+--
 
--- ALTER TABLE `prefix_customers` ADD `customers_nmra_num` varchar(8) default NULL;
+--
+--  Necessary table updates
+--
 
 ALTER TABLE `prefix_customers`                MODIFY customers_email_address varchar(96) NOT NULL default '';
 ALTER TABLE `prefix_eventtools_layouts`       MODIFY layout_owner_email      varchar(96) default '';

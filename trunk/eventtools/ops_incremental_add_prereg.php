@@ -49,7 +49,6 @@ if (mysql_num_rows($reqs) == 0) {
 }
 
 // do an insert of the address block
-// following should instead properly handle prefix_customers.customers_default_address_id instead of just forcing one
 // Right now, it just updates the earliest if there already is one
 $findu = "SELECT ".$event_tools_db_prefix."customers.customers_id, address_book_id FROM (".$event_tools_db_prefix."customers LEFT JOIN ".$event_tools_db_prefix."address_book ON ".$event_tools_db_prefix."customers.customers_id = ".$event_tools_db_prefix."address_book.customers_id ) WHERE customers_email_address = '".$email."';";
 //print '[ '.$findu.' ] ';
@@ -59,7 +58,12 @@ $reqs = mysql_query($findu);
 $address = "REPLACE INTO ".$event_tools_db_prefix."address_book (`customers_id`, `address_book_id`, `entry_street_address`, `entry_city`, `entry_state`, `entry_postcode`) VALUES "
     ."('".mysql_result($reqs,0,"customers_id")."','".mysql_result($reqs,0,"address_book_id")."','".$_REQUEST["street"]."','".$_REQUEST["city"]."','".$_REQUEST["state"]."','".$_REQUEST["zip"]."');";
 //print '[ '.$address.' ] ';
-mysql_query($address);
+$repl = mysql_query($address);
+
+// and make sure prefix_customers.customers_default_address_id is correct
+$customer = "UPDATE ".$event_tools_db_prefix."customers SET customers_default_address_id =".mysql_insert_id()." WHERE customers_id = ".mysql_result($reqs,0,"customers_id")." ;";
+//print '[ '.$customer.' ] ';
+$repl = mysql_query($customer);
 
 ?>
 

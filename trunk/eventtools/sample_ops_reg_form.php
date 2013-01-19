@@ -44,8 +44,8 @@
     // add fill dump
 	$message .= get_request_args(date("m/d/y g:i a T",$now)."\r\n","\r\n");
 
-    // and send
-	mail($to, $subject, $message, $headers);
+    // uncomment next line to send email
+	//mail($to, $subject, $message, $headers);
 	
 	// process into database
 	require( 'ops_incremental_request.php');
