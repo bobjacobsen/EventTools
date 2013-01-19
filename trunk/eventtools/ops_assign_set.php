@@ -628,7 +628,7 @@ if ( $args["best"] ) {
                     //echo '[ checking '.$ses_next.' with '.$empty_slots_by_session[$ses_next].']';
                     if ($empty_slots_by_session[$ses_next] == '' || $empty_slots_by_session[$ses_next] == NONE || $empty_slots_by_session[$ses_next] > 0) {
                         // found, move request over and repeat
-                        echo 'Move '.$email.' request from '.$reqname_by_rqstr[$email][$pri].' '.$strtdate_by_rqstr[$email][$pri];
+                        echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Move '.$email.' request from '.$reqname_by_rqstr[$email][$pri].' '.$strtdate_by_rqstr[$email][$pri];
                         echo ' to '.$strtdate_by_session[$ses_next].'<br/>';
                         transfer_unassigned($strtdate_by_session[$ses_next], $strtdate_by_rqstr[$email][$pri], $reqname_by_rqstr[$email][$pri], $cycle, $email);
                         $result = updatenavigation();
@@ -696,7 +696,7 @@ if ( $args["best"] ) {
                         //echo '[ checking '.$ses_next.' with '.$empty_slots_by_session[$ses_next].']';
                         if ($empty_slots_by_session[$ses_next] == '' || $empty_slots_by_session[$ses_next] == NONE || $empty_slots_by_session[$ses_next] > 0) {
                             // found, move request over and repeat
-                            echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Move '.$email.' request from '.$reqname_by_rqstr[$email][$pri].' '.$strtdate_by_rqstr[$email][$pri];
+                            echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Move '.$email.' request from '.$reqname_by_rqstr[$email][$pri].' '.$strtdate_by_rqstr[$email][$pri];
                             echo ' to '.$strtdate_by_session[$ses_next].'<br/>';
                             transfer_unassigned($strtdate_by_session[$ses_next], $strtdate_by_rqstr[$email][$pri], $reqname_by_rqstr[$email][$pri], $cycle, $email);
                             $result = updatenavigation();
