@@ -624,7 +624,7 @@ if ( $args["best"] ) {
                 if (($layout_next == $layout ) && ($ses_next != $session)) {
                     // alternate session, check space
                     echo '[ checking '.$ses_next.' with '.$empty_slots_by_session[$ses_next].']';
-                    if ($empty_slots_by_session[$ses_next] > 0) {
+                    if ($empty_slots_by_session[$ses_next] == '' || $empty_slots_by_session[$ses_next] == NONE || $empty_slots_by_session[$ses_next] > 0) {
                         // found, move request over and repeat
                         echo 'Move request of '.$email.' to alternate session  from '.$reqname_by_rqstr[$email][$pri].' ('.$strtdate_by_rqstr[$email][$pri].') layout '.$layout;
                         echo ' to '.$ses_next.' ('.$strtdate_by_session[$ses_next].') in cycle '.$cycle.'<br/>';
