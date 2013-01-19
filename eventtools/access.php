@@ -89,6 +89,9 @@ $event_tools_cartlink = "http://127.0.0.1/localcart";
 // Include support for doing op-session requests by category? 
 $event_tools_ops_session_by_category     = TRUE;
 
+// Do op-session requests By Layout (TRUE) or By Session (FALSE)
+$event_tools_ops_session_assign_by_layout = TRUE;
+
 // Names for optional fields 1-8 in op session requests
 $event_tools_op_session_opt1_name        = 'Opt1';
 $event_tools_op_session_opt1_long_name   = 'Option 1';
