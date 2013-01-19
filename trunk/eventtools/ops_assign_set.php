@@ -154,10 +154,12 @@ function transfer_unassigned($toDate, $fromDate, $showName, $cycle, $email=NONE)
 
     $first = True;
     for ($i = 0; $i < $num; $i++) {
-        if ($first) echo "Moving ";
-        else echo ", ";
-        $first = False;
-        echo mysql_result($result,$i,"customers_lastname");
+        if ($email == NONE) {
+            if ($first) echo "Moving ";
+            else echo ", ";
+            $first = False;
+            echo mysql_result($result,$i,"customers_lastname");
+        }
         
         // do the move
         //echo "(".mysql_result($result,$i,"ops_id").")";
@@ -276,7 +278,7 @@ function updatenavigation() {
         //echo '['.mysql_result($result,$i,"show_name").'/'.mysql_result($result,$j,"start_date").'/'.mysql_result($result,$i,"ops_layout_id").']';
         if (mysql_result($result,$i,"show_name") != "") {
             $layout_number_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$i,"start_date")] = mysql_result($result,$i,"ops_layout_id");
-            $strtdate_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$i,"start_date")] = mysql_result($result,$j,"start_date");
+            $strtdate_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$i,"start_date")] = mysql_result($result,$i,"start_date");
         }
     }
      
@@ -658,7 +660,7 @@ if ( $args["best"] ) {
                     //echo '['.$ses_next.'/'.$layout_next.']';
                     if (($layout_next == $layout ) && ($ses_next != $session)) {
                         // alternate session, check space
-                        echo '[ checking '.$ses_next.' with '.$empty_slots_by_session[$ses_next].']';
+                        //echo '[ checking '.$ses_next.' with '.$empty_slots_by_session[$ses_next].']';
                         if ($empty_slots_by_session[$ses_next] == '' || $empty_slots_by_session[$ses_next] == NONE || $empty_slots_by_session[$ses_next] > 0) {
                             // found, move request over and repeat
                             echo 'Move '.$email.' request from '.$reqname_by_rqstr[$email][$pri].' '.$strtdate_by_rqstr[$email][$pri];
