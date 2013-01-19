@@ -11,7 +11,7 @@ function setspan($stat) {
     if ($stat == STATUS_ASSIGNED) echo '<span class="assigned" title="Assigned">';
     if ($stat == STATUS_DISABLED) echo '<span class="disabled" title="Disabled">';
     if ($stat == STATUS_CONFLICT) echo '<span class="conflict" title="Conflict">';
-    if ($stat == STATUS_FULL) echo '<span class="filled">';
+    if ($stat == STATUS_FULL)     echo '<span class="filled"   title="Filled">';
 }
 
 function insert_multiple_ops_request_structure($cycle, $reqs) {
