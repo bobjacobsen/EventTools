@@ -7,10 +7,10 @@ define(STATUS_CONFLICT, "-3"); // has time conflict with other assignment
 define(STATUS_FULL,     "-4"); // session is known to be full
 
 function setspan($stat) {
-    if ($stat == STATUS_RELEASED) echo '<span class="released">';
-    if ($stat == STATUS_ASSIGNED) echo '<span class="assigned">';
-    if ($stat == STATUS_DISABLED) echo '<span class="disabled">';
-    if ($stat == STATUS_CONFLICT) echo '<span class="conflict">';
+    if ($stat == STATUS_RELEASED) echo '<span class="released" title="Released">';
+    if ($stat == STATUS_ASSIGNED) echo '<span class="assigned" title="Assigned">';
+    if ($stat == STATUS_DISABLED) echo '<span class="disabled" title="Disabled">';
+    if ($stat == STATUS_CONFLICT) echo '<span class="conflict" title="Conflict">';
     if ($stat == STATUS_FULL) echo '<span class="filled">';
 }
 
