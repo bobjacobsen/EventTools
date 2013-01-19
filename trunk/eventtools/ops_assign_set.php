@@ -609,6 +609,7 @@ if ( $args["best"] ) {
     // if doing by-layout assignment, and requested section is full and the alternate section has space, move request
     if ($event_tools_ops_session_assign_by_layout) {
         foreach ($rqstr_email as $email) {
+            echo '{'.$email;
             // skip if not valid request
             if ($reqname_by_rqstr[$email][$pri] == "") continue;
             // check for not session full or conflicted 
