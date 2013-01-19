@@ -290,8 +290,6 @@ function updatenavigation() {
     
     // scan for full sessions and disable requests
     $empty_slots_by_session = array();   // count of empty slots by session name (show_name.start_date)
-    $layout_number_by_session = array(); // layout ID by session name (show_name.start_date)
-    $strtdate_by_session = array();      // start date by session name (show_name.start_date)
     
     for ($i=0; $i<$num; $i++ ) {
         if (mysql_result($result,$i,"show_name") != "") {
@@ -306,8 +304,6 @@ function updatenavigation() {
             }
             $empty_slots_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$j,"start_date")] = 0+mysql_result($result,$i,"spaces") - $count1;
             //echo "Recomputed empty slots for ".mysql_result($result,$i,"show_name")." as ".$empty_slots_by_session[mysql_result($result,$i,"show_name")]."<br/>";
-            $layout_number_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$j,"start_date")] = mysql_result($result,$i,"ops_layout_id");
-            $strtdate_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$j,"start_date")] = mysql_result($result,$j,"start_date");
 
             // have count, check for over
             if ($count1 >= (0+mysql_result($result,$i,"spaces")) ) {
