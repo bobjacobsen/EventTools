@@ -617,7 +617,7 @@ if ( $args["best"] ) {
     foreach ($users as $u) echo ' '.$u.' '; echo '<br/>';
     
     echo '<p>';
-    
+    if ($event_tools_ops_session_assign_by_layout) echo "selected TRUE"; else echo "selected FALSE";
     // loop until can't do anything
     while (TRUE) {
         // if doing by-layout assignment, and requested section is full and alternate section has space, move request
