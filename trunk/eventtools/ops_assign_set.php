@@ -651,11 +651,13 @@ if ( $args["best"] ) {
                 // check for not session full or conflicted 
                 if (!( ($status_by_rqstr[$email][$pri] == STATUS_FULL) || ($status_by_rqstr[$email][$pri] == STATU_CONFLICT) )) continue;
                 // yes, check for another available session with same layout
+                echo '('.$email.')';
                 $session = $reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri];
                 $layout = $layout_number_by_session[$session];
                 foreach ($layout_number_by_session as $ses_next => $layout_next) {
                     if (($layout_next == $layout ) && ($ses_next != $session)) {
                         // alternate session, check space
+                        echo '['.$layout.']';
                         if ($empty_slots_by_session[$ses_next] > 0) {
                             // found, move request over and repeat
                             echo 'Move request of '.$email.' to alternate session  from '.$reqname_by_rqstr[$email][$pri].' ('.$strtdate_by_rqstr[$email][$pri].') layout '.$layout;
@@ -751,7 +753,7 @@ if ( $args["best"] ) {
     
     // error if can't make it work
     if (count($users) > 0) {
-        echo '<b>Error, cannot process requests for: ';
+        echo '<b>Error: cannot process requests for: ';
         foreach ($users as $u) echo ' '.$u.' '; 
         echo '</b><br/>';
     }
