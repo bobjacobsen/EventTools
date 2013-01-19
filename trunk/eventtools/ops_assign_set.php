@@ -605,40 +605,6 @@ if ( $args["grp"] ) { // assign remaining top priority in requesting session
 if ( $args["best"] ) {
     $pri = 0+$args["pri"];
 
-    // if doing by-layout assignment, and requested section is full and the alternate section has space, move request
-    if ($event_tools_ops_session_assign_by_layout) {
-        foreach ($rqstr_email as $email) {
-            //echo '<br/>{'.$email.' '.$status_by_rqstr[$email][$pri].' ';
-            // skip if not valid request
-            if ($reqname_by_rqstr[$email][$pri] == "") continue;
-            // check for not session full or conflicted 
-            if (!( ($status_by_rqstr[$email][$pri] == STATUS_FULL) || ($status_by_rqstr[$email][$pri] == STATU_CONFLICT) )) continue;
-            // yes, check for another available session with same layout
-            $session = $reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri];
-            $layout = $layout_number_by_session[$session];
-            //echo '('.$email.'/'.$session.'/'.$layout.')';
-            foreach ($layout_number_by_session as $ses_next => $layout_next) {
-                //echo '['.$ses_next.'/'.$layout_next.']';
-                if ($layout_next == $layout ) echo ' X ';
-                if ($ses_next != $session) echo ' Y ';
-                if (($layout_next == $layout ) && ($ses_next != $session)) {
-                    // alternate session, check space
-                    //echo '[ checking '.$ses_next.' with '.$empty_slots_by_session[$ses_next].']';
-                    if ($empty_slots_by_session[$ses_next] == '' || $empty_slots_by_session[$ses_next] == NONE || $empty_slots_by_session[$ses_next] > 0) {
-                        // found, move request over and repeat
-                        echo 'Move request of '.$email.' from '.$reqname_by_rqstr[$email][$pri].' ('.$strtdate_by_rqstr[$email][$pri].') layout '.$layout;
-                        echo ' to '.$ses_next.' ('.$strtdate_by_session[$ses_next].') in cycle '.$cycle.'<br/>';
-                        //transfer_unassigned($toDate, $fromDate, $showName, $cycle, $email);
-                        //$result = updatenavigation();
-                        //$num = mysql_numrows($result);
-                        break; // done with this user, go next
-                    }
-                }
-            }
-        }
-    }
-    echo '<p>';
-    
     // make a list of everybody we're trying to place
     $users = array();
     $groups = array();
@@ -676,6 +642,36 @@ if ( $args["best"] ) {
     
     // loop until can't do anything
     while (TRUE) {
+        // if doing by-layout assignment, and requested section is full and the alternate section has space, move request
+        if ($event_tools_ops_session_assign_by_layout) {
+            foreach ($rqstr_email as $email) {
+                //echo '<br/>{'.$email.' '.$status_by_rqstr[$email][$pri].' ';
+                // skip if not valid request
+                if ($reqname_by_rqstr[$email][$pri] == "") continue;
+                // check for not session full or conflicted 
+                if (!( ($status_by_rqstr[$email][$pri] == STATUS_FULL) || ($status_by_rqstr[$email][$pri] == STATU_CONFLICT) )) continue;
+                // yes, check for another available session with same layout
+                $session = $reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri];
+                $layout = $layout_number_by_session[$session];
+                //echo '('.$email.'/'.$session.'/'.$layout.')';
+                foreach ($layout_number_by_session as $ses_next => $layout_next) {
+                    //echo '['.$ses_next.'/'.$layout_next.']';
+                    if (($layout_next == $layout ) && ($ses_next != $session)) {
+                        // alternate session, check space
+                        //echo '[ checking '.$ses_next.' with '.$empty_slots_by_session[$ses_next].']';
+                        if ($empty_slots_by_session[$ses_next] == '' || $empty_slots_by_session[$ses_next] == NONE || $empty_slots_by_session[$ses_next] > 0) {
+                            // found, move request over and repeat
+                            echo 'Move '.$email.' request from '.$reqname_by_rqstr[$email][$pri].' '.$strtdate_by_rqstr[$email][$pri];
+                            echo ' to '.$strtdate_by_session[$ses_next].'<br/>';
+                            transfer_unassigned($strtdate_by_session[$ses_next], $strtdate_by_rqstr[$email][$pri], $reqname_by_rqstr[$email][$pri], $cycle, $email);
+                            $result = updatenavigation();
+                            $num = mysql_numrows($result);
+                            break; // done with this user, go next
+                        }
+                    }
+                }
+            }
+        }
         // find and satisfy requests without a N+1th choice, then continue
         foreach ($users as $key => $email) {
             if ( ($status_by_rqstr[$email][1+$pri] == "0") && ($reqname_by_rqstr[$email][1+$pri] != "") ) {
