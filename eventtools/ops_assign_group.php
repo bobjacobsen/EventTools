@@ -39,7 +39,6 @@ if (! ($args["cy"]) ) {
     $query="
         SELECT opsreq_group_cycle_name, SUM(status) 
         FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
-        WHERE status = 1
         GROUP BY opsreq_group_cycle_name
         ORDER BY  opsreq_group_cycle_name
         ;
