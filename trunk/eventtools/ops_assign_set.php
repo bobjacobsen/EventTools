@@ -193,7 +193,7 @@ function updatenavigation() {
         SELECT  *
         FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
         WHERE opsreq_group_cycle_name = '".$cycle."'
-        ORDER BY customers_lastname, opsreq_person_email, req_num
+        ORDER BY opsreq_priority DESC, customers_create_date, customers_lastname, opsreq_person_email, req_num
         ;
     ";
     
