@@ -23,6 +23,17 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
+-- Loading data for table `prefix_eventtools_opsession``
+--
+-- Provides a blank entry in the drop-down selections
+
+DELETE FROM `bayrails_eventtools_opsession`; 
+INSERT INTO `bayrails_eventtools_opsession` (`ops_id`, `ops_layout_id`, `start_date`, `end_date`, `location`, `distance`, `travel_time`, `status_code`, `spaces`, `presenting_time`, `note`, `ops_layout_id2`, `ops_layout_id3`, `ops_layout_id4`, `mark_changed`) VALUES
+(0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, '');
+
+-- --------------------------------------------------------
+
+--
 -- Loading data for table `prefix_eventtools_event_status_values`
 --
 
