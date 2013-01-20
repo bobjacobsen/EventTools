@@ -657,6 +657,7 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE) {
     }
     $headings = array(); // like [Wed 03, Thu 04]
     $dates = array();    // like [2008-01-03, 2008-01-04]
+    
     $day = $first_date;
     for ($j=0; $j<=$days; $j++) {
         $headings[] = $day->format('D').'<br>'.$day->format('Y-m-d');
@@ -664,6 +665,8 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE) {
         $day->add(new DateInterval('P1D'));
     }    
         
+    $total_seats = array(count($dates));
+
     echo '<tr>
         <th>Host</th>
         <th>Railroad</th>
@@ -732,7 +735,7 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE) {
         echo "      </span> \n";
         echo "  </td>\n";
 
-        // start processing dates
+        // start processing dates to fill in row
         
         for ($j = 0; $j < count($dates); $j++) {  // loop over dates
             echo '<td class="et-ops-times">';
@@ -744,6 +747,7 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE) {
                 if (! $first) echo '<hr/>';
                 $first = FALSE;
                 echo '<span class="et-ops-sessions">'.time_from_long_format(mysql_result($result,$i,"start_date")).'</span><br/>';
+                $total_seats[$j] = $total_seats[$j] + mysql_result($result,$i,"spaces");
                 if (($i!=$num-1) 
                         && mysql_result($result,$i,"show_name") == mysql_result($result,$i+1,"show_name")
                         && mysql_result($result,$i,"distance") == mysql_result($result,$i+1,"distance")
@@ -758,15 +762,21 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE) {
             if (! $full) {
                 echo '<span class="et-ops-empty"></span>';
             }
+
             echo '</td>';
         }
         
         // end processing dates
-
         echo "</tr>";
 
         $i++;
     }
+    
+    echo '<tr></tr><tr><th colspan="4" align="right">Total Slots Each Day</th>';
+    for ($j = 0; $j < count($dates); $j++) {
+        echo '<td>'.$total_seats[$j].'</td>';
+    }
+    echo '</tr>';
     
     echo "</table>\n";
     
