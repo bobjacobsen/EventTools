@@ -79,6 +79,8 @@ $event_tools_central_addr = "1230+J+Street";
 $event_tools_central_city = "Sacramento";
 $event_tools_central_state = "CA";
 $event_tools_central_postcode = "95814";
+// If not in same timezone as site host location, uncomment the following line and set your proper timezone
+//date_default_timezone_set('America/Los_Angeles');
 
 // Connected to Zen Cart?
 $event_tools_option_zen_cart_used       = FALSE;
