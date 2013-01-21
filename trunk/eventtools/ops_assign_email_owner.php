@@ -9,14 +9,30 @@ require_once('utilities.php');
 parse_str($_SERVER["QUERY_STRING"], $args);
 
 // for cycle defined
+$default_text = '
+First, let me thank you again for agreeing to host op session(s).  Without your participation this event, especially of this magnitude, would just not happen. 
+  
+In this email you will find the names and email addresses of the convention attendees assigned to your op session(s).  Please feel free to contact them and send them any operating documents or information you may want them to review before they arrive on your doorstep.  Please be aware that there are likely to be some last minute changes in assignments due to the real world - we will let you know of any changes that occur prior the the convention itself.
+  
+Some of your sessions are not full at this time.  Based on the experience at prior ops events we expect to fill all operating slots.  If there appears to be problem with filling a particular session we will be in touch with you individually to discuss our options.
+
+Please get in touch with us if you have any questions,
+
+The '.$event_tools_event_name.' Committee
+
+----------------------
+';
+
 if (! ($args["cy"]) ) {
     echo "This is the page for emailing to the owners.<p/>";
-    echo "Please fill in the form and press 'start'. All fields are required. Multiple email addresses can be specified, separated with a comma. Put a dollar sign '$' in 'test' to send for real.";
+    echo "Please fill in the form and press 'start'. All fields are required. Multiple email addresses can be specified, separated with a comma. Put just dollar sign '$' in 'test' to send for real, otherwise where you want test emails sent.";
     echo '<form method="get" action="ops_assign_email_owner.php">
         Cycle Name: <input  name="cy"><br>
-        From email address: <input  name="from"><br>
-        Bcc email address(es): <input  name="bcc"><br>
-        (Test) To email address(es): <input  name="testto"><br>
+        From email address: <input  name="from" value="'.$event_tools_registrar_email_address.'"><br>
+        Bcc email address(es): <input  name="bcc" value="'.$event_tools_registrar_email_address.'"><br>
+        (Test) To email address(es): <input  name="testto" value="'.$event_tools_registrar_email_address.'"><br>
+        Message content:<br>
+        <textarea  name="content" rows="20" cols="70">'.$default_text.'</textarea><br>
         <button type="submit">Start</button>
         </form>
     ';
@@ -72,19 +88,7 @@ $num=mysql_numrows($result);
 $i=0;
 $lastmajorkey = mysql_result($result,$i,"show_name").mysql_result($result,$i,"start_date");
 
-$part1 = "
-First, let me thank you again for agreeing to host op session(s).  Without your participation this event, especially of this magnitude, would just not happen. 
-  
-In this email you will find the names and email addresses of the convention attendees assigned to your op session(s).  Please feel free to contact them and send them any operating documents or information you may want them to review before they arrive on your doorstep.  Please be aware that there are likely to be some last minute changes in assignments due to the real world - I will let you know of any changes that occur prior the the convention itself.
-  
-Some of your sessions are not full at this time.  Based on the experience at prior ops events we expect to fill all operating slots.  If there appears to be problem with filling a particular session I will be in touch with you individually to discuss our options.
-
-Please get in touch with me if you have any questions,
-
-Jim Providenza
-ProRail 2012 Scheduler
-----------------------
-";
+$part1 = $args["content"];
 
 $sessions = "";
 $first = TRUE;
@@ -113,6 +117,7 @@ while ($i < $num) {
                 $sessions."\n\n\n";
         
         mail($to,$subject,$body,$headers);
+        echo '<hr>'.$body.'<hr>';
         
         $sessions = "";
     }
