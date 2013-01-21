@@ -9,14 +9,28 @@ require_once('utilities.php');
 parse_str($_SERVER["QUERY_STRING"], $args);
 
 // for cycle defined
+$default_text = '
+Here are your operating session assignments for '.$event_tools_event_name.'.  Please look them over and if there are any problems please reply to this email to let me know and we will try to resolve it.
+
+As always, there is a possibility that cancellations will force us to make adjustments to session assignments.  If we need to change one of your assignments, I will let you know.
+
+Our Registrar will be sending you additional information regarding other activities.
+
+The '.$event_tools_event_name.' Committee
+
+----------------------
+';
+
 if (! ($args["cy"]) ) {
     echo "This is the page for emailing to the operators.<p/>";
-    echo "Please fill in the form and press 'start'. All fields are required. Multiple email addresses can be specified, separated with a comma. Put a dollar sign '$' in 'test' to send for real.";
+    echo "Please fill in the form and press 'start'. All fields are required. Multiple email addresses can be specified, separated with a comma. Put just dollar sign '$' in 'test' to send for real, otherwise where you want test emails sent.";
     echo '<form method="get" action="ops_assign_email_operator.php">
-        Cycle Name: <input  name="cy"><br>
-        From email address: <input  name="from"><br>
-        Bcc email address(es): <input  name="bcc"><br>
-        (Test) To email address(es): <input  name="testto"><br>
+        Cycle Name: <input  name="cy" size="32"><br>
+        From email address: <input  name="from" value="'.$event_tools_registrar_email_address.'"><br>
+        Bcc email address(es): <input  name="bcc" value="'.$event_tools_registrar_email_address.'"><br>
+        (Test) To email address(es): <input  name="testto" value="'.$event_tools_registrar_email_address.'"><br>
+        Message content:<br>
+        <textarea  name="content" rows="20" cols="70">'.$default_text.'</textarea><br>
         <button type="submit">Start</button>
         </form>
     ';
@@ -69,18 +83,7 @@ $num=mysql_numrows($result);
 $i=0;
 $lastmajorkey = mysql_result($result,$i,"opsreq_person_email");
 
-$part1 = "
-Here are your operating session assignments for ".$event_tools_event_name.".  Please look them over and if there are any problems please reply to this email to let me know and we will try to resolve it.
-
-As always, there is a possibility that cancellations will force us to make adjustments to session assignments.  If we need to change one of your assignments, I will let you know.
-
-Our Registrar, Larry Altbaum will be sending you additional information regarding other activities including the Saturday dinner.
-
-Jim Providenza
-ProRail 2012 Scheduler
-----------------------
-
-";
+$part1 = $args["content"];
 
 $sessions = "";
 
@@ -106,6 +109,7 @@ while ($i < $num) {
         $body = $part1.$sessions."\n\n\n";
         
         mail($to,$subject,$body,$headers);
+        //echo '<hr>'.$body.'<hr>';
         
         $sessions = "";
     }
