@@ -598,7 +598,7 @@ function format_all_ops_as_table($url=NONE, $where=NONE, $order=NONE) {
 // 
 // Listing of operating sessions
 //
-function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE) {
+function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_limit=NONE) {
     global $opts, $event_tools_db_prefix, $event_tools_href_add_on;
     global $event_tools_show_min_value;
 
@@ -636,10 +636,18 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE) {
     echo "<table border=\"1\" class=\"et-ops-by-day-table\">\n";
     
     // generate table headings from first, last date
-    $first_string = "2100-12-31 00:00:00";
+    $first_string =  "2200-01-01 00:00:00";
     $last_string =  "1999-01-01 00:00:00";
+    // default is nothing before this month, specify argument if you want to see the past
+    if ($start_date_limit == NONE) {
+        $now = new DateTime();
+        $start_date_limit = $now->format("Y-m")."-01 00:00:00";
+        //echo '['.$start_date_limit.']';
+    }
     for ($j=0; $j<$num; $j++) {
-        if (mysql_result($result,$j,"start_date") < $first_string) $first_string = mysql_result($result,$j,"start_date");
+        if ((mysql_result($result,$j,"start_date") < $first_string) &&  (mysql_result($result,$j,"start_date") > $start_date_limit) ) {
+                    $first_string = mysql_result($result,$j,"start_date");
+        }
         if (mysql_result($result,$j,"start_date") > $last_string) $last_string = mysql_result($result,$j,"start_date");
     }
     //echo 'dates: '.$first_string.' '.$last_string.'<p>';
