@@ -43,6 +43,24 @@ function score($choice,$key) {
     $stats[$key][$choice] = $stats[$key][$choice]+1;
 }
 
+function summarize_question($columnName, $where=NONE) {
+    global $event_tools_db_prefix;
+    if ($where != NONE && $where !="") {
+        $where = $where." AND ".$columnName." = Y ";
+    } else {
+        $where = " ".$columnName." = \"Y\" ";
+    }
+    
+    $query="
+        SELECT ".$columnName."
+            FROM ".$event_tools_db_prefix."eventtools_opsession_req
+            WHERE ".$where."
+            ;
+        ";
+    //echo $query;
+    $resultSurvey=mysql_query($query);
+    return mysql_numrows($resultSurvey);
+}
 
 mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
 @mysql_select_db($opts['db']) or die( "Unable to select database");
@@ -218,5 +236,16 @@ while ($i < $numReqs) {
 }
 echo '</table>';
 
+echo '<p>';
+echo '<h3>Extra Questions</h3>';
 
-echo '</body></html>';
+if ($event_tools_op_session_opt1_name != "") echo $event_tools_op_session_opt1_long_name.": ".summarize_question("opsreq_opt1")."<p>";
+if ($event_tools_op_session_opt2_name != "") echo $event_tools_op_session_opt2_long_name.": ".summarize_question("opsreq_opt2")."<p>";
+if ($event_tools_op_session_opt3_name != "") echo $event_tools_op_session_opt3_long_name.": ".summarize_question("opsreq_opt3")."<p>";
+if ($event_tools_op_session_opt4_name != "") echo $event_tools_op_session_opt4_long_name.": ".summarize_question("opsreq_opt4")."<p>";
+if ($event_tools_op_session_opt5_name != "") echo $event_tools_op_session_opt5_long_name.": ".summarize_question("opsreq_opt5")."<p>";
+if ($event_tools_op_session_opt6_name != "") echo $event_tools_op_session_opt6_long_name.": ".summarize_question("opsreq_opt6")."<p>";
+if ($event_tools_op_session_opt7_name != "") echo $event_tools_op_session_opt7_long_name.": ".summarize_question("opsreq_opt7")."<p>";
+if ($event_tools_op_session_opt8_name != "") echo $event_tools_op_session_opt8_long_name.": ".summarize_question("opsreq_opt8")."<p>";
+
+echo "</body></html>";
