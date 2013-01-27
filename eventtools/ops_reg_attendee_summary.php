@@ -45,6 +45,9 @@ $where = "";
 if ($args["session"]) {
     $where = " WHERE ops_id = \"".$args["session"]."\"";
 }
+if ($args["q"]) {
+    $where = " WHERE opsreq_opt".$args["q"]." = \"Y\"";
+}
 
 require_once('parsers.php');
 $order = parse_order();
