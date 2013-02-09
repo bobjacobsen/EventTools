@@ -77,8 +77,8 @@ $reqs = mysql_query($findu);
 if (mysql_num_rows($reqs) == 0) {
  
     // no, do an insert of the user
-    $user = "REPLACE INTO ".$event_tools_db_prefix."customers (`customers_email_address`, `customers_firstname`, `customers_lastname`, `customers_telephone`, `customers_cellphone`, `customers_create_date`) VALUES "
-        ."('".$email."','".clean_text($_REQUEST["fname"])."','".clean_text($_REQUEST["lname"])."','".clean_text($_REQUEST["phone"])."','".clean_text($_REQUEST["cell"])."',now());";
+    $user = "REPLACE INTO ".$event_tools_db_prefix."customers (`customers_email_address`, `customers_firstname`, `customers_lastname`, `customers_telephone`, `customers_cellphone`, `customers_create_date`, `customers_x2011_emerg_contact_name`, `customers_x2011_emerg_contact_phone`) VALUES "
+        ."('".$email."','".clean_text($_REQUEST["fname"])."','".clean_text($_REQUEST["lname"])."','".clean_text($_REQUEST["phone"])."','".clean_text($_REQUEST["cell"])."',now(),'".clean_text($_REQUEST["econtact"])."','".clean_text($_REQUEST["ephone"])."');";
     //print '[ '.$user.' ] ';
     mysql_query($user);
 

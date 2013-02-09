@@ -85,6 +85,9 @@ $event_tools_central_postcode = "95814";
 // Connected to Zen Cart?
 $event_tools_option_zen_cart_used       = FALSE;
 
+// include attendee emergency contact info?
+$event_tools_emergency_contact_info     = TRUE;
+
 // how to generate a link to optional Zen Cart
 $event_tools_cartlink = "http://127.0.0.1/localcart";
 
