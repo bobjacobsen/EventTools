@@ -19,13 +19,18 @@ function check_for_value($values, $check, $reqs)
     return $reqs;
 }
 
+function clean_text($text) 
+{
+    return mysql_real_escape_string(stripslashes($text));
+}
+
 global $values;
 
 global $opts, $event_tools_db_prefix;
 mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
 @mysql_select_db($opts['db']) or die( "Unable to select database");
 
-$email = $_REQUEST[ "email" ];
+$email = clean_text($_REQUEST[ "email" ]);
 
 // see if the user already exists
 $findu = "SELECT customers_id FROM ".$event_tools_db_prefix."customers WHERE customers_email_address = '".$email."';";
@@ -34,15 +39,15 @@ $reqs = mysql_query($findu);
 if (mysql_num_rows($reqs) == 0) {
  
     // no, do an insert of the user
-    $user = "REPLACE INTO ".$event_tools_db_prefix."customers (`customers_email_address`, `customers_firstname`, `customers_lastname`, `customers_telephone`, `customers_cellphone`, `customers_create_date`) VALUES "
-        ."('".$email."','".$_REQUEST["fname"]."','".$_REQUEST["lname"]."','".$_REQUEST["phone"]."','".$_REQUEST["cell"]."',now());";
+    $user = "REPLACE INTO ".$event_tools_db_prefix."customers (`customers_email_address`, `customers_firstname`, `customers_lastname`, `customers_telephone`, `customers_cellphone`, `customers_create_date`, `customers_x2011_emerg_contact_name`, `customers_x2011_emerg_contact_phone`) VALUES "
+        ."('".$email."','".clean_text($_REQUEST["fname"])."','".clean_text($_REQUEST["lname"])."','".clean_text($_REQUEST["phone"])."','".clean_text($_REQUEST["cell"])."',now(),'".clean_text($_REQUEST["econtact"])."','".clean_text($_REQUEST["ephone"])."');";
     //print '[ '.$user.' ] ';
     mysql_query($user);
 
 } else {
 
     // yes, do an update of the user
-    $user = "UPDATE ".$event_tools_db_prefix."customers SET customers_firstname ='".$_REQUEST["fname"]."', customers_lastname ='".$_REQUEST["lname"]."', customers_telephone ='".$_REQUEST["phone"]."', customers_cellphone ='".$_REQUEST["cell"]."' WHERE customers_email_address = '".$email."'";
+    $user = "UPDATE ".$event_tools_db_prefix."customers SET customers_firstname ='".clean_text($_REQUEST["fname"])."', customers_lastname ='".clean_text($_REQUEST["lname"])."', customers_telephone ='".clean_text($_REQUEST["phone"])."', customers_cellphone ='".clean_text($_REQUEST["cell"])."', customers_x2011_emerg_contact_name ='".clean_text($_REQUEST["econtact"])."', customers_x2011_emerg_contact_phone ='".clean_text($_REQUEST["ephone"])."' WHERE customers_email_address = '".$email."'";
     //print '[ '.$user.' ] ';
     mysql_query($user);
 
@@ -56,12 +61,23 @@ $reqs = mysql_query($findu);
 //print "<p>found ".mysql_result($reqs,0,"customers_id")."</p>";
 
 $address = "REPLACE INTO ".$event_tools_db_prefix."address_book (`customers_id`, `address_book_id`, `entry_street_address`, `entry_city`, `entry_state`, `entry_postcode`) VALUES "
-    ."('".mysql_result($reqs,0,"customers_id")."','".mysql_result($reqs,0,"address_book_id")."','".$_REQUEST["street"]."','".$_REQUEST["city"]."','".$_REQUEST["state"]."','".$_REQUEST["zip"]."');";
+    ."('".mysql_result($reqs,0,"customers_id")."','".mysql_result($reqs,0,"address_book_id")."','".clean_text($_REQUEST["street"])."','".clean_text($_REQUEST["city"])."','".clean_text($_REQUEST["state"])."','".clean_text($_REQUEST["zip"])."');";
 //print '[ '.$address.' ] ';
 $repl = mysql_query($address);
 
+$id = mysql_insert_id();
+if ($id == NONE || $id =='' || $id == 0) {
+    // need to retrieve the address row by query
+    $finda = $findu = "SELECT address_book_id FROM ".$event_tools_db_prefix."address_book WHERE customers_id = '".mysql_result($reqs,0,"customers_id")."';";
+    $repa = mysql_query($finda);
+    //print '['.$finda.']';
+    //print '{'.$repa.'}';
+    //print "Update to address ID ".mysql_result($repa,0,"address_book_id");
+    $id = mysql_result($repa,0,"address_book_id");
+}
+
 // and make sure prefix_customers.customers_default_address_id is correct
-$customer = "UPDATE ".$event_tools_db_prefix."customers SET customers_default_address_id =".mysql_insert_id()." WHERE customers_id = ".mysql_result($reqs,0,"customers_id")." ;";
+$customer = "UPDATE ".$event_tools_db_prefix."customers SET customers_default_address_id =".$id." WHERE customers_id = ".mysql_result($reqs,0,"customers_id")." ;";
 //print '[ '.$customer.' ] ';
 $repl = mysql_query($customer);
 

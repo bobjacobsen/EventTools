@@ -1,4 +1,4 @@
-<?
+<?php
 
 // Note that the sample code includes PHP 'require' and 'require_once'
 // statements that reference files in the EventTools directory.  If you
@@ -108,8 +108,15 @@ END;
 			<tr><td>State</td><td><input type=text size=15 name=state></td></tr>
 			<tr><td>ZIP code</td><td><input type=text size=15 name=zip></td></tr>
 END;
-
 	print $page;
+    global $event_tools_emergency_contact_info;
+    if ($event_tools_emergency_contact_info) {
+         $page =  <<<END
+                <tr><td>Emergency contact</td><td><input type=text size=15 name=econtact></td></tr>
+                <tr><td>Emergency phone</td><td><input type=text size=15 name=ephone></td></tr>
+END;
+        print $page;
+    }
 
 	require('ops_req_tools.php');
 	create_option_entries();
