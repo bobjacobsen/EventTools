@@ -46,7 +46,7 @@ if (! ($args["cy"]) ) {
     $result=mysql_query($query);
     $num = mysql_numrows($result);
     for ($i = 0; $i < $num; $i++) {
-        echo '<tr><td>'.mysql_result($result,$i,"opsreq_group_cycle_name").'</td><td>'.mysql_result($result,$i,1).'</td></tr>';
+        echo '<tr><td><a href="?cy='.mysql_result($result,$i,"opsreq_group_cycle_name").'">'.mysql_result($result,$i,"opsreq_group_cycle_name").'</a></td><td>'.mysql_result($result,$i,1).'</td></tr>';
     }
     echo '</table>';
     return;
