@@ -353,7 +353,6 @@ please contact him directly if you want more information on using EventTools.
 <p>
 This is the 
 <a href="<?php echo 'http://'.$_SERVER['SERVER_NAME'].'/eventtools/index.php';  ?>"><?php echo $event_tools_event_name;  ?> EventTools index page</a>.
-This is version $Revision$ of EventTools.
 
 </body>
 </html>
