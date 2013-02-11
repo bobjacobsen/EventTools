@@ -184,6 +184,22 @@ $opts['fdd']['customers_cellphone'] = array(
   'maxlen'   => 32,
   'sort'     => true
 );
+if ($event_tools_emergency_contact_info) {
+    $opts['fdd']['customers_x2011_emerg_contact_name'] = array(
+      'name'     => 'Emergency Contact',
+      'select'   => 'T',
+      'options'  => 'LVR',
+      'maxlen'   => 60,
+      'sort'     => true
+    );
+    $opts['fdd']['customers_x2011_emerg_contact_phone'] = array(
+      'name'     => 'Emergency Contact Phone',
+      'select'   => 'T',
+      'options'  => 'LVR',
+      'maxlen'   => 32,
+      'sort'     => true
+    );
+}
 $opts['fdd']['customers_create_date'] = array(
   'name'     => 'Date Created',
   'select'   => 'T',
