@@ -77,17 +77,19 @@ $reqs = mysql_query($findu);
 if (mysql_num_rows($reqs) == 0) {
  
     // no, do an insert of the user
-    $user = "REPLACE INTO ".$event_tools_db_prefix."customers (`customers_email_address`, `customers_firstname`, `customers_lastname`, `customers_telephone`, `customers_cellphone`, `customers_create_date`, `customers_x2011_emerg_contact_name`, `customers_x2011_emerg_contact_phone`) VALUES "
+    $user = "INSERT INTO ".$event_tools_db_prefix."customers (`customers_email_address`, `customers_firstname`, `customers_lastname`, `customers_telephone`, `customers_cellphone`, `customers_create_date`, `customers_x2011_emerg_contact_name`, `customers_x2011_emerg_contact_phone`) VALUES "
         ."('".$email."','".clean_text($_REQUEST["fname"])."','".clean_text($_REQUEST["lname"])."','".clean_text($_REQUEST["phone"])."','".clean_text($_REQUEST["cell"])."',now(),'".clean_text($_REQUEST["econtact"])."','".clean_text($_REQUEST["ephone"])."');";
-    //print '[ '.$user.' ] ';
+    //print 'Insert of user: [ '.$user.' ] ';
     mysql_query($user);
+    if (mysql_errno() != 0) print "<p>Error in INSERT customers: ".mysql_errno() . ": " . mysql_error() . "</p>";
 
 } else {
 
     // yes, do an update of the user
-    $user = "UPDATE ".$event_tools_db_prefix."customers SET customers_firstname ='".clean_text($_REQUEST["fname"])."', customers_lastname ='".clean_text($_REQUEST["lname"])."', customers_telephone ='".clean_text($_REQUEST["phone"])."', customers_cellphone ='".clean_text($_REQUEST["cell"])."', customers_updated_date=now() WHERE customers_email_address = '".clean_text($email)."'";
-    //print '[ '.$user.' ] ';
+    $user = "UPDATE ".$event_tools_db_prefix."customers SET customers_firstname ='".clean_text($_REQUEST["fname"])."', customers_lastname ='".clean_text($_REQUEST["lname"])."', customers_telephone ='".clean_text($_REQUEST["phone"])."', customers_cellphone ='".clean_text($_REQUEST["cell"])."', customers_x2011_emerg_contact_name ='".clean_text($_REQUEST["econtact"])."', customers_x2011_emerg_contact_phone ='".clean_text($_REQUEST["ephone"])."', customers_updated_date=now() WHERE customers_email_address = '".clean_text($email)."'";
+    //print 'Replace of user: [ '.$user.' ] ';
     mysql_query($user);
+    if (mysql_errno() != 0) print "<p>Error in UPDATE customers: ".mysql_errno() . ": " . mysql_error() . "</p>";
 
 }
 
@@ -96,17 +98,22 @@ if (mysql_num_rows($reqs) == 0) {
 $findu = "SELECT ".$event_tools_db_prefix."customers.customers_id, address_book_id FROM (".$event_tools_db_prefix."customers LEFT JOIN ".$event_tools_db_prefix."address_book ON ".$event_tools_db_prefix."customers.customers_id = ".$event_tools_db_prefix."address_book.customers_id ) WHERE customers_email_address = '".$email."';";
 //print '[ '.$findu.' ] ';
 $reqs = mysql_query($findu);
-//print "<p>found ".mysql_result($reqs,0,"customers_id")."</p>";
+if (mysql_errno() != 0) print "<p>Error in SELECT LEFT JOIN: ".mysql_errno() . ": " . mysql_error() . "</p>";
+//print "<p>found ".mysql_num_rows($reqs)." rows ";
+//if (mysql_num_rows($reqs)>0) print "with first: ".mysql_result($reqs,0,"customers_id");
+//print "</p>";
 
 $address = "REPLACE INTO ".$event_tools_db_prefix."address_book (`customers_id`, `address_book_id`, `entry_street_address`, `entry_city`, `entry_state`, `entry_postcode`) VALUES "
     ."('".mysql_result($reqs,0,"customers_id")."','".mysql_result($reqs,0,"address_book_id")."','".clean_text($_REQUEST["street"])."','".clean_text($_REQUEST["city"])."','".clean_text($_REQUEST["state"])."','".clean_text($_REQUEST["zip"])."');";
 //print '[ '.$address.' ] ';
 mysql_query($address);
+if (mysql_errno() != 0) print "<p>Error in REPLACE address_book: ".mysql_errno() . ": " . mysql_error() . "</p>";
 
 // and make sure prefix_customers.customers_default_address_id is correct
 $customer = "UPDATE ".$event_tools_db_prefix."customers SET customers_default_address_id =".mysql_insert_id()." WHERE customers_id = ".mysql_result($reqs,0,"customers_id")." ;";
 //print '[ '.$customer.' ] ';
 $repl = mysql_query($customer);
+if (mysql_errno() != 0) print "<p>Error in final UPDATE customers: ".mysql_errno() . ": " . mysql_error() . "</p>";
 
 ?>
 
