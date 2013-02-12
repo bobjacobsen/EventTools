@@ -44,7 +44,8 @@ $date = $args["date"];
 $where = "";
 if ($date != NONE && $date != "") {
     if (strlen($date) == 1) $date = '0'.$date;
-    $where = ' AND start_date LIKE "2012-04-'.substr($date,-2).'%" ';
+    // assume single month for now
+    $where = ' AND start_date LIKE "2___-__-'.substr($date,-2).'%" ';
 }
 
 // open db
