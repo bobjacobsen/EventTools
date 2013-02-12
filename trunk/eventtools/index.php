@@ -127,6 +127,7 @@ if ($event_tools_option_op_sessions)    echo '<td><a href="ops_req_summary.php">
     The following display a given assignment cycle.<p> 
     <a href="ops_print_by_layout.php">Session Rosters</a>    <br>
     <a href="ops_print_summary.php">Printable Session Rosters</a>    <p>
+    <a href="ops_print_by_attendee.php">Assigned Sessions by Attendee</a><p>
     <a href="ops_assign_email_operator.php">Email Roster to Assigned Operators</a>    <br>
     <a href="ops_assign_email_owner.php">Email Roster to Layout Owners</a>
 
