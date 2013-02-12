@@ -67,12 +67,8 @@ $query="
 $result=mysql_query($query);
 $num = mysql_numrows($result);
 
-$title = mysql_result($result,0,"customers_firstname").' '.mysql_result($result,0,"customers_lastname");
-$first = TRUE;
-
 echo '<table border="1"><tr>';
-echo '<tr><th></th><th>2012-04-25</th><th>2012-04-26</th><th>2012-04-27</th><th>2012-04-28</th><th>2012-04-29</th></tr>';
-echo '<td>'.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").' </td>';
+
 
     // generate table headings from first, last date
     $first_string =  "2200-01-01 00:00:00";
@@ -111,6 +107,15 @@ echo '<td>'.mysql_result($result,$i,"customers_firstname").' '.mysql_result($res
         $colarray[] = $day->format('Y-m-d');
         $day->add(new DateInterval('P1D'));
     }    
+
+echo '<tr><th></th>';
+foreach ($colarray as $x) { echo '<th>'.$x.'</th>'; }
+echo '</tr>';
+
+$title = mysql_result($result,0,"customers_firstname").' '.mysql_result($result,0,"customers_lastname");
+$first = TRUE;
+
+echo '<td>'.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").' </td>';
 
 $colnum = 0;
 
