@@ -95,12 +95,12 @@ echo '<td>'.mysql_result($result,$i,"customers_firstname").' '.mysql_result($res
     $last_date = DateTime::createFromFormat('Y-m-d H:i:s', $last_string);
     $days = (intval($last_date->format('z'))-intval($first_date->format('z')));
     //echo 'days: '.$days.'<p>';
-    if ($days < 1) {
-       echo "Some session dates are probably wrong, found ".$first_string." through ".$last_string."; is status parameter right?<p>";
+    if ($days < 0) {
+       echo "Some session dates are probably wrong, found ".$first_string." through ".$last_string."; is date parameter right?<p>";
     }    
     if ($days > 10) {
        $days = 10;  // limit to width; more probably due to bad dates
-       echo "Some session dates are probably wrong, found ".$first_string." through ".$last_string."; is status parameter right?<p>";
+       echo "Some session dates are probably wrong, found ".$first_string." through ".$last_string."; is date parameter right?<p>";
     }
     $headings = array();    // like [Wed 03, Thu 04]
     $colarray = array();    // like [2008-01-03, 2008-01-04]
@@ -112,7 +112,6 @@ echo '<td>'.mysql_result($result,$i,"customers_firstname").' '.mysql_result($res
         $day->add(new DateInterval('P1D'));
     }    
 
-//$colarray = array("2012-04-25","2012-04-26","2012-04-27","2012-04-28","2012-04-29");
 $colnum = 0;
 
 for ($i=0; $i < $num; $i++) {
