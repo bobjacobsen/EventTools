@@ -124,7 +124,7 @@ for ($i=0; $i < $num; $i++) {
     if ($title != mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname")) {
         $title = mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname");
         // first end old session
-        while ( $colnum < 5 ) {
+        while ( $colnum < len($colarray) ) {
             echo '<td></td>';
             $colnum++;
         }
