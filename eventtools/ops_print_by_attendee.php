@@ -44,7 +44,7 @@ $date = $args["date"];
 $where = "";
 if ($date != NONE && $date != "") {
     if (strlen($date) == 1) $date = '0'.$date;
-    $where = ' AND start_date LIKE "2012-04-'.substr($date,-2).'%" ';
+    $where = ' AND start_date LIKE "2___-__-'.substr($date,-2).'%" ';
 }
 
 // open db
@@ -74,7 +74,45 @@ echo '<table border="1"><tr>';
 echo '<tr><th></th><th>2012-04-25</th><th>2012-04-26</th><th>2012-04-27</th><th>2012-04-28</th><th>2012-04-29</th></tr>';
 echo '<td>'.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").' </td>';
 
-$colarray = array("2012-04-25","2012-04-26","2012-04-27","2012-04-28","2012-04-29");
+    // generate table headings from first, last date
+    $first_string =  "2200-01-01 00:00:00";
+    $last_string =  "1999-01-01 00:00:00";
+    // default is nothing before this month, specify argument if you want to see the past
+    if ($start_date_limit == NONE) {
+        $now = new DateTime();
+        $start_date_limit = $now->format("Y-m")."-01 00:00:00";
+        //echo '['.$start_date_limit.']';
+    }
+    for ($j=0; $j<$num; $j++) {
+        if ((mysql_result($result,$j,"start_date") < $first_string) &&  (mysql_result($result,$j,"start_date") > $start_date_limit) ) {
+                    $first_string = mysql_result($result,$j,"start_date");
+        }
+        if (mysql_result($result,$j,"start_date") > $last_string) $last_string = mysql_result($result,$j,"start_date");
+    }
+    //echo 'dates: '.$first_string.' '.$last_string.'<p>';
+    // following assumes that event doesn't cross end of year
+    $first_date = DateTime::createFromFormat('Y-m-d H:i:s', $first_string);
+    $last_date = DateTime::createFromFormat('Y-m-d H:i:s', $last_string);
+    $days = (intval($last_date->format('z'))-intval($first_date->format('z')));
+    //echo 'days: '.$days.'<p>';
+    if ($days < 1) {
+       echo "Some session dates are probably wrong, found ".$first_string." through ".$last_string."; is status parameter right?<p>";
+    }    
+    if ($days > 10) {
+       $days = 10;  // limit to width; more probably due to bad dates
+       echo "Some session dates are probably wrong, found ".$first_string." through ".$last_string."; is status parameter right?<p>";
+    }
+    $headings = array();    // like [Wed 03, Thu 04]
+    $colarray = array();    // like [2008-01-03, 2008-01-04]
+    
+    $day = $first_date;
+    for ($j=0; $j<=$days; $j++) {
+        $headings[] = $day->format('D').'<br>'.$day->format('Y-m-d');
+        $colarray[] = $day->format('Y-m-d');
+        $day->add(new DateInterval('P1D'));
+    }    
+
+//$colarray = array("2012-04-25","2012-04-26","2012-04-27","2012-04-28","2012-04-29");
 $colnum = 0;
 
 for ($i=0; $i < $num; $i++) {
