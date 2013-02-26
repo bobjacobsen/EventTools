@@ -24,7 +24,7 @@ The '.$event_tools_event_name.' Committee
 ';
 
 if (! ($args["cy"]) ) {
-    echo "This is the page for emailing to the owners.<p/>";
+    echo "This is the page for emailing to the owners. The list of people assigned to their layout will be appended to the email.<p/>";
     echo "Please fill in the form and press 'start'. All fields are required. Multiple email addresses can be specified, separated with a comma. Put just dollar sign '$' in 'test' to send for real, otherwise where you want test emails sent.";
     echo '<form method="get" action="ops_assign_email_owner.php">
         Cycle Name: <input  name="cy"><br>
@@ -74,14 +74,16 @@ $query="
     SELECT *
     FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments 
     LEFT JOIN ".$event_tools_db_prefix."eventtools_layouts
-    ON layout_id = ops_layout_id 
+    ON layout_id = ops_layout_id
+    LEFT JOIN ".$event_tools_db_prefix."eventtools_opsession_req
+    USING ( opsreq_person_email )
     WHERE opsreq_group_cycle_name = '".$cycle."'
     AND show_name != ''
     AND status = '1'
     ORDER BY show_name, start_date
     ";
 
-//echo $query;
+echo $query;
 $result=mysql_query($query);
 $num=mysql_numrows($result);
 
@@ -94,8 +96,19 @@ $sessions = "";
 $first = TRUE;
 
 while ($i < $num) {
-    $sessions = $sessions.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname")."\n".mysql_result($result,$i,"opsreq_person_email")."\n\n";
-
+    $sessions = $sessions.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname")."\n".mysql_result($result,$i,"opsreq_person_email");
+    $options = "";
+    if (mysql_result($result,$i,"opsreq_opt1") ==  'Y') $options = $options." (".$event_tools_op_session_opt1_name.") ";
+    if (mysql_result($result,$i,"opsreq_opt2") ==  'Y') $options = $options." (".$event_tools_op_session_opt2_name.") ";
+    if (mysql_result($result,$i,"opsreq_opt3") ==  'Y') $options = $options." (".$event_tools_op_session_opt3_name.") ";
+    if (mysql_result($result,$i,"opsreq_opt4") ==  'Y') $options = $options." (".$event_tools_op_session_opt4_name.") ";
+    if (mysql_result($result,$i,"opsreq_opt5") ==  'Y') $options = $options." (".$event_tools_op_session_opt5_name.") ";
+    if (mysql_result($result,$i,"opsreq_opt6") ==  'Y') $options = $options." (".$event_tools_op_session_opt6_name.") ";
+    if (mysql_result($result,$i,"opsreq_opt7") ==  'Y') $options = $options." (".$event_tools_op_session_opt7_name.") ";
+    if (mysql_result($result,$i,"opsreq_opt8") ==  'Y') $options = $options." (".$event_tools_op_session_opt8_name.") ";
+    if ($options != "") $sessions = $sessions."\n".$options;
+    $sessions = $sessions."\n\n";
+    
     if ( ($i == $num-1) || ($lastmajorkey != mysql_result($result,$i+1,"show_name").mysql_result($result,$i+1,"start_date")) ) {
         if ($i < $num-1) {
             $lastmajorkey = mysql_result($result,$i+1,"show_name").mysql_result($result,$i+1,"start_date");
@@ -106,7 +119,7 @@ while ($i < $num) {
         else
             $to = $testto;
         
-        echo "sending to ".mysql_result($result,$i,"layout_owner_email").' '.mysql_result($result,$i,"show_name").'('.$to.')<p>';
+        echo "Sending to ".mysql_result($result,$i,"layout_owner_email").' '.mysql_result($result,$i,"show_name").'('.$to.')<p>';
         
         $subject = "Operating Session Assignments";
         
