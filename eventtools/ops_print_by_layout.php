@@ -76,7 +76,7 @@ $count = 0+mysql_result($result,0,"spaces");
 $first = TRUE;
 
 echo '<table border="1"><tr>';
-echo '<td>'.mysql_result($result,$i,"show_name").'<br>'.mysql_result($result,$i,"start_date").' </td>';
+echo '<th>'.mysql_result($result,$i,"show_name").'<br>'.mysql_result($result,$i,"start_date").' </th>';
 $colnum = 1;
 
 for ($i=0; $i < $num; $i++) {
@@ -86,7 +86,7 @@ for ($i=0; $i < $num; $i++) {
         // first end old session
         echo '</tr>';
         // finally, start layout
-        echo '<tr><td>'.mysql_result($result,$i,"show_name").'<br>'.mysql_result($result,$i,"start_date").' </td>';
+        echo '<tr><th>'.mysql_result($result,$i,"show_name").'<br>'.mysql_result($result,$i,"start_date").' </th>';
         $colnum = 1;
     }
     // show if allocated
