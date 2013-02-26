@@ -173,12 +173,12 @@ $opts['fdd']['opsreq_person_email'] = array(
                         'column' => 'customers_email_address',
                         'description' => array(
                                 'columns' => array(
-                                                'customers_firstname',
                                                 'customers_lastname',
+                                                'customers_firstname',
                                                 'customers_email_address'
                                                 ),
                                 'divs' => array(
-                                                ' ','<br/>',''
+                                                ', ','<br/>',''
                                                 )
                             )
                         )
