@@ -83,7 +83,7 @@ $query="
     ORDER BY show_name, start_date
     ";
 
-echo $query;
+//echo $query;
 $result=mysql_query($query);
 $num=mysql_numrows($result);
 
