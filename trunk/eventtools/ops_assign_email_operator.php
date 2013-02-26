@@ -22,7 +22,7 @@ The '.$event_tools_event_name.' Committee
 ';
 
 if (! ($args["cy"]) ) {
-    echo "This is the page for emailing to the operators.<p/>";
+    echo "This is the page for emailing to the operators. Their specific layout assignments will be appended to the email.<p/>";
     echo "Please fill in the form and press 'start'. All fields are required. Multiple email addresses can be specified, separated with a comma. Put just dollar sign '$' in 'test' to send for real, otherwise where you want test emails sent.";
     echo '<form method="get" action="ops_assign_email_operator.php">
         Cycle Name: <input  name="cy" size="32"><br>
