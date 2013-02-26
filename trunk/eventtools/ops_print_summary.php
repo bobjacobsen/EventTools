@@ -12,7 +12,7 @@
         td.num { font-weight:normal; font-size: 14pt; font-family: Ariel; }
         td.attendee { font-weight:normal; font-size: 14pt; font-family: Ariel; }
         td.slot { font-weight:normal; font-size: 14pt; font-family: Ariel; }
-        div.break { page-break-before:always; }
+        div.break { page-break-before:always; page-break-after:always;}
     </style>
 </head>
 <body>
@@ -85,13 +85,10 @@ for ($i=0; $i < $num; $i++) {
             for ($j = 0; $j < $count; $j++) echo '<tr><td class="num">'.($colnum++).'</td><td>____</td><td class="slot"><pre>__________________________________________________</pre></td></tr>';
         }
         $count = 0+mysql_result($result,$i,"spaces");
-        // next, see if need page break
-        if ($date != date_from_long_format(mysql_result($result,$i,"start_date"))) {
-            $date = date_from_long_format(mysql_result($result,$i,"start_date"));
-            echo '<div class="break"></div>';
-        }
-        // finally, start new header
         echo '</table>';
+        // page break
+        echo '<div class="break"></div>';
+        // finally, start new header
         echo '<div class="session">'.mysql_result($result,$i,"show_name").' <div>';
         echo '<span class="date">'.mysql_result($result,$i,"start_date").' <span>';
         echo '<table><tr><th></th><th class="carpool">Seats for<br/>carpool?</th><th></th></tr>';
