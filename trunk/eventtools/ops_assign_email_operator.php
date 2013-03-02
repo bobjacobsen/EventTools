@@ -83,7 +83,7 @@ $num=mysql_numrows($result);
 $i=0;
 $lastmajorkey = mysql_result($result,$i,"opsreq_person_email");
 
-$part1 = $args["content"];
+$part1 = $args["content"]."\n\n";
 
 $sessions = "";
 
