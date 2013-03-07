@@ -24,6 +24,7 @@ The '.$event_tools_event_name.' Committee
 ';
 
 if (! ($args["cy"]) ) {
+    // --------------------------- format the raw page -------------------------------
     echo "This is the page for emailing to the owners. The list of people assigned to their layout will be appended to the email.<p/>";
     echo "Please fill in the form and press 'start'. All fields are required. Multiple email addresses can be specified, separated with a comma. Put just dollar sign '$' in 'test' to send for real, otherwise where you want test emails sent.";
     echo '<form method="get" action="ops_assign_email_owner.php">
@@ -34,7 +35,6 @@ if (! ($args["cy"]) ) {
         Message content:<br>
         <textarea  name="content" rows="20" cols="70">'.$default_text.'</textarea><br>
         <button type="submit">Start</button>
-        </form>
     ';
     
     // display existing cycles & number of assignments)
@@ -54,10 +54,32 @@ if (! ($args["cy"]) ) {
     $result=mysql_query($query);
     $num = mysql_numrows($result);
     for ($i = 0; $i < $num; $i++) {
-        echo '<tr><td><a href="?cy='.mysql_result($result,$i,"opsreq_group_cycle_name").'">'.mysql_result($result,$i,"opsreq_group_cycle_name").'</a></td><td>'.mysql_result($result,$i,1).'</td></tr>';
+        echo '<tr><td>'.mysql_result($result,$i,"opsreq_group_cycle_name").'</td><td>'.mysql_result($result,$i,1).'</td></tr>';
     }
     echo '</table>';
+
+    $query="
+        SELECT *
+            FROM  
+            ".$event_tools_db_prefix."eventtools_opsession_name
+            ".$where." ORDER BY show_name
+            ;
+        ";
+
+    $result=mysql_query($query);
+    $num=mysql_numrows($result);
+    $i=0;
+    
+    echo '<h3>Operators</h3><p>If you select a specific session below, only that owner will get email</p><select name="session" id="session">';
+    echo '<option value="(ALL)">(ALL)</option>';
+    while ($i < $num) {
+        echo '<option value="'.mysql_result($result,$i,"ops_id").'">'.mysql_result($result,$i,"show_name").' '.mysql_result($result,$i,"start_date").' '.mysql_result($result,$i,"presenting_time").'</option>';
+        $i++;
+    }
+    echo '</select></form>';
+    //echo $query;
     return;
+    // ------------------------------------------------------------------------------------------------------------------
 } else {
     $cycle = $args["cy"];
     $from = $args["from"];
@@ -70,6 +92,12 @@ mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
 
 echo "Emailing from cycle ".$cycle."<p>";
 
+if (!($args["session"]==NONE || $args["session"]=="" || $args["session"]=="(ALL)")) {
+    $where = "AND ops_id = '".$args["session"]."' ";
+} else {
+    $where = "";
+}
+
 $query="
     SELECT *
     FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments 
@@ -78,6 +106,7 @@ $query="
     LEFT JOIN ".$event_tools_db_prefix."eventtools_opsession_req
     USING ( opsreq_person_email )
     WHERE opsreq_group_cycle_name = '".$cycle."'
+    ".$where."
     AND show_name != ''
     AND status = '1'
     ORDER BY show_name, start_date
