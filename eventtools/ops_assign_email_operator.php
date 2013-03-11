@@ -32,6 +32,7 @@ if (! ($args["cy"]) ) {
         (Test) To email address(es): <input  name="testto" value="'.$event_tools_registrar_email_address.'"><br>
         Message content:<br>
         <textarea  name="content" rows="20" cols="70">'.$default_text.'</textarea><br>
+        <input name="noassignments" id="noassignments" type="checkbox">Just send email text, omit including individual assignments</input> (but you still need a cycle name to identify operators)<br>
         <button type="submit">Start</button>
     ';
     
@@ -137,7 +138,9 @@ while ($i < $num) {
         
         $headers = "from: ".$from."\nbcc: ".$bcc;
                 
-        $body = $part1.$sessions."\n\n\n";
+        $body = $part1;
+        if ($args["noassignments"] != "on") $body = $body.$sessions;
+        $body = $body."\n\n\n";
         
         mail($to,$subject,$body,$headers);
         //echo '<hr>'.$body.'<hr>';
