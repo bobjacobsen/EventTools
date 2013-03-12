@@ -641,7 +641,7 @@ function format_all_ops_addresses($url=NONE, $where=NONE, $order=NONE) {
         <th>Host</th>
         <th>Railroad</th>
         <th>Address</th>
-        <th>City</th>
+        <th>Phone</th>
         </tr>'."\n";
         
     while ($i < $num) {
@@ -674,13 +674,14 @@ function format_all_ops_addresses($url=NONE, $where=NONE, $order=NONE) {
         echo "  <td class=\"et-ops-td03\">\n";
         echo "    <span class=\"et-ops-address\">\n";
         echo "        ".htmlspecialchars(mysql_result($result,$i,"layout_street_address"));
+        echo ", ".htmlspecialchars(mysql_result($result,$i,"layout_city"));
         echo "      </span> \n";
         echo "  </td>\n";
     
         // City
         echo "  <td class=\"et-ops-td04\">\n";
         echo "    <span class=\"et-ops-city\">\n";
-        echo "        ".htmlspecialchars(mysql_result($result,$i,"layout_city"));
+        echo "        ".htmlspecialchars(mysql_result($result,$i,"layout_owner_phone"));
         echo "      </span> \n";
         echo "  </td>\n";
         
