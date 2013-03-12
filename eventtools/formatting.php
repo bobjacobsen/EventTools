@@ -596,6 +596,109 @@ function format_all_ops_as_table($url=NONE, $where=NONE, $order=NONE) {
 }
 
 // 
+// Listing of operating layout addresses
+//
+function format_all_ops_addresses($url=NONE, $where=NONE, $order=NONE) {
+    global $opts, $event_tools_db_prefix, $event_tools_href_add_on;
+    global $event_tools_show_min_value;
+
+    mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
+    @mysql_select_db($opts['db']) or die( "Unable to select database");
+    
+    if ($order==NONE) $order = "layout_owner_lastname";
+    if ($where==NONE) $where =" WHERE l1.ops_layout_id != 0 OR l2.ops_layout_id2 != 0";
+    
+    $query="
+        SELECT  ".$event_tools_db_prefix."eventtools_layouts . *
+
+        FROM (
+            ".$event_tools_db_prefix."eventtools_layouts LEFT JOIN ".$event_tools_db_prefix."eventtools_opsession l1
+            ON ".$event_tools_db_prefix."eventtools_layouts.layout_id = l1.ops_layout_id
+            )
+            LEFT JOIN ".$event_tools_db_prefix."eventtools_opsession l2
+            ON ".$event_tools_db_prefix."eventtools_layouts.layout_id = l2.ops_layout_id2
+        ".$where."
+        GROUP BY layout_id
+        ORDER BY ".$order."
+        ;
+    ";
+    $result=mysql_query($query);
+    
+    $i=0;
+    $num=mysql_numrows($result);
+    //echo "num: ".$num."<br/>\n";
+    if ($num == 0) {
+        mysql_close();
+        return;
+    }
+    $alt = 1;
+    
+    // start a new table
+    echo "\n";
+    echo "<table border=\"1\" class=\"et-ops-table\">\n";
+    
+    echo '<tr>
+        <th>Host</th>
+        <th>Railroad</th>
+        <th>Address</th>
+        <th>City</th>
+        </tr>'."\n";
+        
+    while ($i < $num) {
+   
+        if ($alt > 0 ) {
+            echo "<tr>\n";
+        } else {
+            echo '<tr class="altrow">'."\n";
+        }
+        $alt = -$alt;
+        
+        // Owner
+        echo "  <td class=\"et-ops-td01\">\n";
+        echo "    <span class=\"et-ops-host\">\n";
+        echo "      <a href=\"".$url.mysql_result($result,$i,"layout_id")."\">\n";
+        echo "     ".htmlspecialchars(mysql_result($result,$i,"layout_owner_lastname"));
+        echo "      </a></span> \n";
+        echo "  </td>\n";
+    
+        // Name
+        echo "  <td class=\"et-ops-td02\">\n";
+        echo "    <span class=\"et-ops-name\">\n";
+        echo "      <a href=\"".$url.mysql_result($result,$i,"layout_id")."\">\n";
+        echo "     ".htmlspecialchars(mysql_result($result,$i,"layout_name"));
+        echo "      </a></span> \n";
+        echo "  </td>\n";
+    
+    
+        // Address
+        echo "  <td class=\"et-ops-td03\">\n";
+        echo "    <span class=\"et-ops-address\">\n";
+        echo "        ".htmlspecialchars(mysql_result($result,$i,"layout_street_address"));
+        echo "      </span> \n";
+        echo "  </td>\n";
+    
+        // City
+        echo "  <td class=\"et-ops-td04\">\n";
+        echo "    <span class=\"et-ops-city\">\n";
+        echo "        ".htmlspecialchars(mysql_result($result,$i,"layout_city"));
+        echo "      </span> \n";
+        echo "  </td>\n";
+        
+
+        echo "</tr>";
+
+        $i++;
+    }
+    
+    echo "</table>\n";
+    
+    // done, clean up
+    
+    mysql_close();    
+
+}
+
+// 
 // Listing of operating sessions
 //
 function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_limit=NONE) {
