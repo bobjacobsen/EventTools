@@ -344,7 +344,7 @@ most recent draft of the
 <p>
 For example query code, see the <a href="samples.php">samples page</a>.
 <p>
-The are sample pages for 
+There are sample pages for 
 <a href="sample_ops_prereg_form.php">preregistration</a>
 and
 <a href="sample_ops_reg_form.php">registration and requesting op sessions</a>.
