@@ -8,10 +8,6 @@
 	require_once('access.php'); 
 	require('utilities.php'); 
 
-// Special bonus session hack
-//         if ($_REQUEST['radio1'] != 'none') $_REQUEST['v_'.$_REQUEST['radio1']] = '11';
-//         if ($_REQUEST['radio3'] != 'none') $_REQUEST['v_'.$_REQUEST['radio3']] = '12';
-
 	$message = "<span style=\"color:red;font-weight:bold\">";
 
 	if ( !formcomplete() ) {
@@ -126,19 +122,6 @@ $page =  <<<END
 
 		</table>
 
-// Special bonus session hack
-// 		<hr/>
-// 		<table border="0">
-//             <tr><td colspan=2><input type="radio" name="radio1" value="15">&nbsp;Sign me up for the Steve Hayes/John Zach session on Wednesday</td></tr>
-//             <tr><td colspan=2><input type="radio" name="radio1" value="27">&nbsp;Sign me up for the Kent Williams session on Wednesday.</td></tr>
-// 			<tr><td colspan=2><input type="radio" name="radio1" value="none" checked>&nbsp;No thank you.</td></tr>
-// 		</table>
-// 		<hr/>
-// 		<table border="0">
-// 		    <tr><td colspan=2><input type="radio" name="radio3" value="28">&nbsp;Sign me up for the Dave Houston session on Sunday.</td></tr>
-//             <tr><td colspan=2><input type="radio" name="radio3" value="29">&nbsp;Sign me up for the Ed Merrin session on Sunday.</td></tr>
-// 			<tr><td colspan=2><input type="radio" name="radio3" value="none" checked>&nbsp;No thank you.</td></tr>
-// 		</table>
 	</td><td width="40%">
 		<table border=0>
 			<tr><td colspan=2><a href="#notes">**</a> Please rank your preferred venues:</td></tr>
