@@ -58,7 +58,8 @@
             echo  '<th><a href="index_attendees.php?order=customers_x2011_emerg_contact_name">Emergency<br>Contact</a></th>
                    <th><a href="index_attendees.php?order=customers_x2011_emerg_contact_phone">Emergency<br>Phone</a></th>';
         }
-        echo  '<th><a href="index_attendees.php?order=customers_create_date">Created</a></th>
+        echo  '<th><a href="index_attendees.php?order=customers_create_date">Created</a></th>';
+        echo  '<th><a href="index_attendees.php?order=customers_updated_date">Updated</a></th>
             </tr>';
         
         $table = $event_tools_db_prefix.'customers LEFT JOIN '.$event_tools_db_prefix.'address_book
@@ -75,11 +76,11 @@
 
         if ($event_tools_emergency_contact_info) {
             table_from_query( $query, 
-                array('customers_firstname', 'customers_lastname', 'customers_email_address', 'entry_street_address', 'entry_city', 'entry_state', 'entry_postcode', 'customers_telephone', 'customers_cellphone', 'customers_x2011_emerg_contact_name', 'customers_x2011_emerg_contact_phone', 'customers_create_date')
+                array('customers_firstname', 'customers_lastname', 'customers_email_address', 'entry_street_address', 'entry_city', 'entry_state', 'entry_postcode', 'customers_telephone', 'customers_cellphone', 'customers_x2011_emerg_contact_name', 'customers_x2011_emerg_contact_phone', 'customers_create_date', 'customers_update_date')
             );
         } else {
             table_from_query( $query, 
-                array('customers_firstname', 'customers_lastname', 'customers_email_address', 'entry_street_address', 'entry_city', 'entry_state', 'entry_postcode', 'customers_telephone', 'customers_cellphone', 'customers_create_date')
+                array('customers_firstname', 'customers_lastname', 'customers_email_address', 'entry_street_address', 'entry_city', 'entry_state', 'entry_postcode', 'customers_telephone', 'customers_cellphone', 'customers_create_date', 'customers_update_date')
             );
         }
         echo '</table>';
