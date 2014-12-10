@@ -8,9 +8,6 @@
 	require_once('access.php'); 
 	require('utilities.php'); 
 
-        if ($_REQUEST['radio1'] != 'none') $_REQUEST['v_'.$_REQUEST['radio1']] = '11';
-        if ($_REQUEST['radio3'] != 'none') $_REQUEST['v_'.$_REQUEST['radio3']] = '12';
-
 	$message = "<span style=\"color:red;font-weight:bold\">";
 
 	if ( !formcomplete() ) {
