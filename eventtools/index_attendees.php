@@ -76,11 +76,11 @@
 
         if ($event_tools_emergency_contact_info) {
             table_from_query( $query, 
-                array('customers_firstname', 'customers_lastname', 'customers_email_address', 'entry_street_address', 'entry_city', 'entry_state', 'entry_postcode', 'customers_telephone', 'customers_cellphone', 'customers_x2011_emerg_contact_name', 'customers_x2011_emerg_contact_phone', 'customers_create_date', 'customers_update_date')
+                array('customers_firstname', 'customers_lastname', 'customers_email_address', 'entry_street_address', 'entry_city', 'entry_state', 'entry_postcode', 'customers_telephone', 'customers_cellphone', 'customers_x2011_emerg_contact_name', 'customers_x2011_emerg_contact_phone', 'customers_create_date', 'customers_updated_date')
             );
         } else {
             table_from_query( $query, 
-                array('customers_firstname', 'customers_lastname', 'customers_email_address', 'entry_street_address', 'entry_city', 'entry_state', 'entry_postcode', 'customers_telephone', 'customers_cellphone', 'customers_create_date', 'customers_update_date')
+                array('customers_firstname', 'customers_lastname', 'customers_email_address', 'entry_street_address', 'entry_city', 'entry_state', 'entry_postcode', 'customers_telephone', 'customers_cellphone', 'customers_create_date', 'customers_updated_date')
             );
         }
         echo '</table>';
