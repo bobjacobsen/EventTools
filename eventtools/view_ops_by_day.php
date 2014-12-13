@@ -30,7 +30,7 @@ $order = parse_order();
 if ($where == NONE) $where = "";
 if ($where != "") $where = " WHERE ".$where;
 
-format_all_ops_by_day("edit_layouts_all.php?layoutid=", $where, $order, "layout_photo_url", NONE, NONE);
+format_all_ops_by_day("edit_layouts_all.php?layoutid=", $where, $order, NONE, "layout_photo_url", NONE, NONE);
 
 ?>
 </body>
