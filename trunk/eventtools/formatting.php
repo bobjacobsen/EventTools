@@ -907,7 +907,11 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
         $i++;
     }
     
-    echo '<tr></tr><tr><th colspan="4" align="right">Total Slots Each Day</th>';
+    $colspan = 2;
+    if ($column3!=NONE) $colspan++;
+    if ($column4!=NONE) $colspan++;
+    
+    echo '<tr></tr><tr><th colspan="'.$colspan.'" align="right">Total Slots Each Day</th>';
     for ($j = 0; $j < count($dates); $j++) {
         echo '<td>'.$total_seats[$j].'</td>';
     }
