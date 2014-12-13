@@ -20,7 +20,8 @@
     /* dont display the distance/time (3) or crew (4) columns */
     .et-ops-td03 { display: none; }
     .et-ops-td04 { display: none; }
-
+    .et-ops-slots-label{ colspan: 2} /* usually 4, but 2 collapsed */
+    
     /* sessions with "bonus" status show green  */
     .et-ops-session-status-50 { background: #80FF80; }
 </style>
