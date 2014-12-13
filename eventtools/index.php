@@ -79,8 +79,8 @@ if ($event_tools_option_general_tours ) echo '<td><a href="format_all_general_to
 if ($event_tools_option_layout_tours)   echo '<td><a href="format_all_layout_tours.php">Formatted View</a></td>';
 if ($event_tools_option_other_events)   echo '<td><a href="format_all_misc_events.php">Formatted View</td>';
 if ($event_tools_option_layouts)        echo '<td><a href="format_all_layouts.php">Formatted View</a></td>';
-if ($event_tools_option_clinics)        echo '<td><a href="format_all_clinics.php">Formatted View</td>';
-if ($event_tools_option_op_sessions)    echo '<td></td>';
+if ($event_tools_option_clinics)        echo '<td><a href="format_all_clinics.php">Formatted View</a></td>';
+if ($event_tools_option_op_sessions)    echo '<td><a href="view_ops_by_day.php">Formatted Ops By Day</a></td>';
 
 
 echo '</tr><tr>
