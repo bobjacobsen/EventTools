@@ -910,7 +910,8 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
     if ($column3!=NONE) $colspan++;
     if ($column4!=NONE) $colspan++;
     
-    echo '<tr></tr><tr><th colspan="'.$colspan.'" align="right">Total Slots Each Day</th>';
+    echo '<tr>
+          <th class=".et-ops-slots-label" align="right" colspan="4">Total Slots Each Day</th>';
     for ($j = 0; $j < count($dates); $j++) {
         echo '<td>'.$total_seats[$j].'</td>';
     }
