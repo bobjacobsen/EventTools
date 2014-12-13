@@ -332,14 +332,20 @@ most recent draft of the
 <a href="EventTools.pdf">EventTools User Guide</a>.
 
 <p>
-For EventTools background information, please see the 
+For information on using EventTools at an operating meet, please see the 
+most recent draft of the 
+<a href="EventToolsOps.pdf">EventTools Op Sessions Guide</a>.
+
+<p>
+For EventTools installation and configuration information, please see the 
 most recent draft of the 
 <a href="EventToolsAdmin.pdf">EventTools Administration Guide</a>.
 
 <p>
-For information on using EventTools at an operating meet, please see the 
-most recent draft of the 
-<a href="EventToolsOps.pdf">EventTools Op Sessions Guide</a>.
+For information on using Cascading Style Sheets (CSS) to 
+configure how EventTools information is displayed on your web pages, 
+please see the most recent draft of the
+<a href="EventToolsCSS.pdf">EventTools CSS Guide</a>.
 
 <p>
 For example query code, see the <a href="samples.php">samples page</a>.
