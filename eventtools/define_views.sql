@@ -117,6 +117,8 @@ AS SELECT ops_id, start_date, presenting_time, spaces, distance, travel_time, lo
             IF((ops_layout_id2!=0),CONCAT(l1.layout_owner_lastname,' / ',l2.layout_owner_lastname),CONCAT(l1.layout_owner_lastname,' ',l1.layout_name)) AS show_name,
             l1.layout_owner_lastname AS layout_owner_lastname1, l2.layout_owner_lastname AS layout_owner_lastname2,
             l1.layout_owner_firstname AS layout_owner_firstname1, l2.layout_owner_firstname AS layout_owner_firstname2,
+            l1.layout_local_url AS layout_local_url1, l2.layout_local_url AS layout_local_url2,
+            l1.layout_photo_url AS layout_photo_url1, l2.layout_photo_url AS layout_photo_url2,
             l1.layout_name AS layout_name1, l2.layout_name AS layout_name2,
             l1.layout_id AS layout_id1, l2.layout_id AS layout_id2
     FROM (
