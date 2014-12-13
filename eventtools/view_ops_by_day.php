@@ -18,7 +18,7 @@
 <style TYPE="text/css">
 
     /* dont display the owner column */
-    .et-ops-session-col-host { display: none; }
+    .et-ops-col-host { display: none; }
 
     /* sessions with "bonus" status show green  */
     .et-ops-session-status-50 { background: #80FF80; }
