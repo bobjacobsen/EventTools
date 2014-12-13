@@ -785,15 +785,15 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
     $total_seats = array(count($dates));
 
     echo '<tr>
-        <th>Host</th>
-        <th>Railroad</th>';
+        <th class="et-ops-col-host">Host</th>
+        <th class="et-ops-col-railroad">Railroad</th>';
     if ($column3!=NONE) echo '
-        <th>Distance/Time</th>';
+        <th class="et-ops-col-distance>Distance/Time</th>';
     if ($column4!=NONE) echo '
-        <th>Crew</th>';
+        <th class="et-ops-col-crew">Crew</th>';
         
     for ($i = 0; $i < count($headings); $i++) {
-        echo '<th>'.$headings[$i].'</th>';
+        echo '<th class="et-ops-col-day-'.$i.'">'.$headings[$i].'</th>';
     }
     echo '</tr>'."\n";
     
