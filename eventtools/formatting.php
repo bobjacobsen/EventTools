@@ -702,7 +702,7 @@ function format_all_ops_addresses($url=NONE, $where=NONE, $order=NONE) {
 // 
 // Listing of operating sessions
 //
-function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_limit=NONE, $link_field=NONE, $column3="distance", $column4="spaces") {
+function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_limit=NONE, $link_field=NONE) {
     // layout_local_url and layout_photo_url were
     // added to the $event_tools_db_prefix."eventtools_opsession_name
     // as layout_local_url1, layout_local_url2 and layout_photo_url1, layout_photo_url2
@@ -785,12 +785,10 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
     $total_seats = array(count($dates));
 
     echo '<tr>
-        <th class="et-ops-col-host">Host</th>
-        <th class="et-ops-col-railroad">Railroad</th>';
-    if ($column3!=NONE) echo '
-        <th class="et-ops-col-distance>Distance/Time</th>';
-    if ($column4!=NONE) echo '
-        <th class="et-ops-col-crew">Crew</th>';
+        <th class="et-ops-td01">Host</th>
+        <th class="et-ops-td02">Railroad</th>
+        <th class="et-ops-td03">Distance/Time</th>
+        <th class="et-ops-td04">Crew</th>';
         
     for ($i = 0; $i < count($headings); $i++) {
         echo '<th class="et-ops-col-day-'.$i.'">'.$headings[$i].'</th>';
