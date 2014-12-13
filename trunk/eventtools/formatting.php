@@ -702,7 +702,12 @@ function format_all_ops_addresses($url=NONE, $where=NONE, $order=NONE) {
 // 
 // Listing of operating sessions
 //
-function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_limit=NONE) {
+function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_limit=NONE, $link_field=NONE, $column3="distance", $column4="spaces") {
+    // layout_local_url and layout_photo_url were
+    // added to the $event_tools_db_prefix."eventtools_opsession_name
+    // as layout_local_url1, layout_local_url2 and layout_photo_url1, layout_photo_url2
+    // so they could be selected in $link_field.  Use e.g. $link_field="layout_local_url"
+    
     global $opts, $event_tools_db_prefix, $event_tools_href_add_on;
     global $event_tools_show_min_value;
 
@@ -781,12 +786,15 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
 
     echo '<tr>
         <th>Host</th>
-        <th>Railroad</th>
-        <th>Distance/Time</th>
+        <th>Railroad</th>';
+    if ($column3!=NONE) echo '
+        <th>Distance/Time</th>';
+    if ($column4!=NONE) echo '
         <th>Crew</th>';
-        for ($i = 0; $i < count($headings); $i++) {
-            echo '<th>'.$headings[$i].'</th>';
-        }
+        
+    for ($i = 0; $i < count($headings); $i++) {
+        echo '<th>'.$headings[$i].'</th>';
+    }
     echo '</tr>'."\n";
     
     $i = 0;
@@ -817,36 +825,51 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
         // Name
         echo "  <td class=\"et-ops-td02\">\n";
         echo "    <span class=\"et-ops-name\">\n";
-        echo "      <a href=\"".$url.mysql_result($result,$i,"layout_id1")."\">".
+        
+        $link_url1 = $url.mysql_result($result,$i,"layout_id1");
+        $link_url2 = $url.mysql_result($result,$i,"layout_id2");
+        if ($link_field != NONE) {
+            $link_url1 = mysql_result($result,$i,$link_field."1");
+            $link_url2 = mysql_result($result,$i,$link_field."2");
+        }
+        
+        echo "      <a href=\"".$link_url1."\">".
                                 htmlspecialchars(mysql_result($result,$i,"layout_name1"))."</a>\n";
 
         if (mysql_result($result,$i,"layout_name2")!='') {
-            echo "     / <a href=\"".$url.mysql_result($result,$i,"layout_id2")."\">".
+            echo "     / <a href=\"".$link_url2."\">".
                                 htmlspecialchars(mysql_result($result,$i,"layout_name2"))."</a>\n";
         }
         echo "      </a></span> \n";
         echo "  </td>\n";
     
     
-        // Distance and time
-        echo "  <td class=\"et-ops-td03\">\n";
-        echo "    <span class=\"et-ops-distance\">\n";
-        if (mysql_result($result,$i,"distance")!='' || mysql_result($result,$i,"travel_time")!='') {
-            echo mysql_result($result,$i,"distance");
-            if (mysql_result($result,$i,"distance")!='' && mysql_result($result,$i,"travel_time")!='')
-                echo '/ ';
-            echo mysql_result($result,$i,"travel_time");
+        // Column 3
+        // This is a composite done by code, so we're really 
+        // checking the argument for "none";
+        // later on, can make this a smarter view
+        if ($column3!=NONE) {
+            echo "  <td class=\"et-ops-td03\">\n";
+            echo "    <span class=\"et-ops-distance\">\n";
+            if (mysql_result($result,$i,"distance")!='' || mysql_result($result,$i,"travel_time")!='') {
+                echo mysql_result($result,$i,"distance");
+                if (mysql_result($result,$i,"distance")!='' && mysql_result($result,$i,"travel_time")!='')
+                    echo '/ ';
+                echo mysql_result($result,$i,"travel_time");
+            }
+            echo "      </span> \n";
+            echo "  </td>\n";
         }
-        echo "      </span> \n";
-        echo "  </td>\n";
-    
-        // Slots
-        echo "  <td class=\"et-ops-td04\">\n";
-        echo "    <span class=\"et-ops-spaces\">\n";
-        echo "        ".htmlspecialchars(mysql_result($result,$i,"spaces"));
-        echo "      </span> \n";
-        echo "  </td>\n";
-
+        
+        // Column4
+        if ($column4!=NONE) {
+            echo "  <td class=\"et-ops-td04\">\n";
+            echo "    <span class=\"et-ops-spaces\">\n";
+            echo "        ".htmlspecialchars(mysql_result($result,$i,$column4));
+            echo "      </span> \n";
+            echo "  </td>\n";
+        }
+        
         // start processing dates to fill in row
         
         for ($j = 0; $j < count($dates); $j++) {  // loop over dates
