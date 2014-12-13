@@ -14,8 +14,14 @@
 <p>
 
 <!-- styling a particular item -->
+
 <style TYPE="text/css">
-.et-ops-session-status-50 { background: #C0FFC0; }
+
+    /* dont display the owner column */
+    .et-ops-session-col-host { display: none; }
+
+    /* sessions with "bonus" status show green  */
+    .et-ops-session-status-50 { background: #80FF80; }
 </style>
 
 <?php
@@ -35,7 +41,7 @@ $order = parse_order();
 if ($where == NONE) $where = "";
 if ($where != "") $where = " WHERE ".$where;
 
-format_all_ops_by_day("edit_layouts_all.php?layoutid=", $where, $order, NONE, "layout_photo_url", NONE, NONE);
+format_all_ops_by_day("edit_layouts_all.php?layoutid=", $where, $order, NONE, "layout_photo_url" <!-- NONE, NONE -->);
 
 ?>
 </body>
