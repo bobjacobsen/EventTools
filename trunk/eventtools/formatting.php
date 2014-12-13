@@ -881,7 +881,8 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
                 $full = TRUE;
                 if (! $first) echo '<hr/>';
                 $first = FALSE;
-                echo '<span class="et-ops-sessions">'.time_from_long_format(mysql_result($result,$i,"start_date")).'</span><br/>';
+                echo '<span class="et-ops-session-status-'.mysql_result($result,$i,"status_code").'">';
+                echo '<span class="et-ops-sessions">'.time_from_long_format(mysql_result($result,$i,"start_date")).'</span></span><br/>';
                 $total_seats[$j] = $total_seats[$j] + mysql_result($result,$i,"spaces");
                 if (($i!=$num-1) 
                         && mysql_result($result,$i,"show_name") == mysql_result($result,$i+1,"show_name")

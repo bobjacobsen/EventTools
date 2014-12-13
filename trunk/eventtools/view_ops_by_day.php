@@ -13,6 +13,11 @@
 <a href="index.php">Back to main page</a>
 <p>
 
+<!-- styling a particular item -->
+<style TYPE="text/css">
+.et-ops-session-status-50 { background: #C0FFC0; }
+</style>
+
 <?php
 require_once('access.php');
 require_once('utilities.php');
