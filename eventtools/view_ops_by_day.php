@@ -17,6 +17,13 @@
 
 <style TYPE="text/css">
 
+    /* center everything */
+    .et-faobd-table { text-align: center; }
+
+    /* except left align owner and layout name cells */
+    .et-faobd-td-1 { text-align: left; }
+    .et-faobd-td-2 { text-align: left; }
+        
     /* dont display the distance/time (3) or crew (4) columns */
 
     .et-faobd-th-3 { display: none; }
