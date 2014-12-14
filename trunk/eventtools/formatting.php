@@ -789,12 +789,15 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
         <col class="et-faobd-col-1"/>
         <col class="et-faobd-col-2"/>
         <col class="et-faobd-col-3"/>
-        <col class="et-faobd-col-4"/>';
+        <col class="et-faobd-col-4"/>
+        <colgroup class="et-faobd-colgroup-days">';
         
     for ($i = 0; $i < count($headings); $i++) {
-        echo '
-        <col class="et-faobd-col-'.($i+5).'"/>';
+        echo '  
+            <col class="et-faobd-col-'.($i+5).'"/>';
     }
+    echo '
+        </colgroup>';
 
     // headings
     echo "\n".'<thead class="et-faobd-thread">
