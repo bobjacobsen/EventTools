@@ -18,12 +18,18 @@
 <style TYPE="text/css">
 
     /* dont display the distance/time (3) or crew (4) columns */
-    .et-ops-td03 { display: none; }
-    .et-ops-td04 { display: none; }
-    .et-ops-slots-label{ colspan: 2} /* usually 4, but 2 collapsed */
+
+    .et-faobd-th-3 { display: none; }
+    .et-faobd-td-3 { display: none; }
+    .et-faobd-th-4 { display: none; }
+    .et-faobd-td-4 { display: none; }
+    
+    .et-faobd-slots-total{ display: none; } /* don't display totals */
     
     /* sessions with "bonus" status show green  */
-    .et-ops-session-status-50 { background: #80FF80; }
+    .et-faobd-session-status-50 { background: #80FF80; }
+    
+    
 </style>
 
 <?php
