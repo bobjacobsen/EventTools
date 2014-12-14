@@ -824,13 +824,21 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
         }
         $alt = -$alt;
         
+        // compute destination page for link
+        $link_url1 = $url.mysql_result($result,$i,"layout_id1");
+        $link_url2 = $url.mysql_result($result,$i,"layout_id2");
+        if ($link_field != NONE) {
+            $link_url1 = mysql_result($result,$i,$link_field."1");
+            $link_url2 = mysql_result($result,$i,$link_field."2");
+        }
+
         // Owner
         echo "  <td class=\"et-faobd-td-1\">\n";
         echo "    <span class=\"et-faobd-layout-owner\">\n";
-        echo '      <a href="'.$url.mysql_result($result,$i,"layout_id1").'">'.
+        echo '      <a href="'.$link_url1.'">'.
                         mysql_result($result,$i,"layout_owner_lastname1")."</a>\n";
         if (mysql_result($result,$i,"layout_owner_lastname2")!='') {
-            echo "    /  <a href=\"".$url.mysql_result($result,$i,"layout_id2")."\">".
+            echo "    /  <a href=\"".$link_url2."\">".
                         mysql_result($result,$i,"layout_owner_lastname2")."</a>\n";
         }
         echo "    </span>\n";
@@ -839,14 +847,6 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
         // Name
         echo "  <td class=\"et-faobd-td-2\">\n";
         echo "    <span class=\"et-faobd-name\">\n";
-        
-        $link_url1 = $url.mysql_result($result,$i,"layout_id1");
-        $link_url2 = $url.mysql_result($result,$i,"layout_id2");
-        if ($link_field != NONE) {
-            $link_url1 = mysql_result($result,$i,$link_field."1");
-            $link_url2 = mysql_result($result,$i,$link_field."2");
-        }
-        
         echo "      <a href=\"".$link_url1."\">".
                                 htmlspecialchars(mysql_result($result,$i,"layout_name1"))."</a>\n";
 
