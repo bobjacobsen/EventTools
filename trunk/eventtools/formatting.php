@@ -742,7 +742,7 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
     
     // start a new table
     echo "\n";
-    echo "<table border=\"1\" class=\"et-ops-by-day-table\">\n";
+    echo "<table border=\"1\" class=\"et-faobd-table\">\n";
     
     // generate table headings from first, last date
     $first_string =  "2200-01-01 00:00:00";
@@ -784,16 +784,32 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
         
     $total_seats = array(count($dates));
 
-    echo '<tr>
-        <th class="et-ops-td01">Host</th>
-        <th class="et-ops-td02">Railroad</th>
-        <th class="et-ops-td03">Distance/Time</th>
-        <th class="et-ops-td04">Crew</th>';
+    // columns
+    echo '
+        <col class="et-faobd-col-1"/>
+        <col class="et-faobd-col-2"/>
+        <col class="et-faobd-col-3"/>
+        <col class="et-faobd-col-4"/>';
         
     for ($i = 0; $i < count($headings); $i++) {
-        echo '<th class="et-ops-col-day-'.$i.'">'.$headings[$i].'</th>';
+        echo '
+        <col class="et-faobd-col-'.($i+5).'"/>';
     }
-    echo '</tr>'."\n";
+
+    // headings
+    echo "\n".'<thead class="et-faobd-thread">
+    <tr class=et-faobd-th">
+        <th class="et-faobd-th-1">Host</th>
+        <th class="et-faobd-th-2">Railroad</th>
+        <th class="et-faobd-th-3">Distance/Time</th>
+        <th class="et-faobd-th-4">Crew</th>';
+        
+    for ($i = 0; $i < count($headings); $i++) {
+        echo '
+        <th class="et-faobd-col-day-'.$i.'">'.$headings[$i].'</th>';
+    }
+    echo '
+    </tr>'."\n</thead>\n\n<tbody class=\"et-faobd-tbody\">\n\n";
     
     $i = 0;
     while ($i < $num) {
@@ -802,15 +818,15 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
         if (mysql_result($result,$i,"layout_name1") == '') { $i++; continue;}
         
         if ($alt > 0 ) {
-            echo "<tr>\n";
+            echo "\n<tr>\n";
         } else {
-            echo '<tr class="altrow">'."\n";
+            echo "\n".'<tr class="altrow">'."\n";
         }
         $alt = -$alt;
         
         // Owner
-        echo "  <td class=\"et-ops-td01\">\n";
-        echo "    <span class=\"et-ops-layout-owner\">\n";
+        echo "  <td class=\"et-faobd-td-1\">\n";
+        echo "    <span class=\"et-faobd-layout-owner\">\n";
         echo '      <a href="'.$url.mysql_result($result,$i,"layout_id1").'">'.
                         mysql_result($result,$i,"layout_owner_lastname1")."</a>\n";
         if (mysql_result($result,$i,"layout_owner_lastname2")!='') {
@@ -821,8 +837,8 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
         echo "  </td>\n";
 
         // Name
-        echo "  <td class=\"et-ops-td02\">\n";
-        echo "    <span class=\"et-ops-name\">\n";
+        echo "  <td class=\"et-faobd-td-2\">\n";
+        echo "    <span class=\"et-faobd-name\">\n";
         
         $link_url1 = $url.mysql_result($result,$i,"layout_id1");
         $link_url2 = $url.mysql_result($result,$i,"layout_id2");
@@ -841,37 +857,29 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
         echo "      </a></span> \n";
         echo "  </td>\n";
     
-    
-        // Column 3
-        // This is a composite done by code, so we're really 
-        // checking the argument for "none";
-        // later on, can make this a smarter view
-        if ($column3!=NONE) {
-            echo "  <td class=\"et-ops-td03\">\n";
-            echo "    <span class=\"et-ops-distance\">\n";
-            if (mysql_result($result,$i,"distance")!='' || mysql_result($result,$i,"travel_time")!='') {
-                echo mysql_result($result,$i,"distance");
-                if (mysql_result($result,$i,"distance")!='' && mysql_result($result,$i,"travel_time")!='')
-                    echo '/ ';
-                echo mysql_result($result,$i,"travel_time");
-            }
-            echo "      </span> \n";
-            echo "  </td>\n";
+        // distance
+        echo "  <td class=\"et-faobd-td-3\">\n";
+        echo "    <span class=\"et-faobd-distance\"> ";
+        if (mysql_result($result,$i,"distance")!='' || mysql_result($result,$i,"travel_time")!='') {
+            echo mysql_result($result,$i,"distance");
+            if (mysql_result($result,$i,"distance")!='' && mysql_result($result,$i,"travel_time")!='')
+                echo '/ ';
+            echo mysql_result($result,$i,"travel_time");
         }
+        echo "      </span></td> \n";
         
-        // Column4
-        if ($column4!=NONE) {
-            echo "  <td class=\"et-ops-td04\">\n";
-            echo "    <span class=\"et-ops-spaces\">\n";
-            echo "        ".htmlspecialchars(mysql_result($result,$i,$column4));
-            echo "      </span> \n";
-            echo "  </td>\n";
-        }
+        // slots
+        echo "  <td class=\"et-faobd-td-4\">\n";
+        echo "    <span class=\"et-faobd-spaces\">\n";
+        echo "        ".htmlspecialchars(mysql_result($result,$i,$column4));
+        echo "      </span> \n";
+        echo "  </td>\n";
+
         
         // start processing dates to fill in row
         
         for ($j = 0; $j < count($dates); $j++) {  // loop over dates
-            echo '<td class="et-ops-times">';
+            echo "\n".'  <td class="et-faobd-td-'.($j+5).'">';
             // if match up, display and advance
             $full = FALSE;
             $first = TRUE;
@@ -879,8 +887,8 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
                 $full = TRUE;
                 if (! $first) echo '<hr/>';
                 $first = FALSE;
-                echo '<span class="et-ops-session-status-'.mysql_result($result,$i,"status_code").'">';
-                echo '<span class="et-ops-sessions">'.time_from_long_format(mysql_result($result,$i,"start_date")).'</span></span><br/>';
+                echo "\n".'    <span class="et-faobd-session-status-'.mysql_result($result,$i,"status_code").'">';
+                echo "\n".'      <span class="et-faobd-sessions">'.time_from_long_format(mysql_result($result,$i,"start_date")).'</span></span><br/>';
                 $total_seats[$j] = $total_seats[$j] + mysql_result($result,$i,"spaces");
                 if (($i!=$num-1) 
                         && mysql_result($result,$i,"show_name") == mysql_result($result,$i+1,"show_name")
@@ -894,7 +902,7 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
             }
             // if not match up, skip cell
             if (! $full) {
-                echo '<span class="et-ops-empty"></span>';
+                echo "\n".'    <span class="et-faobd-empty"></span>';
             }
 
             echo '</td>';
@@ -906,12 +914,17 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
         $i++;
     }
     
-    $colspan = 2;
-    if ($column3!=NONE) $colspan++;
-    if ($column4!=NONE) $colspan++;
+    echo "\n</tbody>\n\n";
     
-    echo '<tr>
-          <th class=".et-ops-slots-label" align="right" colspan="4">Total Slots Each Day</th>';
+    // issues
+    //     1) getting the marged cell across the bottom to hold the label/header
+    //              how to do something like a varible colspan?
+    //
+    //     If we put in separate cells, maybe with border removed/modified/optimized
+    //              how to we show just one label as columns are displayed/suppressed?
+    //
+    echo '<tr class="et-faobd-slots-total">
+          <th class=".et-faobd-slots-label" align="right" colspan="4">Total Slots Each Day</th>';
     for ($j = 0; $j < count($dates); $j++) {
         echo '<td>'.$total_seats[$j].'</td>';
     }
