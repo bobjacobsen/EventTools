@@ -871,7 +871,7 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
         // slots
         echo "  <td class=\"et-faobd-td-4\">\n";
         echo "    <span class=\"et-faobd-spaces\">\n";
-        echo "        ".htmlspecialchars(mysql_result($result,$i,$column4));
+        echo "        ".htmlspecialchars(mysql_result($result,$i,"spaces"));
         echo "      </span> \n";
         echo "  </td>\n";
 
@@ -897,7 +897,7 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
                         ) {
                     $i++;
                 } else {
-                    break;
+                    break; // no more sessions for this layout today; go to the next cell
                 }
             }
             // if not match up, skip cell
