@@ -714,8 +714,8 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
     
-    if ($order==NONE) $order = " layout_owner_lastname1, start_date ";
-    else $order = " layout_owner_lastname1, start_date, ".$order;
+    if ($order==NONE) $order = " layout_owner_lastname1, layout_owner_lastname2, layout_name1, layout_name2, start_date ";
+    else $order = " layout_owner_lastname1, layout_owner_lastname2, layout_name1, layout_name2, start_date, ".$order;
         
     if ($where==NONE) $where = " ";
     
