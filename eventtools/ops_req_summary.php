@@ -43,18 +43,14 @@ function score($choice,$key) {
     $stats[$key][$choice] = $stats[$key][$choice]+1;
 }
 
-function summarize_question($columnName, $where=NONE) {
+function summarize_question($shortOptionName) {
     global $event_tools_db_prefix;
-    if ($where != NONE && $where !="") {
-        $where = $where." AND ".$columnName." = Y ";
-    } else {
-        $where = " ".$columnName." = \"Y\" ";
-    }
     
     $query="
-        SELECT ".$columnName."
-            FROM ".$event_tools_db_prefix."eventtools_opsession_req
-            WHERE ".$where."
+        SELECT customers_id
+            FROM ".$event_tools_db_prefix."eventtools_customer_cross_options_and_values
+            WHERE customer_option_value_value = \"Y\" 
+            AND customer_option_short_name = \"".$shortOptionName."\"
             ;
         ";
     //echo $query;
@@ -238,14 +234,27 @@ echo '</table>';
 
 echo '<p>';
 echo '<h3>Extra Questions</h3>';
-
-if ($event_tools_op_session_opt1_name != "") echo $event_tools_op_session_opt1_long_name.": ".summarize_question("opsreq_opt1")."<p>";
-if ($event_tools_op_session_opt2_name != "") echo $event_tools_op_session_opt2_long_name.": ".summarize_question("opsreq_opt2")."<p>";
-if ($event_tools_op_session_opt3_name != "") echo $event_tools_op_session_opt3_long_name.": ".summarize_question("opsreq_opt3")."<p>";
-if ($event_tools_op_session_opt4_name != "") echo $event_tools_op_session_opt4_long_name.": ".summarize_question("opsreq_opt4")."<p>";
-if ($event_tools_op_session_opt5_name != "") echo $event_tools_op_session_opt5_long_name.": ".summarize_question("opsreq_opt5")."<p>";
-if ($event_tools_op_session_opt6_name != "") echo $event_tools_op_session_opt6_long_name.": ".summarize_question("opsreq_opt6")."<p>";
-if ($event_tools_op_session_opt7_name != "") echo $event_tools_op_session_opt7_long_name.": ".summarize_question("opsreq_opt7")."<p>";
-if ($event_tools_op_session_opt8_name != "") echo $event_tools_op_session_opt8_long_name.": ".summarize_question("opsreq_opt8")."<p>";
+    global $event_tools_db_prefix;    
+    $query="
+        SELECT *
+            FROM ".$event_tools_db_prefix."eventtools_customer_options
+            ORDER BY customer_option_order
+            ;
+        ";
+    //echo $query;
+    $result=mysql_query($query);
+    
+    $i = 0;
+    $num = mysql_numrows($result);
+    echo "<table border=\"1\">\n";
+    while ($i < $num) {
+        echo "   <tr><td>";
+        echo mysql_result($result,$i,"customer_option_long_name");
+        echo "</td><td>";
+        echo summarize_question(mysql_result($result,$i,"customer_option_short_name"));
+        echo "</td></tr>\n";
+        $i++;
+    }
+    echo "</table>\n";
 
 echo "</body></html>";
