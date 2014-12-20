@@ -65,8 +65,8 @@ $reqs = check_for_value($values, "12", $reqs);
 // so reqs now is an ordered list of requests
 
 // do an insert of the request
-$op = "REPLACE INTO ".$event_tools_db_prefix."eventtools_opsession_req (`opsreq_person_email`, `opsreq_pri1`, `opsreq_pri2`, `opsreq_pri3`, `opsreq_pri4`, `opsreq_pri5`, `opsreq_pri6`, `opsreq_pri7`, `opsreq_pri8`, `opsreq_pri9`, `opsreq_pri10`, `opsreq_pri11`, `opsreq_pri12`, `opsreq_opt1`, `opsreq_opt2`, `opsreq_opt3`, `opsreq_opt4`, `opsreq_opt5`, `opsreq_opt6`, `opsreq_opt7`, `opsreq_opt8`, `opsreq_comment`) VALUES "
-    ."('".$email."','".$reqs[0]."','".$reqs[1]."','".$reqs[2]."','".$reqs[3]."','".$reqs[4]."','".$reqs[5]."','".$reqs[6]."','".$reqs[7]."','".$reqs[8]."','".$reqs[9]."','".$reqs[10]."','".$reqs[11]."','".clean_text($_REQUEST['opt1'])."','".clean_text($_REQUEST['opt2'])."','".clean_text($_REQUEST['opt3'])."','".clean_text($_REQUEST['opt4'])."','".clean_text($_REQUEST['opt5'])."','".clean_text($_REQUEST['opt6'])."','".clean_text($_REQUEST['opt7'])."','".clean_text($_REQUEST['opt8'])."','".clean_text($_REQUEST[ "comments" ])."');";
+$op = "REPLACE INTO ".$event_tools_db_prefix."eventtools_opsession_req (`opsreq_person_email`, `opsreq_pri1`, `opsreq_pri2`, `opsreq_pri3`, `opsreq_pri4`, `opsreq_pri5`, `opsreq_pri6`, `opsreq_pri7`, `opsreq_pri8`, `opsreq_pri9`, `opsreq_pri10`, `opsreq_pri11`, `opsreq_pri12`, `opsreq_comment`) VALUES "
+    ."('".$email."','".$reqs[0]."','".$reqs[1]."','".$reqs[2]."','".$reqs[3]."','".$reqs[4]."','".$reqs[5]."','".$reqs[6]."','".$reqs[7]."','".$reqs[8]."','".$reqs[9]."','".$reqs[10]."','".$reqs[11]."','".clean_text($_REQUEST[ "comments" ])."');";
 //print 'Request [ '.$op.' ] <p>';
 mysql_query($op);
 
@@ -114,6 +114,44 @@ $customer = "UPDATE ".$event_tools_db_prefix."customers SET customers_default_ad
 //print '[ '.$customer.' ] ';
 $repl = mysql_query($customer);
 if (mysql_errno() != 0) print "<p>Error in final UPDATE customers: ".mysql_errno() . ": " . mysql_error() . "</p>";
+
+// handle the options 
+// setting the value to Y or N for each checkbox
+$query="
+    SELECT  *
+    FROM ".$event_tools_db_prefix."eventtools_customer_options
+    ORDER BY customer_option_order
+    ;
+";
+//echo $query;
+$options=mysql_query($query);
+
+$i=0;
+$num=mysql_numrows($options);
+while ($i < $num) {
+    // see is this customer/option pair exists 
+    $check = "SELECT customers_id FROM ".$event_tools_db_prefix."eventtools_customer_option_values WHERE customers_id = '".mysql_result($reqs,0,"customers_id")."' AND customer_option_id = '".mysql_result($options,$i,"customer_option_id")."';";
+    $result=mysql_query($check);
+    if (mysql_numrows($result) == 0) {
+        $insert = "INSERT INTO ".$event_tools_db_prefix."eventtools_customer_option_values (`customers_id`, `customer_option_id`, `customer_option_value_value`, `customer_option_value_date`) VALUES "
+        ."('".mysql_result($reqs,0,"customers_id")."','".mysql_result($options,$i,"customer_option_id")."','".clean_text($_REQUEST["option_id_".mysql_result($options,$i,"customer_option_id")])."','now()');";
+        mysql_query($insert);
+        if (mysql_errno() != 0) print "<p>Error in INSERT of options: ".mysql_errno() . ": " . mysql_error() . "</p>" .$insert."<p>";
+    } else {
+        $update = "UPDATE ".$event_tools_db_prefix."eventtools_customer_option_values SET
+                    customer_option_value_value = '".clean_text($_REQUEST["option_id_".mysql_result($options,$i,"customer_option_id")])."',
+                    customer_option_value_date  = now()
+                
+                  WHERE
+                    customers_id         = '".mysql_result($reqs,0,"customers_id")."' AND
+                    customer_option_id   = '".mysql_result($options,$i,"customer_option_id")."'
+            ";
+        mysql_query($update);
+        if (mysql_errno() != 0) print "<p>Error in UPDATE of options: ".mysql_errno() . ": " . mysql_error() . "</p>" .$update."<p>";
+    }
+    
+    $i++;
+}
 
 ?>
 

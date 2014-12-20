@@ -67,28 +67,27 @@ function create_request_entries($max_pri, $where=NONE, $order=NONE ) {
 // for options
 // 
 function create_option_entries() {
-    global $event_tools_op_session_opt1_name, $event_tools_op_session_opt1_long_name;
-    global $event_tools_op_session_opt2_name, $event_tools_op_session_opt2_long_name;
-    global $event_tools_op_session_opt3_name, $event_tools_op_session_opt3_long_name;
-    global $event_tools_op_session_opt4_name, $event_tools_op_session_opt4_long_name;
-    global $event_tools_op_session_opt5_name, $event_tools_op_session_opt5_long_name;
-    global $event_tools_op_session_opt6_name, $event_tools_op_session_opt6_long_name;
-    global $event_tools_op_session_opt7_name, $event_tools_op_session_opt7_long_name;
-    global $event_tools_op_session_opt8_name, $event_tools_op_session_opt8_long_name;
-    
-    create_option_entry($event_tools_op_session_opt1_name, $event_tools_op_session_opt1_long_name, 'opt1');
-    create_option_entry($event_tools_op_session_opt2_name, $event_tools_op_session_opt2_long_name, 'opt2');
-    create_option_entry($event_tools_op_session_opt3_name, $event_tools_op_session_opt3_long_name, 'opt3');
-    create_option_entry($event_tools_op_session_opt4_name, $event_tools_op_session_opt4_long_name, 'opt4');
-    create_option_entry($event_tools_op_session_opt5_name, $event_tools_op_session_opt5_long_name, 'opt5');
-    create_option_entry($event_tools_op_session_opt6_name, $event_tools_op_session_opt6_long_name, 'opt6');
-    create_option_entry($event_tools_op_session_opt7_name, $event_tools_op_session_opt7_long_name, 'opt7');
-    create_option_entry($event_tools_op_session_opt8_name, $event_tools_op_session_opt8_long_name, 'opt8');
+    global $opts, $event_tools_db_prefix;
+    mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
+    @mysql_select_db($opts['db']) or die( "Unable to select database");
+    $query="
+        SELECT  *
+        FROM ".$event_tools_db_prefix."eventtools_customer_options
+        ORDER BY customer_option_order
+        ;
+    ";
+    //echo $query;
+    $result=mysql_query($query);
+
+    $i=0;
+    $num=mysql_numrows($result);
+    while ($i < $num) {
+        create_option_entry(mysql_result($result,$i,"customer_option_id"),mysql_result($result,$i,"customer_option_long_name"));
+        $i++;
+    }
 }
-function create_option_entry($short, $long, $var) {
-    if ($short == NONE) return;
-    if ($short == '') return;
-    echo '<tr><td colspan=2><input type="checkbox" value="Y" name="'.$var.'">&nbsp;'."\n";
+function create_option_entry($id, $long) {
+    echo '<tr><td colspan=2><input type="checkbox" value="Y" name="option_id_'.$id.'">&nbsp;'."\n";
     echo $long;
     echo "</td></tr>\n";
 }
