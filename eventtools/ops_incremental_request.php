@@ -134,7 +134,7 @@ while ($i < $num) {
     $result=mysql_query($check);
     if (mysql_numrows($result) == 0) {
         $insert = "INSERT INTO ".$event_tools_db_prefix."eventtools_customer_option_values (`customers_id`, `customer_option_id`, `customer_option_value_value`, `customer_option_value_date`) VALUES "
-        ."('".mysql_result($reqs,0,"customers_id")."','".mysql_result($options,$i,"customer_option_id")."','".clean_text($_REQUEST["option_id_".mysql_result($options,$i,"customer_option_id")])."','now()');";
+        ."('".mysql_result($reqs,0,"customers_id")."','".mysql_result($options,$i,"customer_option_id")."','".clean_text($_REQUEST["option_id_".mysql_result($options,$i,"customer_option_id")])."',now());";
         mysql_query($insert);
         if (mysql_errno() != 0) print "<p>Error in INSERT of options: ".mysql_errno() . ": " . mysql_error() . "</p>" .$insert."<p>";
     } else {
