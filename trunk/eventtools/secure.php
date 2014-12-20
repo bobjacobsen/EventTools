@@ -19,6 +19,15 @@ if ($event_tools_require_user_authenticate  || $event_tools_require_user_id ) {
     $user = $_SERVER['PHP_AUTH_USER'];
     $REMOTE_USER = $user;  // for phpMyEdit
 
+    if ($event_tools_require_user_id) {
+        // requires a user ID
+        if ($REMOTE_USER == NONE || $REMOTE_USER == "") {
+            // fail
+            header('WWW-Authenticate: Basic realm="EventTools Admin"');
+            header('HTTP/1.0 401 Unauthorized');
+            return;
+        }
+    }
     if ($event_tools_require_user_authenticate) {
         // required to check
         
