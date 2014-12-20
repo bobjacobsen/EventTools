@@ -178,6 +178,39 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_constrain_communications` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
+-- Table structure for table `prefix_eventtools_customer_options`
+-- Defines options that can be specified for each customer
+--
+
+DROP TABLE IF EXISTS `prefix_eventtools_customer_options`;
+CREATE TABLE IF NOT EXISTS `prefix_eventtools_customer_options` (
+  `customer_option_id` int(5) NOT NULL auto_increment,
+  `customer_option_long_name` varchar(100) NOT NULL,
+  `customer_option_short_name` varchar(20) NOT NULL,
+  `customer_option_order` int(5) NOT NULL,
+  PRIMARY KEY  (`customer_option_id`),
+  KEY `idx_eventtools_customer_option_short_name` (`customer_option_short_name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Table structure for table `prefix_eventtools_customer_option_values`
+-- Defines value of option for a specific customer
+--
+
+DROP TABLE IF EXISTS `prefix_eventtools_customer_option_values`;
+
+CREATE TABLE IF NOT EXISTS `prefix_eventtools_customer_option_values` (
+  `customer_option_value_id` int(5) NOT NULL auto_increment,
+  `customers_id` int(11) NOT NULL,
+  `customer_option_id` int(5) NOT NULL,
+  `customer_option_value_value` varchar(50) NOT NULL,
+  `customer_option_value_date` varchar(25) NOT NULL,
+  PRIMARY KEY  (`customer_option_value_id`),
+  KEY `idx_eventtools_customer_option_value_customers_id` (`customers_id`),
+  KEY `idx_eventtools_customer_option_value_customer_option_id` (`customer_option_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
 -- Table structure for table `prefix_eventtools_users`
 -- Defines user accounts that can access the tools
 --
