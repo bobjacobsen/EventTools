@@ -26,9 +26,10 @@ if ($event_tools_require_user_authenticate  || $event_tools_require_user_id ) {
             SELECT *
             FROM ".$event_tools_db_prefix."eventtools_users
             WHERE user_name = '".strtolower($user)."'
-            ;
-        ";
-    
+            AND user_pwd = '".strtolower($_SERVER['PHP_AUTH_PW'])."'
+            ;";
+
+        
         // open database
         mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
         @mysql_select_db($opts['db']) or die( "Unable to select database");
