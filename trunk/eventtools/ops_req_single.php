@@ -33,8 +33,11 @@
 	td.pme-buttons { text-align: left;   }
 	td.pme-message { text-align: center; }
 	td.pme-stats   { text-align: right;  }
-	.pme-more { visibility:hidden; } // suppress Apply button
 
+	.pme-navigation, .pme-hr,
+	.pme-more {  display:none; } // suppress inter-table rule, nav table, Apply button
+
+    
 	hr.pme2-hr		     { border: 0px solid; padding: 0px; margin: 0px; border-top-width: 1px; height: 1px; }
 	table.pme2-main 	     { border: #004d9c 1px solid; border-collapse: collapse; border-spacing: 0px; width: 100%; }
 	table.pme2-navigation { border: #004d9c 0px solid; border-collapse: collapse; border-spacing: 0px; width: 100%; }
@@ -47,7 +50,9 @@
 	td.pme2-message { text-align: center; }
 	td.pme2-stats   { text-align: right;  }
 	td.pme2-value-0, td.pme2-value-1 { width: 5%; } 
-	.pme2-more { visibility:hidden; } // suppress Apply button
+	
+	.pme2-navigation, .pme2-hr,
+	.pme2-more { display:none; } // suppress inter-table rule, nav table, Apply button
 
 </style>
 </head>
