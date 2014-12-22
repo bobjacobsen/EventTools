@@ -171,7 +171,8 @@ AS SELECT prefix_eventtools_opsession_req.*,  prefix_customers.*,
 -- customer name with option values
 CREATE OR REPLACE VIEW prefix_eventtools_customer_cross_options_and_values
 AS SELECT prefix_customers.*, prefix_eventtools_customer_options.*, 
-            prefix_eventtools_customer_option_values.customer_option_value_value, prefix_eventtools_customer_option_values.customer_option_value_date
+            prefix_eventtools_customer_option_values.customer_option_value_value, prefix_eventtools_customer_option_values.customer_option_value_date,
+            prefix_eventtools_customer_option_values.customer_option_value_id
         FROM (
         prefix_customers LEFT JOIN prefix_eventtools_customer_option_values
         ON prefix_customers.customers_id = prefix_eventtools_customer_option_values.customers_id
