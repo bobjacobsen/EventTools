@@ -472,54 +472,12 @@ $opts['fdd']['opsreq_priority'] = array(
   'maxlen'   => 5,
   'sort'     => true
 );
-$opts['fdd']['opsreq_opt1'] = array(
-  'name'     => $event_tools_op_session_opt1_name,
-  'select'   => 'T',
-  'maxlen'   => 1,
-  'sort'     => true
-);
-$opts['fdd']['opsreq_opt2'] = array(
-  'name'     => $event_tools_op_session_opt2_name,
-  'select'   => 'T',
-  'maxlen'   => 1,
-  'sort'     => true
-);
-$opts['fdd']['opsreq_opt3'] = array(
-  'name'     => $event_tools_op_session_opt3_name,
-  'select'   => 'T',
-  'maxlen'   => 1,
-  'sort'     => true
-);
-$opts['fdd']['opsreq_opt4'] = array(
-  'name'     => $event_tools_op_session_opt4_name,
-  'select'   => 'T',
-  'maxlen'   => 1,
-  'sort'     => true
-);
-$opts['fdd']['opsreq_opt5'] = array(
-  'name'     => $event_tools_op_session_opt5_name,
-  'select'   => 'T',
-  'maxlen'   => 1,
-  'sort'     => true
-);
-$opts['fdd']['opsreq_opt6'] = array(
-  'name'     => $event_tools_op_session_opt6_name,
-  'select'   => 'T',
-  'maxlen'   => 1,
-  'sort'     => true
-);
-$opts['fdd']['opsreq_opt7'] = array(
-  'name'     => $event_tools_op_session_opt7_name,
-  'select'   => 'T',
-  'maxlen'   => 1,
-  'sort'     => true
-);
-$opts['fdd']['opsreq_opt8'] = array(
-  'name'     => $event_tools_op_session_opt8_name,
-  'select'   => 'T',
-  'maxlen'   => 1,
-  'sort'     => true
-);
+// $opts['fdd']['opsreq_opt1'] = array(
+//   'name'     => $event_tools_op_session_opt1_name,
+//   'select'   => 'T',
+//   'maxlen'   => 1,
+//   'sort'     => true
+// );
 $opts['fdd']['opsreq_any'] = array(
   'name'     => "Any session OK, not just priorities?",
   'select'   => 'T',
