@@ -50,23 +50,21 @@ if ($args["q"]) {
 }
 
 require_once('parsers.php');
-$order = parse_order();
-if ($order == NONE) $order = "customers_lastname";
-$query="
+
+// get the list of extras
+$queryExtras="
     SELECT *
         FROM ( 
-        ".$event_tools_db_prefix."eventtools_opsession_req LEFT JOIN ".$event_tools_db_prefix."customers
-        ON ".$event_tools_db_prefix."eventtools_opsession_req.opsreq_person_email = ".$event_tools_db_prefix."customers.customers_email_address
+        ".$event_tools_db_prefix."eventtools_customer_options
         ) 
-        ".$where." ORDER BY ".$order."
+        ".$where." ORDER BY customer_option_order 
         ;
     ";
-//echo $query;
-$resultReqs=mysql_query($query);
-$numReqs= mysql_numrows($resultReqs);
+//echo $queryExtras;
+$resultExtras=mysql_query($queryExtras);
+$numExtras= mysql_numrows($resultExtras);
 
-$i = 0;
-
+// create table
 echo '<table border="1">';
 echo '<tr>';
 echo '<th><a href="?order=cfirstname">First</a></th>';
@@ -75,8 +73,63 @@ echo '<th><a href="?order=email">Email</a></th>';
 echo '<th><a href="?order=create">Created Date</a></th>';
 echo '<th><a href="?order=update">Updated Date</a></th>';
 echo '<th><a href="?order=category">Attendee<br/>Category</a></th>';
+
+// add columns for extras
+$i = 0;
+while ($i < $numExtras) {
+    echo '<th><a href="?order=value'.$i.'">'.mysql_result($resultExtras,$i,"customer_option_short_name").'</a></th>';
+    $i++;
+}
+
+// end of header
 echo '</tr>';
 
+
+// create a query that includes the extras
+
+if (strlen($args["order"])>5 AND substr($args["order"],0,5) == "value") $order = urldecode($args["order"]).' DESC, customers_updated_date ';
+else $order = parse_order();
+
+if ($order == NONE) $order = "customers_lastname";
+$query="
+    SELECT customers_firstname, customers_lastname, opsreq_person_email, customers_create_date, customers_updated_date, opsreq_priority
+    ";
+    
+// loop over extras and add column 
+$i = 0;
+while ($i < $numExtras) {
+    $query=$query.", table".$i.".customer_option_value_value AS value".$i."  ";
+    $i++;
+}
+  
+// add main join
+$query=$query."
+        FROM ( 
+        ".$event_tools_db_prefix."eventtools_opsession_req LEFT JOIN ".$event_tools_db_prefix."customers
+        ON ".$event_tools_db_prefix."eventtools_opsession_req.opsreq_person_email = ".$event_tools_db_prefix."customers.customers_email_address ";
+
+
+// loop over extras and add join 
+$i = 0;
+while ($i < $numExtras) {
+    $query=$query." LEFT JOIN ".$event_tools_db_prefix."eventtools_customer_option_values AS table".$i." 
+            ON ".$event_tools_db_prefix."customers.customers_id =  table".$i.".customers_id  AND table".$i.".customer_option_id = '".mysql_result($resultExtras,$i,"customer_option_id")."' ";
+    $i++;
+}
+       
+$query=$query."
+        ) 
+        ".$where." ORDER BY ".$order." 
+        ;
+    ";
+//echo $query;
+
+$resultReqs=mysql_query($query);
+$numReqs= mysql_numrows($resultReqs);
+
+
+// for each line
+$i = 0;
 while ($i < $numReqs) {
     echo '<tr>';
     echo  '<td>'.mysql_result($resultReqs,$i,"customers_firstname").'</td>';
@@ -91,6 +144,12 @@ while ($i < $numReqs) {
             echo mysql_result($resultReqs,$i,"customers_updated_date");
     echo '</td>';
     echo  '<td align="center">'.mysql_result($resultReqs,$i,"opsreq_priority").'</td>';
+    // add options
+    $j = 0;
+    while ($j < $numExtras) {
+        echo  '<td align="center">'.mysql_result($resultReqs,$i,"value".$j).'</td>';
+        $j++;
+    }
     echo '</tr>';
     $i++;
 }
