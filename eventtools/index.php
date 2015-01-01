@@ -9,7 +9,8 @@ echo "<html>
 <body>
 <h1>".$event_tools_event_name." Event Tools</h1>
 
-EventTools pages for tours and clinics.
+<h2 id=\"events\">Events</h2>
+EventTools pages for tours, clinics and operating sessions.
 
 "?>
 
@@ -154,6 +155,8 @@ if (!$event_tools_option_general_tours ||
     if (!$event_tools_option_op_sessions) echo "Op Session feature is disabled.<br/>";    
 }
 
+echo '<h2 id="people">People</h2>
+';
 
 if ($event_tools_option_zen_cart_used) {
     echo '<p>Contact and attendee lists are being maintained in Zen Cart.</p>';
@@ -184,6 +187,7 @@ individual customer. This can be used to capture a Y/N answer to "I'd like to at
 for example.  To define these, use the 
 <a href="edit_customer_options.php">Edit Customer Options</a> page.
 
+<h2 id="configuration">Configuration</h2>
 <p>
 The next section lets you edit the possible status and handicapped access values.
 Changing the text associated with a key will change all existing entries
@@ -302,7 +306,7 @@ if ( $event_tools_option_general_tours ||
        $event_tools_option_clinics ) {
     
     echo '
-        <p>
+        <h2 id="program">Program and Calendar</h2>
         The following links provide formatted information for inclusion in the 
         printed program.
         <table border="1">
@@ -333,7 +337,7 @@ if ( $event_tools_option_general_tours ||
 }
 ?>
 
-<p>
+<h2 id="information">Information</h2>
 For more information on using EventTools, please see the
 most recent draft of the 
 <a href="EventTools.pdf">EventTools User Guide</a>.
