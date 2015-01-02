@@ -522,7 +522,7 @@ $opts['fdd']['opsreq_number'] = array(
   'select'   => 'T',
   'maxlen'   => 5,
   'sort'     => true,
-  'values'   => array('1','2','3','4','5','6','7','8')
+  'values'   => array('','1','2','3','4','5','6','7','8')
 );
 $opts['fdd']['opsreq_comment'] = array(
   'name'     => 'Any comments?',
