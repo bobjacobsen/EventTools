@@ -522,7 +522,8 @@ $opts['fdd']['opsreq_number'] = array(
   'select'   => 'T',
   'maxlen'   => 5,
   'sort'     => true,
-  'values'   => array('','1','2','3','4','5','6','7','8')
+  'values'   => array('','1','2','3','4','5','6','7','8','9','10','11','12'),
+  'sqlw'     => 'IF($val_qas = "", NULL, $val_qas)'
 );
 $opts['fdd']['opsreq_comment'] = array(
   'name'     => 'Any comments?',
