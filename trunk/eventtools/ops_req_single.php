@@ -584,7 +584,8 @@ $options=mysql_query($query);
 $i=0;
 $num=mysql_numrows($options);
 while ($i < $num) {
-
+    if (mysql_result($options,$i,"customer_option_long_name") == "") break;
+    if (mysql_result($options,$i,"customer_option_long_name") == NONE) break;
 /*
  * IMPORTANT NOTE: This generated file contains only a subset of huge amount
  * of options that can be used with phpMyEdit. To get information about all
