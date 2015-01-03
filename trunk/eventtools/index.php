@@ -181,13 +181,16 @@ if ($event_tools_option_zen_cart_used) {
 ?>
 
 
-<p>
+<h2 id="configuration">Configuration</h2>
 You can define global optional quantities that can be attached to each
 individual customer. This can be used to capture a Y/N answer to "I'd like to attend the dinner",
-for example.  To define these, use the 
-<a href="edit_customer_options.php">Edit Customer Options</a> page.
-
-<h2 id="configuration">Configuration</h2>
+for example.
+<table border="1">
+<tr><th>Customer Options<br/>(Registration Extra Questions)</th>
+<td>
+<a href="edit_customer_options.php">Edit Customer Options</a>
+</td>
+</tr></table>
 <p>
 The next section lets you edit the possible status and handicapped access values.
 Changing the text associated with a key will change all existing entries
