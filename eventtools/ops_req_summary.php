@@ -48,8 +48,16 @@ function summarize_question($shortOptionName) {
     
     $query="
         SELECT customers_id
-            FROM ".$event_tools_db_prefix."eventtools_customer_cross_options_and_values
-            WHERE customer_option_value_value = \"Y\" 
+            FROM ( ".$event_tools_db_prefix."eventtools_customer_cross_options_and_values
+                JOIN ".$event_tools_db_prefix."eventtools_opsession_req 
+                ON customers_email_address = opsreq_person_email )
+            WHERE customer_option_value_value = \"Y\" ";
+            
+    parse_str($_SERVER["QUERY_STRING"], $args);
+    if ($args["session"]) {
+        $query = $query." AND ops_id = \"".$args["session"]."\"";
+    }
+    $query=$query."        
             AND customer_option_short_name = \"".$shortOptionName."\"
             ;
         ";
@@ -233,12 +241,12 @@ while ($i < $numReqs) {
 echo '</table>';
 
 echo '<p>';
-echo '<h3>Extra Questions</h3>';
+echo '<h3>Extra Question Totals</h3>';
     global $event_tools_db_prefix;    
     $query="
         SELECT *
             FROM ".$event_tools_db_prefix."eventtools_customer_options
-            ".$where." ORDER BY customer_option_order
+            ORDER BY customer_option_order
             ;
         ";
     //echo $query;
