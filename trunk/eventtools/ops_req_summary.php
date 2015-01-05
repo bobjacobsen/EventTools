@@ -43,7 +43,7 @@ function score($choice,$key) {
     $stats[$key][$choice] = $stats[$key][$choice]+1;
 }
 
-function summarize_question($shortOptionName) {
+function summarize_question($shortOptionName, $where) {
     global $event_tools_db_prefix;
     
     $query="
@@ -51,11 +51,11 @@ function summarize_question($shortOptionName) {
             FROM ( ".$event_tools_db_prefix."eventtools_customer_cross_options_and_values
                 JOIN ".$event_tools_db_prefix."eventtools_opsession_req 
                 ON customers_email_address = opsreq_person_email )
-            WHERE customer_option_value_value = \"Y\" ";
-            
-    parse_str($_SERVER["QUERY_STRING"], $args);
-    if ($args["session"]) {
-        $query = $query." AND ops_id = \"".$args["session"]."\"";
+            "
+    if ($where) {
+        $query = $query." ".$where." AND customer_option_value_value = \"Y\" "
+    } else {
+        $query = $query." WHERE customer_option_value_value = \"Y\" "
     }
     $query=$query."        
             AND customer_option_short_name = \"".$shortOptionName."\"
@@ -259,7 +259,7 @@ echo '<h3>Extra Question Totals</h3>';
         echo "   <tr><td>";
         echo mysql_result($result,$i,"customer_option_long_name");
         echo "</td><td>";
-        echo summarize_question(mysql_result($result,$i,"customer_option_short_name"));
+        echo summarize_question(mysql_result($result,$i,"customer_option_short_name"), $where);
         echo "</td></tr>\n";
         $i++;
     }
