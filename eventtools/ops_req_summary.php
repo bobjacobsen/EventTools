@@ -238,7 +238,7 @@ echo '<h3>Extra Questions</h3>';
     $query="
         SELECT *
             FROM ".$event_tools_db_prefix."eventtools_customer_options
-            ORDER BY customer_option_order
+            ".$where." ORDER BY customer_option_order
             ;
         ";
     //echo $query;
