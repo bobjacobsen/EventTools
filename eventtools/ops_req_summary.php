@@ -104,7 +104,7 @@ while ($i < $numSessions) {
 // accumulate statistics
 $where = "";
 if ($args["session"]) {
-    $where = ' WHERE 
+    $where = ' WHERE (
         opsreq_pri1 = "'.$args["session"].'" OR 
         opsreq_pri2 = "'.$args["session"].'" OR 
         opsreq_pri3 = "'.$args["session"].'" OR 
@@ -117,7 +117,7 @@ if ($args["session"]) {
         opsreq_pri10 = "'.$args["session"].'" OR 
         opsreq_pri11 = "'.$args["session"].'" OR 
         opsreq_pri12 = "'.$args["session"].'" 
-        ';
+         ) ';
 }
 
 require_once('parsers.php');
