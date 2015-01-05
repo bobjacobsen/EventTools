@@ -61,7 +61,7 @@ function summarize_question($shortOptionName) {
             AND customer_option_short_name = \"".$shortOptionName."\"
             ;
         ";
-    //echo $query;
+    echo $query;
     $resultSurvey=mysql_query($query);
     return mysql_numrows($resultSurvey);
 }
