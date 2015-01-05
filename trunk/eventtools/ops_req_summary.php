@@ -51,11 +51,11 @@ function summarize_question($shortOptionName, $where) {
             FROM ( ".$event_tools_db_prefix."eventtools_customer_cross_options_and_values
                 JOIN ".$event_tools_db_prefix."eventtools_opsession_req 
                 ON customers_email_address = opsreq_person_email )
-            "
+            ";
     if ($where) {
-        $query = $query." ".$where." AND customer_option_value_value = \"Y\" "
+        $query = $query." ".$where." AND customer_option_value_value = \"Y\" ";
     } else {
-        $query = $query." WHERE customer_option_value_value = \"Y\" "
+        $query = $query." WHERE customer_option_value_value = \"Y\" ";
     }
     $query=$query."        
             AND customer_option_short_name = \"".$shortOptionName."\"
