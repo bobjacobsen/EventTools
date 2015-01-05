@@ -61,7 +61,7 @@ function summarize_question($shortOptionName, $where) {
             AND customer_option_short_name = \"".$shortOptionName."\"
             ;
         ";
-    echo $query;
+    //echo $query;
     $resultSurvey=mysql_query($query);
     return mysql_numrows($resultSurvey);
 }
@@ -240,6 +240,7 @@ while ($i < $numReqs) {
 }
 echo '</table>';
 
+echo "Total requests: ".$numReqs;
 echo '<p>';
 echo '<h3>Extra Question Totals</h3>';
     global $event_tools_db_prefix;    
