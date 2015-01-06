@@ -169,6 +169,7 @@ $opts['fdd']['customers_lastname'] = array(
 $opts['fdd']['customers_email_address'] = array(
   'name'     => 'Email Address',
   'select'   => 'T',
+  'options'  => 'AVD', // matching key, so don't allow edit
   'maxlen'   => 96,
   'sort'     => true
 );
