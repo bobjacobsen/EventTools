@@ -205,6 +205,35 @@ while ($j < 12+2) {
 echo '</tr>';
 echo '</table>';
 echo 'Zero entries suppressed for visibility.';
+echo '<p>';
+
+
+echo '<h3>Extra Question Totals</h3>';
+    global $event_tools_db_prefix;    
+    $query="
+        SELECT *
+            FROM ".$event_tools_db_prefix."eventtools_customer_options
+            ORDER BY customer_option_order
+            ;
+        ";
+    //echo $query;
+    $resultOpt=mysql_query($query);
+    
+    $i = 0;
+    $numOpt = mysql_numrows($resultOpt);
+    echo "<table border=\"1\">\n";
+    while ($i < $numOpt) {
+        echo "   <tr><td>";
+        echo mysql_result($resultOpt,$i,"customer_option_long_name");
+        echo "</td><td>";
+        echo summarize_question(mysql_result($resultOpt,$i,"customer_option_short_name"), $where);
+        echo "</td></tr>\n";
+        $i++;
+    }
+    echo "</table>\n";
+
+
+
 
 echo '<p>';
 echo '<h3>Requestors</h3>';
@@ -242,28 +271,6 @@ echo '</table>';
 
 echo "Total requests: ".$numReqs;
 echo '<p>';
-echo '<h3>Extra Question Totals</h3>';
-    global $event_tools_db_prefix;    
-    $query="
-        SELECT *
-            FROM ".$event_tools_db_prefix."eventtools_customer_options
-            ORDER BY customer_option_order
-            ;
-        ";
-    //echo $query;
-    $result=mysql_query($query);
-    
-    $i = 0;
-    $num = mysql_numrows($result);
-    echo "<table border=\"1\">\n";
-    while ($i < $num) {
-        echo "   <tr><td>";
-        echo mysql_result($result,$i,"customer_option_long_name");
-        echo "</td><td>";
-        echo summarize_question(mysql_result($result,$i,"customer_option_short_name"), $where);
-        echo "</td></tr>\n";
-        $i++;
-    }
-    echo "</table>\n";
+
 
 echo "</body></html>";
