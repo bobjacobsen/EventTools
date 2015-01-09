@@ -240,6 +240,8 @@ echo '<h3>Requestors</h3>';
 
 $i = 0;
 
+echo "Total requests: ".$numReqs;
+
 echo '<table border="1">';
 echo '<tr>';
 echo '<th><a href="ops_req_summary.php?order=cfirstname">First</a></th>';
@@ -268,8 +270,6 @@ while ($i < $numReqs) {
     $i++;
 }
 echo '</table>';
-
-echo "Total requests: ".$numReqs;
 echo '<p>';
 
 
