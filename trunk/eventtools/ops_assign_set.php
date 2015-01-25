@@ -38,12 +38,12 @@ function setbuttons($cycle,$stat,$id,$tag) {
         echo '<td><form method="get" action="ops_assign_warn_jam.php#'.$tag.'"><input type="hidden" name="cy" value="'.$cycle.'">
               <input type="hidden" name="id" value="'.$id.'">
               <input type="hidden" name="reason" value="Session time conflicts with another assigned session">
-              <input type="submit" name="op" value="F"/></form></td>';
+              <input type="submit" name="op" value="F" title="F button forces assignment of the operator even if session conflicts"/></form></td>';
     if ( $stat == STATUS_FULL) // send via force warning
         echo '<td><form method="get" action="ops_assign_warn_jam.php#'.$tag.'"><input type="hidden" name="cy" value="'.$cycle.'">
               <input type="hidden" name="id" value="'.$id.'">
               <input type="hidden" name="reason" value="Session is already full">
-              <input type="submit" name="op" value="F"/></form></td>';
+              <input type="submit" name="op" value="F" title="F button forces assignment of the operator even if session is full"/></form></td>';
     echo '</tr></table>';
 }
 
