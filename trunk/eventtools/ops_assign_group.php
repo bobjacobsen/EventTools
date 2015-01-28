@@ -117,7 +117,7 @@ if (count($merges) > 0) {
             ;
     ";
     $matchstart=mysql_query($query);
-    echo '<br/>Start with '.mysql_result($matchstart,0,"opsreq_person_email").'<br/>';
+    echo '<br/>Start with <a href="edit_ops_all.php?email='.mysql_result($matchstart,0,"opsreq_person_email").'" target="_blank">'.mysql_result($matchstart,0,"opsreq_person_email").'</a><br/>';
     
     for ($i = 1; $i < count($merges); $i ++) {
         $query = "SELECT * FROM (
@@ -132,7 +132,7 @@ if (count($merges) > 0) {
         $matchmid=mysql_query($query);
         $goodcheck = TRUE;
         
-        echo 'Checking against '.mysql_result($matchmid,0,"opsreq_person_email").'<br/>';
+        echo '<br/>   Checking <a href="edit_ops_all.php?email='.mysql_result($matchmid,0,"opsreq_person_email").'" target="_blank">'.mysql_result($matchmid,0,"opsreq_person_email").'</a><br/>';
         if (mysql_result($matchmid,0,"opsreq_pri1") != mysql_result($matchstart,0,"opsreq_pri1")) {
             echo "<b>Error: 1st requests don't match</b><br/>\n";
             $goodcheck = FALSE;
