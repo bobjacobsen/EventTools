@@ -102,28 +102,114 @@ echo "(Loading ...)<p/>";
 
 $merges = array_keys($args, "merge");
 if (count($merges) > 0) {
-    // do the merge; keys are link numbers
-    // create a new group
-    $query = "INSERT INTO ".$event_tools_db_prefix."eventtools_opsreq_group
-                (opsreq_group_cycle_name)
-                VALUES 
-                ('".$cycle."')
-                ;";
-    $groups=mysql_query($query);
-    $id = mysql_insert_id();
+    // yes, check for whether they agree 
+    echo 'Starting to merge '.count($merges).' entries';
+    echo '<br/>';
+    // merges[] are group keys; see if the requests match up
+    // there's always at least merges[0]
+    $query = "SELECT * FROM (
+                    ".$event_tools_db_prefix."eventtools_opsreq_group_req_link
+                    JOIN
+                    ".$event_tools_db_prefix."eventtools_opsession_req
+                    USING (opsreq_id)
+            )                    
+            WHERE opsreq_group_req_link_id = '".$merges[0]."'
+            ;
+    ";
+    $matchstart=mysql_query($query);
+    echo '<br/>Start with '.mysql_result($matchstart,0,"opsreq_person_email").'<br/>';
+    
+    for ($i = 1; $i < count($merges); $i ++) {
+        $query = "SELECT * FROM (
+                        ".$event_tools_db_prefix."eventtools_opsreq_group_req_link
+                        JOIN
+                        ".$event_tools_db_prefix."eventtools_opsession_req
+                        USING (opsreq_id)
+                )                    
+                WHERE opsreq_group_req_link_id = '".$merges[$i]."'
+                ;
+        ";
+        $matchmid=mysql_query($query);
+        $goodcheck = TRUE;
+        
+        echo 'Checking against '.mysql_result($matchmid,0,"opsreq_person_email").'<br/>';
+        if (mysql_result($matchmid,0,"opsreq_pri1") != mysql_result($matchstart,0,"opsreq_pri1")) {
+            echo "<b>Error: 1st requests don't match</b><br/>\n";
+            $goodcheck = FALSE;
+        }
+        if (mysql_result($matchmid,0,"opsreq_pri2") != mysql_result($matchstart,0,"opsreq_pri2")) {
+            echo "<b>Error: 2nd requests don't match</b><br/>\n";
+            $goodcheck = FALSE;
+        }
+        if (mysql_result($matchmid,0,"opsreq_pri3") != mysql_result($matchstart,0,"opsreq_pri3")) {
+            echo "<b>Error: 3rd requests don't match</b><br/>\n";
+            $goodcheck = FALSE;
+        }
+        if (mysql_result($matchmid,0,"opsreq_pri4") != mysql_result($matchstart,0,"opsreq_pri4")) {
+            echo "<b>Error: 4th requests don't match</b><br/>\n";
+            $goodcheck = FALSE;
+        }
+        if (mysql_result($matchmid,0,"opsreq_pri5") != mysql_result($matchstart,0,"opsreq_pri5")) {
+            echo "<b>Error: 5th requests don't match</b><br/>\n";
+            $goodcheck = FALSE;
+        }
+        if (mysql_result($matchmid,0,"opsreq_pri6") != mysql_result($matchstart,0,"opsreq_pri6")) {
+            echo "<b>Error: 6th requests don't match</b><br/>\n";
+            $goodcheck = FALSE;
+        }
+        if (mysql_result($matchmid,0,"opsreq_pri7") != mysql_result($matchstart,0,"opsreq_pri7")) {
+            echo "<b>Error: 7th requests don't match</b><br/>\n";
+            $goodcheck = FALSE;
+        }
+        if (mysql_result($matchmid,0,"opsreq_pri8") != mysql_result($matchstart,0,"opsreq_pri8")) {
+            echo "<b>Error: 8th requests don't match</b><br/>\n";
+            $goodcheck = FALSE;
+        }
+        if (mysql_result($matchmid,0,"opsreq_pri9") != mysql_result($matchstart,0,"opsreq_pri9")) {
+            echo "<b>Error: 9th requests don't match</b><br/>\n";
+            $goodcheck = FALSE;
+        }
+        if (mysql_result($matchmid,0,"opsreq_pri10") != mysql_result($matchstart,0,"opsreq_pri10")) {
+            echo "<b>Error: 10th requests don't match</b><br/>\n";
+            $goodcheck = FALSE;
+        }
+        if (mysql_result($matchmid,0,"opsreq_pri11") != mysql_result($matchstart,0,"opsreq_pri11")) {
+            echo "<b>Error: 11th requests don't match</b><br/>\n";
+            $goodcheck = FALSE;
+        }
+        if (mysql_result($matchmid,0,"opsreq_pri12") != mysql_result($matchstart,0,"opsreq_pri12")) {
+            echo "<b>Error: 12th requests don't match</b><br/>\n";
+            $goodcheck = FALSE;
+        }
+    }
 
-    // update the links
-    for ($i = 0; $i < count($merges); $i ++) {
-        $query = "UPDATE ".$event_tools_db_prefix."eventtools_opsreq_group_req_link
-                    SET opsreq_group_id='".$id."'
-                    WHERE opsreq_group_req_link_id = '".$merges[$i]."'
+    if ($goodcheck) {    
+        // do the merge; keys are link numbers
+        // create a new group
+        $query = "INSERT INTO ".$event_tools_db_prefix."eventtools_opsreq_group
+                    (opsreq_group_cycle_name)
+                    VALUES 
+                    ('".$cycle."')
                     ;";
-        mysql_query($query);
+        $groups=mysql_query($query);
+        $id = mysql_insert_id();
+
+        // update the links
+        for ($i = 0; $i < count($merges); $i ++) {
+            $query = "UPDATE ".$event_tools_db_prefix."eventtools_opsreq_group_req_link
+                        SET opsreq_group_id='".$id."'
+                        WHERE opsreq_group_req_link_id = '".$merges[$i]."'
+                        ;";
+            mysql_query($query);
+        }
+        echo "<p>Merge complete<p>\n";
+    } else {
+        echo "<p><b>Skipping merge because requests don't match</b><p>\n";
     }
 }
 
 // Create a table form with a check-box for merging
-echo 'Check boxes and click "Group" to combine requests.';
+echo 'Check boxes and click "Group" to combine requests, or click the Continue to Assignments Button above.<br/>';
 
 echo '<form method="get" action="ops_assign_group.php?cy='.$cycle.'"><table border="1">'."\n";
 echo '<tr><th></th><th></th><th>Name</th><th>Comment</th>'."\n";
