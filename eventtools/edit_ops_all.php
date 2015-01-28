@@ -102,7 +102,11 @@ $opts['filters'] = "section_id = 9";
 $opts['filters'] = "PMEtable0.sessions_count > 200";
 */
 
-//$opts['filters'] = "opsreq_person_email = '".$REMOTE_USER."' ";
+// check for one user request
+parse_str($_SERVER["QUERY_STRING"], $args);
+if ($args["email"]) {
+    $opts['filters'] = "opsreq_person_email = '".$args["email"]."' ";
+}
 
 // Options you wish to give the users
 // A - add,  C - change, P - copy, V - view, D - delete,
