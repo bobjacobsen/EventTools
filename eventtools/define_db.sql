@@ -719,9 +719,9 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_opsreq_group_req_link` (
 --
 -- A specific layout request and status
 --    opsreq_group_req_link_id     points to a specific reg&group link, hence request
---    req_num                      1-8 request number
+--    req_num                      1-12 request number
 --    ops_id                       operating session link
---    status                       0 none, 1 assigned, 2 locked out
+--    status                       0 none, 1 assigned, <0 not available (see ops_assign_common.php)
 --
 
 DROP TABLE IF EXISTS `prefix_eventtools_opsreq_req_status`;
