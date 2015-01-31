@@ -337,7 +337,7 @@ function updatenavigation() {
 parse_str($_SERVER["QUERY_STRING"], $args);
 
 // first, see if there's a "?cy=" or "?start=" in the arguments
-if (! ($args["cy"]) ) {
+if (! array_key_exists("cy", $args)) {
     echo 'This page has to be entered from the <a href="ops_assign_group.php">grouping page</a>.<p/>';
     echo "Please click on that link and start there.<p/>";
     return;
@@ -429,16 +429,16 @@ echo '</select>';
 echo '</form>';
 
 // start processing tags
-if ( $args["from"] ) {
+if (array_key_exists("from", $args)) {
     copy_to_new_cycle($args["from"], $cycle);
 }
 
-if ( $args["transfer"] ) {
+if (array_key_exists("transfer", $args)) {
     // Transfer from one session to another
     transfer_unassigned($args["transfer"], $args["from_date"], $args["show_name"], $cycle);
 }
 
-if ( $args["insert"] ) {
+if (array_key_exists("insert", $args)) {
     // insert a request not already present
     
     $ops_id = $args["session"];  
@@ -510,7 +510,7 @@ if ( $args["insert"] ) {
     
 }
 
-if ( $args["op"] ) {
+if (array_key_exists("op", $args)) {
     //echo "Set status for id ".$args["id"].'<br>';
     $stat = ($args["op"] == 'A') ? '1' : ($args["op"] == 'D' ? '-2' : '0');
     $id =  $args["id"];
@@ -558,7 +558,7 @@ $num = mysql_numrows($result);
 // handle group operations after the temporary 
 // status (conflicts, etc) has been set
 
-if ( $args["grp"] ) { // assign remaining top priority in requesting session
+if (array_key_exists("grp", $args)) { // assign remaining top priority in requesting session
     //cy=gggg&id=7737&pri=1&op=P#s637
     $id =  $args["id"];  // one item; there will be more through the group
     $pri = $args["pri"];
@@ -606,7 +606,7 @@ if ( $args["grp"] ) { // assign remaining top priority in requesting session
 }
 
 // do a best-fill operation
-if ( $args["best"] ) {
+if (array_key_exists("best", $args)) {
     $pri = 0+$args["pri"];
 
     // if doing by-layout assignment, and requested section is full and the alternate section has space, move request
