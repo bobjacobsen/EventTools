@@ -1,10 +1,21 @@
 <?php
 
-define(STATUS_RELEASED,  "0");  // no assignment
-define(STATUS_ASSIGNED,  "1");  // normal assignment
-define(STATUS_DISABLED, "-2"); // assignment manually forbidden
-define(STATUS_CONFLICT, "-3"); // has time conflict with other assignment
-define(STATUS_FULL,     "-4"); // session is known to be full
+define('STATUS_RELEASED',  "0");  // no assignment
+define('STATUS_ASSIGNED',  "1");  // normal assignment
+define('STATUS_DISABLED', "-2"); // assignment manually forbidden
+define('STATUS_CONFLICT', "-3"); // has time conflict with other assignment
+define('STATUS_FULL',     "-4"); // session is known to be full
+
+function session_title_from_query($ops_id) {
+    global $event_tools_db_prefix;
+
+    $query = "SELECT show_name, start_date
+                FROM ".$event_tools_db_prefix."eventtools_opsession_name
+                WHERE ops_id = '".$ops_id."'
+                ;";
+    $result=mysql_query($query);
+    return mysql_result($result,0,"show_name").' '.mysql_result($result,0,"start_date");
+}
 
 function setspan($stat) {
     if ($stat == STATUS_RELEASED) echo '<span class="released" title="Released">';
