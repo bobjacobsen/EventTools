@@ -20,7 +20,7 @@ require_once('ops_assign_common.php');
 parse_str($_SERVER["QUERY_STRING"], $args);
 
 // first, see if there's a "?cy=" in the arguments
-if (! ($args["cy"]) ) {
+if (! array_key_exists("cy", $args)) {
     echo "This is the starting page for op session assignments.<p/>";
     echo "It's also where you group attendees together when they want the same assignment.<p/>";
     echo "Please provide a cycle name and press start start. If the name exists, we'll load that, otherwise we'll create it.";
@@ -103,7 +103,7 @@ echo "(Loading ...)<p/>";
 $merges = array_keys($args, "merge");
 if (count($merges) > 0) {
     // yes, check for whether they agree 
-    echo 'Starting to merge '.count($merges).' entries';
+    echo 'Starting to group '.count($merges).' entries';
     echo '<br/>';
     // merges[] are group keys; see if the requests match up
     // there's always at least merges[0]
@@ -132,59 +132,30 @@ if (count($merges) > 0) {
         $matchmid=mysql_query($query);
         $goodcheck = TRUE;
         
-        echo '<br/>   Checking <a href="edit_ops_all.php?email='.mysql_result($matchmid,0,"opsreq_person_email").'" target="_blank">'.mysql_result($matchmid,0,"opsreq_person_email").'</a><br/>';
-        if (mysql_result($matchmid,0,"opsreq_pri1") != mysql_result($matchstart,0,"opsreq_pri1")) {
-            echo "<b>Error: 1st requests don't match</b><br/>\n";
-            $goodcheck = FALSE;
-        }
-        if (mysql_result($matchmid,0,"opsreq_pri2") != mysql_result($matchstart,0,"opsreq_pri2")) {
-            echo "<b>Error: 2nd requests don't match</b><br/>\n";
-            $goodcheck = FALSE;
-        }
-        if (mysql_result($matchmid,0,"opsreq_pri3") != mysql_result($matchstart,0,"opsreq_pri3")) {
-            echo "<b>Error: 3rd requests don't match</b><br/>\n";
-            $goodcheck = FALSE;
-        }
-        if (mysql_result($matchmid,0,"opsreq_pri4") != mysql_result($matchstart,0,"opsreq_pri4")) {
-            echo "<b>Error: 4th requests don't match</b><br/>\n";
-            $goodcheck = FALSE;
-        }
-        if (mysql_result($matchmid,0,"opsreq_pri5") != mysql_result($matchstart,0,"opsreq_pri5")) {
-            echo "<b>Error: 5th requests don't match</b><br/>\n";
-            $goodcheck = FALSE;
-        }
-        if (mysql_result($matchmid,0,"opsreq_pri6") != mysql_result($matchstart,0,"opsreq_pri6")) {
-            echo "<b>Error: 6th requests don't match</b><br/>\n";
-            $goodcheck = FALSE;
-        }
-        if (mysql_result($matchmid,0,"opsreq_pri7") != mysql_result($matchstart,0,"opsreq_pri7")) {
-            echo "<b>Error: 7th requests don't match</b><br/>\n";
-            $goodcheck = FALSE;
-        }
-        if (mysql_result($matchmid,0,"opsreq_pri8") != mysql_result($matchstart,0,"opsreq_pri8")) {
-            echo "<b>Error: 8th requests don't match</b><br/>\n";
-            $goodcheck = FALSE;
-        }
-        if (mysql_result($matchmid,0,"opsreq_pri9") != mysql_result($matchstart,0,"opsreq_pri9")) {
-            echo "<b>Error: 9th requests don't match</b><br/>\n";
-            $goodcheck = FALSE;
-        }
-        if (mysql_result($matchmid,0,"opsreq_pri10") != mysql_result($matchstart,0,"opsreq_pri10")) {
-            echo "<b>Error: 10th requests don't match</b><br/>\n";
-            $goodcheck = FALSE;
-        }
-        if (mysql_result($matchmid,0,"opsreq_pri11") != mysql_result($matchstart,0,"opsreq_pri11")) {
-            echo "<b>Error: 11th requests don't match</b><br/>\n";
-            $goodcheck = FALSE;
-        }
-        if (mysql_result($matchmid,0,"opsreq_pri12") != mysql_result($matchstart,0,"opsreq_pri12")) {
-            echo "<b>Error: 12th requests don't match</b><br/>\n";
-            $goodcheck = FALSE;
+        echo '   Checking <a href="edit_ops_all.php?email='.mysql_result($matchmid,0,"opsreq_person_email").'" target="_blank">'.mysql_result($matchmid,0,"opsreq_person_email").'</a><br/>';
+
+        for ($j = 1 ; $j <= 12 ; $j ++) {
+            if (mysql_result($matchmid,0,"opsreq_pri".strval($j)) != mysql_result($matchstart,0,"opsreq_pri".strval($j)) ) {
+                if (! array_key_exists("force", $args)) {
+                    echo "<b>Error: Request ".strval($j)." for \"".session_title_from_query(mysql_result($matchmid,0,"opsreq_pri".strval($j)))."\" doesn't match \"".session_title_from_query(mysql_result($matchstart,0,"opsreq_pri".strval($j)))."\"</b><br/>\n";
+                    $goodcheck = FALSE;
+                } else {
+                    echo "Setting request ".strval($j)." for \"".session_title_from_query(mysql_result($matchmid,0,"opsreq_pri".strval($j)))."\" to \"".session_title_from_query(mysql_result($matchstart,0,"opsreq_pri".strval($j)))."\"<br/>\n";
+                    // make the change
+                    $query = "UPDATE ".$event_tools_db_prefix."eventtools_opsreq_req_status
+                                SET ops_id='".mysql_result($matchstart,0,"opsreq_pri".strval($j))."'
+                                WHERE opsreq_group_req_link_id = '".$merges[$i]."'
+                                    AND req_num='".$j."'
+                                ;";
+                    mysql_query($query);
+                    //echo '<p>'.$query.'</p>';$goodcheck = FALSE;
+                }
+            }
         }
     }
 
     if ($goodcheck) {    
-        // do the merge; keys are link numbers
+        // OK: do the merge; keys are link numbers
         // create a new group
         $query = "INSERT INTO ".$event_tools_db_prefix."eventtools_opsreq_group
                     (opsreq_group_cycle_name)
@@ -204,7 +175,17 @@ if (count($merges) > 0) {
         }
         echo "<p>Merge complete<p>\n";
     } else {
-        echo "<p><b>Skipping merge because requests don't match</b><p>\n";
+        // Not OK: give an override button
+        echo '<form method="get" action="ops_assign_group.php?cy='.$cycle.'">';
+        echo "<p><b>Skipping grouping because requests don't match</b>\n";
+        echo '<input type="hidden" name="cy" value="'.$cycle.'">'."\n";
+        
+        for ($j = 0; $j < count($merges) ; $j ++) {
+            echo '<input type=hidden name="'.$merges[$j].'" value="merge">'."\n";
+        }
+        echo '<input type="hidden" name="force" value="yes">'."\n";
+        echo '<button type="submit">Force this grouping, making all requests match first</button>'."\n";
+        echo '</form>';
     }
 }
 
