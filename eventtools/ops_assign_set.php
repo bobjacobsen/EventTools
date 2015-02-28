@@ -298,6 +298,9 @@ function updatenavigation() {
     // scan for full sessions and disable requests
     $empty_slots_by_session = array();   // count of empty slots by session name (show_name.start_date)
     
+    $detailed_debug = FALSE;
+    
+    if ($detailed_debug) echo "\n<br/>Start original scan for full sessions<br/>\n";
     for ($i=0; $i<$num; $i++ ) {
         if (mysql_result($result,$i,"show_name") != "") {
             // count number of assignments (status = STATUS_ASSIGNED)
@@ -310,10 +313,11 @@ function updatenavigation() {
                 if (mysql_result($result,$j,"status") == STATUS_ASSIGNED) $count1++;
             }
             $empty_slots_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$j,"start_date")] = 0+mysql_result($result,$i,"spaces") - $count1;
-            //echo "Recomputed empty slots for ".mysql_result($result,$i,"show_name")." as ".$empty_slots_by_session[mysql_result($result,$i,"show_name")]."<br/>";
+            if ($detailed_debug) echo "Recomputed empty slots for ".mysql_result($result,$i,"show_name")." as ".$empty_slots_by_session[mysql_result($result,$i,"show_name")]."<br/>\n";
 
             // have count, check for over
             if ($count1 >= (0+mysql_result($result,$i,"spaces")) ) {
+                if ($detailed_debug) echo "Found ".mysql_result($result,$i,"show_name")." over<br/>\n";
                 // yes, have to set others to 'filled' == STATUS_FULL
                 $j = $i;
                 if (mysql_result($result,$j,"status") == STATUS_RELEASED) {
@@ -330,6 +334,24 @@ function updatenavigation() {
             $i = $j;
         }
     }
+    if ($detailed_debug) echo "\nEnd original scan for full sessions<br/>\n";
+
+    if ($detailed_debug) echo "\nStart scan for full sessions using counts and group size<br/>\n";
+    foreach ($rqstr_email as $email) {
+        if ($detailed_debug) echo "\nStart ".$email." size ".$rqstr_group_size[$email]."<br>\n";
+        for ($pri = 1; $pri <= MAX_OP_REQS; $pri++) {
+            if ( ($status_by_rqstr[$email][$pri] == STATUS_RELEASED) && ($reqname_by_rqstr[$email][$pri] != "") ) {
+                // check this one
+                if ( $rqstr_group_size[$email] > $empty_slots_by_session[$reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri]] ) {
+                    // set to STATUS_FILLED
+                    if ($detailed_debug) echo "&nbsp;&nbsp;That ".$mail." doesn't fit in ".$reqname_by_rqstr[$email][$pri]."/".$strtdate_by_rqstr[$email][$pri].", set filled<br/>\n";
+                    $status_by_rqstr[$email][$pri] = STATUS_FULL;
+                }
+            }
+        }
+    }
+    if ($detailed_debug) echo "\nEnd scan for full sessions using counts<br/>\n";
+
     return $result;
 }
 
@@ -640,11 +662,13 @@ if (array_key_exists("best", $args)) {
         }
     }
 
+    echo "\nstart placement processing<br/>\n";
+    
     // make a list of everybody we're trying to place
     $users = array();
     $groups = array();
     foreach ($rqstr_email as $email) {
-        if (($status_by_rqstr[$email][$pri] == "0") && ($reqname_by_rqstr[$email][$pri] != "")) {
+        if (($status_by_rqstr[$email][$pri] == STATUS_RELEASED) && ($reqname_by_rqstr[$email][$pri] != "")) {
             // user needs to be assigned
             // see if already handling via group
             if ( $groups[$rqstr_group[$email]]) {
@@ -675,12 +699,15 @@ if (array_key_exists("best", $args)) {
     
     echo '<p>';
     
+    $detail_debug = FALSE;
+    
     // loop until can't do anything
     while (TRUE) {
+        if ($detail_debug)  echo "\n********* part 1 - move if needed & possible<br/>\n";
         // if doing by-layout assignment, and requested section is full and the alternate section has space, move request
         if ($event_tools_ops_session_assign_by_layout) {
             foreach ($rqstr_email as $email) {
-                //echo '<br/>{'.$email.' '.$status_by_rqstr[$email][$pri].' ';
+                if ($detail_debug) echo '<br/>{Start user '.$email.' pri: '.$status_by_rqstr[$email][$pri].' ';
                 // skip if not valid request
                 if ($reqname_by_rqstr[$email][$pri] == "") continue;
                 // check for not session full or conflicted 
@@ -688,12 +715,12 @@ if (array_key_exists("best", $args)) {
                 // yes, check for another available session with same layout
                 $session = $reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri];
                 $layout = $layout_number_by_session[$session];
-                //echo '('.$email.'/'.$session.'/'.$layout.')';
+                if ($detail_debug) echo '(checking for alternatives for '.$email.' to '.$session.'/'.$layout.')';
                 foreach ($layout_number_by_session as $ses_next => $layout_next) {
-                    //echo '['.$ses_next.'/'.$layout_next.']';
+                    if ($detail_debug) echo '[checking '.$ses_next.'/'.$layout_next.']';
                     if (($layout_next == $layout ) && ($ses_next != $session)) {
                         // alternate session, check space
-                        //echo '[ checking '.$ses_next.' with '.$empty_slots_by_session[$ses_next].']';
+                        if ($detail_debug) echo '[ checking '.$ses_next.' with '.$empty_slots_by_session[$ses_next].']';
                         if ($empty_slots_by_session[$ses_next] == '' || $empty_slots_by_session[$ses_next] == NONE || $empty_slots_by_session[$ses_next] > 0) {
                             // found, move request over and repeat
                             echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Move '.$email.' request from '.$reqname_by_rqstr[$email][$pri].' '.$strtdate_by_rqstr[$email][$pri];
@@ -707,15 +734,19 @@ if (array_key_exists("best", $args)) {
                 }
             }
         }
-        // find and satisfy requests without a N+1th choice, then continue
+
+        // first find and satisfy requests without a N+1th choice, so they don't get shut out
+        if ($detail_debug)  echo "\n<br/>======== part 2: find and satisfy requests without a N+1th choice<br/>\n";
         foreach ($users as $key => $email) {
-            if ( ($status_by_rqstr[$email][1+$pri] == "0") && ($reqname_by_rqstr[$email][1+$pri] != "") ) {
-                // echo "Next choice for ".$email.' is '.$reqname_by_rqstr[$email][1+$pri].'<br/>';
+            if ( ($status_by_rqstr[$email][1+$pri] == STATUS_RELEASED) && ($reqname_by_rqstr[$email][1+$pri] != "") ) {
+                // continue if there's space available in next choice, we'll pick this up 
+                // in the next part
+                if ($detail_debug) echo "Next choice for ".$email.' is '.$reqname_by_rqstr[$email][1+$pri].', has '.$status_by_rqstr[$email][1+$pri].' status and '.$empty_slots_by_session[$reqname_by_rqstr[$email][1+$pri].$strtdate_by_rqstr[$email][1+$pri]].' spaces now, skipping assignment<br/>';
                 continue;
             }
             // check space
             if ( $rqstr_group_size[$email] > $empty_slots_by_session[$reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri]] ) {
-                echo 'Skip '.$email.' because group needs '.$rqstr_group_size[$email].' spots but only '.$empty_slots_by_session[$reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri]].' available, no 2nd choice<br/>';
+                echo 'Skip '.$email.' in pre-pass because group needs '.$rqstr_group_size[$email].' spots but only '.$empty_slots_by_session[$reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri]].' available in 2nd choice '.$reqname_by_rqstr[$email][1+$pri].'<br/>';
                 continue;  // next user
             }
             // found one
@@ -730,12 +761,15 @@ if (array_key_exists("best", $args)) {
             // and restart at top
             continue 2;
         }
-        // put in a first where possible (2nd exists at present)
+
+        // Fill remaining choices (2nd exists at present)
+        if ($detail_debug) echo "\n+++++++++ part 3: put in a first where possible (2nd exists at present)<br/>\n";
         foreach ($users as $key => $email) {
-            if ( ($status_by_rqstr[$email][$pri] != "0") || ($reqname_by_rqstr[$email][$pri] == "") ) {
-                // echo "First choice for ".$email.' is '.$reqname_by_rqstr[$email][1+$pri].'<br/>';
+            if ( ($status_by_rqstr[$email][$pri] != STATUS_RELEASED) || ($reqname_by_rqstr[$email][$pri] == "") ) {
+                if ($detail_debug) echo "Skip first choice for ".$email.' is '.$reqname_by_rqstr[$email][1+$pri].'<br/>';
                 continue;
             }
+            if ($detail_debug) echo "First choice for ".$email.' is '.$reqname_by_rqstr[$email][$pri].' status '.$status_by_rqstr[$email][$pri].' group size: '.$rqstr_group_size[$email].' slots available: '.$empty_slots_by_session[$reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri]].'<br/>';
             if ( $rqstr_group_size[$email] > $empty_slots_by_session[$reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri]] ) {
                 echo 'Assign '.$email.' 2nd choice because group needs '.$rqstr_group_size[$email].' spots in 1st choice but only '.$empty_slots_by_session[$reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri]].' available<br/>';
                 // do the db update
@@ -748,7 +782,7 @@ if (array_key_exists("best", $args)) {
                 continue;
             }
             // found one
-            //echo 'Check '.$email.' group needs '.$rqstr_group_size[$email].' has '.$empty_slots_by_session[$reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri]].' available<br/>';
+            if ($detail_debug) echo 'Check '.$email.' group needs '.$rqstr_group_size[$email].' has '.$empty_slots_by_session[$reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri]].' available<br/>';
             echo 'Assign '.$email.' to '.$reqname_by_rqstr[$email][$pri].' '.$strtdate_by_rqstr[$email][$pri].' (1st)<br/>';
             // do the db update
             setstatus($statusid_by_rqstr[$email][$pri],"1");
@@ -769,7 +803,7 @@ if (array_key_exists("best", $args)) {
     
     // loop to assign those to their next choice
     foreach ($users as $key => $email) {
-        if ( ($status_by_rqstr[$email][$pri+1] != "0") || ($reqname_by_rqstr[$email][$pri+1] == "") ) {
+        if ( ($status_by_rqstr[$email][$pri+1] != STATUS_RELEASED) || ($reqname_by_rqstr[$email][$pri+1] == "") ) {
             continue;  // this is an error
         }
         if ( $rqstr_group_size[$email] > $empty_slots_by_session[$reqname_by_rqstr[$email][$pri+1].$strtdate_by_rqstr[$email][$pri+1]] ) {
