@@ -10,6 +10,7 @@
         span.assigned { background: #b0b0ff; }
         span.conflict { background: #ffc0c0; }
         span.filled   { background: #c0ffc0; }
+        div.filled    { background: #c0ffc0; }
         span.disabled { background: #ff8080; }
         
         td.session { width: 600px; }
@@ -893,7 +894,7 @@ $n_sessions = mysql_numrows($r_sessions);
 // now do a table of people by op session
 echo '<h3>By Session</h3>';
 echo 'Key: <span class="assigned">Assigned</span> <span class="filled">Layout full</span> <span class="conflict">Time conflict</span> <span class="disabled">Disabled</span><br>';
-echo 'Numbers are (Number Operators Assigned)/(Assignable Requests Left)/(Total Slots)<br>';
+echo 'Left-header numbers are (Number Operators Assigned)/(Assignable Requests Left)/(Total Slots) colored if <span class="filled">layout full</span><br>';
 
 echo '<table border="1">';
 $tagnum = 0;
@@ -944,7 +945,11 @@ for ($i=0; $i<$num; ) {
         echo '<br/>';
         // button to add?
         echo '<form method="get" action="ops_assign_set.php#'.'s'.$tagnum.'">';
-        echo '<div title="Number operators assigned / assignable requests left / total slots">'.$count1.'/'.$count0.'/'.mysql_result($result,$i,"spaces").'</div>';  // report counts
+        echo '<div ';
+        if ($count1 >= (int) mysql_result($result,$i,"spaces")) echo ' class="filled" ';
+        echo ' title="Number operators assigned / assignable requests left / total slots">';
+        echo $count1.'/'.$count0.'/'.mysql_result($result,$i,"spaces"); // report counts
+        echo'</div>';  
         echo '<input type="hidden" name="cy" value="'.$cycle.'">
               <input type="hidden" name="id" value="'.mysql_result($result,$firstindex,"opsreq_req_status_id").'">
               <input type="hidden" name="pri" value="'.$firstpri.'">';
