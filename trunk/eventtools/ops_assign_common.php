@@ -6,6 +6,8 @@ define('STATUS_DISABLED', "-2"); // assignment manually forbidden
 define('STATUS_CONFLICT', "-3"); // has time conflict with other assignment
 define('STATUS_FULL',     "-4"); // session is known to be full
 
+define('MAX_OP_REQS',       12); // loop counter for max requests by user; 1-12; MAKE THIS OBSOLETE!
+
 function session_title_from_query($ops_id) {
     global $event_tools_db_prefix;
 
