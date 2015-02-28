@@ -801,7 +801,7 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
 
     // headings
     echo "\n".'<thead class="et-faobd-thread">
-    <tr class=et-faobd-th">
+    <tr class="et-faobd-th">
         <th class="et-faobd-th-1">Host</th>
         <th class="et-faobd-th-2">Railroad</th>
         <th class="et-faobd-th-3">Distance/Time</th>
@@ -857,7 +857,7 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
             echo "     / <a href=\"".$link_url2."\">".
                                 htmlspecialchars(mysql_result($result,$i,"layout_name2"))."</a>\n";
         }
-        echo "      </a></span> \n";
+        echo "      </span> \n";
         echo "  </td>\n";
     
         // distance
@@ -869,7 +869,7 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
                 echo '/ ';
             echo mysql_result($result,$i,"travel_time");
         }
-        echo "      </span></td> \n";
+        echo "&nbsp;</span></td> \n";
         
         // slots
         echo "  <td class=\"et-faobd-td-4\">\n";
@@ -905,7 +905,7 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
             }
             // if not match up, skip cell
             if (! $full) {
-                echo "\n".'    <span class="et-faobd-empty"></span>';
+                ; //echo "\n".'    <span class="et-faobd-empty"></span>';
             }
 
             echo '</td>';
