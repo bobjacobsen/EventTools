@@ -27,9 +27,10 @@ if (! ($args["cy"]) ) {
     echo "Please fill in the form and press 'start'. All fields are required. Multiple email addresses can be specified, separated with a comma. Put just dollar sign '$' in 'test' to send for real, otherwise where you want test emails sent.";
     echo '<form method="get" action="ops_assign_email_operator.php">
         Cycle Name: <input  name="cy" size="32"><br>
-        From email address: <input  name="from" value="'.$event_tools_registrar_email_address.'" size="72"><br>
-        Bcc email address(es): <input  name="bcc" value="'.$event_tools_registrar_email_address.'" size="72"><br>
-        (Test) To email address(es): <input  name="testto" value="'.$event_tools_registrar_email_address.'" size="72"><br>
+        From email address: <input  name="from" value="'.$event_tools_registrar_email_address.'"> (Best if this is on the same domain as the web site)<br>
+        Reply-to email address: <input  name="reply" value="'.$event_tools_registrar_email_address.'"> (This is who will get return messages)<br>
+        Bcc email address(es): <input  name="bcc" value="'.$event_tools_registrar_email_address.'"> (These people get copies when mail is sent)<br>
+        (Test) To email address(es): <input  name="testto" value="'.$event_tools_registrar_email_address.'"><br>
         Subject: <input  name="subject" value="'.$event_tools_event_name.' Operating Session Assignments" size="72"><br>
         Message content:<br>
         <textarea  name="content" rows="20" cols="70">'.$default_text.'</textarea><br>
@@ -84,6 +85,7 @@ if (! ($args["cy"]) ) {
 } else {
     $cycle = $args["cy"];
     $from = $args["from"];
+    $reply = $args["reply"];
     $bcc = $args["bcc"];
     $testto = $args["testto"];
 }
@@ -137,7 +139,7 @@ while ($i < $num) {
             
         $subject = $args["subject"];
         
-        $headers = "from: ".$from."\nbcc: ".$bcc;
+        $headers = "from: ".$from."\nreply-to: ".$reply."\nbcc: ".$bcc;
                 
         $body = $part1;
         if ($args["noassignments"] != "on") $body = $body.$sessions;
