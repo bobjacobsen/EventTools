@@ -230,5 +230,5 @@ INSERT INTO `prefix_eventtools_constrain_communications` (`constrain_value`) VAL
 --
 
 INSERT INTO `prefix_eventtools_users` (`user_id`, `user_name`, `user_pwd`, `user_key`, `user_email_log_skip`) VALUES
-(8, 'jacobsen@berkeley.edu', '', '*', '1');
+(8, 'jacobsen@mac.com', '', '*', '1');
 
