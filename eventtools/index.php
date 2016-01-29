@@ -348,7 +348,10 @@ most recent draft of the
 <p>
 For information on using EventTools at an operating meet, please see the 
 most recent draft of the 
-<a href="EventToolsOps.pdf">EventTools Op Sessions Guide</a>.
+<a href="EventToolsOps.pdf">EventTools Op Sessions Guide</a>. 
+The 
+<a href="EventToolsOpsQuickStart.pdf">Quick Start guide</a>
+will walk you through entering the initial data.
 
 <p>
 For EventTools installation and configuration information, please see the 
