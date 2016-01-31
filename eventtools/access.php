@@ -79,14 +79,14 @@ $event_tools_central_addr = "1230+J+Street";
 $event_tools_central_city = "Sacramento";
 $event_tools_central_state = "CA";
 $event_tools_central_postcode = "95814";
-// If not in same timezone as site host location, uncomment the following line and set your proper timezone
+// If server is not in same timezone as event location, uncomment the following line and set event timezone
 //date_default_timezone_set('America/Los_Angeles');
-
-// Connected to Zen Cart?
-$event_tools_option_zen_cart_used       = FALSE;
 
 // include attendee emergency contact info?
 $event_tools_emergency_contact_info     = TRUE;
+
+// Connected to Zen Cart?
+$event_tools_option_zen_cart_used       = FALSE;
 
 // how to generate a link to optional Zen Cart
 $event_tools_cartlink = "http://127.0.0.1/localcart";
@@ -97,7 +97,7 @@ $event_tools_ops_session_by_category     = TRUE;
 // Do op-session requests By Layout (TRUE) or By Session (FALSE)
 $event_tools_ops_session_assign_by_layout = TRUE;
 
-// Names for optional fields 1-8 in op session requests
+// Names for optional fields 1-8 in op session requests (obsolete, do not use)
 $event_tools_op_session_opt1_name        = 'Opt1';
 $event_tools_op_session_opt1_long_name   = 'Option 1';
 $event_tools_op_session_opt2_name        = 'Opt2';
