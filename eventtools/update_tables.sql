@@ -11,14 +11,12 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- 
 -- Add/update necessary columns in tables.
 -- 
--- To be used if an SVN update changes any .sql files
+-- To be used if an Git update changes any .sql files
 --
 -- After this, you MUST rerun the define_views.sql file
 --
 -- Should not lose existing date, but make
 -- sure you have a good backup first.
---
--- $Revision$
 --
 -- --------------------------------------------------------
 
@@ -59,7 +57,13 @@ ALTER TABLE `prefix_eventtools_layouts`       ADD   `layout_distance`        var
 ALTER TABLE `prefix_eventtools_opsession_req` ADD   `opsreq_opt5`            char(1);
 ALTER TABLE `prefix_eventtools_opsession_req` ADD   `opsreq_opt6`            char(1);
 ALTER TABLE `prefix_eventtools_opsession_req` ADD   `opsreq_opt7`            char(1);
-ALTER TABLE `prefix_eventtools_opsession_req` ADD   `opsreq_opt8`            char(1);
+
+-- --------------------------------------------------------
+-- Lengthen URL fields
+-- --------------------------------------------------------
+ALTER TABLE `prefix_eventtools_layouts`       MODIFY `layout_local_url` varchar(128) default '';
+ALTER TABLE `prefix_eventtools_layouts`       MODIFY `layout_photo_url` varchar(128) default '';
+
 
 -- --------------------------------------------------------
 -- After this, you MUST rerun the define_views.sql file
