@@ -357,13 +357,13 @@ $opts['fdd']['layout_owner_url'] = array(
 $opts['fdd']['layout_local_url'] = array(
   'name'     => 'Local URL',
   'select'   => 'T',
-  'maxlen'   => 50,
+  'maxlen'   => 128,
   'sort'     => true
 );
 $opts['fdd']['layout_photo_url'] = array(
   'name'     => 'Photo URL',
   'select'   => 'T',
-  'maxlen'   => 100,
+  'maxlen'   => 128,
   'sort'     => true
 );
 

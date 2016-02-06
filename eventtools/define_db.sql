@@ -274,7 +274,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_layouts` (
   `layout_postcode` varchar(14) default '',
   `layout_distance` varchar(25) default '',
 
-  `layout_local_url` varchar(50) default '',
+  `layout_local_url` varchar(128) default '',
   
   `layout_status_code` int(3)  default 0,
 
@@ -289,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_layouts` (
   `layout_communications` varchar(12) default '',
   
   `layout_organizer_comment` varchar(250) default '',
-  `layout_photo_url` varchar(50) default '',
+  `layout_photo_url` varchar(128) default '',
   
   `layout_mark_changed` varchar(1) default '',
   `layout_last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
