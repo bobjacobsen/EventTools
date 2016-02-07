@@ -783,7 +783,10 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
     }    
         
     $total_seats = array(count($dates));
-
+    for ($j = 0; $j < count($dates); $j++) {
+        $total_seats[$j] = 0;
+    }
+    
     // columns
     echo '
         <col class="et-faobd-col-1"/>
