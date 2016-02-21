@@ -176,16 +176,19 @@ function column_first_table_from_query($query, $var_names, $labels) {
     
     while ($j < count($var_names)) {
         $i = 0;
-        echo "<tr><td>".$labels[$j]."</td>\n";
-        $row = mysql_fetch_assoc($result);
+        
+        if ($labels[$j] != NONE) { 
+            echo "<tr><td>".$labels[$j]."</td>\n";
+            $row = mysql_fetch_assoc($result);
 
-        while ($i < $num) {
+            while ($i < $num) {
     
-            simple_table_format_cell($j, $row, $var_names[$j]);
-    
-            $i++;
+                simple_table_format_cell($j, $row, $var_names[$j]);
+
+                $i++;
+            }
+            echo "</tr>\n";
         }
-        echo "</tr>\n";
         $j++;
     }    
 }
