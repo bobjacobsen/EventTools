@@ -197,10 +197,7 @@ function by_column_table($table_name, $var_names, $labels, $where=NONE, $order=N
             echo "<tr><td>".$labels[$j]."</td>\n";
 
             while ($i < $num) {
-    
-                echo "D".$i." ".$j." ".$var_names[$j].":".mysql_result($result,$i,$var_names[$j])."/";
                 simple_column_format_cell($i, $j, $result, $var_names[$j]);
-
                 $i++;
             }
             echo "</tr>\n";
