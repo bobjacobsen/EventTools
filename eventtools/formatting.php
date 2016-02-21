@@ -108,7 +108,7 @@ function format_all_general_tours_as_8table($where=NONE, $order=NONE, $url=NONE,
     format_as_table($formatter, $where, $order);
 }
 
-function simple_table($table_name, $var_names, $where=NONE, $order=NONE, $transpose=NONE ) {
+function simple_table($table_name, $var_names, $where=NONE, $order=NONE) {
     // If you provide an array of labels in $transpose, you'll get a table with 
     // with the data in columns
     
@@ -128,8 +128,7 @@ function simple_table($table_name, $var_names, $where=NONE, $order=NONE, $transp
     ";
     //echo $query;
 
-    if ($transpose == NONE) table_from_query($query, $var_names);
-    else column_first_table_from_query($query, $var_names, $transpose);
+    table_from_query($query, $var_names);
 }
 
 function table_from_query($query, $var_names) {
@@ -161,8 +160,25 @@ function table_from_query($query, $var_names) {
     }    
 }
 
-function column_first_table_from_query($query, $var_names, $labels) {
+function by_column_table($table_name, $var_names, $labels, $where=NONE, $order=NONE) {
+    // Provide an array of labels in $transpose, you'll get a table with 
+    // with the data in columns
+    
     global $opts, $event_tools_db_prefix;
+
+    if ($order==NONE) $order = "layout_owner_lastname, layout_owner_firstname";
+
+    if ($where != NONE) $where = "WHERE ".$where." ";
+    else $where = " ";
+    
+    $query="
+        SELECT  *
+        FROM ".$event_tools_db_prefix."eventtools_".$table_name."
+        ".$where."
+        ORDER BY ".$order."
+        ;
+    ";
+    //echo $query;
 
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
@@ -179,11 +195,10 @@ function column_first_table_from_query($query, $var_names, $labels) {
         
         if ($labels[$j] != NONE) { 
             echo "<tr><td>".$labels[$j]."</td>\n";
-            $row = mysql_fetch_assoc($result);
 
             while ($i < $num) {
     
-                simple_table_format_cell($j, $row, $var_names[$j]);
+                simple_column_format_cell($i, $j, $result, $var_names[$j]);
 
                 $i++;
             }
