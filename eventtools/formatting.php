@@ -128,7 +128,7 @@ function simple_table($table_name, $var_names, $where=NONE, $order=NONE, $transp
     ";
     //echo $query;
 
-    if ($transpose != NONE) table_from_query($query, $var_names);
+    if ($transpose == NONE) table_from_query($query, $var_names);
     else column_first_table_from_query($query, $var_names, $transpose);
 }
 
