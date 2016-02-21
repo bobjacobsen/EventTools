@@ -198,6 +198,7 @@ function by_column_table($table_name, $var_names, $labels, $where=NONE, $order=N
 
             while ($i < $num) {
     
+                echo "D".$i." ".$j." ".$var_names[$j]."d";
                 simple_column_format_cell($i, $j, $result, $var_names[$j]);
 
                 $i++;
