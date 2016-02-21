@@ -108,7 +108,10 @@ function format_all_general_tours_as_8table($where=NONE, $order=NONE, $url=NONE,
     format_as_table($formatter, $where, $order);
 }
 
-function simple_table($table_name, $var_names, $where=NONE, $order=NONE) {
+function simple_table($table_name, $var_names, $where=NONE, $order=NONE, $transpose=NONE ) {
+    // If you provide an array of labels in $transpose, you'll get a table with 
+    // with the data in columns
+    
     global $opts, $event_tools_db_prefix;
 
     if ($order==NONE) $order = "layout_owner_lastname, layout_owner_firstname";
@@ -125,7 +128,8 @@ function simple_table($table_name, $var_names, $where=NONE, $order=NONE) {
     ";
     //echo $query;
 
-    table_from_query($query, $var_names);
+    if ($transpose != NONE) table_from_query($query, $var_names);
+    else column_first_table_from_query($query, $var_names, $transpose);
 }
 
 function table_from_query($query, $var_names) {
@@ -154,6 +158,35 @@ function table_from_query($query, $var_names) {
         }
         echo "</tr>\n";
         $i++;
+    }    
+}
+
+function column_first_table_from_query($query, $var_names, $labels) {
+    global $opts, $event_tools_db_prefix;
+
+    mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
+    @mysql_select_db($opts['db']) or die( "Unable to select database");
+    
+    //echo $query;
+    $result=mysql_query($query);
+    
+    $j=0;
+    $num=mysql_numrows($result);
+    //echo $num;
+    
+    while ($j < count($var_names)) {
+        $i = 0;
+        echo "<tr><td>".$labels[$j]."</td>\n";
+        $row = mysql_fetch_assoc($result);
+
+        while ($i < $num) {
+    
+            simple_table_format_cell($j, $row, $var_names[$j]);
+    
+            $i++;
+        }
+        echo "</tr>\n";
+        $j++;
     }    
 }
 
