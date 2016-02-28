@@ -22,7 +22,7 @@ require_once('parsers.php');
 $where = parse_layout_query();
 $order = parse_order();
 
-format_all_ops_addresses("http://www.x2011west.org/layoutsTable.php?layoutid=", $where, $order);
+format_all_ops_addresses("format_all_layouts.php?layoutid=", $where, $order);
 
 ?>
 </body>
