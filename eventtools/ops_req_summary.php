@@ -211,7 +211,7 @@ while ($j < 12+2) {
 }
 echo '</tr>';
 echo '</table>';
-echo 'Zero entries suppressed for visibility. Yellow color indicates insufficient room is all higher-priority requests are assigned.';
+echo 'Zero entries suppressed for visibility. Yellow color indicates insufficient room if all higher-priority requests are assigned.';
 echo '<p>';
 
 
