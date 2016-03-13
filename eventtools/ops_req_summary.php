@@ -195,7 +195,7 @@ while ($i < $numSessions) {
             echo $stats[$key][$j];
             if ($include) $grandtotal[$j+2] += $stats[$key][$j];
         } else {
-            echo ' ';
+            echo '&nbsp;';
         }
         echo '</div></td>'."\n";
         $j++;
