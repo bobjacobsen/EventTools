@@ -361,7 +361,7 @@ $opts['fdd']['layout_local_url'] = array(
   'sort'     => true
 );
 $opts['fdd']['layout_photo_url'] = array(
-  'name'     => 'Photo URL',
+  'name'     => 'Photo Page URL',
   'select'   => 'T',
   'maxlen'   => 128,
   'sort'     => true
