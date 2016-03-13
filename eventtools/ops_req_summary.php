@@ -188,7 +188,7 @@ while ($i < $numSessions) {
     while ($j < 12) {
         $linetotal += $stats[$key][$j];
         if ($linetotal > mysql_result($resultSessions,$i,"spaces"))
-            echo '<td align="right"><div style=\"background: #ffffc0\">';
+            echo '<td align="right"><div style="background: #ffffc0">';
         else
             echo '<td align="right"><div>';            
         if ($stats[$key][$j] != 0) {
