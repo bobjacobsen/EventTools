@@ -180,7 +180,13 @@ while ($i < $numSessions) {
         $sum = $sum + $stats[$key][$j];
         $j++;
     }
-    echo '<td align="right">'.$sum.'</td>'."\n";
+    echo '<td align="right">';
+    if ($sum < mysql_result($resultSessions,$i,"spaces"))
+        echo '<div style="background: #ffe0e0">';
+    else
+        echo '<div>';            
+    echo $sum;
+    echo '</div></td>'."\n";
     if ($include) $grandtotal[1] += $sum;
     
     $j = 0;
@@ -188,7 +194,7 @@ while ($i < $numSessions) {
     while ($j < 12) {
         $linetotal += $stats[$key][$j];
         if ($linetotal > mysql_result($resultSessions,$i,"spaces"))
-            echo '<td align="right"><div style="background: #ffffc0">';
+            echo '<td align="right"><div style="background: #ffffd0">';
         else
             echo '<td align="right"><div>';            
         if ($stats[$key][$j] != 0) {
