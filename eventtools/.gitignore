@@ -1,0 +1,9 @@
+# transient artifacts
+.ant-targets-build.xml
+
+# private / per-user configuration files
+
+# OS junk files
+[Tt]humbs.db
+*.DS_Store
+/jmri-fb.html
