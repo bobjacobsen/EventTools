@@ -38,7 +38,7 @@ echo '<p>';
 
 echo '<form method="get" action="map_one_layout.php">';
 echo '    <button type="submit">Map</button>Layout Name:';
-echo '    <input name="layout" type="text" size="20" maxlength="20" value="'.$layout.'" />';
+echo '    <input name="layout" type="text" size="64" maxlength="64" value="'.$layout.'" />';
 echo '</form>';
 
 mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
