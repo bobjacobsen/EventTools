@@ -602,6 +602,8 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_people` (
 --
 -- Table structure for table `prefix_eventtools_opsession`
 --
+-- Defines a session:  a time at a layout
+--
 
 DROP TABLE IF EXISTS `prefix_eventtools_opsession`;
 
@@ -632,6 +634,8 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_opsession` (
 
 --
 -- Table structure for table `prefix_eventtools_opsession_req`
+--
+-- Records a single user's set of op session requests
 --
 
 DROP TABLE IF EXISTS `prefix_eventtools_opsession_req`;
@@ -717,7 +721,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_opsreq_group_req_link` (
 --
 -- Table structure for table `prefix_eventtools_opsreq_req_status`
 --
--- A specific layout request and status
+-- Links a specific user's layout request and holds status
 --    opsreq_group_req_link_id     points to a specific reg&group link, hence request
 --    req_num                      1-12 request number
 --    ops_id                       operating session link
