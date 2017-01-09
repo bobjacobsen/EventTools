@@ -635,7 +635,11 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_opsession` (
 --
 -- Table structure for table `prefix_eventtools_opsession_req`
 --
--- Records a single user's set of op session requests
+-- This is now obsolete!
+-- See eventtools_customer_cross_options_and_values, a view that
+--   joins eventtools_customer_options and eventtools_customer_option_values
+-- 
+-- Recorded a single user's set of op session requests
 --
 
 DROP TABLE IF EXISTS `prefix_eventtools_opsession_req`;
