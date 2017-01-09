@@ -46,7 +46,7 @@ function insert_multiple_ops_request_structure($cycle, $reqs) {
             && (mysql_result($reqs,$i,"opsreq_pri11") <= "1") 
             && (mysql_result($reqs,$i,"opsreq_pri12") <= "1") 
             ) {
-                echo "Skip ".mysql_result($reqs,$i,"opsreq_person_email")."<br/>";
+                echo "Skip ".mysql_result($reqs,$i,"opsreq_person_email").": no requests<br/>";
                 continue;
         }
         
