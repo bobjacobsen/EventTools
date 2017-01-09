@@ -217,7 +217,9 @@ while ($j < 12+2) {
 }
 echo '</tr>';
 echo '</table>';
-echo 'Zero entries suppressed for visibility. Red indicates insufficient requests to fill; yellow indicates insufficient room if all higher requests are assigned.';
+echo '<p>';
+echo 'Red indicates insufficient requests to fill; yellow indicates insufficient room if all higher requests are assigned. Zero entries suppressed for visibility. <br>';
+echo 'Click on a session name to get more information on the attendees who have requested it.';
 echo '<p>';
 
 
@@ -237,18 +239,24 @@ echo '<h3>Extra Question Totals</h3>';
     echo "<table border=\"1\">\n";
     while ($i < $numOpt) {
         echo "   <tr><td>";
-        echo mysql_result($resultOpt,$i,"customer_option_long_name");
+          echo '<a href="ops_reg_attendee_summary.php?order=value'.$i.'">';
+            echo mysql_result($resultOpt,$i,"customer_option_long_name");
+          echo "</a>";
         echo "</td><td>";
-        echo summarize_question(mysql_result($resultOpt,$i,"customer_option_short_name"), $where);
+          echo '<a href="ops_reg_attendee_summary.php?order=value'.$i.'">';
+            echo summarize_question(mysql_result($resultOpt,$i,"customer_option_short_name"), $where);
+          echo "</a>";
         echo "</td></tr>\n";
         $i++;
     }
     echo "</table>\n";
-
-
-
-
 echo '<p>';
+echo 'Click on a question or answer count to get a time-sorted list of who said Yes.';
+echo '<p>';
+
+
+
+
 echo '<h3>Requestors</h3>';
 
 $i = 0;
@@ -283,6 +291,9 @@ while ($i < $numReqs) {
     $i++;
 }
 echo '</table>';
+echo '<p>';
+echo 'Click on a column header to sort the results.<br>';
+echo 'Category numbers can be <a href="http://localhost/eventtools/edit_user_req_group.php">changed here</a>.<br>';
 echo '<p>';
 
 
