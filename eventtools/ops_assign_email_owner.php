@@ -142,27 +142,34 @@ $numExtras= mysql_numrows($resultExtras);
 
 // loop over attendee rows, breaking when next is a different majorkey (name and date)
 while ($i < $num) {
-    $sessions = $sessions.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname")."\n".mysql_result($result,$i,"opsreq_person_email");
-    
-    // accumulate all the customer options that have gotten a Y answer
-    $options = "";
+    // accumulate the individual attendee information
+    $sessions = $sessions.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname")."\n";
+    $sessions = $sessions.'  Email: '.mysql_result($result,$i,"opsreq_person_email");
+        
+    // accumulate all the customer options that have gotten a Y answer as CSV string
+    $options = "  Options Selected: ";
     $optQuery = options_select_statement()." WHERE ( opsreq_person_email = '".mysql_result($result,$i,"opsreq_person_email")."' ) ;";
+    echo $optQuery;
     $resultOptions = mysql_query($optQuery);
     $numOptions = mysql_numrows($resultOptions);
     if ($numOptions > 1) echo "Didn't expect more than one match";
     $j = 0;
+    $more = False;
     while ($j < $numExtras) {
         if ( mysql_result($resultOptions,0,"value".$j) == 'Y' ) { // expecting just 1
-            $options = $options."   ".mysql_result($resultExtras,$j,"customer_option_short_name")."\n";
+            if ($more) $options = $options.", ";
+            $more = True;
+            $options = $options." ".mysql_result($resultExtras,$j,"customer_option_short_name");
         }
         $j++;
     }
+    $options = $options."\n";
 
-
-
+    $sessions = $sessions.' Phone: '.mysql_result($resultOptions,0,"customers_telephone");
+    $sessions = $sessions.' Cell: '.mysql_result($resultOptions,0,"customers_cellphone");
 
     if ($options != "") $sessions = $sessions."\n".$options;
-    $sessions = $sessions."\n\n";
+    $sessions = $sessions."\n";
     
     if ( ($i == $num-1) || ($lastmajorkey != mysql_result($result,$i+1,"show_name").mysql_result($result,$i+1,"start_date")) ) {
         if ($i < $num-1) {
@@ -193,8 +200,7 @@ while ($i < $num) {
     $i++;
 }
 
-mysql_close();    
+mysql_close();
 
-echo "</clinics>\n";
 ?>
 
