@@ -198,7 +198,7 @@ while ($i < $numSessions) {
         $totweight = $totweight + ($p+1)*$stats[$key][$p];
         $p++;
     }
-    if ($sum > 0) echo $totweight/$sum;
+    if ($sum > 0) echo number_format($totweight/$sum,2);
     echo '</div></td>'."\n";
     
     
