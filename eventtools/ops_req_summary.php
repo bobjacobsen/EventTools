@@ -157,10 +157,10 @@ while ($i < $numReqs) {
 
 // print table
 echo '<table border="1">';
-echo '<tr><th>Layout</th><th>Start</th><th>Spots</th><th>Sum</th><th>Wgt</th><th>1st</th><th>2nd</th><th>3rd</th><th>4th</th><th>5th</th><th>6th</th><th>7th</th><th>8th</th><th>9th</th><th>10th</th><th>11th</th><th>12th</th></tr>';
+echo '<tr><th>Layout</th><th>Start</th><th>Spots</th><th>Sum</th><th>Wgt</th><th>Dm4</th><th>1st</th><th>2nd</th><th>3rd</th><th>4th</th><th>5th</th><th>6th</th><th>7th</th><th>8th</th><th>9th</th><th>10th</th><th>11th</th><th>12th</th></tr>';
 
 $i = 0;
-$grandtotal = array(0,0,"",0,0,0,0,0,0,0,0,0,0,0,0);
+$grandtotal = array(0,0,"","",0,0,0,0,0,0,0,0,0,0,0,0);
 
 while ($i < $numSessions) {
     $key = mysql_result($resultSessions,$i,"ops_id");
@@ -174,13 +174,13 @@ while ($i < $numSessions) {
     echo '<td align="right">'.mysql_result($resultSessions,$i,"spaces").'</td>'."\n";
     if ($include) $grandtotal[0] += mysql_result($resultSessions,$i,"spaces");
 
+    // sum column
     $j = 0;
     $sum = 0;
     while ($j < 12) {
         $sum = $sum + $stats[$key][$j];
         $j++;
     }
-    // sum column
     echo '<td align="right">';
     if ($sum < mysql_result($resultSessions,$i,"spaces"))
         echo '<div style="background: #ffe0e0">';
@@ -201,6 +201,17 @@ while ($i < $numSessions) {
     if ($sum > 0) echo number_format($totweight/$sum,2);
     echo '</div></td>'."\n";
     
+    // Dm4 column: sum of 1st 4 / spots
+    echo '<td align="right">';
+    $p = 0;
+    $totweight = 0.0;
+    while ($p < 4) {
+        $totweight = $totweight + $stats[$key][$p];
+        $p++;
+    }
+    $slots = mysql_result($resultSessions,$i,"spaces");
+    if ($slots > 0) echo number_format($totweight/$slots,2);
+    echo '</div></td>'."\n";
     
     
     $j = 0;
@@ -213,7 +224,7 @@ while ($i < $numSessions) {
             echo '<td align="right"><div>';            
         if ($stats[$key][$j] != 0) {
             echo $stats[$key][$j];
-            if ($include) $grandtotal[$j+3] += $stats[$key][$j];
+            if ($include) $grandtotal[$j+2+2] += $stats[$key][$j];
         } else {
             echo '&nbsp;';
         }
@@ -225,7 +236,7 @@ while ($i < $numSessions) {
 
 echo '<tr><th>Sum over rows</th><th></th>';
 $j = 0;
-while ($j < 2+1+12) {
+while ($j < 2+2+12) {
     echo '<td>'.$grandtotal[$j].'</td>';
     $j++;
 }
@@ -233,7 +244,9 @@ echo '</tr>';
 echo '</table>';
 echo '<p>';
 echo 'Red indicates insufficient requests to fill; yellow indicates insufficient room if all higher requests are assigned. Zero entries suppressed for visibility. <br>';
-echo 'Click on a session name to get more information on the attendees who have requested it.';
+echo 'Click on a session name to get more information on the attendees who have requested it.<br>';
+echo 'Wgt: Weighted average of request priority.<br>';
+echo 'Dm4: ratio of priority 1-4 requests to session capacity (if > 1.0, indicates more 1-4 requests than capacity).';
 echo '<p>';
 
 
