@@ -4,6 +4,7 @@
 
 require_once('access.php');
 require_once('utilities.php');
+require_once('options_utilities.php');
 
 // parse out arguments
 parse_str($_SERVER["QUERY_STRING"], $args);
@@ -126,17 +127,40 @@ $part1 = $args["content"]."\n\n";
 $sessions = "";
 $first = TRUE;
 
+// get the list of extras
+$queryExtras="
+    SELECT *
+        FROM ( 
+        ".$event_tools_db_prefix."eventtools_customer_options
+        ) 
+        ".$where." ORDER BY customer_option_order 
+        ;
+    ";
+//echo $queryExtras;
+$resultExtras=mysql_query($queryExtras);
+$numExtras= mysql_numrows($resultExtras);
+
+// loop over attendee rows, breaking when next is a different majorkey (name and date)
 while ($i < $num) {
     $sessions = $sessions.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname")."\n".mysql_result($result,$i,"opsreq_person_email");
+    
+    // accumulate all the customer options that have gotten a Y answer
     $options = "";
-    if (mysql_result($result,$i,"opsreq_opt1") ==  'Y') $options = $options." (".$event_tools_op_session_opt1_name.") ";
-    if (mysql_result($result,$i,"opsreq_opt2") ==  'Y') $options = $options." (".$event_tools_op_session_opt2_name.") ";
-    if (mysql_result($result,$i,"opsreq_opt3") ==  'Y') $options = $options." (".$event_tools_op_session_opt3_name.") ";
-    if (mysql_result($result,$i,"opsreq_opt4") ==  'Y') $options = $options." (".$event_tools_op_session_opt4_name.") ";
-    if (mysql_result($result,$i,"opsreq_opt5") ==  'Y') $options = $options." (".$event_tools_op_session_opt5_name.") ";
-    if (mysql_result($result,$i,"opsreq_opt6") ==  'Y') $options = $options." (".$event_tools_op_session_opt6_name.") ";
-    if (mysql_result($result,$i,"opsreq_opt7") ==  'Y') $options = $options." (".$event_tools_op_session_opt7_name.") ";
-    if (mysql_result($result,$i,"opsreq_opt8") ==  'Y') $options = $options." (".$event_tools_op_session_opt8_name.") ";
+    $optQuery = options_select_statement()." WHERE ( opsreq_person_email = '".mysql_result($result,$i,"opsreq_person_email")."' ) ;";
+    $resultOptions = mysql_query($optQuery);
+    $numOptions = mysql_numrows($resultOptions);
+    if ($numOptions > 1) echo "Didn't expect more than one match";
+    $j = 0;
+    while ($j < $numExtras) {
+        if ( mysql_result($resultOptions,0,"value".$j) == 'Y' ) { // expecting just 1
+            $options = $options."   ".mysql_result($resultExtras,$j,"customer_option_short_name")."\n";
+        }
+        $j++;
+    }
+
+
+
+
     if ($options != "") $sessions = $sessions."\n".$options;
     $sessions = $sessions."\n\n";
     
