@@ -19,7 +19,7 @@ These are the instructions for rolling a convention to a new year. E.g. you've h
         - [ ] bayrails2017_eventtools_opsreq_group
         - [ ] bayrails2017_eventtools_opsreq_group_req_link
         - [ ] bayrails2017_eventtools_opsreq_req_status (huge!)
- 
+        - you're leaving the old layouts, etc defined so they can be reused if needed; the organizers will have to set them to inactive status if they don't want them displayed (we could do the systematically perhaps)
     - [ ] Edit define_views.sql (you don't have to save it) to replace prefix_ with bayrails2017_
        
 - Sequel Pro (for localhost database update)
