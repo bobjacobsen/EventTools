@@ -13,15 +13,15 @@ These are the instructions for rolling a convention to a new year. E.g. you've h
 >                /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
     - [ ] remove CREATE ALGORITHM defines near bottom (leave the DROP lines)
-    - [ ] Remove op session request data by removing IMPORT blocks for
-        - [ ] bayrails2017_eventtools_opsession (leave in place, if they've started working on defining sessions)
-        - Fourn tables for op session requests and assignments:
+    - [ ] Remove previous year op session data by removing IMPORT blocks for
+        - [ ] bayrails2017_eventtools_opsession (leave in place, if they've started working on defining sessions before you get around to this)
+        - Four tables for op session requests and assignments:
         - [ ] bayrails2017_eventtools_opsession_req (resetting this resets the attendee list too)
         - [ ] bayrails2017_eventtools_opsreq_group
         - [ ] bayrails2017_eventtools_opsreq_group_req_link
         - [ ] bayrails2017_eventtools_opsreq_req_status (huge!)
         - Note: you're leaving the old layouts, etc defined so they can be reused if needed; the organizers will have to set them to inactive status if they don't want them displayed (we could do the systematically perhaps)
-    - [ ] Edit define_views.sql (you don't have to save it) to replace prefix_ with bayrails2017_
+    - [ ] Temporarily edit define_views.sql (you don't have to save it, you'll just use content below) to replace prefix_ with bayrails2017_
        
 - Sequel Pro (for localhost database update)
     - [ ] Start mySql, log on to localhost
@@ -36,4 +36,5 @@ These are the instructions for rolling a convention to a new year. E.g. you've h
     - [ ] refresh tables to see the new ones
     - [ ] do the view creation via "SQL" and cut&paste
 
+ - [ ] Check the site is working
 
