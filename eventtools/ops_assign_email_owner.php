@@ -133,7 +133,7 @@ $queryExtras="
         FROM ( 
         ".$event_tools_db_prefix."eventtools_customer_options
         ) 
-        ".$where." ORDER BY customer_option_order 
+        ORDER BY customer_option_order 
         ;
     ";
 //echo $queryExtras;
