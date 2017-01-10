@@ -210,7 +210,7 @@ while ($i < $numSessions) {
         $p++;
     }
     $slots = mysql_result($resultSessions,$i,"spaces");
-    if ($slots > 0) {
+    if ($slots > 0 and $totweight/$slots > 0) {
         if ($totweight/$slots > 1.0)
             echo '<div style="background: #ffe0e0">'.number_format($totweight/$slots,2).'</div>';
         else
