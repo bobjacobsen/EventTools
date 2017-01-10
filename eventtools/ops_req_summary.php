@@ -210,8 +210,13 @@ while ($i < $numSessions) {
         $p++;
     }
     $slots = mysql_result($resultSessions,$i,"spaces");
-    if ($slots > 0) echo number_format($totweight/$slots,2);
-    echo '</div></td>'."\n";
+    if ($slots > 0) {
+        if ($totweight/$slots > 1.0)
+            echo '<div style="background: #ffe0e0">'.number_format($totweight/$slots,2).'</div>';
+        else
+            echo number_format($totweight/$slots,2);        
+    }
+    echo '</td>'."\n";
     
     
     $j = 0;
@@ -243,10 +248,11 @@ while ($j < 2+2+12) {
 echo '</tr>';
 echo '</table>';
 echo '<p>';
-echo 'Red indicates insufficient requests to fill; yellow indicates insufficient room if all higher requests are assigned. Zero entries suppressed for visibility. <br>';
 echo 'Click on a session name to get more information on the attendees who have requested it.<br>';
+echo 'Spots: Total available spaces in session; Red background indicates insufficient requests to fill the session<br>'; 
 echo 'Wgt: Weighted average of request priority.<br>';
-echo 'Dm4: ratio of priority 1-4 requests to session capacity (if > 1.0, indicates more 1-4 requests than capacity).';
+echo 'Dm4: ratio of priority 1-4 requests to session capacity (red if > 1.0, indicates more 1-4 requests than capacity).<br>';
+echo 'The yellow request cells indicate insufficient room if all higher requests are assigned.<br>';
 echo '<p>';
 
 
