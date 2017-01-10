@@ -13,7 +13,7 @@ These are the instructions for rolling a convention to a new year. E.g. you've h
 >                /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
     - [ ] remove CREATE ALGORITHM defines near bottom (leave the DROP lines)
-    - [ ] Remove op session request data by removing IMPORT blocks for: 
+    - [ ] Remove op session request data by removing IMPORT blocks for
         - [ ] (leave _eventtools_opsession in place, if they've started working on defining sessions)
         - [ ] bayrails2017_eventtools_opsession_req
         - [ ] bayrails2017_eventtools_opsreq_group
