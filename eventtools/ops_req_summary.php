@@ -157,10 +157,10 @@ while ($i < $numReqs) {
 
 // print table
 echo '<table border="1">';
-echo '<tr><th>Layout</th><th>Start</th><th>Spots</th><th>Sum</th><th>1st</th><th>2nd</th><th>3rd</th><th>4th</th><th>5th</th><th>6th</th><th>7th</th><th>8th</th><th>9th</th><th>10th</th><th>11th</th><th>12th</th></tr>';
+echo '<tr><th>Layout</th><th>Start</th><th>Spots</th><th>Sum</th><th>Wgt</th><th>1st</th><th>2nd</th><th>3rd</th><th>4th</th><th>5th</th><th>6th</th><th>7th</th><th>8th</th><th>9th</th><th>10th</th><th>11th</th><th>12th</th></tr>';
 
 $i = 0;
-$grandtotal = array(0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+$grandtotal = array(0,0,"",0,0,0,0,0,0,0,0,0,0,0,0);
 
 while ($i < $numSessions) {
     $key = mysql_result($resultSessions,$i,"ops_id");
@@ -180,6 +180,7 @@ while ($i < $numSessions) {
         $sum = $sum + $stats[$key][$j];
         $j++;
     }
+    // sum column
     echo '<td align="right">';
     if ($sum < mysql_result($resultSessions,$i,"spaces"))
         echo '<div style="background: #ffe0e0">';
@@ -188,6 +189,19 @@ while ($i < $numSessions) {
     echo $sum;
     echo '</div></td>'."\n";
     if ($include) $grandtotal[1] += $sum;
+    
+    // weight column
+    echo '<td align="right">';
+    $p = 0;
+    $totweight = 0.0;
+    while ($p < 12) {
+        $totweight = $totweight + ($p+1)*$stats[$key][$p];
+        $p++;
+    }
+    if ($sum > 0) echo $totweight/$sum;
+    echo '</div></td>'."\n";
+    
+    
     
     $j = 0;
     $linetotal = 0;
@@ -199,7 +213,7 @@ while ($i < $numSessions) {
             echo '<td align="right"><div>';            
         if ($stats[$key][$j] != 0) {
             echo $stats[$key][$j];
-            if ($include) $grandtotal[$j+2] += $stats[$key][$j];
+            if ($include) $grandtotal[$j+3] += $stats[$key][$j];
         } else {
             echo '&nbsp;';
         }
@@ -211,7 +225,7 @@ while ($i < $numSessions) {
 
 echo '<tr><th>Sum over rows</th><th></th>';
 $j = 0;
-while ($j < 12+2) {
+while ($j < 2+1+12) {
     echo '<td>'.$grandtotal[$j].'</td>';
     $j++;
 }
