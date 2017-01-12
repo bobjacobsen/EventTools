@@ -1,7 +1,8 @@
 <?php
-// this is PHP to log
+// this is PHP to store
 // the contents of the $_REQUEST array called out by
-// the values array.
+// the values array, used by sample_ops_reg_form.php to 
+// process an attendee registration.
 
 // Specific values expected in $_REQUEST, e.g. $_REQUEST[ "email" ]
 //  email (primary key)
@@ -13,8 +14,8 @@
 //  city
 //  state
 //  zip
-//    opt1 - opt8
-//    v_###   a request for a session (### is the session, value is priority)
+//   v_###   a request for a session (### is the session, value is priority)
+//     plus options encoded as option_id_(id)
 
 function check_for_value($values, $check, $reqs)
 {
