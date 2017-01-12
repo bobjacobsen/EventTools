@@ -344,28 +344,25 @@ if ( $event_tools_option_general_tours ||
 For more information on using EventTools, please see the
 most recent draft of the 
 <a href="EventTools.pdf">EventTools User Guide</a>.
-
-<p>
+<br>
 For information on using EventTools at an operating meet, please see the 
 most recent draft of the 
 <a href="EventToolsOps.pdf">EventTools Op Sessions Guide</a>. 
 The 
 <a href="EventToolsOpsQuickStart.pdf">Quick Start guide</a>
 will walk you through entering the initial data.
-
-<p>
+<br>
 For EventTools installation and configuration information, please see the 
 most recent draft of the 
 <a href="EventToolsAdmin.pdf">EventTools Administration Guide</a>.
-
-<p>
+<br>
 For information on using Cascading Style Sheets (CSS) to 
 configure how EventTools information is displayed on your web pages, 
 please see the most recent draft of the
 <a href="EventToolsCSS.pdf">EventTools CSS Guide</a>.
-
-<p>
+<br>
 For example query code, see the <a href="samples.php">samples page</a>.
+
 <p>
 There are sample pages for 
 <a href="sample_ops_prereg_form.php">preregistration</a>
@@ -374,8 +371,6 @@ and
 <p>
 EventTools was written and is maintained by Bob Jacobsen, 
 please contact him directly if you want more information on using EventTools.
-
-<p>
 This is the 
 <a href="<?php echo 'http://'.$_SERVER['SERVER_NAME'].'/eventtools/index.php';  ?>">
 <?php echo $event_tools_event_name;  ?> EventTools index page</a>
