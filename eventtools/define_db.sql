@@ -215,6 +215,21 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_customer_option_values` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
+-- Table structure for table `prefix_eventtools_user_text`
+-- Defines user text for e.g. operator and owner emails
+--
+
+DROP TABLE IF EXISTS `prefix_eventtools_user_text`;
+
+CREATE TABLE IF NOT EXISTS `prefix_eventtools_user_text` (
+  `user_text_key` varchar(50) NOT NULL,
+  `user_text_value` varchar(50000) NOT NULL,
+  `user_text_comment` varchar(500) NOT NULL,
+  PRIMARY KEY  (`user_text_key`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+
+--
 -- Table structure for table `prefix_eventtools_users`
 -- Defines user accounts that can access the tools
 --

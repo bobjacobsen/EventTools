@@ -21,7 +21,41 @@ The '.$event_tools_event_name.' Committee
 ----------------------
 ';
 
-if (! ($args["cy"]) ) {
+global $opts, $event_tools_db_prefix, $event_tools_href_add_on;
+mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
+@mysql_select_db($opts['db']) or die( "Unable to select database");
+
+// see if there is text defined
+$query="
+    SELECT user_text_value
+    FROM ".$event_tools_db_prefix."eventtools_user_text
+    WHERE user_text_key = 'ops_assign_email_operator_sample_text'
+    ;
+";
+$result=mysql_query($query);
+$num = mysql_numrows($result);
+
+if ($num == 0) {
+    // first run, store default - we do it this way because it's very long
+    mysql_query("INSERT INTO ".$event_tools_db_prefix."eventtools_user_text (user_text_key, user_text_value) VALUES ('ops_assign_email_operator_sample_text', '".str_replace("'", "''", $default_text)."');");
+} else if ($num == 1) {
+    $default_text = mysql_result($result,0,0);
+} else {
+    echo "Error, found ".$num." texts and expected 1";
+}
+
+
+if ( ($args["savetext"]) ) {
+    mysql_query("INSERT INTO ".$event_tools_db_prefix."eventtools_user_text (user_text_key, user_text_value) VALUES ('ops_assign_email_operator_sample_text', '".str_replace("'", "''", $args["content"])."') ON DUPLICATE KEY UPDATE user_text_value = '".str_replace("'", "''", $args["content"])."';");
+    $default_text = $args["content"];
+    echo "<b>Email text saved</b><br>";    
+} 
+
+if ( ($args["send"]) && (! $args["cy"])  ) {
+    echo "<b>You have to specify a cycle to send email</b><br>";    
+}
+
+if ( (! $args["send"]) || (! $args["cy"])  ) {
     // --------------------------- format the raw page -------------------------------
     echo "This is the page for emailing to the operators. Their specific layout assignments will be appended to the email.<p/>";
     echo "Please fill in the form and press 'start'. All fields are required. Multiple email addresses can be specified, separated with a comma. Put just dollar sign '$' in 'test' to send for real, otherwise where you want test emails sent.";
@@ -35,7 +69,8 @@ if (! ($args["cy"]) ) {
         Message content:<br>
         <textarea  name="content" rows="20" cols="70">'.$default_text.'</textarea><br>
         <input name="noassignments" id="noassignments" type="checkbox">Just send email text, omit including individual assignments</input> (but you still need a cycle name to identify operators)<br>
-        <button type="submit">Start</button>
+        <button type="submit" name="savetext" value="savetext">Save Text (doesn'."'".'t send mail)</button><br>
+        <button type="submit" name="send" value="send">Send Emails (doesn'."'".'t save text changes)</button>
     ';
     
     // display existing cycles & number of assignments)
