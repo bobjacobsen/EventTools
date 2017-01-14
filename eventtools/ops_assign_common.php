@@ -33,22 +33,22 @@ function insert_multiple_ops_request_structure($cycle, $reqs) {
     // create the group entries, one for each
     for ($i = 0; $i < $num; $i ++) {
         // skip if no selections
-        if (   (mysql_result($reqs,$i,"opsreq_pri1") <= "1")
-            && (mysql_result($reqs,$i,"opsreq_pri2") <= "1")
-            && (mysql_result($reqs,$i,"opsreq_pri3") <= "1")
-            && (mysql_result($reqs,$i,"opsreq_pri4") <= "1")
-            && (mysql_result($reqs,$i,"opsreq_pri5") <= "1")
-            && (mysql_result($reqs,$i,"opsreq_pri6") <= "1")
-            && (mysql_result($reqs,$i,"opsreq_pri7") <= "1")
-            && (mysql_result($reqs,$i,"opsreq_pri8") <= "1") 
-            && (mysql_result($reqs,$i,"opsreq_pri9") <= "1") 
-            && (mysql_result($reqs,$i,"opsreq_pri10") <= "1") 
-            && (mysql_result($reqs,$i,"opsreq_pri11") <= "1") 
-            && (mysql_result($reqs,$i,"opsreq_pri12") <= "1") 
-            ) {
-                echo "Skip ".mysql_result($reqs,$i,"opsreq_person_email").": no requests<br/>";
-                continue;
-        }
+//         if (   (mysql_result($reqs,$i,"opsreq_pri1") <= "1")
+//             && (mysql_result($reqs,$i,"opsreq_pri2") <= "1")
+//             && (mysql_result($reqs,$i,"opsreq_pri3") <= "1")
+//             && (mysql_result($reqs,$i,"opsreq_pri4") <= "1")
+//             && (mysql_result($reqs,$i,"opsreq_pri5") <= "1")
+//             && (mysql_result($reqs,$i,"opsreq_pri6") <= "1")
+//             && (mysql_result($reqs,$i,"opsreq_pri7") <= "1")
+//             && (mysql_result($reqs,$i,"opsreq_pri8") <= "1") 
+//             && (mysql_result($reqs,$i,"opsreq_pri9") <= "1") 
+//             && (mysql_result($reqs,$i,"opsreq_pri10") <= "1") 
+//             && (mysql_result($reqs,$i,"opsreq_pri11") <= "1") 
+//             && (mysql_result($reqs,$i,"opsreq_pri12") <= "1") 
+//             ) {
+//                 echo "Skip ".mysql_result($reqs,$i,"opsreq_person_email").": no requests<br/>";
+//                 continue;
+//         }
         
         // now insert
         insert_one_ops_request_structure($cycle, $reqs, $i);
