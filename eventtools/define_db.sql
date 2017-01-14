@@ -181,6 +181,9 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_constrain_communications` (
 -- Table structure for table `prefix_eventtools_customer_options`
 -- Defines options that can be specified for each customer
 --
+-- long_name is for e.g. listing on the registration form; what an attendee sees
+-- short_name is for e.g. table headings; what a committee member sees
+-- session_report_name is for the email to the session layout owners (leave null or blank if not needed)
 
 DROP TABLE IF EXISTS `prefix_eventtools_customer_options`;
 CREATE TABLE IF NOT EXISTS `prefix_eventtools_customer_options` (
@@ -188,6 +191,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_customer_options` (
   `customer_option_long_name` varchar(100) NOT NULL,
   `customer_option_short_name` varchar(20) NOT NULL,
   `customer_option_order` int(5) NOT NULL,
+  `customer_option_session_report_name` varchar(40) default '',
   PRIMARY KEY  (`customer_option_id`),
   KEY `idx_eventtools_customer_option_short_name` (`customer_option_short_name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;

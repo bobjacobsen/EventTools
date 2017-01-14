@@ -156,10 +156,10 @@ while ($i < $num) {
     $j = 0;
     $more = False;
     while ($j < $numExtras) {
-        if ( mysql_result($resultOptions,0,"value".$j) == 'Y' ) { // expecting just 1
+        if ( mysql_result($resultOptions,0,"value".$j) == 'Y' && mysql_result($resultExtras,$j,"customer_option_session_report_name")!='') { // expecting just 1
             if ($more) $options = $options.", ";
             $more = True;
-            $options = $options." ".mysql_result($resultExtras,$j,"customer_option_short_name");
+            $options = $options." ".mysql_result($resultExtras,$j,"customer_option_session_report_name");
         }
         $j++;
     }

@@ -61,9 +61,13 @@ ALTER TABLE `prefix_eventtools_opsession_req` ADD   `opsreq_opt7`            cha
 -- --------------------------------------------------------
 -- Lengthen URL fields
 -- --------------------------------------------------------
-ALTER TABLE `prefix_eventtools_layouts`       MODIFY `layout_local_url` varchar(128) default '';
-ALTER TABLE `prefix_eventtools_layouts`       MODIFY `layout_photo_url` varchar(128) default '';
+ALTER TABLE `prefix_eventtools_layouts`       MODIFY `layout_local_url`      varchar(128) default '';
+ALTER TABLE `prefix_eventtools_layouts`       MODIFY `layout_photo_url`      varchar(128) default '';
 
+-- --------------------------------------------------------
+-- Add additional option names
+-- --------------------------------------------------------
+ALTER TABLE `prefix_eventtools_customer_options` ADD `customer_option_session_report_name`       varchar(40) default '';
 
 -- --------------------------------------------------------
 -- After this, you MUST rerun the define_views.sql file

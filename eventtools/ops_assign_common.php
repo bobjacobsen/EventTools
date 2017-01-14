@@ -32,7 +32,8 @@ function insert_multiple_ops_request_structure($cycle, $reqs) {
     
     // create the group entries, one for each
     for ($i = 0; $i < $num; $i ++) {
-        // skip if no selections
+// following commented out 2017-01-12, not sure why it was here anyway.
+//        // skip if no selections
 //         if (   (mysql_result($reqs,$i,"opsreq_pri1") <= "1")
 //             && (mysql_result($reqs,$i,"opsreq_pri2") <= "1")
 //             && (mysql_result($reqs,$i,"opsreq_pri3") <= "1")

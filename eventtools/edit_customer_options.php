@@ -161,6 +161,12 @@ $opts['fdd']['customer_option_short_name'] = array(
   'maxlen'   => 20,
   'sort'     => true
 );
+$opts['fdd']['customer_option_session_report_name'] = array(
+  'name'     => 'Owner Report Label',
+  'select'   => 'T',
+  'maxlen'   => 40,
+  'sort'     => true
+);
 $opts['fdd']['customer_option_order'] = array(
   'name'     => 'Order Number (1 first)',
   'select'   => 'T',
