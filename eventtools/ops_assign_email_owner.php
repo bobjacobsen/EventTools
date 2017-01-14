@@ -72,7 +72,7 @@ if (! ($args["cy"]) ) {
     $num=mysql_numrows($result);
     $i=0;
     
-    echo '<h3>Operators</h3><p>If you select a specific session below, only that owner will get email</p><select name="session" id="session">';
+    echo '<h3>Sessions</h3><p>If you select a specific session below, only that owner will get email</p><select name="session" id="session">';
     echo '<option value="(ALL)">(ALL)</option>';
     while ($i < $num) {
         echo '<option value="'.mysql_result($result,$i,"ops_id").'">'.mysql_result($result,$i,"show_name").' '.mysql_result($result,$i,"start_date").' '.mysql_result($result,$i,"presenting_time").'</option>';
@@ -147,18 +147,23 @@ while ($i < $num) {
     $sessions = $sessions.'  Email: '.mysql_result($result,$i,"opsreq_person_email");
         
     // accumulate all the customer options that have gotten a Y answer as CSV string
-    $options = "  Options Selected: ";
+    $options = "";
     $optQuery = options_select_statement()." WHERE ( opsreq_person_email = '".mysql_result($result,$i,"opsreq_person_email")."' ) ;";
-    echo $optQuery;
+    //echo $optQuery;
     $resultOptions = mysql_query($optQuery);
     $numOptions = mysql_numrows($resultOptions);
     if ($numOptions > 1) echo "Didn't expect more than one match";
+    
     $j = 0;
-    $more = False;
+    $first = True;
     while ($j < $numExtras) {
         if ( mysql_result($resultOptions,0,"value".$j) == 'Y' && mysql_result($resultExtras,$j,"customer_option_session_report_name")!='') { // expecting just 1
-            if ($more) $options = $options.", ";
-            $more = True;
+            if ($first) {
+                $options = $options."  Options Selected: ";
+            } else {
+                $options = $options.", ";
+            } 
+            $first = False;
             $options = $options." ".mysql_result($resultExtras,$j,"customer_option_session_report_name");
         }
         $j++;
