@@ -183,12 +183,12 @@ if ($event_tools_option_zen_cart_used) {
 
 <h2 id="configuration">Configuration</h2>
 You can define global optional quantities that can be attached to each
-individual customer. This can be used to capture a Y/N answer to "I'd like to attend the dinner",
+individual attendee. This can be used to capture a Y/N answer to "I'd like to attend the dinner",
 for example.
 <table border="1">
-<tr><th>Customer Options<br/>(Registration Extra Questions)</th>
+<tr><th>Attendee Options<br/>(Registration Extra Questions)</th>
 <td>
-<a href="edit_customer_options.php">Edit Customer Options</a>
+<a href="edit_customer_options.php">Edit Attendee Options</a>
 </td>
 </tr></table>
 <p>
