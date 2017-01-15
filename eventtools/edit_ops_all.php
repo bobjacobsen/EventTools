@@ -476,12 +476,6 @@ $opts['fdd']['opsreq_priority'] = array(
   'maxlen'   => 5,
   'sort'     => true
 );
-// $opts['fdd']['opsreq_opt1'] = array(
-//   'name'     => $event_tools_op_session_opt1_name,
-//   'select'   => 'T',
-//   'maxlen'   => 1,
-//   'sort'     => true
-// );
 $opts['fdd']['opsreq_any'] = array(
   'name'     => "Any session OK, not just priorities?",
   'select'   => 'T',
