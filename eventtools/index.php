@@ -51,7 +51,7 @@ if ($event_tools_option_layout_tours)   echo '<td><a href="edit_layout_tour_add_
 if ($event_tools_option_other_events)   echo '<td><a href="edit_misc_event_tags.php">Add or remove tags</a></td>';
 if ($event_tools_option_layouts)        echo '<td><a href="edit_layouts_entry.php">Quick Entry</a></td>';
 if ($event_tools_option_clinics)        echo '<td><a href="edit_clinic_tags.php">Add or remove tags</a></td>';
-if ($event_tools_option_op_sessions)    echo '<td><a href="edit_ops_all.php">Enter/Change User Requests</a></td>';
+if ($event_tools_option_op_sessions)    echo '<td><a href="edit_ops_all.php">Enter/Change Attendee Requests</a></td>';
 
 echo '</tr><tr>
     <th>Review Content</th>';
@@ -172,7 +172,7 @@ if ($event_tools_option_zen_cart_used) {
     echo '<a href="ops_reg_attendee_summary.php">Attendee Summary Table<a/><p>';
     if ($event_tools_ops_session_by_category) echo '<a href="edit_user_req_group.php">View/Edit Attendee Category Numbers</a><p>';
     echo '<a href="ops_req_single.php">Single Attendee Summary (enter email)<a/><p>';
-    echo '<a href="ops_req.php">Form for users to change their own request (enter email)</a><p>';
+    echo '<a href="ops_req.php">Form for attendees to change their own request (enter email)</a><p>';
     echo '<a href="ops_print_by_attendee.php">Assigned Sessions by Attendee (enter cycle)</a><p>';
     echo '<a href="ops_list_group.php">Email list for attendees (enter cycle)</a>    <p>';
     echo '</td><td>Attendees have registered and/or<br/>requested operating session<br/>assignments<p>They also appear in the contacts pages,<br/>where you can edit their contact info.</td></tr></table>';
