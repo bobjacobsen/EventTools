@@ -19,7 +19,7 @@ function create_request_entries($max_pri, $where=NONE, $order=NONE ) {
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
     
-    if ($order==NONE) $order = "show_name";
+    if ($order==NONE) $order = "show_name, start_date";
 
     if ($where != NONE) $where = "WHERE ".$where." ";
     else $where = " ";
