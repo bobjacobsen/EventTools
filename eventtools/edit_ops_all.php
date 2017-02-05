@@ -21,7 +21,8 @@
 </head>
 <body>
 <h3>Edit Operating Session Requests</h3>
-<a href="index.php">Back to main page</a>
+<a href="index.php">Back to main page</a><br>
+<a href="ops_req_bulk_move.php">Bulk Move Requests</a>
 <p>
 
 
