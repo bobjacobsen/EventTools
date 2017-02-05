@@ -419,37 +419,15 @@ while ($i < $num) {
     $i++;
 }
 
-echo '<form method="get" action="ops_assign_set.php">
-    <button type="submit" name="insert" value="y" title="Select operator and session before clicking button to force assignment">Add operator to session</button>';
-echo '<input type="hidden" name="cy" value="'.$cycle.'">';
-echo '<select name="operator" title="Select operator and session before clicking button to force assignment">';
-$query="
-    SELECT DISTINCT customers_firstname, customers_lastname, opsreq_person_email
-    FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
-    WHERE opsreq_group_cycle_name = '".$cycle."'
-    ORDER BY customers_lastname, opsreq_person_email
-    ;
-";
-$result=mysql_query($query);
+// preload navigation
+
+global $reqnum_by_rqstr, $reqname_by_rqstr, $strtdate_by_rqstr, $statusid_by_rqstr, $status_by_rqstr;
+global $rqstr_name, $rqstr_group, $rqstr_address, $rqstr_category, $rqstr_email, $rqstr_group_size, $rqstr_req_size, $rqstr_req_any;
+global $empty_slots_by_session, $layout_number_by_session, $strtdate_by_session;
+
+// set the navigation info
+$result = updatenavigation();
 $num = mysql_numrows($result);
-for ($i = 0; $i < $num; $i++) {
-    echo '<option value="'.mysql_result($result,$i,"opsreq_person_email").'">'.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").' &lt;'.mysql_result($result,$i,"opsreq_person_email").'&gt;'."</option>";
-}
-echo '</select>';
-echo '<select name="session" title="Select operator and session before clicking button to force assignment">';
-$query="
-    SELECT DISTINCT ops_id, show_name, start_date
-    FROM ".$event_tools_db_prefix."eventtools_opsession_name
-    ORDER BY show_name, start_date
-    ;
-";
-$result=mysql_query($query);
-$num = mysql_numrows($result);
-for ($i = 0; $i < $num; $i++) {
-    echo '<option value="'.mysql_result($result,$i,"ops_id").'">'.mysql_result($result,$i,"show_name").' '.mysql_result($result,$i,"start_date")."</option>";
-}
-echo '</select>';
-echo '</form>';
 
 // start processing tags
 if (array_key_exists("from", $args)) {
@@ -483,7 +461,7 @@ if (array_key_exists("insert", $args)) {
         $id = 0;
         for ($i = 0; $i < $num; $i++) {
             if ( mysql_result($result,$i,"ops_id") == $ops_id ) {
-                echo '<b>Force assignment of existing request to  '.mysql_result($result,$i,"show_name").' '.mysql_result($result,$i,"start_date").'</b>';
+                echo '<b>Forced assignment to  '.mysql_result($result,$i,"show_name").' '.mysql_result($result,$i,"start_date").'</b>';
                 setstatus(mysql_result($result,$i,"opsreq_req_status_id"),'1');
                 $O = FALSE;
                 echo '<form method="get" action="ops_assign_set.php#sess'.mysql_result($result,$i,"show_name").'">
@@ -519,7 +497,7 @@ if (array_key_exists("insert", $args)) {
             $result=mysql_query($query);
             $num = mysql_numrows($result);
             
-            echo '<b>Created new request and forced assignment to '.mysql_result($result,0,"show_name").' '.mysql_result($result,0,"start_date").'</b> ';
+            echo '<b>New request force assigned to '.mysql_result($result,0,"show_name").' '.mysql_result($result,0,"start_date").'</b> ';
             //echo '[opsreq_group_req_link: '.mysql_result($result,0,"opsreq_group_id").' '.mysql_result($result,0,"opsreq_id").']';
             //echo '[opsreq_req_status: '.mysql_result($result,0,"ops_id").' '.$lastfree.']';
             echo '<form method="get" action="ops_assign_set.php#sess'.mysql_result($result,0,"show_name").'">
@@ -568,12 +546,6 @@ for ($i = 0; $i < $num; ) {
     $i++;
 }
 
-// preload navigation
-
-global $reqnum_by_rqstr, $reqname_by_rqstr, $strtdate_by_rqstr, $statusid_by_rqstr, $status_by_rqstr;
-global $rqstr_name, $rqstr_group, $rqstr_address, $rqstr_category, $rqstr_email, $rqstr_group_size, $rqstr_req_size, $rqstr_req_any;
-global $empty_slots_by_session, $layout_number_by_session, $strtdate_by_session;
-
 // set the initial navigation info
 $result = updatenavigation();
 $num = mysql_numrows($result);
@@ -582,6 +554,7 @@ $num = mysql_numrows($result);
 // status (conflicts, etc) has been set
 
 if (array_key_exists("grp", $args)) { // assign remaining top priority in requesting session
+    echo '<hr>';
     //cy=gggg&id=7737&pri=1&op=P#s637
     $id =  $args["id"];  // one item; there will be more through the group
     $pri = $args["pri"];
@@ -626,10 +599,12 @@ if (array_key_exists("grp", $args)) { // assign remaining top priority in reques
     // and update status
     $result = updatenavigation();
     $num = mysql_numrows($result);
+    echo '<hr><p>';
 }
 
 // do a best-fill operation
 if (array_key_exists("best", $args)) {
+    echo '<hr>';
     $pri = 0+$args["pri"];
 
     // if doing by-layout assignment, and requested section is full and the alternate section has space, move request
@@ -829,10 +804,90 @@ if (array_key_exists("best", $args)) {
         foreach ($users as $u) echo ' '.$u.' '; 
         echo '</b><br/>';
     }
-    
+    echo '<hr><p>';
 }
 
 // start display
+
+echo 'The next two lines do the same thing. The first is in alphabetical order, and the second is ordered by least existing assignments<br>';
+
+// first form
+echo '<form method="get" action="ops_assign_set.php">
+    <button type="submit" name="insert" value="y" title="Select operator and session before clicking button to force assignment">Add operator to session</button>';
+echo '<input type="hidden" name="cy" value="'.$cycle.'">';
+echo '<select name="operator" title="Select operator and session before clicking button to force assignment">';
+$query="
+    SELECT DISTINCT customers_firstname, customers_lastname, opsreq_person_email
+    FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
+    WHERE opsreq_group_cycle_name = '".$cycle."'
+    ORDER BY customers_lastname, opsreq_person_email
+    ;
+";
+$result=mysql_query($query);
+$num = mysql_numrows($result);
+for ($i = 0; $i < $num; $i++) {
+    echo '<option value="'.mysql_result($result,$i,"opsreq_person_email").'">'.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").' &lt;'.mysql_result($result,$i,"opsreq_person_email").'&gt;'."</option>";
+}
+echo '</select>';
+echo '<select name="session" title="Select operator and session before clicking button to force assignment">';
+$query="
+    SELECT DISTINCT ops_id, show_name, start_date
+    FROM ".$event_tools_db_prefix."eventtools_opsession_name
+    ORDER BY show_name, start_date
+    ;
+";
+$result=mysql_query($query);
+$num = mysql_numrows($result);
+for ($i = 0; $i < $num; $i++) {
+    echo '<option value="'.mysql_result($result,$i,"ops_id").'">'.mysql_result($result,$i,"show_name").' '.mysql_result($result,$i,"start_date")."</option>";
+}
+echo '</select>';
+echo '</form>';
+
+// second form - order options by number of assignments and by number of spaces
+echo '<form method="get" action="ops_assign_set.php">
+    <button type="submit" name="insert" value="y" title="Select operator and session before clicking button to force assignment">Add operator to session</button>';
+echo '<input type="hidden" name="cy" value="'.$cycle.'">';
+echo '<select name="operator" title="(Number of current assignments)">';
+$query="
+    SELECT customers_firstname, customers_lastname, opsreq_person_email, COUNT(*)
+    FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
+    WHERE opsreq_group_cycle_name = '".$cycle."' AND status = '0'
+    GROUP BY customers_firstname, customers_lastname, opsreq_person_email
+    ORDER BY COUNT(*) DESC
+    ;
+";
+$result=mysql_query($query);
+$num = mysql_numrows($result);
+for ($i = 0; $i < $num; $i++) {
+    echo '<option value="'.mysql_result($result,$i,"opsreq_person_email").'">'.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").' &lt;'.mysql_result($result,$i,"opsreq_person_email").'&gt; ('.(12-mysql_result($result,$i,"COUNT(*)")).")</option>";
+}
+echo '</select>';
+echo '<select name="session" title="Number Assigned / Spaces Left / Total Spaces">';
+$query="
+SELECT start_date, spaces, show_name, COUNT(*), ops_id
+FROM bayrails2017_eventtools_opsreq_group 
+    JOIN bayrails2017_eventtools_opsreq_group_req_link USING ( opsreq_group_id )
+    JOIN bayrails2017_eventtools_opsreq_req_status USING ( opsreq_group_req_link_id )
+    JOIN bayrails2017_eventtools_opsession_name USING ( ops_id )
+    JOIN bayrails2017_eventtools_layouts on ops_layout_id = layout_id
+ WHERE opsreq_group_cycle_name = 'jake-test-6' and status = '1'
+ GROUP BY `ops_id`
+ ORDER BY spaces-COUNT(*) DESC
+ ;
+ ";
+$result=mysql_query($query);
+$num = mysql_numrows($result);
+for ($i = 0; $i < $num; $i++) {
+    echo '<option value="'.mysql_result($result,$i,"ops_id").'">'.mysql_result($result,$i,"show_name").' '.mysql_result($result,$i,"start_date")." ".mysql_result($result,$i,"COUNT(*)")."/".(mysql_result($result,$i,"spaces")-mysql_result($result,$i,"COUNT(*)"))."/".mysql_result($result,$i,"spaces")."</option>";
+}
+echo '</select>';
+echo '</form>';
+
+// ensure navigation info
+$result = updatenavigation();
+$num = mysql_numrows($result);
+
 
 // Create by-operator table with buttons for assigning (from arrays only, not query)
 echo '<h3>By Operator, in preference order</h3>';
