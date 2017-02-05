@@ -1,6 +1,6 @@
 Instructions for Rolling to a New Year
 
-These are the instructions for rolling a convention to a new year. E.g. you've have BayRails 2015, and want to get ready to use that same EventTools install for BayRails 2017.
+These are the instructions for rolling a convention to a new year. E.g. you've have BayRails 2015, and want to get ready to use that same EventTools install for BayRails 2017.  You can also use this to reload a test database from a production one.
 
 - [ ] Export all bayrails2015 databases using phpMyAdmin
 
@@ -25,7 +25,7 @@ These are the instructions for rolling a convention to a new year. E.g. you've h
        
 - Sequel Pro (for localhost database update)
     - [ ] Start mySql, log on to localhost
-    - [ ] Make sure sneumann database exists and is selected
+    - [ ] Make sure correct (e.g snuemann) database exists and is selected
     - [ ] "Query" icon, paste the load content (from above) in window, select entire pasted content, hit "Run Selection": should see about 84 queries, 1686 rows affected
     - [ ] "Query" icon, paste define_views.sql contents in window, select entire pasted content, hit "Run Selection": should see about 14 queries
         
