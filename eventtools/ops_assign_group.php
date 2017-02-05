@@ -184,13 +184,13 @@ if (count($merges) > 0) {
             echo '<input type=hidden name="'.$merges[$j].'" value="merge">'."\n";
         }
         echo '<input type="hidden" name="force" value="yes">'."\n";
-        echo '<button type="submit">Force this grouping, making all requests match first</button>'."\n";
+        echo '<button type="submit" name="group" value="group">Force this grouping, making all requests match first</button>'."\n";
         echo '</form>';
     }
 }
 
 // Create a table form with a check-box for merging
-echo 'Check boxes and click "Group" to combine requests, or click the Continue to Assignments Button above.<br/>';
+echo 'Check boxes and click "Group" at bottom to combine requests, or click the Continue to Assignments Button above.<br>';
 
 echo '<form method="get" action="ops_assign_group.php?cy='.$cycle.'"><table border="1">'."\n";
 echo '<tr><th></th><th></th><th>Name</th><th>Comment</th>'."\n";
@@ -289,8 +289,10 @@ foreach ($rows as $key => $val) {
 }
 
 echo '</table>';
+echo '<p>';
+echo "Click the button below to group all selected attendees. If the requests don't agree, you'll be prompted whether to force them all to be the same as the 1st checked attendee.<br>";
 echo '<input type="hidden" name="cy" value="'.$cycle.'">';
-echo '<button type="submit">Group</button></form>';
+echo '<button type="submit" name="group" value="group">Group all checked rows above</button></form>';
 
 ?>
 </body>
