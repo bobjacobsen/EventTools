@@ -236,7 +236,7 @@ function updatenavigation() {
         $statusid = array();
         $status = array();
     
-        for ($j = 1; $j<13; $j++) {
+        for ($j = 1; $j<=12; $j++) {
             $nums[$j] = mysql_result($result,$i,"req_num");
             $names[$j] = mysql_result($result,$i,"show_name");
     
@@ -902,7 +902,7 @@ $tagnum = 0;
 $lowpri = "99";
 
 for ($i=0; $i<$num; ) {
-    if (mysql_result($result,$i,"show_name") != "") {
+    if (mysql_result($result,$i,"show_name") != "") { // skip nameless sessions
         // count number of assignments (status = 1)
         $j = $i;
         $firstindex = $j;
