@@ -94,16 +94,9 @@ for ($i=0; $i < $num; $i++) {
         echo '<td class="attendee">';
         echo mysql_result($result,$i,"customers_firstname").' ';
         echo mysql_result($result,$i,"customers_lastname").' ';
-        $options = "";
-        if (mysql_result($result,$i,"opsreq_opt1") ==  'Y') $options = $options." (".$event_tools_op_session_opt1_name.") ";
-        if (mysql_result($result,$i,"opsreq_opt2") ==  'Y') $options = $options." (".$event_tools_op_session_opt2_name.") ";
-        if (mysql_result($result,$i,"opsreq_opt3") ==  'Y') $options = $options." (".$event_tools_op_session_opt3_name.") ";
-        if (mysql_result($result,$i,"opsreq_opt4") ==  'Y') $options = $options." (".$event_tools_op_session_opt4_name.") ";
-        if (mysql_result($result,$i,"opsreq_opt5") ==  'Y') $options = $options." (".$event_tools_op_session_opt5_name.") ";
-        if (mysql_result($result,$i,"opsreq_opt6") ==  'Y') $options = $options." (".$event_tools_op_session_opt6_name.") ";
-        if (mysql_result($result,$i,"opsreq_opt7") ==  'Y') $options = $options." (".$event_tools_op_session_opt7_name.") ";
-        if (mysql_result($result,$i,"opsreq_opt8") ==  'Y') $options = $options." (".$event_tools_op_session_opt8_name.") ";
-        if ($options != "") echo '<br/>'.$options;
+
+        // if you want to print options selected by user, put it here
+        
         echo '</td>';
         $count--;
     }
