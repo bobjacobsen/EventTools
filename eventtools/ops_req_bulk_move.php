@@ -37,6 +37,8 @@ require_once('utilities.php');
 
 global $stats;
 
+$min_status = 60;                  // min status below which get warning; 40 is "under construction", 50 is "special", 60 is "approved"^M
+
 function score($choice,$key) {
     global $stats;
     if ($key == NONE || $key == '') return;
@@ -78,6 +80,9 @@ if ($args["session"]) {
 echo 'Use this page to move requests from one session to another.<p>';
 echo 'On the line for the session from which you want to move requests, select the new session for those requests, and click "Move to".<br>';
 echo 'The attendee requests will be changed from the old session to the newly-selected one, keeping all the priority information unchanged.';
+echo '<p>';
+echo '<span style="background: #ffa0a0">Red highlights</span> indicate an error:  requests still on a session that\'s been disabled.';
+
 // is there a requested move?
 if ($args["move"]) {
     
@@ -221,8 +226,10 @@ while ($i < $numSessions) {
         $j++;
     }
     echo '<td align="right">';
-    if ($sum < mysql_result($resultSessions,$i,"spaces"))
-        echo '<div style="background: #ffe0e0">';
+    if (mysql_result($resultSessions,$i,"status_code") < $min_status 
+            && $sum != 0
+            && mysql_result($resultSessions,$i,"spaces") > 0)
+        echo '<div style="background: #ffa0a0">';
     else
         echo '<div>';            
     echo $sum;
