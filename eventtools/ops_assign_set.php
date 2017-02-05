@@ -24,6 +24,9 @@
 
 require_once('ops_assign_common.php');
 
+global $min_status;
+$min_status = 60;                  // min status to be included; 40 is "under construction", 50 is "special", 60 is "approved"
+
 function setbuttons($cycle,$stat,$id,$tag) {
     echo '<table><tr>';
     if ( ($stat == STATUS_RELEASED) || ($stat == STATUS_DISABLED ) )
@@ -187,13 +190,13 @@ function updatenavigation() {
     global $reqnum_by_rqstr, $reqname_by_rqstr, $strtdate_by_rqstr, $statusid_by_rqstr, $status_by_rqstr;
     global $rqstr_name, $rqstr_group, $rqstr_address, $rqstr_category, $rqstr_email, $rqstr_group_size, $rqstr_req_size, $rqstr_req_any;
     global $group_user_count;
-    global $empty_slots_by_session, $layout_number_by_session,$strtdate_by_session;
-    global $event_tools_db_prefix, $cycle;
+    global $empty_slots_by_session, $layout_number_by_session, $strtdate_by_session, $session_status_by_session;
+    global $event_tools_db_prefix, $cycle, $min_status;
     
     $query="
         SELECT  *
         FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
-        WHERE opsreq_group_cycle_name = '".$cycle."'
+        WHERE opsreq_group_cycle_name = '".$cycle."' 
         ORDER BY opsreq_priority DESC, customers_create_date, customers_lastname, opsreq_person_email, req_num
         ;
     ";
@@ -298,6 +301,7 @@ function updatenavigation() {
     
     // scan for full sessions and disable requests
     $empty_slots_by_session = array();   // count of empty slots by session name (show_name.start_date)
+    $session_status_by_session = array(); // session code (40, 50, 60) of session
     
     $detailed_debug = FALSE;
     
@@ -314,6 +318,7 @@ function updatenavigation() {
                 if (mysql_result($result,$j,"status") == STATUS_ASSIGNED) $count1++;
             }
             $empty_slots_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$j,"start_date")] = 0+mysql_result($result,$i,"spaces") - $count1;
+            $session_status_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$j,"start_date")] = mysql_result($result,$i,"status_code");
             if ($detailed_debug) echo "Recomputed empty slots for ".mysql_result($result,$i,"show_name")." as ".$empty_slots_by_session[mysql_result($result,$i,"show_name")]."<br/>\n";
 
             // have count, check for over
@@ -622,16 +627,19 @@ if (array_key_exists("best", $args)) {
             foreach ($layout_number_by_session as $ses_next => $layout_next) {
                 //echo '['.$ses_next.'/'.$layout_next.']';
                 if (($layout_next == $layout ) && ($ses_next != $session)) {
-                    // alternate session, check space
-                    //echo '[ checking '.$ses_next.' with '.$empty_slots_by_session[$ses_next].']';
-                    if ($empty_slots_by_session[$ses_next] == '' || $empty_slots_by_session[$ses_next] == NONE || $empty_slots_by_session[$ses_next] > 0) {
-                        // found, move request over and repeat
-                        echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Move '.$email.' request from '.$reqname_by_rqstr[$email][$pri].' '.$strtdate_by_rqstr[$email][$pri];
-                        echo ' to '.$strtdate_by_session[$ses_next].'<br/>';
-                        transfer_unassigned($strtdate_by_session[$ses_next], $strtdate_by_rqstr[$email][$pri], $reqname_by_rqstr[$email][$pri], $cycle, $email);
-                        $result = updatenavigation();
-                        $num = mysql_numrows($result);
-                        break; // done with this user, go next
+                    // alternate session, check status OK
+                    if ($empty_slots_by_session[$ses_next] >= $min_status) {
+                        // check space
+                        //echo '[ checking '.$ses_next.' with '.$empty_slots_by_session[$ses_next].']';
+                        if ($empty_slots_by_session[$ses_next] == '' || $empty_slots_by_session[$ses_next] == NONE || $empty_slots_by_session[$ses_next] > 0) {
+                            // found, move request over and repeat
+                            echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Move '.$email.' request from '.$reqname_by_rqstr[$email][$pri].' '.$strtdate_by_rqstr[$email][$pri];
+                            echo ' to '.$strtdate_by_session[$ses_next].'<br/>';
+                            transfer_unassigned($strtdate_by_session[$ses_next], $strtdate_by_rqstr[$email][$pri], $reqname_by_rqstr[$email][$pri], $cycle, $email);
+                            $result = updatenavigation();
+                            $num = mysql_numrows($result);
+                            break; // done with this user, go next
+                        }
                     }
                 }
             }
@@ -697,14 +705,16 @@ if (array_key_exists("best", $args)) {
                     if (($layout_next == $layout ) && ($ses_next != $session)) {
                         // alternate session, check space
                         if ($detail_debug) echo '[ checking '.$ses_next.' with '.$empty_slots_by_session[$ses_next].']';
-                        if ($empty_slots_by_session[$ses_next] == '' || $empty_slots_by_session[$ses_next] == NONE || $empty_slots_by_session[$ses_next] > 0) {
-                            // found, move request over and repeat
-                            echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Move '.$email.' request from '.$reqname_by_rqstr[$email][$pri].' '.$strtdate_by_rqstr[$email][$pri];
-                            echo ' to '.$strtdate_by_session[$ses_next].'<br/>';
-                            transfer_unassigned($strtdate_by_session[$ses_next], $strtdate_by_rqstr[$email][$pri], $reqname_by_rqstr[$email][$pri], $cycle, $email);
-                            $result = updatenavigation();
-                            $num = mysql_numrows($result);
-                            break; // done with this user, go next
+                        if ($session_status_by_session[$ses_next] > $min_status) {
+                            if ($empty_slots_by_session[$ses_next] == '' || $empty_slots_by_session[$ses_next] == NONE || $empty_slots_by_session[$ses_next] > 0) {
+                                // found, move request over and repeat
+                                echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Move '.$email.' request from '.$reqname_by_rqstr[$email][$pri].' '.$strtdate_by_rqstr[$email][$pri];
+                                echo ' to '.$strtdate_by_session[$ses_next].'<br/>';
+                                transfer_unassigned($strtdate_by_session[$ses_next], $strtdate_by_rqstr[$email][$pri], $reqname_by_rqstr[$email][$pri], $cycle, $email);
+                                $result = updatenavigation();
+                                $num = mysql_numrows($result);
+                                break; // done with this user, go next
+                            }
                         }
                     }
                 }
@@ -833,6 +843,7 @@ echo '<select name="session" title="Select operator and session before clicking 
 $query="
     SELECT DISTINCT ops_id, show_name, start_date
     FROM ".$event_tools_db_prefix."eventtools_opsession_name
+    WHERE status_code >= ".$min_status."
     ORDER BY show_name, start_date
     ;
 ";
@@ -871,7 +882,7 @@ FROM bayrails2017_eventtools_opsreq_group
     JOIN bayrails2017_eventtools_opsreq_req_status USING ( opsreq_group_req_link_id )
     JOIN bayrails2017_eventtools_opsession_name USING ( ops_id )
     JOIN bayrails2017_eventtools_layouts on ops_layout_id = layout_id
- WHERE opsreq_group_cycle_name = 'jake-test-6' and status = '1'
+ WHERE opsreq_group_cycle_name = 'jake-test-6' and status = '1' AND status_code >= ".$min_status."
  GROUP BY `ops_id`
  ORDER BY spaces-COUNT(*) DESC
  ;
@@ -954,17 +965,17 @@ echo 'Left-header numbers are (Number Operators Assigned)/(Assignable Requests L
 echo '<table border="1">';
 $tagnum = 0;
 
-$lowpri = "99";
+$lowpri = "99"; // lowest available priority (1-12 position, aka req_num) in whole population
 
 for ($i=0; $i<$num; ) {
     if (mysql_result($result,$i,"show_name") != "") { // skip nameless sessions
         // count number of assignments (status = 1)
         $j = $i;
         $firstindex = $j;
-        $count0 = 0; // waiting assignment
+        $count0 = 0; // available for assignment
         $count1 = 0; // assigned
-        $firstpri = 99;
-        $pricnt = 0;
+        $firstpri = 99; // lowest (best) remaining priority (1-12 position, aka req_num) this row
+        $pricnt = 0; // count of those
         if ($status_by_rqstr[mysql_result($result,$j,"opsreq_person_email")][mysql_result($result,$j,"req_num")] == "0") {
             if (mysql_result($result,$j,"req_num") < $lowpri) $lowpri = mysql_result($result,$j,"req_num");
             $count0++;
@@ -1008,13 +1019,14 @@ for ($i=0; $i<$num; ) {
         echo '<input type="hidden" name="cy" value="'.$cycle.'">
               <input type="hidden" name="id" value="'.mysql_result($result,$firstindex,"opsreq_req_status_id").'">
               <input type="hidden" name="pri" value="'.$firstpri.'">';
-        if (($pricnt > 0) && ($pricnt <= (mysql_result($result,$i,"spaces") - $count1))) {
+        if (($pricnt > 0) && ($pricnt <= (mysql_result($result,$i,"spaces") - $count1))) { // won't show button if none, or too many to take all
             echo '<input type="submit" name="grp" value="P" title="P buttons assign the next priority remaining requests for this layout."/><br/>';
         }
         $header = False;
         for ($session = 0; $session < $n_sessions; $session++) { 
             if (mysql_result($r_sessions, $session, "show_name") == mysql_result($result,$i,"show_name")
-                    && mysql_result($r_sessions, $session, "start_date") != mysql_result($result,$i,"start_date") ) {
+                    && mysql_result($r_sessions, $session, "start_date") != mysql_result($result,$i,"start_date") 
+                    && mysql_result($r_sessions, $session, "status_code") >= $min_status) {
                 if (! $header) {
                     echo 'Move to: <br/>';
                     echo '<input type="hidden" name="show_name" value="'.mysql_result($result,$i,"show_name").'">';
