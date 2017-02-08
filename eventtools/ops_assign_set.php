@@ -877,16 +877,16 @@ echo '</select>';
 echo '<select name="session" title="Number Assigned / Spaces Left / Total Spaces">';
 $query="
 SELECT start_date, spaces, show_name, COUNT(*), ops_id
-FROM bayrails2017_eventtools_opsreq_group 
-    JOIN bayrails2017_eventtools_opsreq_group_req_link USING ( opsreq_group_id )
-    JOIN bayrails2017_eventtools_opsreq_req_status USING ( opsreq_group_req_link_id )
-    JOIN bayrails2017_eventtools_opsession_name USING ( ops_id )
-    JOIN bayrails2017_eventtools_layouts on ops_layout_id = layout_id
+FROM ".$event_tools_db_prefix."eventtools_opsreq_group 
+    JOIN ".$event_tools_db_prefix."eventtools_opsreq_group_req_link USING ( opsreq_group_id )
+    JOIN ".$event_tools_db_prefix."eventtools_opsreq_req_status USING ( opsreq_group_req_link_id )
+    JOIN ".$event_tools_db_prefix."eventtools_opsession_name USING ( ops_id )
+    JOIN ".$event_tools_db_prefix."eventtools_layouts on ops_layout_id = layout_id
  WHERE opsreq_group_cycle_name = 'jake-test-6' and status = '1' AND status_code >= ".$min_status."
  GROUP BY `ops_id`
  ORDER BY spaces-COUNT(*) DESC
  ;
- ";
+ "; // to the WHERE line, added         AND status_code >= ".$min_status."
 $result=mysql_query($query);
 $num = mysql_numrows($result);
 for ($i = 0; $i < $num; $i++) {
