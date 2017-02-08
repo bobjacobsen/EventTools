@@ -882,15 +882,17 @@ FROM ".$event_tools_db_prefix."eventtools_opsreq_group
     JOIN ".$event_tools_db_prefix."eventtools_opsreq_req_status USING ( opsreq_group_req_link_id )
     JOIN ".$event_tools_db_prefix."eventtools_opsession_name USING ( ops_id )
     JOIN ".$event_tools_db_prefix."eventtools_layouts on ops_layout_id = layout_id
- WHERE opsreq_group_cycle_name = 'jake-test-6' and status = '1' AND status_code >= ".$min_status."
+ WHERE opsreq_group_cycle_name = '".$cycle."' and status = '1' AND status_code >= ".$min_status."
  GROUP BY `ops_id`
- ORDER BY spaces-COUNT(*) DESC
+ ORDER BY SUBSTRING(start_date,1,10) ASC, spaces-COUNT(*) DESC, show_name ASC
  ;
- "; // to the WHERE line, added         AND status_code >= ".$min_status."
+ ";
 $result=mysql_query($query);
 $num = mysql_numrows($result);
 for ($i = 0; $i < $num; $i++) {
-    echo '<option value="'.mysql_result($result,$i,"ops_id").'">'.mysql_result($result,$i,"show_name").' '.mysql_result($result,$i,"start_date")." ".mysql_result($result,$i,"COUNT(*)")."/".(mysql_result($result,$i,"spaces")-mysql_result($result,$i,"COUNT(*)"))."/".mysql_result($result,$i,"spaces")."</option>";
+    if ((mysql_result($result,$i,"spaces")-mysql_result($result,$i,"COUNT(*)")) > 0 ) { // full sessions not included
+        echo '<option value="'.mysql_result($result,$i,"ops_id").'">'.mysql_result($result,$i,"show_name").' '.mysql_result($result,$i,"start_date")." ".mysql_result($result,$i,"COUNT(*)")."/".(mysql_result($result,$i,"spaces")-mysql_result($result,$i,"COUNT(*)"))."/".mysql_result($result,$i,"spaces")."</option>";
+    }
 }
 echo '</select>';
 echo '</form>';
