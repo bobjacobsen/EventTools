@@ -204,19 +204,19 @@ echo '<table border="1">';
 echo '<tr><th>Layout</th><th>Start</th><th>Spots</th><th>Sum</th><th>Status</th><th></th></tr>';
 
 $i = 0;
-$grandtotal = array(0,0,"","",0,0,0,0,0,0,0,0,0,0,0,0);
 
 while ($i < $numSessions) {
     $key = mysql_result($resultSessions,$i,"ops_id");
     echo '<tr>';
+    
+    // layout name
     echo '<td><a href="?session='.mysql_result($resultSessions,$i,"ops_id").'">'.mysql_result($resultSessions,$i,"show_name").'</a></td>';
+    
+    // start time
     echo '<td>'.mysql_result($resultSessions,$i,"start_date").'</td>'."\n";
-    
-    $include = FALSE;
-    if (mysql_result($resultSessions,$i,"show_name") !=NULL) $include = TRUE;
-    
+        
+    // spaces (called spots)
     echo '<td align="right">'.mysql_result($resultSessions,$i,"spaces").'</td>'."\n";
-    if ($include) $grandtotal[0] += mysql_result($resultSessions,$i,"spaces");
 
     // sum column
     $j = 0;
@@ -229,13 +229,13 @@ while ($i < $numSessions) {
     if (mysql_result($resultSessions,$i,"status_code") < $min_status 
             && $sum != 0
             && mysql_result($resultSessions,$i,"spaces") > 0)
-        echo '<div style="background: #ffa0a0">';
+        echo '<div style="background: #ffa0a0">';  // red if not at or above min_status
     else
         echo '<div>';            
     echo $sum;
     echo '</div></td>'."\n";
-    if ($include) $grandtotal[1] += $sum;
     
+    // status
     echo '<td>'.$statusMap[mysql_result($resultSessions,$i,"status_code")].'</td>';
     
     // set up the move-to form
