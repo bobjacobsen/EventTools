@@ -198,7 +198,6 @@ while ($i < $numReqs) {
     $i++;
 }
 
-
 // print table
 echo '<table border="1">';
 echo '<tr><th>Layout</th><th>Start</th><th>Spots</th><th>Sum</th><th>Status</th><th></th></tr>';
@@ -239,17 +238,33 @@ while ($i < $numSessions) {
     echo '<td>'.$statusMap[mysql_result($resultSessions,$i,"status_code")].'</td>';
     
     // set up the move-to form
-    echo '<td><form>';
-    echo '<button type="submit" name="move" value="'.$key.'">Move to:</button>';
-    echo '<select name="to">';
+    echo "\n".'<td>';
+    echo '<form onsubmit="
+        var sel = 
+            document.getElementById(\'to'
+                .mysql_result($resultSessions,$i,"ops_id")
+                .'\');
+        var dest = sel.options[sel.selectedIndex].text;
+        if (dest == \'\') {
+            return confirm(\'Really erase requests?\');
+        } else {
+            return confirm(
+                \'Move to \'+dest+\'?\'
+            );
+        }
+      ">';
+    echo 'To:';
+    echo "\n".'<select name="to" id="to'.mysql_result($resultSessions,$i,"ops_id").'">'."\n";
     $n = 0;
     while ($n < $numSessions) {
         if ($i != $n) 
-            echo '<option value="'.mysql_result($resultSessions,$n,"ops_id").'">'.mysql_result($resultSessions,$n,"show_name")." ".mysql_result($resultSessions,$n,"start_date").'</option>';
+            echo '  <option value="'.mysql_result($resultSessions,$n,"ops_id").'">'.mysql_result($resultSessions,$n,"show_name")." ".mysql_result($resultSessions,$n,"start_date").'</option>'."\n";
         $n++;
     }
     
-    echo '</select></form></td>';
+    echo '</select>';
+    echo "\n".'<button type="submit" name="move" value="'.$key.'">Move!</button>';
+    echo '</form></td>';
 
     $i++;
     
