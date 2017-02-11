@@ -458,7 +458,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_accessibility_codes` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prefix_eventtools_tour_status_values`
+-- Table structure for table `prefix_eventtools_event_status_values`
 --
 
 DROP TABLE IF EXISTS `prefix_eventtools_event_status_values`;
