@@ -192,15 +192,22 @@ for example.
 </td>
 </tr></table>
 <p>
-The next section lets you edit the possible status and handicapped access values.
+The next section lets you edit general information used by EventTools.
+<p>
+<ul>
+<li>Keys for status codes
+<li>Keys for handicapped access values.
+<li>Keys for locations (e.g. "Main Hall" or "Offsite")
+</ul>
 Changing the text associated with a key will change all existing entries
 from the old text to the new text. Add another key instead of changing
 an existing one if you want to leave existing events unchanged.
 <table border="1">
 <tr><th>General Edits</th>
 <td>
-<a href="edit_location_keys.php ">Edit Location Keys<a/><br/>
-<a href="edit_handicap_access_keys.php ">Edit Handicap Access Keys<a/><br/>
+<a href="edit_status_values.php">Edit Status Keys<a/><br/>
+<a href="edit_handicap_access_keys.php">Edit Handicap Access Keys<a/><br/>
+<a href="edit_location_keys.php">Edit Location Keys<a/><br/>
 </td>
 </tr></table>
 
