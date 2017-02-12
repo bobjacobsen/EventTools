@@ -12,6 +12,7 @@
         span.filled   { background: #c0ffc0; }
         div.filled    { background: #c0ffc0; }
         span.disabled { background: #ff8080; }
+        div.disabled  { background: #ff8080; }
         
         td.session { width: 600px; }
     </style>
@@ -1042,7 +1043,18 @@ for ($i=0; $i<$num; ) {
         }
         
         // make row
-        echo '<tr><td class="session">';
+        echo '<tr>';
+        
+        // start cell for session info
+        echo '<td class="session">';
+
+
+        // start warning if session disabled
+        if ($session_status_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$i,"start_date")] < $min_status) {
+            echo "<span class='disabled'>\n";
+        }
+
+        // add identification
         echo '<a name="'.'s'.$tagnum.'">';
         echo '<a name="'.'sess'.mysql_result($result,$i,"show_name").'">';
         echo mysql_result($result,$i,"show_name").'<br/>'.mysql_result($result,$i,"start_date");
@@ -1050,11 +1062,16 @@ for ($i=0; $i<$num; ) {
         echo '<br/>';
         // button to add?
         echo '<form method="get" action="ops_assign_set.php#'.'s'.$tagnum.'">';
+        
+        // color the numbers and add tooltip
         echo '<div ';
-        if ($count1 >= (int) mysql_result($result,$i,"spaces")) echo ' class="filled" ';
+        if ($session_status_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$i,"start_date")] < $min_status) echo ' class="disabled" ';
+        else if ($count1 >= (int) mysql_result($result,$i,"spaces")) echo ' class="filled" ';
         echo ' title="Number operators assigned / assignable requests left / total slots">';
         echo $count1.'/'.$count0.'/'.mysql_result($result,$i,"spaces"); // report counts
         echo'</div>';  
+        
+        // add the P button if available
         echo '<input type="hidden" name="cy" value="'.$cycle.'">
               <input type="hidden" name="id" value="'.mysql_result($result,$firstindex,"opsreq_req_status_id").'">
               <input type="hidden" name="pri" value="'.$firstpri.'">';
@@ -1075,9 +1092,18 @@ for ($i=0; $i<$num; ) {
                 echo '<input type="submit" title="Move unassigned requests to this session" name="transfer" value="'.mysql_result($r_sessions, $session, "start_date").'"><br>';
             }
         }
-        echo '</form></td><td>';
+        echo '</form>';
+        
+        // end warning if session disabled
+        if ($session_status_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$i,"start_date")] < $min_status) {
+            echo "Session Disabled</span>\n";
+        }
+        
+        // end of head cell
+        echo "</td>\n";
         
         // Display row of people requesting this session, in order 
+        echo '<td>';
         $status = $status_by_rqstr[mysql_result($result,$i,"opsreq_person_email")][mysql_result($result,$i,"req_num")];
         setspan($status);
         echo '<a name="'.'y'.mysql_result($result,$i,"opsreq_req_status_id").'"/>';
