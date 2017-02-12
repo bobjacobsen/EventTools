@@ -62,7 +62,7 @@ function setfilled($email,$regnum) {
     echo "Didn't find match for ".$email.'['.$regnum.'] while setting session full. ';
 }
 
-function setstatus($id, $status) {  // set status record $id to $status, then also rest of group
+function setstatus($id, $status) {  // set request with opsreq_req_status_id == $id to $status, then also rest of group if there is one
     global $event_tools_db_prefix, $cycle;
     $query = "UPDATE ".$event_tools_db_prefix."eventtools_opsreq_req_status
                 SET status='".$status."'
@@ -193,6 +193,19 @@ function updatenavigation() {
     global $empty_slots_by_session, $layout_number_by_session, $strtdate_by_session, $session_status_by_session;
     global $event_tools_db_prefix, $cycle, $min_status;
     
+    // get status vector
+    $query="
+        SELECT  ops_id, status_code, show_name, start_date
+        FROM ".$event_tools_db_prefix."eventtools_opsession_name
+        ;
+    ";
+    $result=mysql_query($query);
+    $num = mysql_numrows($result);
+    $session_status_by_session = array(); // session code (40, 50, 60) of session, keyed by name and date
+    for ($i = 0; $i < $num; $i++ ) {
+        $session_status_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$i,"start_date")] = mysql_result($result,$i,"status_code");
+    }
+
     $query="
         SELECT  *
         FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
@@ -301,10 +314,35 @@ function updatenavigation() {
     
     // scan for full sessions and disable requests
     $empty_slots_by_session = array();   // count of empty slots by session name (show_name.start_date)
-    $session_status_by_session = array(); // session code (40, 50, 60) of session
     
     $detailed_debug = FALSE;
-    
+ 
+    if ($detailed_debug) echo "\n<br/>Start original scan for disabled sessions<p/>\n";
+    for ($i=0; $i<$num; $i++ ) {
+        if (mysql_result($result,$i,"show_name") != "") {
+            if ($detailed_debug) echo mysql_result($result,$i,"show_name")." ".mysql_result($result,$i,"start_date")." status: ".$session_status_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$i,"start_date")]." ops_id: ".mysql_result($result,$i,"opsreq_req_status_id")."<br/>\n";
+            if ($session_status_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$i,"start_date")] < $min_status) {
+                // session disabled, scan entries for this session, disabling if needed
+                $j = $i;
+                if (mysql_result($result,$j,"status") != STATUS_DISABLED) {
+                    echo "<br><span class='disabled'>Disabling requests for disabled session: ".mysql_result($result,$i,"show_name")." ".mysql_result($result,$i,"start_date")."</span><p>\n";
+                    setstatus(mysql_result($result,$j,"opsreq_req_status_id"), STATUS_DISABLED);
+                }
+                while ( ($j<$num-1) && (mysql_result($result,$j,"show_name") == mysql_result($result,$j+1,"show_name")) 
+                        && (mysql_result($result,$j,"start_date") == mysql_result($result,$j+1,"start_date")) ) {
+                    $j++;
+                    if (mysql_result($result,$j,"status") != STATUS_DISABLED) {
+                        setstatus(mysql_result($result,$j,"opsreq_req_status_id"), STATUS_DISABLED);
+                    }
+                }
+                $i = $j;
+            }
+        }
+    }
+    if ($detailed_debug) echo "\nEnd original scan for disabled sessions<br/>\n";
+
+    $detailed_debug = FALSE;
+
     if ($detailed_debug) echo "\n<br/>Start original scan for full sessions<br/>\n";
     for ($i=0; $i<$num; $i++ ) {
         if (mysql_result($result,$i,"show_name") != "") {
@@ -318,7 +356,6 @@ function updatenavigation() {
                 if (mysql_result($result,$j,"status") == STATUS_ASSIGNED) $count1++;
             }
             $empty_slots_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$j,"start_date")] = 0+mysql_result($result,$i,"spaces") - $count1;
-            $session_status_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$j,"start_date")] = mysql_result($result,$i,"status_code");
             if ($detailed_debug) echo "Recomputed empty slots for ".mysql_result($result,$i,"show_name")." as ".$empty_slots_by_session[mysql_result($result,$i,"show_name")]."<br/>\n";
 
             // have count, check for over
@@ -705,7 +742,7 @@ if (array_key_exists("best", $args)) {
                     if (($layout_next == $layout ) && ($ses_next != $session)) {
                         // alternate session, check space
                         if ($detail_debug) echo '[ checking '.$ses_next.' with '.$empty_slots_by_session[$ses_next].']';
-                        if ($session_status_by_session[$ses_next] > $min_status) {
+                        if ($session_status_by_session[$ses_next] >= $min_status) {
                             if ($empty_slots_by_session[$ses_next] == '' || $empty_slots_by_session[$ses_next] == NONE || $empty_slots_by_session[$ses_next] > 0) {
                                 // found, move request over and repeat
                                 echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Move '.$email.' request from '.$reqname_by_rqstr[$email][$pri].' '.$strtdate_by_rqstr[$email][$pri];
