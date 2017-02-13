@@ -905,15 +905,15 @@ echo '<select name="operator" title="(Number of current assignments)">';
 $query="
     SELECT customers_firstname, customers_lastname, opsreq_person_email, COUNT(*)
     FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
-    WHERE opsreq_group_cycle_name = '".$cycle."' AND status = '".STATUS_ASSIGNED."'
+    WHERE opsreq_group_cycle_name = '".$cycle."' AND status < '".STATUS_ASSIGNED."'
     GROUP BY customers_firstname, customers_lastname, opsreq_person_email
-    ORDER BY COUNT(*) ASC
+    ORDER BY COUNT(*) DESC, opsreq_priority DESC, customers_create_date
     ;
 ";
 $result=mysql_query($query);
 $num = mysql_numrows($result);
 for ($i = 0; $i < $num; $i++) {
-    echo '<option value="'.mysql_result($result,$i,"opsreq_person_email").'">'.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").' &lt;'.mysql_result($result,$i,"opsreq_person_email").'&gt; ('.mysql_result($result,$i,"COUNT(*)").")</option>";
+    echo '<option value="'.mysql_result($result,$i,"opsreq_person_email").'">'.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").' &lt;'.mysql_result($result,$i,"opsreq_person_email").'&gt; ('.(12-mysql_result($result,$i,"COUNT(*)")).")</option>";
 }
 echo '</select>';
 echo '<select name="session" title="Number Assigned / Spaces Left / Total Spaces">';
