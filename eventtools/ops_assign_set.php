@@ -420,6 +420,8 @@ global $opts, $event_tools_db_prefix, $event_tools_href_add_on, $cycle;
 mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
 @mysql_select_db($opts['db']) or die( "Unable to select database");
 
+// Fixed navigation buttons
+
 echo '<table><tr>';
 
 echo '<td><form method="get" action="ops_assign_group.php">';
@@ -442,7 +444,7 @@ echo '</form></td>';
 
 echo '</tr></table>';
 
-
+// create list of sessions
 $query="
     SELECT DISTINCT show_name, start_date
     FROM ".$event_tools_db_prefix."eventtools_opsession_name
@@ -855,7 +857,9 @@ if (array_key_exists("best", $args)) {
     echo '<hr><p>';
 }
 
-// start display
+// End processing tags from input
+
+// Create the force-assignment lines
 
 echo 'The next two lines do the same thing. The first is in alphabetical order, and the second is ordered by least existing assignments<br>';
 
@@ -901,15 +905,15 @@ echo '<select name="operator" title="(Number of current assignments)">';
 $query="
     SELECT customers_firstname, customers_lastname, opsreq_person_email, COUNT(*)
     FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
-    WHERE opsreq_group_cycle_name = '".$cycle."' AND status = '0'
+    WHERE opsreq_group_cycle_name = '".$cycle."' AND status = '".STATUS_ASSIGNED."'
     GROUP BY customers_firstname, customers_lastname, opsreq_person_email
-    ORDER BY COUNT(*) DESC
+    ORDER BY COUNT(*) ASC
     ;
 ";
 $result=mysql_query($query);
 $num = mysql_numrows($result);
 for ($i = 0; $i < $num; $i++) {
-    echo '<option value="'.mysql_result($result,$i,"opsreq_person_email").'">'.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").' &lt;'.mysql_result($result,$i,"opsreq_person_email").'&gt; ('.(12-mysql_result($result,$i,"COUNT(*)")).")</option>";
+    echo '<option value="'.mysql_result($result,$i,"opsreq_person_email").'">'.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").' &lt;'.mysql_result($result,$i,"opsreq_person_email").'&gt; ('.mysql_result($result,$i,"COUNT(*)").")</option>";
 }
 echo '</select>';
 echo '<select name="session" title="Number Assigned / Spaces Left / Total Spaces">';
@@ -934,6 +938,8 @@ for ($i = 0; $i < $num; $i++) {
 }
 echo '</select>';
 echo '</form>';
+
+// Start creating the display
 
 // ensure navigation info
 $result = updatenavigation();
@@ -1067,8 +1073,8 @@ for ($i=0; $i<$num; ) {
         echo '<div ';
         if ($session_status_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$i,"start_date")] < $min_status) echo ' class="disabled" ';
         else if ($count1 >= (int) mysql_result($result,$i,"spaces")) echo ' class="filled" ';
-        echo ' title="Number operators assigned / assignable requests left / total slots">';
-        echo $count1.'/'.$count0.'/'.mysql_result($result,$i,"spaces"); // report counts
+        echo ' title="Number operators assigned / empty slots left / total slots : assignable requests left">';
+        echo $count1.'/'.(mysql_result($result,$i,"spaces")-$count1).'/'.mysql_result($result,$i,"spaces").' : '.$count0; // report counts
         echo'</div>';  
         
         // add the P button if available
@@ -1145,8 +1151,13 @@ echo '</table><p/>';
 
 echo '<form method="get" action="ops_assign_set.php">
       <input type="hidden" name="cy" value="'.$cycle.'">
-      <input type="hidden" name="pri" value="'.$lowpri.'">
-      <input type="submit" name="best" value="Fill Best Priority '.$lowpri.'" title="Assign as many priority '.$lowpri.' requests as possible" /></form>';
+      <input type="hidden" name="pri" value="'.$lowpri.'">';
+if ($lowpri < 99) {
+    echo '<input type="submit" name="best" value="Fill Best Priority '.$lowpri.'" title="Assign as many priority '.$lowpri.' requests as possible" />';
+} else {
+    echo "Automatic assignment complete";
+}
+echo '</form>';
 
 ?>
 </body>
