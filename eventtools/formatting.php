@@ -891,9 +891,9 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
         echo "  <td class=\"et-faobd-td-1\">\n";
         echo "    <span class=\"et-faobd-layout-owner\">\n";
         echo '      <a href="'.$link_url1.'">'.
-                        mysql_result($result,$i,"layout_owner_lastname1")."</a>\n";
+                        mysql_result($result,$i,"layout_owner_lastname1")."</a>";
         if (mysql_result($result,$i,"layout_owner_lastname2")!='') {
-            echo "    /  <a href=\"".$link_url2."\">".
+            echo "/<a href=\"".$link_url2."\">".
                         mysql_result($result,$i,"layout_owner_lastname2")."</a>\n";
         }
         echo "    </span>\n";
@@ -903,10 +903,10 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
         echo "  <td class=\"et-faobd-td-2\">\n";
         echo "    <span class=\"et-faobd-name\">\n";
         echo "      <a href=\"".$link_url1."\">".
-                                htmlspecialchars(mysql_result($result,$i,"layout_name1"))."</a>\n";
+                                htmlspecialchars(mysql_result($result,$i,"layout_name1"))."</a>";
 
         if (mysql_result($result,$i,"layout_name2")!='') {
-            echo "     / <a href=\"".$link_url2."\">".
+            echo "/<a href=\"".$link_url2."\">".
                                 htmlspecialchars(mysql_result($result,$i,"layout_name2"))."</a>\n";
         }
         echo "      </span> \n";

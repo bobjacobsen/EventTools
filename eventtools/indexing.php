@@ -422,9 +422,9 @@ class Index_Ops_as_Table extends Index_Layouts_as_Table {
         echo "    <span class=\"et-lt-layout-owner\">\n";
         echo "      <a href=\"".$url.mysql_result($result,$i,"layout_id1")."\">".
                         htmlspecialchars(mysql_result($result,$i,"layout_owner_firstname1")." ".
-                        mysql_result($result,$i,"layout_owner_lastname1"))."</a>\n";
+                        mysql_result($result,$i,"layout_owner_lastname1"))."</a>";
         if (mysql_result($result,$i,"layout_owner_lastname2")!='') {
-            echo "    /  <a href=\"".$url.mysql_result($result,$i,"layout_id2")."\">".
+            echo "/<a href=\"".$url.mysql_result($result,$i,"layout_id2")."\">".
                         htmlspecialchars(mysql_result($result,$i,"layout_owner_firstname2")." ".
                         mysql_result($result,$i,"layout_owner_lastname2"))."</a>\n";
         }
@@ -433,10 +433,10 @@ class Index_Ops_as_Table extends Index_Layouts_as_Table {
         echo "  <td class=\"et-lt-layout-td2\">\n";
         echo "    <span class=\"et-lt-layout-name\">\n";
         echo "      <a href=\"".$url.mysql_result($result,$i,"layout_id1")."\">".
-                                htmlspecialchars(mysql_result($result,$i,"layout_name1"))."</a>\n";
+                                htmlspecialchars(mysql_result($result,$i,"layout_name1"))."</a>";
 
         if (mysql_result($result,$i,"layout_name2")!='') {
-            echo "     / <a href=\"".$url.mysql_result($result,$i,"layout_id2")."\">".
+            echo "/<a href=\"".$url.mysql_result($result,$i,"layout_id2")."\">".
                                 htmlspecialchars(mysql_result($result,$i,"layout_name2"))."</a>\n";
         }
         echo "    </span>\n";
