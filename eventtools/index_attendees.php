@@ -1,20 +1,22 @@
+<?php require_once('access.php'); require_once('secure.php'); ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 		"http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Contacts</title>
+    <html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Contacts</title>
 
-    <link href="tours.css" rel="stylesheet" type="text/css" />    
+        <link href="tours.css" rel="stylesheet" type="text/css" />    
 
-</head>
-<body>
-<h2>Contacts</h2>  
-<a href="index.php">Back to main page</a>
-<p>
+    </head>
+    <body>
+    <h2>Contacts</h2>  
+    <a href="index.php">Back to main page</a>
+    <p>
 
-<?php
-        require_once('access.php'); require_once('utilities.php'); require_once('formatting.php');
+<?php 
+    require_once('utilities.php'); require_once('formatting.php');
+
         function simple_table_format_cell($index, $row, $name) {
             $val = errorOnEmpty(htmlspecialchars($row[$name]),$name);
             // special cases
