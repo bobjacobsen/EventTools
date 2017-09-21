@@ -15,7 +15,7 @@
 // -------------------------------------------------------------------------
 // Part of EventTools, a package for managing convention information
 //
-// By Bob Jacobsen, rgj1927@pacbell.net, Copyright 2010, 2011, 2012
+// By Bob Jacobsen, jacobsen@mac.com, Copyright 2010, 2011, 2012
 // -------------------------------------------------------------------------
 
 //

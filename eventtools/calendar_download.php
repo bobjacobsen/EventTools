@@ -1,8 +1,8 @@
 <?php
 // -------------------------------------------------------------------------
-// Part of EventTools, a package for managing X2011west information
+// Part of EventTools, a package for managing model railroad meeting information
 //
-// By Bob Jacobsen, rgj1927@pacbell.net, Copyright 2010, 2011
+// By Bob Jacobsen, jacobsen@mac.com, Copyright 2010, 2011
 // -------------------------------------------------------------------------
 
 require_once('access.php');

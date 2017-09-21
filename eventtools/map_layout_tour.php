@@ -26,13 +26,13 @@ function issueAddress($result,$i){
 
 echo '<head>';
 echo '	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
-echo '    <title>X2011West Layout Tour '.$tour.' Map</title>';
+echo '    <title>'.$event_tools_event_name.' Layout Tour '.$tour.' Map</title>';
 
 echo '    <link href="tours.css" rel="stylesheet" type="text/css" />';
 
 echo '</head>';
 echo '<body>';
-echo '<h2>X2011West Layout Tour '.$tour.' Map</h2>';
+echo '<h2>'.$event_tools_event_name.' Layout Tour '.$tour.' Map</h2>';
 echo '<a href="index.php">Back to main page</a>';
 echo '<p>';
 
