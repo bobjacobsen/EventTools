@@ -3,13 +3,13 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>X2011West Clinics</title>
+    <title><?php require_once('access.php'); echo $event_tools_event_name; ?> Clinics</title>
 
     <link href="clinics.css" rel="stylesheet" type="text/css" />    
 
 </head>
 <body>
-<h1>X2011West Clinics</h1>  
+<h1><?php require_once('access.php'); echo $event_tools_event_name; ?> Clinics</h1>  
 <a href="index.php">Back to main page</a>
 <p>
 

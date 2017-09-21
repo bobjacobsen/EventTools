@@ -2,7 +2,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>X2011West Layout Tour Calendar</title>
+<title><?php require_once('../access.php'); echo $event_tools_event_name; ?> Layout Tour Calendar</title>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE" />
 <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE" />

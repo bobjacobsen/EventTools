@@ -3,12 +3,12 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>X2011West Tours by Layout and Time</title>
+    <title><?php require_once('access.php'); echo $event_tools_event_name; ?> Tours by Layout and Time</title>
     
 
 </head>
 <body>
-<h1>X2011West Tours by Layout and Time</h1>  
+<h1><?php require_once('access.php'); echo $event_tools_event_name; ?> Tours by Layout and Time</h1>  
 <a href="index.php">Back to main page</a>
 <p>
 

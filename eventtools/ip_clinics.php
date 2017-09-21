@@ -2,7 +2,7 @@
 		"http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     
-<title>X2011West Clinics</title><style type="text/css">
+<title><?php require_once('access.php'); echo $event_tools_event_name; ?> Clinics</title><style type="text/css">
 
 /** Highlight name **/
 tr.et-clinic-tr1 { font-family: Tahoma, sans-serif;}

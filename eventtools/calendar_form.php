@@ -3,11 +3,11 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>X2011West Calendar Download</title>
+    <title><?php require_once('access.php'); echo $event_tools_event_name; ?> Calendar Download</title>
     <link href="clinics.css" rel="stylesheet" type="text/css" />    
 </head>
 <body>
-<h1>X2011West Calendar Download</h1>  
+<h1><?php require_once('access.php'); echo $event_tools_event_name; ?> Calendar Download</h1>  
 
 This page lets you download information into your calendar program
 on your computer.  It works with Apple iCal, Google Calendar, 

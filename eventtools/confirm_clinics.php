@@ -6,11 +6,11 @@ require_once('access.php');
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Confirm X2011west Clinic(s)</title>
+	<title>Confirm <?php require_once('access.php'); echo $event_tools_event_name; ?> Clinic(s)</title>
     <link href="../css/clinicsPHP.css" rel="stylesheet" type="text/css" />    
 </head>
 <body>
-<h3>Confirm X2011west Clinic(s)</h3>
+<h3>Confirm <?php require_once('access.php'); echo $event_tools_event_name; ?> Clinic(s)</h3>
 <p>
 
 <?php

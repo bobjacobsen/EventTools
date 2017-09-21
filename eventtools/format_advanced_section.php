@@ -3,7 +3,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>X2011West Advanced Section</title>
+    <title><?php require_once('access.php'); echo $event_tools_event_name; ?> Advanced Section</title>
 
     <link href="tours.css" rel="stylesheet" type="text/css" />
     <link href="layouts.css" rel="stylesheet" type="text/css" />
@@ -11,7 +11,7 @@
 
 </head>
 <body>
-<h1>X2011West Advanced Section</h1>  
+<h1><?php require_once('access.php'); echo $event_tools_event_name; ?> Advanced Section</h1>  
 <a href="index.php">Back to main page</a>
 <p>
 

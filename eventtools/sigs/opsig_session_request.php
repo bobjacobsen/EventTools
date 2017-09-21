@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>X2011West Operating Session Request</title>
+	<title><?php require_once('access.php'); echo $event_tools_event_name; ?> Operating Session Request</title>
 </head>
 <body>
-<h1>X2011West Operating Session Request</h1>
+<h1><?php require_once('access.php'); echo $event_tools_event_name; ?> Operating Session Request</h1>
 
 Text and pictures and cool formatting still to be added ....<p/>
 
