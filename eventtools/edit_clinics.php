@@ -228,14 +228,14 @@ $opts['fdd']['start_date'] = array(
   'name'     => 'Start date/time',
   'select'   => 'T',
   'maxlen'   => 19,
-  'default'  => '2011-07-08 00:00:00',
+  'default'  => $event_tools_default_event_start_date,
   'sort'     => true
 );
 $opts['fdd']['end_date'] = array(
   'name'     => 'End date/time',
   'select'   => 'T',
   'maxlen'   => 19,
-  'default'  => '2011-07-08 00:00:00',
+  'default'  => $event_tools_default_event_end_date,
   'sort'     => true
 );
 $opts['fdd']['comment'] = array(

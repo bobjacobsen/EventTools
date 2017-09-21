@@ -103,7 +103,7 @@ function time_from_long_format($date) {
 function check_missing_time($date) {
     if ($date == "") { return TRUE; }
     if ($date == "0000-00-00 00:00:00") { return TRUE; }
-    if ($date == "2011-07-01 00:00:00") { return TRUE; }
+    if ($date == $event_tools_default_event_start_date) { return TRUE; } // flags default
     if (substr($date,-8) == "00:00:00") { return TRUE; }
     return FALSE;
 }

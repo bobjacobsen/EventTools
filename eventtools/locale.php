@@ -111,7 +111,7 @@ function format_clinics_by_loc($url=NONE, $where=NONE) {
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
     
-    $dates = array("2011-07-01","2011-07-02","2011-07-03","2011-07-04","2011-07-05","2011-07-06","2011-07-07","2011-07-08","2011-07-09", "2011-07-10");
+    $dates = $event_tools_dates; // from access.php
     $k = 0;
     
     if($where!=NONE) {
@@ -144,9 +144,7 @@ function format_clinics_by_loc($url=NONE, $where=NONE) {
         }
     
         // fixed time slots regardless
-        $starttimes = array("08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00",
-                            "13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00",
-                            "19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30");
+        $starttimes = $event_tools_clinics_start_times;
     
         // add dynamic entries
         while ($i < $num) {
@@ -324,7 +322,7 @@ function format_misc_events_by_loc($url=NONE, $where=NONE) {
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
     
-    $dates = array("2011-07-01","2011-07-02","2011-07-03","2011-07-04","2011-07-05","2011-07-06","2011-07-07","2011-07-08","2011-07-09", "2011-07-10");
+    $dates = $event_tools_dates; // from access.php
     $k = 0;
     
     if($where!=NONE) {
@@ -357,9 +355,7 @@ function format_misc_events_by_loc($url=NONE, $where=NONE) {
         }
     
         // fixed time slots regardless
-        $starttimes = array("08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00",
-                            "13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00",
-                            "19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30");
+        $starttimes = $event_tools_misc_event_start_times; // access.php
     
         // add dynamic entries
         while ($i < $num) {
@@ -448,177 +444,5 @@ function format_misc_events_by_loc($url=NONE, $where=NONE) {
     mysql_close();    
 }
 
-// function format_misc_events_by_loc($url=NONE, $where=NONE) {
-//     global $opts, $event_tools_db_prefix;
-// 
-//     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
-//     @mysql_select_db($opts['db']) or die( "Unable to select database");
-//     
-//     $dates = array("2011-07-01","2011-07-02","2011-07-03","2011-07-04","2011-07-05","2011-07-06","2011-07-07","2011-07-08","2011-07-09", "2011-07-10");
-//     $k = 0;
-//     
-//     if($where!=NONE) {
-//         $where = " AND ".$where." ";
-//     } else {
-//         $where ="";
-//     }
-//     
-//     while ($k < count($dates)) { 
-//         
-//         // query for start times
-//         $query="
-//             SELECT DISTINCT start_date
-//             FROM ".$event_tools_db_prefix."eventtools_misc_events_with_tags
-//             WHERE start_date LIKE '".$dates[$k]."%'
-//             ".$where."
-//             ORDER BY start_date
-//             ;
-//         ";
-//     
-//         $result=mysql_query($query);
-//         
-//         $i = 0;
-//         $num = mysql_numrows($result);
-//     
-//         if ($num==0) {
-//             $k++;
-//             continue;
-//         }
-//     
-//         // fixed time slots regardless
-//         $starttimes = array("08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00",
-//                             "13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00",
-//                             "19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30");
-//     
-//         // add dynamic entries
-//         while ($i < $num) {
-//             $starttimes[$i] = substr(mysql_result($result,$i,"start_date"), -8, 5);
-//             $i++;
-//         }
-//     
-//         // remove duplicates   
-//         sort( $starttimes, SORT_STRING);
-//         $starttimes = array_values(array_unique( $starttimes ));
-//         
-//         // now query for misc events
-//         $query="
-//             SELECT *
-//             FROM ".$event_tools_db_prefix."eventtools_misc_events_with_tags
-//             WHERE start_date LIKE '".$dates[$k]."%'
-//             ".$where."
-//             ORDER BY location_name, start_date, tag_name
-//             ;
-//         ";
-//     
-//         $result=mysql_query($query);
-//         
-//         $i = 0;
-//         $num = mysql_numrows($result);
-//         
-//         if ($num==0) {
-//             $k++;
-//             continue;
-//         }
-//         
-//         $lastmajorkey = "";
-//             
-//         echo "<h2 class=\"et-mebl-h2\">".daydate_from_long_format($dates[$k])."</h2>\n";
-//         echo "<table border=\"1\" class=\"et-mebl-table\">\n";
-//         
-//         $j = 0;
-//         echo "<tr class=\"et-mebl-tr-head\"><th class=\"et-mebl-th-corner\">Location</th>";
-//         while ($j < count($starttimes)) { echo "<th class=\"et-mebl-th-time\">".$starttimes[$j++]."</th>"; }
-//         echo "</tr>\n";
-//         
-//         $k++;    
-//     
-//         // loop over locations, using SQL query order
-//         while ($i < $num) {
-//         
-//             // search for new location
-//             if ($lastmajorkey != mysql_result($result,$i,"location_name")) {
-//                 $lastmajorkey = mysql_result($result,$i,"location_name");
-//                 echo "<tr class=\"et-mebl-tr-\">\n";
-//                 echo "  <th class=\"et-mebl-th-location\">".htmlspecialchars(mysql_result($result,$i,"location_name"))."</th>\n";
-//                 $lasti = $i;
-//                 
-//                 $j = 0;
-//                 // loop over times, creating a row
-//                 while ($j < count($starttimes)) {        
-//                     $n = $j+1;
-//                     if ($starttimes[$j] == substr(mysql_result($result,$i,"start_date"), -8, 5)) {
-//                         // this is the start of one, starting at edge $j
-//                         $endtime = substr(mysql_result($result,$i,"end_date"), -8, 5);
-//                         while ($n < count($starttimes)) {
-//                             if ($endtime<=$starttimes[$n]) break;
-//                             $n++;
-//                         }
-//                         
-//                         // now format output cell
-//                         $name = htmlspecialchars(mysql_result($result,$i,"name"));
-//                         echo "  <td colspan=\"".($n-$j)."\" class=\"et-mebl-td-misc-event\"><table class=\"et-mebl-sub-table\">\n";
-//                         echo "     <tr class=\"et-clbl-sub-tr1\"><td class=\"et-clbl-sub-td1\"><span class=\"et-clbl-sub-name\">";
-//                         echo "      <a href=\"".$url.mysql_result($result,$i,"id")."\">".$name."</a>\n";                 
-//                         echo "      </span></td></tr>\n";
-//                         // tags
-//                         echo "     <tr class=\"et-mebl-sub-tr3\"><td class=\"et-mebl-sub-td1\"><span class=\"et-mebl-sub-tags\">";
-//                         echo htmlspecialchars(mysql_result($result,$i,"tag_name"));
-//                         while ( ($i < $num-1) && 
-//                                     (mysql_result($result,$i,"name") == mysql_result($result,$i+1,"name")) &&
-//                                     (mysql_result($result,$i,"start_date") == mysql_result($result,$i+1,"start_date"))
-//                                ) {
-//                             $i++;
-//                             echo ", ".htmlspecialchars(mysql_result($result,$i,"tag_name"));
-//                         }
-//                         echo "</span></td>\n";
-//                         echo "   </table></td>\n";
-//                         $i++;
-//                     } else {
-//                         // nothing found, skip
-//                         // to end of day?
-//                         if ( ($i > $num-1) || ($lastmajorkey != mysql_result($result,$i,"location_name")) ) {  // $i already incremented
-//                             // yes, fill to end
-//                             echo "  <td colspan=\"".(count($starttimes)-$j)."\" class=\"et-mebl-td-misc-event-empty\"><span class=\"et-mebl-span-misc-event-empty\"></span></td>\n";
-//                             $n =  count($starttimes);   
-//                         } else {
-//                             // there will be another event today
-//                             $nexttime = substr(mysql_result($result,$i,"start_date"), -8, 5);
-//                             while ($n < count($starttimes)) {
-//                                 if ($nexttime<=$starttimes[$n]) { break; }
-//                                 $n++;
-//                             }
-//                             echo "  <td colspan=\"".($n-$j)."\" class=\"et-mebl-td-misc-event-empty\"><span class=\"et-mebl-span-misc-event-empty\"></span></td>\n";
-//                         }
-//                     }
-//                     $j = $n;
-//                     if ($i >= $num) {
-//                         // end of data (and locations), done
-//                         $n = count($starttimes)-$j;
-//                         // fill in rest of row
-//                         echo "  <td colspan=\"".$n."\" class=\"et-mebl-td-misc-event-empty\"><span class=\"et-mebl-span-misc-event-empty\"></span></td>\n";
-//                         break 2;
-//                     }
-//                 }
-//                 
-//                 echo "</tr>\n";
-//                 if ($lasti == $i) {
-//                     echo "unexpected count ".$i." at end, didnt match times?";
-//                     $i++;
-//                 }
-//             } else {
-//                 echo "didnt match as expected; duplicate time?";
-//                 $i++;
-//             }
-//         }
-//         
-//         // done, clean up
-//         
-//         echo "</tr>\n";
-//         echo "</table>\n";
-//     }
-//     
-//     mysql_close();    
-// 
-// }
 
 ?>

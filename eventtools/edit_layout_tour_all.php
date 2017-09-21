@@ -167,7 +167,7 @@ $opts['fdd']['start_date'] = array(
   'name'     => 'Start date',
   'select'   => 'T',
   'maxlen'   => 22,
-  'default'  => '2011-07-01 08:00:00',
+  'default'  =>  $event_tools_default_event_start_date,
   'sort'     => true,
   'nowrap'   => true
 );
@@ -175,7 +175,7 @@ $opts['fdd']['end_date'] = array(
   'name'     => 'End date',
   'select'   => 'T',
   'maxlen'   => 22,
-  'default'  => '2011-07-01 17:00:00',
+  'default'  => $event_tools_default_event_end_date,
   'sort'     => true,
   'nowrap'   => true
 );
