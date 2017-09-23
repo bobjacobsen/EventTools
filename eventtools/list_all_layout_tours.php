@@ -3,13 +3,13 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>X2011 Layout Tour List</title>
+    <title><?php require_once('access.php'); echo $event_tools_event_name; ?> Layout Tour List</title>
 
     <link href="tours.css" rel="stylesheet" type="text/css" />    
 
 </head>
 <body>
-<h2>X2011 Layout Tour List</h2>  
+<h2><?php require_once('access.php'); echo $event_tools_event_name; ?> Layout Tour List</h2>  
 <a href="index.php">Back to main page</a>
 <?php
 require_once('access.php');
