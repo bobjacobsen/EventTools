@@ -48,7 +48,7 @@ function where_add_tag($args, $where=NONE) {
 // date=n  tours, clinics starting on July n
 function where_add_date($args, $where=NONE) {
     if ($args["date"]) {
-        $r = " start_date LIKE '2011-".$args["date"]."%'";
+        $r = " start_date LIKE '2018-".$args["date"]."%'";
         if ($where != NONE) return $where." AND ".$r;
         else return $r;
     } else {
