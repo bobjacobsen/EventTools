@@ -122,7 +122,7 @@ function list_clinic($result,$i) {
 
     echo 'presenter:  '.warnOnEmpty(mysql_result($result,$i,"clinic_presenter"),"presenter").'<br>';  
     echo 'email:  '.warnOnEmpty(mysql_result($result,$i,"clinic_presenter_email"),"email").'<br>';  
-    echo 'location:  '.mysql_result($result,$i,"location_name").'<br>';  
+    echo 'location:  '.errorOnEmpty(mysql_result($result,$i,"location_name")).'<br>';  
     echo 'clinic URL:  '.mysql_result($result,$i,"clinic_url").'<br>';  
 
 }
