@@ -38,18 +38,18 @@ $event_tools_dates                      = array( // default days to display
                                             "2011-07-01","2011-07-02","2011-07-03","2011-07-04","2011-07-05",
                                             "2011-07-06","2011-07-07","2011-07-08","2011-07-09", "2011-07-10");
 
-$event_tools_clinics_start_times:      = array(  // c.f. locale.php
+$event_tools_clinics_start_times        = array(  // c.f. locale.php
                                             "08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00",
                                             "13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00",
                                             "19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30");
 
-$event_tools_misc_event_start_times:   = $event_tools_clinics_start_times; // can also be specified separately
+$event_tools_misc_event_start_times     = $event_tools_clinics_start_times; // can also be specified separately
 
-$event_tools_layout_tour_start_times:  = array( // c.f. format_layout_tours_by_time.php
+$event_tools_layout_tour_start_times    = array( // c.f. format_layout_tours_by_time.php
                                             "08:00:00", "09:30:00", "11:00:00", "13:00:00", "14:30:00", 
                                             "16:00:00", "17:00:00", "19:00:00", "20:30:00", "22:00:00");
 
-$event_tools_layout_tour_dates:        = array( // c.f. format_layout_tours_by_time.php; might includes extras before/after main dates
+$event_tools_layout_tour_dates          = array( // c.f. format_layout_tours_by_time.php; might includes extras before/after main dates
                                             "2011-07-01", "2011-07-02", "2011-07-03",
                                             "2011-07-04", "2011-07-05", "2011-07-06",
                                             "2011-07-07", "2011-07-08", "2011-07-09");
