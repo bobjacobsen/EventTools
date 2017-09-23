@@ -39,7 +39,7 @@ var tcrobj1            = new tcobj('r');
                                      // files, ex. 'webcal2' (set url without
                                      // http:// -prefix) in tcData1)
 
-tcrobj1.tcData1        = "127.0.0.1/localeventtools/calendar_download.php?types=m";  // 'clg' is all
+tcrobj1.tcData1        = "kc2018.org/eventtools/calendar_download.php?types=m";  // 'clg' is all
                                     // calendar filename WITHOUT .ics suffix
                                      // Opt remote url WITHOUT prefix ('http://'
                                      // or 'webcal://'), but WITH url suffix

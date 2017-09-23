@@ -39,7 +39,7 @@ var tcrobj1            = new tcobj('r');
                                      // files, ex. 'webcal2' (set url without
                                      // http:// -prefix) in tcData1)
 
-tcrobj1.tcData1        = "127.0.0.1/localeventtools/calendar_download.php?types=glcm";  // 'clgm' is all
+tcrobj1.tcData1        = "kc2018.org/eventtools/calendar_download.php?types=glcm";  // 'clgm' is all
                                     // calendar filename WITHOUT .ics suffix
                                      // Opt remote url WITHOUT prefix ('http://'
                                      // or 'webcal://'), but WITH url suffix
@@ -111,7 +111,7 @@ tcrobj1.tcDayendHour   = 23;         // Last hour to display in day/week view,
                                      // max '23' !!
 
                                      // SET header text
-tcrobj1.tcheaderText   = 'X2011West'; // if no header, set empty or null
+tcrobj1.tcheaderText   = 'KC 2018'; // if no header, set empty or null
 
                                      // SET general border+width style
                                      // width required, reduce width by 2px
