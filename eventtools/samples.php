@@ -53,10 +53,10 @@ installation.
 <hr>
 <form method="get" action="format_all_clinics.php">
     <button type="submit">Table of clinics on day:</button>
-    <select name="date">  <!-- manually enter scales -->
-    <option value="1">Friday 7/1</option><option value="2">Saturday 7/2</option><option value="3">Sunday 7/3</option>
-    <option value="4">Monday 7/4</option><option value="5">Tuesday 7/5</option><option value="6">Wednedsay 7/6</option>
-    <option value="7">Thursday 7/7</option><option value="8">Friday 7/8</option><option value="9">Saturday 7/9</option>
+    <select name="date">  <!-- manually enter days -->
+    <option value="08-03">Friday 8/3</option><option value="08-04">Saturday 8/4</option><option value="08-05">Sunday 8/5</option>
+    <option value="08-06">Monday 8/6</option><option value="08-07">Tuesday 8/7</option><option value="08-08">Wednesday 8/8</option>
+    <option value="08-09">Thursday 8/9</option><option value="08-10">Friday 8/10</option><option value="08-11">Saturday 8/11</option>
     </select>
 </form>
 
