@@ -30,7 +30,7 @@ the download will open automatically in your calendar program, which will then
 ask how you want to handle the new information.  
 If you can insert the information as a
 new &quot;category&quot; or new calendar, 
-we recommend you do that so the X2011 information
+we recommend you do that so the <?php require_once('access.php'); echo $event_tools_event_name; ?> information
 will be kept separate from all the other information in your calendar.
 
 <p>
