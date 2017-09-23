@@ -31,7 +31,7 @@ function addStdContent($result,$i,$vevent,$asText,$id,$summary) {
     $vevent->setProperty( 'dtend',   $end);
     $vevent->setProperty( 'summary', $summary );  // event title
     $vevent->setProperty( 'description', $description );  // shows up in "comment"
-    $vevent->setProperty( 'UID', $id."@x2011west.org" );  // needed for multiple downloads
+    $vevent->setProperty( 'UID', $id."@kc2018.org" );  // needed for multiple downloads
 
 }
 
@@ -352,20 +352,20 @@ parse_str($_SERVER["QUERY_STRING"], $args);
 // open the file
 
 $v = new vcalendar();
-$v->setConfig( 'unique_id', 'x2011west.org' );
+$v->setConfig( 'unique_id', 'kc2018.org' );
 $v->setProperty( 'method', 'PUBLISH' );
-$v->setProperty( "x-wr-calname", "X2011West" );
+$v->setProperty( "x-wr-calname", "KC 2018" );
 $v->setProperty( "X-WR-CALDESC", "Calendar Description" );
-$v->setProperty( "X-WR-TIMEZONE", "America/Los_Angeles" );
-$v->setProperty( "tzid", "US-Pacific" );
-$v->setProperty( "tzname", "PDT" );
-$v->setProperty( "tzoffsetfrom", "-0700" );
+$v->setProperty( "X-WR-TIMEZONE", "America/Chicago" );
+$v->setProperty( "tzid", "US-Central" );
+$v->setProperty( "tzname", "CDT" );
+$v->setProperty( "tzoffsetfrom", "-0500" );
 
 // open database
 mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
 @mysql_select_db($opts['db']) or die( "Unable to select database");
 
-$asText = FALSE;
+$asText = FALSE; // convert any HTML in the description to text; given as URL argument, don't change
 if($args["text"]=="on" || $args["text"]=="true") $asText = TRUE;
 
 // write events
@@ -381,28 +381,28 @@ if($args["shopcart"]=="on" || $args["shopcart"]=="true") $shopping = TRUE;
 if(strstr($args["types"],"s")) $shopping = TRUE;
 if ($shopping == TRUE) loadShoppingCart($v, $asText, $args["email"]);
 
-$clinics = FALSE;
+$clinics = TRUE;
 if($args["clinics"]=="no" || $args["clinics"]=="false") $clinics = FALSE;
 if($args["clinics"]=="on" || $args["clinics"]=="true") $clinics = TRUE;
 if(strstr($args["types"],"c")) $clinics = TRUE;
 $where = " status_code <= 70 ";
 if ($clinics == TRUE) loadClinics($v, $asText, $where);
 
-$misc = FALSE;
+$misc = TRUE;
 if($args["misc"]=="no" || $args["misc"]=="false") $misc = FALSE;
 if($args["misc"]=="on" || $args["misc"]=="true") $misc = TRUE;
 if(strstr($args["types"],"m")) $misc = TRUE;
 $where = NONE;
 if ($misc == TRUE) loadMiscEvents($v, $asText, $where);
 
-$layouttours = FALSE;
+$layouttours = TRUE;
 if($args["layout"]=="no" || $args["layout"]=="false") $layouttours = FALSE;
 if($args["layout"]=="on" || $args["layout"]=="true") $layouttours = TRUE;
 if(strstr($args["types"],"l")) $layouttours = TRUE;
 $where = " status_code >= 40 AND status_code <= 70 ";
 if ($layouttours == TRUE) loadLayoutTours($v, $asText, $where);
 
-$generaltours = FALSE;
+$generaltours = TRUE;
 if($args["general"]=="no" || $args["general"]=="false") $generaltours = FALSE;
 if($args["general"]=="on" || $args["general"]=="true") $generaltours = TRUE;
 if(strstr($args["types"],"g")) $generaltours = TRUE;
