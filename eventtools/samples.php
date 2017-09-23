@@ -15,6 +15,9 @@ Note that the sample code includes PHP 'require' and 'require_once'
 statements that reference files in the EventTools directory.  If you
 move the sample file to another directory, you'll have to update the file 
 paths in these statements.
+<p>
+This page includes samples for features that might not be enabled in your EventTools
+installation. 
 <hr>
 <form method="get" action="format_all_clinics.php">
     <button type="submit">Table of clinics with tag:</button>
@@ -64,6 +67,12 @@ paths in these statements.
 </form>
 
 <hr>
+<form method="get" action="format_one_clinic.php">
+    <button type="submit">Clinic details for clinics with tag:</button>
+    <input name="tag" type="text" size="64" maxlength="64"/>
+</form>
+
+<hr>
 <form method="get" action="format_all_misc_events.php">
     <button type="submit">Table of misc events with tag:</button>
     <input name="tag" type="text" size="64" maxlength="64"/>
@@ -94,6 +103,13 @@ paths in these statements.
     <button type="submit">Calendar of misc events with tag:</button>
     <input name="tag" type="text" size="64" maxlength="64"/>
 </form>
+
+<hr>
+<form method="get" action="format_one_misc_event.php">
+    <button type="submit">Misc event details for events with tag:</button>
+    <input name="tag" type="text" size="64" maxlength="64"/>
+</form>
+
 
 <hr>
 <form method="get" action="format_all_layout_tours.php">
@@ -153,6 +169,8 @@ paths in these statements.
 <table border="1">
     <?php  
         require_once('access.php'); require_once('utilities.php'); require_once('formatting.php');
+        
+        // define routine that makes HTML (formatted) content from query results, called for each item
         function simple_table_format_cell($index, $row, $name) {
             $val = errorOnEmpty(htmlspecialchars($row[$name]),$name);
             // special cases
@@ -176,6 +194,8 @@ paths in these statements.
             echo "      </span> \n";
             echo "  </td>\n";
         }
+        
+        // query and construct the table
         simple_table('layouts', 
             array('layout_owner_lastname', 'layout_owner_firstname', 'layout_photo_url', 'layout_name', 'layout_scale', 'layout_distance', 'layout_num_ops', 'layout_control', 'layout_dispatched_by1', 'layout_dispatched_by2'), 
             "`layout_status_code` >= 50 ");
