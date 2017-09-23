@@ -111,7 +111,7 @@ tcrobj1.tcDayendHour   = 23;         // Last hour to display in day/week view,
                                      // max '23' !!
 
                                      // SET header text
-tcrobj1.tcheaderText   = 'X2011West'; // if no header, set empty or null
+tcrobj1.tcheaderText   = 'KC 2018'; // if no header, set empty or null
 
                                      // SET general border+width style
                                      // width required, reduce width by 2px
