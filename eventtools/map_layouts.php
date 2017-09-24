@@ -12,7 +12,7 @@ require_once('formatting.php');
 // minstatus argument is minimum status to display
 
 parse_str($_SERVER["QUERY_STRING"], $args);
-if($args["minstatus"]) {
+if($args["minstatus"] !="") {
     $minstatus = $args["minstatus"];
 } else {
     $minstatus = 60;
@@ -49,7 +49,7 @@ $query="
         WHERE layout_status_code >= \"".$minstatus."\"
         ORDER BY layout_name;
     ";
-//echo $query;
+// echo $query;
 $result=mysql_query($query);
 
 global $event_tools_central_addr;
@@ -67,12 +67,13 @@ $num=mysql_numrows($result);
 echo '&markers=color:red|label:C|'.$event_tools_central_addr.','.$event_tools_central_city
             .'+'.$event_tools_central_state.'+'.$event_tools_central_postcode;
 while ($i < $num) {
-    echo '&markers=color:blue|label:'.($i+1).'|';
-    issueAddress($result,$i);
-
+    if (mysql_result($result,$i,"layout_street_address")!="" && mysql_result($result,$i,"layout_city") !="" && mysql_result($result,$i,"layout_state") != "" && mysql_result($result,$i,"layout_postcode") != "") {
+        echo '&markers=color:blue|';
+        issueAddress($result,$i);
+    }
     $i++;
 }
-echo '&sensor=false">';
+echo '&key=AIzaSyDG527vV3IagEdZWVv2p0XADvze_O1c9UM">';
 
 mysql_close();    
 
