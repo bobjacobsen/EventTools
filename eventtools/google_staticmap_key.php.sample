@@ -1,0 +1,4 @@
+<?php
+global $google_staticmap_key;
+$google_staticmap_key = 'abcdefghijklmnopqrstuvwyz1234567890_ABCDEF';
+?>

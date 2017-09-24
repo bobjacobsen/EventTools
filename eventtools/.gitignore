@@ -7,3 +7,6 @@
 [Tt]humbs.db
 *.DS_Store
 /jmri-fb.html
+
+# don't want this key in GitHub
+google_staticmap_key.php

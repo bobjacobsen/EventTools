@@ -6,6 +6,7 @@
 require_once('access.php');
 require_once('utilities.php');
 require_once('formatting.php');
+require_once('google_staticmap_key.php');
 
 // present a map of all (enabled) layout locations
 //
@@ -73,7 +74,7 @@ while ($i < $num) {
     }
     $i++;
 }
-echo '&key=AIzaSyDG527vV3IagEdZWVv2p0XADvze_O1c9UM">';
+echo '&key='.$google_staticmap_key.'">';
 
 mysql_close();    
 
