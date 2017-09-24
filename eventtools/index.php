@@ -23,7 +23,7 @@ echo "
 
 if ($event_tools_option_general_tours ) echo '<th>General Tours</th>';
 if ($event_tools_option_layout_tours)   echo '<th>Layout Tours</th>';
-if ($event_tools_option_other_events)   echo '<th>Other Events</th>';
+if ($event_tools_option_other_events)   echo '<th>Misc Events</th>';
 if ($event_tools_option_layouts)        echo '<th>Layouts</th>';
 if ($event_tools_option_clinics)        echo '<th>Clinics</th>';
 if ($event_tools_option_op_sessions)    echo '<th>Op Sessions</th>';
