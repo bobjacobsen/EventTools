@@ -5,7 +5,7 @@ require_once('access.php');
     $REMOTE_USER = $user;  // for phpMyEdit
     if ($user == '') {
         // fail
-        header('WWW-Authenticate: Basic realm="X2011west Layout Confirmation"');
+        header('WWW-Authenticate: Basic realm="'.$event_tools_event_name.' Layout Confirmation"');
         header('HTTP/1.0 401 Unauthorized');
     }
     
@@ -21,7 +21,7 @@ require_once('access.php');
     $num=mysql_numrows($result);
     if ($num == 0) {
         // fail
-        header('WWW-Authenticate: Basic realm="X2011west Layout Confirmation"');
+        header('WWW-Authenticate: Basic realm="'.$event_tools_event_name.' Layout Confirmation"');
         header('HTTP/1.0 401 Unauthorized');
     }
 ?>
