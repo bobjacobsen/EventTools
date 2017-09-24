@@ -106,7 +106,7 @@ function output_clinic_location($result,$rowindexes,$starttimes,$num,$url) {
 
 
 function format_clinics_by_loc($url=NONE, $where=NONE) {
-    global $opts, $event_tools_db_prefix;
+    global $opts, $event_tools_db_prefix, $event_tools_dates, $event_tools_clinics_start_times;
     
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
@@ -317,7 +317,7 @@ function output_misc_location($result,$rowindexes,$starttimes,$num,$url) {
 }
 
 function format_misc_events_by_loc($url=NONE, $where=NONE) {
-    global $opts, $event_tools_db_prefix;
+    global $opts, $event_tools_db_prefix, $event_tools_dates, $event_tools_misc_event_start_times;
     
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
