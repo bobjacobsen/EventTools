@@ -1,7 +1,11 @@
-# transient artifacts
-.ant-targets-build.xml
+# don't want these in GitHub
+.htaccess
 
 # private / per-user configuration files
+google_staticmap_key.php
+
+# transient artifacts
+.ant-targets-build.xml
 
 # OS junk files
 [Tt]humbs.db
