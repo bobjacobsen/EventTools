@@ -390,7 +390,7 @@
           return mysqli_num_rows($result);
       }
 
-      public static function mysql_num_rows($result){
+      public static function mysql_numrows($result){
           
           return mysqli_num_rows($result);
       }

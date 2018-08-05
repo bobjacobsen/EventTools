@@ -230,6 +230,13 @@ function mysql_num_rows($result){
     
 }
 
+function mysql_numrows($result){
+    
+    return mysql2i::mysql_num_rows($result);
+    
+}
+
+
 function mysql_pconnect($host = '',$username = '',$passwd = '',$new_link = false,$client_flags = 0){
     
     return mysql2i::mysql_pconnect($host,$username,$passwd,$new_link,$client_flags);
