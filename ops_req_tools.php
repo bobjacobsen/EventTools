@@ -1,6 +1,7 @@
 <?php
 // Service routines for creating a request page for 
 // op sessions.
+include_once('mysql2i.class.php'); // migration step
 
 // Key parts:
 //    regular requests

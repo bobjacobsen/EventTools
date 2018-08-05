@@ -6,6 +6,8 @@
 // By Bob Jacobsen, jacobsen@mac.com, Copyright 2010, 2011
 // -------------------------------------------------------------------------
 
+include_once('mysql2i.class.php'); // migration step
+
 // -------------------------------------------------------------------------
 //
 // Appearance utility functions
@@ -242,7 +244,7 @@ function checkEmpty($item) {
 
 require_once('class.html2text.inc'); 
 function htmlToText($document) {
-    $h2t =& new html2text(str_replace("\n"," ",str_replace("\r"," ",$document))); 
+    $h2t = new html2text(str_replace("\n"," ",str_replace("\r"," ",$document))); 
     return $h2t->get_text(); 
 }
 

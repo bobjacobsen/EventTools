@@ -19,6 +19,8 @@
  * http://platon.sk/projects/phpMyEdit/
  */
 
+include_once('mysql2i.class.php'); // migration step
+
 /* $Platon: phpMyEdit/phpMyEdit.class.php,v 1.204 2007-09-16 12:57:07 nepto Exp $ */
 
 /*  This is a generic table editing program. The table and fields to be

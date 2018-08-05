@@ -11,6 +11,7 @@
 <a href="index.php">Back to main page</a>
 <p>
 <?php
+include_once('mysql2i.class.php'); // migration step
 
 // -------------------------------------------------------------------------
 // Part of EventTools, a package for managing convention information

@@ -1,4 +1,5 @@
 <?php 
+include_once('mysql2i.class.php'); // migration step
 require_once('access.php'); 
     // required to get user name
     $user = $_SERVER['PHP_AUTH_USER'];

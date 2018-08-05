@@ -1,6 +1,7 @@
 <?php
 
 // send emails to operators
+include_once('mysql2i.class.php'); // migration step
 
 require_once('access.php');
 require_once('utilities.php');

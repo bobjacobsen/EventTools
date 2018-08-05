@@ -10,7 +10,9 @@ require_once('access.php');
     <link href="../css/clinicsPHP.css" rel="stylesheet" type="text/css" />    
 </head>
 <body>
-<h3>Confirm <?php require_once('access.php'); echo $event_tools_event_name; ?> Clinic(s)</h3>
+<h3>Confirm <?php 
+    include_once('mysql2i.class.php'); // migration step
+    require_once('access.php'); echo $event_tools_event_name; ?> Clinic(s)</h3>
 <p>
 
 <?php

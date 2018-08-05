@@ -1,4 +1,5 @@
 <?php 
+    include_once('mysql2i.class.php'); // migration step
     require_once('access.php'); 
     global $opts, $event_tools_db_prefix;
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);

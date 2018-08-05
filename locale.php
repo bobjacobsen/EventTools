@@ -8,6 +8,8 @@
 
 // -------------------------------------------------------------------------
 
+include_once('mysql2i.class.php'); // migration step
+
 // By-location Formatting interface and classes
 
 function format_clinic_cell($result,$i,$width,$num,$url) {

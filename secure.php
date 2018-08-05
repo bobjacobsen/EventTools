@@ -5,6 +5,7 @@
 //
 // By Bob Jacobsen, jacobsen@mac.com, Copyright 2010, 2011, 2012
 // -------------------------------------------------------------------------
+include_once('mysql2i.class.php'); // migration step
 
 global $event_tools_require_authenticate, $event_tools_require_user, 
     $opts, $event_tools_db_prefix, $REMOTE_USER, $event_tools_user_email_log_skip;

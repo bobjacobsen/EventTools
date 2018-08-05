@@ -3,6 +3,7 @@
 // the contents of the $_REQUEST array called out by
 // the values array, used by sample_ops_reg_form.php to 
 // process an attendee registration.
+include_once('mysql2i.class.php'); // migration step
 
 // Specific values expected in $_REQUEST, e.g. $_REQUEST[ "email" ]
 //  email (primary key)

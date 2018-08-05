@@ -22,7 +22,7 @@
 <a href="index.php">Back to main page</a><p/>
 
 <?php
-
+include_once('mysql2i.class.php'); // migration step
 require_once('ops_assign_common.php');
 
 global $min_status;

@@ -21,6 +21,7 @@
 
 <?php
 
+include_once('mysql2i.class.php'); // migration step
 require_once('ops_assign_common.php');
 
 function show_update_request_line($result,$i,$cycle,$show_name,$start_date,$variable) { // $variable is like "opsreq_pri1"

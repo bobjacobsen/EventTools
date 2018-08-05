@@ -14,6 +14,7 @@ echo '<html>
 <h1>'.$event_tools_event_name.' Layout List</h1>  
 <a href="index.php">Back to main page</a>
 ';
+include_once('mysql2i.class.php'); // migration step
 
 require_once('access.php');
 require_once('utilities.php');
@@ -50,7 +51,7 @@ $query = $query."
 $result=mysql_query($query);
 
 $i=0;
-$num=mysql_numrows($result);
+$num = mysql_numrows($result);
 $lastmajorkey= "";
 
 while ($i < $num) {

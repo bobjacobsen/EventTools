@@ -2,6 +2,7 @@
 // this is PHP to log
 // the contents of the $_REQUEST array called out by
 // the values array.
+include_once('mysql2i.class.php'); // migration step
 
 function check_for_value($values, $check, $reqs)
 {

@@ -18,6 +18,8 @@
 // By Bob Jacobsen, jacobsen@mac.com, Copyright 2010, 2011, 2012, 2013
 // -------------------------------------------------------------------------
 
+include_once('mysql2i.class.php'); // migration step
+
 //
 // PHP to summarize the Operating Session requests
 //

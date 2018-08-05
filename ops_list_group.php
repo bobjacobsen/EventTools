@@ -14,6 +14,7 @@
 
 <?php
 
+include_once('mysql2i.class.php'); // migration step
 require_once('ops_assign_common.php');
 
 // parse out arguments

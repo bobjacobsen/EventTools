@@ -9,7 +9,9 @@
 
 </head>
 <body>
-<h2><?php require_once('access.php'); echo $event_tools_event_name; ?> Misc Event List</h2>  
+<h2><?php 
+include_once('mysql2i.class.php'); // migration step
+require_once('access.php'); echo $event_tools_event_name; ?> Misc Event List</h2>  
 <a href="index.php">Back to main page</a>
 <?php
 require_once('access.php');

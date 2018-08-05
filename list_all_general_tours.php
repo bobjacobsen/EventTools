@@ -12,6 +12,8 @@
 <h2><?php require_once('access.php'); echo $event_tools_event_name; ?> General Tour List</h2>  
 <a href="index.php">Back to main page</a>
 <?php
+include_once('mysql2i.class.php'); // migration step
+
 require_once('access.php');
 require_once('utilities.php');
 require_once('listing.php');
