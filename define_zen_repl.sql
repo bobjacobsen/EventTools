@@ -42,7 +42,6 @@ CREATE TABLE IF NOT EXISTS `prefix_customers` (
   `customers_referral` varchar(32) NOT NULL default '',
   `customers_paypal_payerid` varchar(20) NOT NULL default '',
   `customers_paypal_ec` tinyint(1) unsigned NOT NULL default '0',
-  `customers_x2011_associated_num` varchar(60) default NULL,
   `customers_create_date` datetime,
   `customers_updated_date` timestamp ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY  (`customers_id`),
