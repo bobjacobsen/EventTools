@@ -1,4 +1,4 @@
-<?php require_once('access.php'); require_once('secure.php'); ?>
+<?php require_once('access_and_open.php'); require_once('secure.php'); ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 		"http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -34,14 +34,11 @@ $update_quantity =  FALSE;         // TRUE to update quantity, FALSE to leave un
 
 
 // Code starts here
-
+require('access_and_open.php');
 require_once('utilities.php');
 require_once('options_utilities.php');
 
 global $stats;
-
-mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
-@mysql_select_db($opts['db']) or die( "Unable to select database");
 
 parse_str($_SERVER["QUERY_STRING"], $args);
 $where = "";

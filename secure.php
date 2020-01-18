@@ -41,8 +41,7 @@ if ($event_tools_require_user_authenticate  || $event_tools_require_user_id ) {
 
         
         // open database
-        mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
-        @mysql_select_db($opts['db']) or die( "Unable to select database");
+        require_once('access_and_open.php'); 
     
         $result=mysql_query($query);
         $num = 0;

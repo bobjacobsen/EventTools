@@ -1,4 +1,4 @@
-<?php require_once('access.php'); require_once('secure.php'); ?>
+<?php require_once('access_and_open.php'); require_once('secure.php'); ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 		"http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -300,7 +300,6 @@ $opts['fdd']['ops_layout_id4'] = array(
     'values2' => array( 0 => 'None'
                 )
 );
-
 
 // Now important call to phpMyEdit
 require_once 'phpMyEdit.class.php';

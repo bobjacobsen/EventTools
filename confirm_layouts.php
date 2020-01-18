@@ -1,6 +1,7 @@
 <?php 
 include_once('mysql2i.class.php'); // migration step
-require_once('access.php'); 
+require('access_and_open.php'); 
+
     // required to get user name
     $user = $_SERVER['PHP_AUTH_USER'];
     $REMOTE_USER = $user;  // for phpMyEdit
@@ -12,8 +13,7 @@ require_once('access.php');
     
     // check if exists
     global $opts, $event_tools_db_prefix;
-    mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
-    @mysql_select_db($opts['db']) or die( "Unable to select database");
+
     $query = "SELECT layout_owner_email 
             FROM ".$event_tools_db_prefix ."eventtools_layouts
             WHERE layout_owner_email = '".$REMOTE_USER."';

@@ -1,9 +1,7 @@
 <?php 
     include_once('mysql2i.class.php'); // migration step
-    require_once('access.php'); 
+    require('access_and_open.php'); 
     global $opts, $event_tools_db_prefix;
-    mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
-    @mysql_select_db($opts['db']) or die( "Unable to select database");
 
     // check for email address
     parse_str($_SERVER["QUERY_STRING"], $args);
@@ -562,8 +560,6 @@ new phpMyEdit_slide($opts);
 <?php
 
     global $opts, $event_tools_db_prefix;
-    mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
-    @mysql_select_db($opts['db']) or die( "Unable to select database");
 
     // check for email address
     parse_str($_SERVER["QUERY_STRING"], $args);

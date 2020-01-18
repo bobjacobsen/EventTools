@@ -1,6 +1,6 @@
 <?php 
 include_once('mysql2i.class.php'); // migration step
-    require_once('access.php'); 
+    require_once('access_and_open.php'); 
     // required to get user name
     $user = $_SERVER['PHP_AUTH_USER'];
     $REMOTE_USER = $user;  // for phpMyEdit
@@ -30,8 +30,6 @@ include_once('mysql2i.class.php'); // migration step
     }
     
     global $opts, $event_tools_db_prefix;
-    mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
-    @mysql_select_db($opts['db']) or die( "Unable to select database");
 
     if ($event_tools_require_customer_id) {
         
@@ -544,8 +542,7 @@ new phpMyEdit_slide($opts);
 echo '<p>';
 
 global $opts, $event_tools_db_prefix;
-mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
-@mysql_select_db($opts['db']) or die( "Unable to select database");
+
 $query = "SELECT * 
         FROM ".$event_tools_db_prefix ."eventtools_opsession_req
         WHERE opsreq_person_email = '".$REMOTE_USER."';
