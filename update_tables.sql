@@ -38,9 +38,26 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 
 ALTER TABLE `prefix_customers`                MODIFY customers_email_address varchar(96) NOT NULL default '';
+
 ALTER TABLE `prefix_eventtools_layouts`       MODIFY layout_owner_email      varchar(96) default '';
+ALTER TABLE `prefix_eventtools_layouts`       MODIFY layout_scale            varchar(64) default NULL;
+ALTER TABLE `prefix_eventtools_layouts`       MODIFY layout_gauge            varchar(64) default NULL;
+ALTER TABLE `prefix_eventtools_layouts`       MODIFY layout_owner_firstname  varchar(64) default '';
+ALTER TABLE `prefix_eventtools_layouts`       MODIFY layout_owner_lastname   varchar(64) default '',
+ALTER TABLE `prefix_eventtools_layouts`       MODIFY layout_fidelity         varchar(64) default '';
+ALTER TABLE `prefix_eventtools_layouts`       MODIFY layout_rigor            varchar(64) default '';
+ALTER TABLE `prefix_eventtools_layouts`       MODIFY layout_documentation    varchar(64) default '';
+ALTER TABLE `prefix_eventtools_layouts`       MODIFY layout_session_pace     varchar(64) default '';
+ALTER TABLE `prefix_eventtools_layouts`       MODIFY layout_car_forwarding   varchar(64) default '',
+ALTER TABLE `prefix_eventtools_layouts`       MODIFY layout_tone             varchar(64) default '';
+ALTER TABLE `prefix_eventtools_layouts`       MODIFY layout_dispatched_by1   varchar(64) default '';
+ALTER TABLE `prefix_eventtools_layouts`       MODIFY layout_dispatched_by2   varchar(64) default '';
+ALTER TABLE `prefix_eventtools_layouts`       MODIFY layout_communications   varchar(64) default '';
+
 ALTER TABLE `prefix_eventtools_clinics`       MODIFY clinic_presenter_email  varchar(96) default '';
+
 ALTER TABLE `prefix_eventtools_people`        MODIFY person_email            varchar(96) NOT NULL default '';
+
 ALTER TABLE `prefix_eventtools_opsession_req` MODIFY opsreq_person_email     varchar(96);
 
 -- --------------------------------------------------------
@@ -53,10 +70,6 @@ ALTER TABLE `prefix_eventtools_opsession_req` ADD   `opsreq_priority`        int
 
 ALTER TABLE `prefix_eventtools_layouts`       ADD   `layout_num_ops`         varchar(5) default NULL;
 ALTER TABLE `prefix_eventtools_layouts`       ADD   `layout_distance`        varchar(25) default '';
-
-ALTER TABLE `prefix_eventtools_opsession_req` ADD   `opsreq_opt5`            char(1);
-ALTER TABLE `prefix_eventtools_opsession_req` ADD   `opsreq_opt6`            char(1);
-ALTER TABLE `prefix_eventtools_opsession_req` ADD   `opsreq_opt7`            char(1);
 
 -- --------------------------------------------------------
 -- Lengthen URL fields

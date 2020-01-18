@@ -258,8 +258,8 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_layouts` (
   `layout_short_description` varchar(64) default '',
   `layout_long_description` varchar(5000) default '',
 
-  `layout_scale` varchar(20) default NULL,
-  `layout_gauge` varchar(20) default NULL,
+  `layout_scale` varchar(64) default NULL,
+  `layout_gauge` varchar(64) default NULL,
   `layout_era` varchar(64) default NULL,
   `layout_class` varchar(64) default NULL,
   `layout_theme` varchar(64) default NULL,
@@ -281,8 +281,8 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_layouts` (
 
   `layout_owner_url` varchar(128) default '',
   
-  `layout_owner_firstname` varchar(16) default '',
-  `layout_owner_lastname` varchar(32) default '',
+  `layout_owner_firstname` varchar(64) default '',
+  `layout_owner_lastname` varchar(64) default '',
   `layout_owner_phone` varchar(16) default '',
   `layout_owner_call_time` varchar(32) default '',
   `layout_owner_email` varchar(96) default '',
@@ -297,15 +297,15 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_layouts` (
   
   `layout_status_code` int(3)  default 0,
 
-  `layout_fidelity` varchar(12) default '',
-  `layout_rigor` varchar(12) default '',
-  `layout_documentation` varchar(12) default '',
-  `layout_session_pace` varchar(12) default '',
-  `layout_car_forwarding` varchar(12) default '',
-  `layout_tone` varchar(12) default '',
-  `layout_dispatched_by1` varchar(12) default '',
-  `layout_dispatched_by2` varchar(12) default '',
-  `layout_communications` varchar(12) default '',
+  `layout_fidelity` varchar(64) default '',
+  `layout_rigor` varchar(64) default '',
+  `layout_documentation` varchar(64) default '',
+  `layout_session_pace` varchar(64) default '',
+  `layout_car_forwarding` varchar(64) default '',
+  `layout_tone` varchar(64) default '',
+  `layout_dispatched_by1` varchar(64) default '',
+  `layout_dispatched_by2` varchar(64) default '',
+  `layout_communications` varchar(64) default '',
   
   `layout_organizer_comment` varchar(250) default '',
   `layout_photo_url` varchar(128) default '',
