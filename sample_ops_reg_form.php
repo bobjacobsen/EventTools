@@ -8,15 +8,22 @@
 	require_once('access.php'); 
 	require('utilities.php'); 
 
-	$message = "<span style=\"color:red;font-weight:bold\">";
+	$message = "";
 
-	if ( !formcomplete() ) {
-		if ( $_SERVER['REQUEST_METHOD'] == 'POST' )
-			$message .= "Please complete all values";
-		$message .= "</span>";
-		showform( $message );
-		return;
+	// Just show form the first time around, when no arguments provided
+	if (! isset( $_REQUEST[ "fname" ] )) {
+	    showform( "" );
+	    return;
 	}
+	
+	//' check for not enough completed
+    if ( !formcomplete() ) { 
+        $message = "<span style=\"color:red;font-weight:bold\">";
+        $message .= "Please complete all values and submit again; your registration is not complete.";
+        $message .= "</span>";
+        showform( $message );
+        return;
+    }
 
 	$now = time();	
 
@@ -79,15 +86,18 @@ function formcomplete() {
 function showform( $message ) {
     global $event_tools_event_name;
     
-	 print $message;
-	 $page =  <<<END
-
+	 $page = <<<END
     <html>
     <body>
+END;
+    print $page.$message;
+
+	 $page = <<<END
 	<h2>Register for 
 END;
 	print $page.$event_tools_event_name;
-	 $page =  <<<END
+
+	 $page = <<<END
 </h2>
 
 	<form action="" method="get">
