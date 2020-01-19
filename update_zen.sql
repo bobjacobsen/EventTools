@@ -25,3 +25,6 @@ ALTER TABLE `prefix_customers` ADD `customers_emerg_contact_name` varchar(60) de
 ALTER TABLE `prefix_customers` ADD `customers_emerg_contact_phone` varchar(32) default NULL;
 ALTER TABLE `prefix_customers` ADD `customers_first_name_badge` varchar(32) default NULL;
 
+ALTER TABLE `prefix_customers` ADD `customers_create_date` datetime;
+ALTER TABLE `prefix_customers` ADD `customers_updated_date` timestamp ON UPDATE CURRENT_TIMESTAMP
+

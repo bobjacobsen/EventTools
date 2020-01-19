@@ -170,13 +170,13 @@ $opts['fdd']['layout_id'] = array(
 $opts['fdd']['layout_owner_firstname'] = array(
   'name'     => 'Owner first name',
   'select'   => 'T',
-  'maxlen'   => 16,
+  'maxlen'   => 64,
   'sort'     => true
 );
 $opts['fdd']['layout_owner_lastname'] = array(
   'name'     => 'Owner last name',
   'select'   => 'T',
-  'maxlen'   => 32,
+  'maxlen'   => 64,
   'sort'     => true
 );
 $opts['fdd']['layout_name'] = array(

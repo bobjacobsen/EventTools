@@ -154,13 +154,13 @@ $opts['fdd']['layout_id'] = array(
 $opts['fdd']['layout_owner_firstname'] = array(
   'name'     => 'Owner first name',
   'select'   => 'T',
-  'maxlen'   => 16,
+  'maxlen'   => 64,
   'sort'     => true
 );
 $opts['fdd']['layout_owner_lastname'] = array(
   'name'     => 'Owner last name',
   'select'   => 'T',
-  'maxlen'   => 32,
+  'maxlen'   => 64,
   'sort'     => true
 );
 $opts['fdd']['layout_street_address'] = array(
@@ -239,7 +239,7 @@ $opts['fdd']['layout_size'] = array(
 $opts['fdd']['layout_scale'] = array(
   'name'     => 'Scale',
   'select'   => 'T',
-  'maxlen'   => 20,
+  'maxlen'   => 64,
   'sort'     => true
 );
 $opts['fdd']['layout_mainline_length'] = array(
