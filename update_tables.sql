@@ -54,10 +54,6 @@ ALTER TABLE `prefix_eventtools_opsession_req` ADD   `opsreq_priority`        int
 ALTER TABLE `prefix_eventtools_layouts`       ADD   `layout_num_ops`         varchar(5) default NULL;
 ALTER TABLE `prefix_eventtools_layouts`       ADD   `layout_distance`        varchar(25) default '';
 
-ALTER TABLE `prefix_eventtools_opsession_req` ADD   `opsreq_opt5`            char(1);
-ALTER TABLE `prefix_eventtools_opsession_req` ADD   `opsreq_opt6`            char(1);
-ALTER TABLE `prefix_eventtools_opsession_req` ADD   `opsreq_opt7`            char(1);
-
 -- --------------------------------------------------------
 -- Lengthen URL fields
 -- --------------------------------------------------------
