@@ -6,6 +6,12 @@
 require_once('access.php');
 require_once('utilities.php');
 require_once('formatting.php');
+
+if (! file_exists('google_staticmap_key.php')) {
+    // this branch is reached if a 'google_staticmap_key.php' file doesn't exist
+    print "<h2>This page requires a (paid) Google API key to be installed </h2>";
+    return;
+}
 require_once('google_staticmap_key.php');
 
 // present a map of all (enabled) layout locations
