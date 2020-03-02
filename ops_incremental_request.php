@@ -45,6 +45,8 @@ global $opts, $event_tools_db_prefix;
 mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
 @mysql_select_db($opts['db']) or die( "Unable to select database");
 
+require_once('no_tran.php');
+
 $email = clean_text($_REQUEST[ "email" ]);
 
 // save op session request
@@ -102,11 +104,21 @@ $findu = "SELECT ".$event_tools_db_prefix."customers.customers_id, address_book_
 $reqs = mysql_query($findu);
 if (mysql_errno() != 0) print "<p>Error in SELECT LEFT JOIN: ".mysql_errno() . ": " . mysql_error() . "</p>";
 //print "<p>found ".mysql_num_rows($reqs)." rows ";
-//if (mysql_num_rows($reqs)>0) print "with first: ".mysql_result($reqs,0,"customers_id");
+$found_address_book_id = NULL;
+if (mysql_num_rows($reqs)>0) {
+   $found_address_book_id = mysql_result($reqs,0,"address_book_id");
+   if (empty(mysql_result($reqs,0,"address_book_id"))) $found_address_book_id = "NULL";
+   
+   //print "with first customers_id: ".mysql_result($reqs,0,"customers_id");
+   //if (mysql_result($reqs,0,"address_book_id") == '') print " address_book_id is empty string ";
+   //if (mysql_result($reqs,0,"address_book_id") === NULL ) print " address_book_id is NULL ";
+   //if (empty(mysql_result($reqs,0,"address_book_id"))) print " address_book_id is empty";
+}
 //print "</p>";
 
 $address = "REPLACE INTO ".$event_tools_db_prefix."address_book (`customers_id`, `address_book_id`, `entry_street_address`, `entry_city`, `entry_state`, `entry_postcode`) VALUES "
-    ."('".mysql_result($reqs,0,"customers_id")."','".mysql_result($reqs,0,"address_book_id")."','".clean_text($_REQUEST["street"])."','".clean_text($_REQUEST["city"])."','".clean_text($_REQUEST["state"])."','".clean_text($_REQUEST["zip"])."');";
+    ."('".mysql_result($reqs,0,"customers_id")."',".$found_address_book_id.",'".clean_text($_REQUEST["street"])."','".clean_text($_REQUEST["city"])."','".clean_text($_REQUEST["state"])."','".clean_text($_REQUEST["zip"])."');";
+
 //print '[ '.$address.' ] ';
 mysql_query($address);
 if (mysql_errno() != 0) print "<p>Error in REPLACE address_book: ".mysql_errno() . ": " . mysql_error() . "</p>";
