@@ -54,9 +54,8 @@ installation.
 <form method="get" action="format_all_clinics.php">
     <button type="submit">Table of clinics on day:</button>
     <select name="date">  <!-- manually enter days -->
-    <option value="08-03">Friday 8/3</option><option value="08-04">Saturday 8/4</option><option value="08-05">Sunday 8/5</option>
-    <option value="08-06">Monday 8/6</option><option value="08-07">Tuesday 8/7</option><option value="08-08">Wednesday 8/8</option>
-    <option value="08-09">Thursday 8/9</option><option value="08-10">Friday 8/10</option><option value="08-11">Saturday 8/11</option>
+    <option value="07-06">Tuesday 7/6</option><option value="07-07">Wednesday 7/7</option><option value="07-08">Thursday 7/8</option>
+    <option value="07-09">Friday 7/9</option><option value="07-10">Saturday 7/10</option>
     </select>
 </form>
 
