@@ -45,10 +45,32 @@ function where_add_tag($args, $where=NONE) {
     }
 }
 
-// date=n  tours, clinics starting on July n
+// date=n  tours, clinics starting on mm-dd
 function where_add_date($args, $where=NONE) {
     if ($args["date"]) {
-        $r = " start_date LIKE '2018-".$args["date"]."%'";
+        $r = " start_date LIKE '2021-".$args["date"]."%'";
+        if ($where != NONE) return $where." AND ".$r;
+        else return $r;
+    } else {
+        return $where;
+    }
+}
+
+// todate=n  tours, clinics through those on mm-dd
+function where_add_todate($args, $where=NONE) {
+    if ($args["todate"]) {
+        $r = " start_date <= '2021-".$args["todate"]." 99'";
+        if ($where != NONE) return $where." AND ".$r;
+        else return $r;
+    } else {
+        return $where;
+    }
+}
+
+// todate  tours, clinics through those today
+function where_add_today($args, $where=NONE) {
+    if ($args["today"]) {
+        $r = " start_date <= '".date("Y-m-d")." 99'";
         if ($where != NONE) return $where." AND ".$r;
         else return $r;
     } else {
@@ -403,9 +425,11 @@ function parse_clinic_query() {
     $where = where_add_name($args, $where);
     $where = where_add_presenter($args, $where);
     $where = where_add_date($args, $where);
+    $where = where_add_todate($args, $where);
+    $where = where_add_today($args, $where);
     $where = where_add_match_event($args, $where);
     $where = where_add_where($args, $where);
-    //echo $where;
+    // echo $where;
     return $where;
 }
 
