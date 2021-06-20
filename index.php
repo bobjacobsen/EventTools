@@ -170,8 +170,10 @@ if ($event_tools_option_zen_cart_used) {
     echo '</td><td>Contacts are people who have pre-registered<br/>or are otherwise known to the committee.</td></tr>';
     echo '<tr><th>Attendees</th><td>';
     echo '<a href="ops_reg_attendee_summary.php">Attendee Summary Table<a/><p>';
-    if ($event_tools_ops_session_by_category) echo '<a href="edit_user_req_group.php">View/Edit Attendee Category Numbers</a><p>';
+    echo '<a href="add_customer.php">Add/View/Edit Attendee</a><p>';
+    if ($event_tools_option_op_sessions && $event_tools_ops_session_by_category) echo '<a href="edit_user_req_group.php">View/Edit Attendee Category Numbers</a><p>';
     echo '<a href="ops_req_single.php">Single Attendee Summary (enter email)<a/><p>';
+    echo '<hr>';
     echo '<a href="ops_req.php">Form for attendees to change their own request (enter email)</a><p>';
     echo '<a href="ops_print_by_attendee.php">Assigned Sessions by Attendee (enter cycle)</a><p>';
     echo '<a href="ops_list_group.php">Email list for attendees (enter cycle)</a>    <p>';
