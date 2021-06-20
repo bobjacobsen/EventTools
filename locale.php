@@ -15,11 +15,27 @@ include_once('mysql2i.class.php'); // migration step
 function format_clinic_cell($result,$i,$width,$num,$url) {
     $name = htmlspecialchars(mysql_result($result,$i,"name"));
     echo "  <td colspan=\"".$width."\" class=\"et-clbl-td-clinic\"><table class=\"et-clbl-sub-table\">\n";
+    
     echo "     <tr class=\"et-clbl-sub-tr1\"><td class=\"et-clbl-sub-td1\"><span class=\"et-clbl-sub-name\">";
-    echo "      <a href=\"".$url.mysql_result($result,$i,"number")."\">".$name."</a>\n";                 
-    echo "      </span></td></tr>\n";
+    if (mysql_result($result,$i,"clinic_url") != "") {
+       echo "      <a href=\"";
+       echo mysql_result($result,$i,"clinic_url")."\">".$name."</a>\n";                 
+    } elseif (mysql_result($result,$i,"number") != "") {
+       echo "      <a href=\"";
+       echo $url.mysql_result($result,$i,"number")."\">".$name."</a>\n";                 
+    } else {   
+       echo       $name;                 
+    }
+    echo "     </span></td></tr>\n";
+    
     echo "     <tr class=\"et-clbl-sub-tr2\"><td class=\"et-clbl-sub-td1\"><span class=\"et-clbl-sub-presenter\">".htmlspecialchars(mysql_result($result,$i,"clinic_presenter"))."</span></td></tr>\n";
-    // tags
+
+// zoom link
+    echo "     <tr class=\"et-clbl-sub-trz\"><td class=\"et-clbl-sub-td1\"><span class=\"et-clbl-sub-zoom\">";
+    echo "      <a href=\"".$url.mysql_result($result,$i,"clinic_presenter_av_comment")."\">(Video)</a>\n";
+    echo "      </span></td></tr>\n";
+
+    // tags, if any
     echo "     <tr class=\"et-clbl-sub-tr3\"><td class=\"et-clbl-sub-td1\"><span class=\"et-clbl-sub-tags\">";
     echo htmlspecialchars(mysql_result($result,$i,"tag_name"));
     while ( ($i < $num-1) && 
