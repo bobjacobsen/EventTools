@@ -196,7 +196,7 @@ $opts['fdd']['opsreq_pri1'] = array(
   'default'  => 'None',
   'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
                         'column' => 'ops_id',
-                        'orderby' => 'layout_owner_lastname',
+                        /* 'orderby' => 'layout_owner_lastname', */
                         'description' => array(
                                 'columns' => array(
                                                 'layout_owner_lastname',
@@ -220,7 +220,7 @@ $opts['fdd']['opsreq_pri2'] = array(
   'default'  => 'None',
   'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
                         'column' => 'ops_id',
-                        'orderby' => 'layout_owner_lastname',
+                        /* 'orderby' => 'layout_owner_lastname', */
                         'description' => array(
                                 'columns' => array(
                                                 'layout_owner_lastname',
@@ -244,7 +244,7 @@ $opts['fdd']['opsreq_pri3'] = array(
   'default'  => 'None',
   'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
                         'column' => 'ops_id',
-                        'orderby' => 'layout_owner_lastname',
+                        /* 'orderby' => 'layout_owner_lastname', */
                         'description' => array(
                                 'columns' => array(
                                                 'layout_owner_lastname',
@@ -268,7 +268,7 @@ $opts['fdd']['opsreq_pri4'] = array(
   'default'  => 'None',
   'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
                         'column' => 'ops_id',
-                        'orderby' => 'layout_owner_lastname',
+                        /* 'orderby' => 'layout_owner_lastname', */
                         'description' => array(
                                 'columns' => array(
                                                 'layout_owner_lastname',
@@ -292,7 +292,7 @@ $opts['fdd']['opsreq_pri5'] = array(
   'default'  => 'None',
   'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
                         'column' => 'ops_id',
-                        'orderby' => 'layout_owner_lastname',
+                        /* 'orderby' => 'layout_owner_lastname', */
                         'description' => array(
                                 'columns' => array(
                                                 'layout_owner_lastname',
@@ -316,7 +316,7 @@ $opts['fdd']['opsreq_pri6'] = array(
   'default'  => 'None',
   'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
                         'column' => 'ops_id',
-                        'orderby' => 'layout_owner_lastname',
+                        /* 'orderby' => 'layout_owner_lastname', */
                         'description' => array(
                                 'columns' => array(
                                                 'layout_owner_lastname',
@@ -340,7 +340,7 @@ $opts['fdd']['opsreq_pri7'] = array(
   'default'  => 'None',
   'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
                         'column' => 'ops_id',
-                        'orderby' => 'layout_owner_lastname',
+                        /* 'orderby' => 'layout_owner_lastname', */
                         'description' => array(
                                 'columns' => array(
                                                 'layout_owner_lastname',
@@ -364,7 +364,7 @@ $opts['fdd']['opsreq_pri8'] = array(
   'default'  => 'None',
   'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
                         'column' => 'ops_id',
-                        'orderby' => 'layout_owner_lastname',
+                        /* 'orderby' => 'layout_owner_lastname', */
                         'description' => array(
                                 'columns' => array(
                                                 'layout_owner_lastname',
@@ -387,7 +387,7 @@ $opts['fdd']['opsreq_pri9'] = array(
   'default'  => 'None',
   'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
                         'column' => 'ops_id',
-                        'orderby' => 'layout_owner_lastname',
+                        /* 'orderby' => 'layout_owner_lastname', */
                         'description' => array(
                                 'columns' => array(
                                                 'layout_owner_lastname',
@@ -410,7 +410,7 @@ $opts['fdd']['opsreq_pri10'] = array(
   'default'  => 'None',
   'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
                         'column' => 'ops_id',
-                        'orderby' => 'layout_owner_lastname',
+                        /* 'orderby' => 'layout_owner_lastname', */
                         'description' => array(
                                 'columns' => array(
                                                 'layout_owner_lastname',
@@ -433,7 +433,7 @@ $opts['fdd']['opsreq_pri11'] = array(
   'default'  => 'None',
   'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
                         'column' => 'ops_id',
-                        'orderby' => 'layout_owner_lastname',
+                        /* 'orderby' => 'layout_owner_lastname', */
                         'description' => array(
                                 'columns' => array(
                                                 'layout_owner_lastname',
@@ -456,7 +456,7 @@ $opts['fdd']['opsreq_pri12'] = array(
   'default'  => 'None',
   'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
                         'column' => 'ops_id',
-                        'orderby' => 'layout_owner_lastname',
+                        /* 'orderby' => 'layout_owner_lastname', */
                         'description' => array(
                                 'columns' => array(
                                                 'layout_owner_lastname',
