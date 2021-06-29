@@ -272,13 +272,6 @@ $opts['fdd']['mark_changed'] = array(
   'maxlen'   => 1,
   'sort'     => true
 );
-$opts['fdd']['last_mod_time'] = array(
-  'name'     => 'Last mod time',
-  'input'    => 'R',
-  'select'   => 'T',
-  'maxlen'   => 19,
-  'sort'     => true
-);
 
 // Now important call to phpMyEdit
 require_once 'phpMyEdit.class.php';
