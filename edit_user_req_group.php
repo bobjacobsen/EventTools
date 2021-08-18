@@ -107,7 +107,7 @@ $opts['filters'] = "PMEtable0.sessions_count > 200";
 // Options you wish to give the users
 // A - add,  C - change, P - copy, V - view, D - delete,
 // F - filter, I - initial sort suppressed
-$opts['options'] = 'CVF';
+$opts['options'] = 'ACDVF';
 
 /* Field definitions
    
@@ -155,58 +155,58 @@ $opts['fdd']['opsreq_id'] = array(
   'default'  => '0',
   'sort'     => true
 );
+$opts['fdd']['opsreq_person_email'] = array(
+  'name'     => 'Attendee email address',
+  'select'   => 'T',
+  'options'  => 'LFACPDV',
+  'maxlen'   => 32,
+  'sort'     => true
+);
 $opts['fdd']['opsreq_priority'] = array(
   'name'     => 'Category (high first, 0 last)',
   'select'   => 'T',
   'maxlen'   => 5,
   'sort'     => true
 );
-$opts['fdd']['opsreq_person_email'] = array(
-  'name'     => 'Your email address',
-  'select'   => 'T',
-  'options'  => 'RLFACPDV',
-  'maxlen'   => 32,
-  'sort'     => true
-);
 $opts['fdd']['customers_firstname'] = array(
   'name'     => 'First Name',
   'select'   => 'T',
-  'options'  => 'RLFACPDV',
+  'options'  => 'LFACPDV',
   'maxlen'   => 32,
   'sort'     => true
 );
 $opts['fdd']['customers_lastname'] = array(
   'name'     => 'Last Name',
   'select'   => 'T',
-  'options'  => 'RLFACPDV',
+  'options'  => 'LFACPDV',
   'maxlen'   => 32,
   'sort'     => true
 );
 $opts['fdd']['entry_city'] = array(
   'name'     => 'City',
   'select'   => 'T',
-  'options'  => 'RLFACPDV',
+  'options'  => 'LFACPDV',
   'maxlen'   => 32,
   'sort'     => true
 );
 $opts['fdd']['entry_state'] = array(
   'name'     => 'State',
   'select'   => 'T',
-  'options'  => 'RLFACPDV',
+  'options'  => 'LFACPDV',
   'maxlen'   => 32,
   'sort'     => true
 );
 $opts['fdd']['entry_postcode'] = array(
   'name'     => 'Zip',
   'select'   => 'T',
-  'options'  => 'RLFACPDV',
+  'options'  => 'LFACPDV',
   'maxlen'   => 10,
   'sort'     => true
 );
 $opts['fdd']['opsreq_comment'] = array(
   'name'     => 'Any comments?',
   'select'   => 'T',
-  'options'  => 'RLFACPDV',
+  'options'  => 'LFACPDV',
   'maxlen'   => 200,
   'sort'     => true
 );

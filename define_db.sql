@@ -1,4 +1,3 @@
-
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
@@ -327,7 +326,7 @@ DROP TABLE IF EXISTS `prefix_eventtools_layout_tours`;
 
 CREATE TABLE IF NOT EXISTS `prefix_eventtools_layout_tours` (
   `id` int(5) NOT NULL auto_increment,
-  `number` varchar(5) NOT NULL,
+  `number` varchar(32) NOT NULL,
   `name` varchar(64) default '<none>',
   `start_date` datetime NOT NULL default '2011-07-01 00:00:00',
   `end_date` datetime NOT NULL default '2011-07-01 00:00:00',
@@ -391,7 +390,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_clinics` (
   
   `clinic_presenter` varchar(48) default '',
   `clinic_location_code` int(5) default 0,
-  `clinic_url` varchar(64) default '',
+  `clinic_url` varchar(150) default '',
   `clinic_presenter_email` varchar(96) default '',
   `comment` varchar(500) default '',
   `clinic_ok` varchar(2) default '',

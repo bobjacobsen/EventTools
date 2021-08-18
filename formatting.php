@@ -1113,7 +1113,7 @@ function format_all_clinics_as_2table($where="", $order="start_date, end_date") 
     mysql_close();    
 }
 
-function format_all_clinics_as_3table($where="", $order="start_date, end_date") {
+function format_all_clinics_as_3table($where="", $order=" start_date ") {
     global $opts, $event_tools_db_prefix, $event_tools_href_add_on;
 
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
@@ -1128,11 +1128,13 @@ function format_all_clinics_as_3table($where="", $order="start_date, end_date") 
         $where = " WHERE ".$where;
     }  
     
+    if ($order == NONE) $order = " start_date ";
+
     $query="
         SELECT *
         FROM ".$event_tools_db_prefix."eventtools_clinics_with_tags
         ".$where."
-        ORDER BY start_date, end_date, name
+        ORDER BY ".$order."
         ;
     ";
     //echo $query;
@@ -1204,7 +1206,7 @@ function format_all_clinics_as_3table($where="", $order="start_date, end_date") 
             echo "<tr class=\"et-clinic-tr4\">\n";
             echo "  <td colspan=\"3\" class=\"et-clinic-td1\">\n";
             if (mysql_result($result,$i,"clinic_url")!='') {
-                echo "    <span class=\"et-clinic-url\"><a  ".$event_tools_href_add_on." href=\"".mysql_result($result,$i,"clinic_url")."\">".mysql_result($result,$i,"clinic_url")."</a></span>\n";
+                echo "    <span class=\"et-clinic-url\"><a  ".$event_tools_href_add_on." href=\"(".mysql_result($result,$i,"clinic_url")."\">(Video Link)</a></span>\n";
             }
             echo "  </td>\n";
             echo "</tr>\n";

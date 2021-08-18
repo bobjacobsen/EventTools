@@ -17,6 +17,7 @@ require_once('eventtools2021/access_and_open.php'); require_once('eventtools2021
 <!-- #BeginEditable "doctitle" -->
 <title>Sessions - Rails By The Bay 2021 NMRA Convention</title>
 
+
 <style type="text/css">
 /* was 12 em */
 .colWidth150 {
@@ -91,23 +92,6 @@ table.agenda th  {
 	 background-color: blue;
  	 color: white;
 }
-
-.et-clinic {
-	   width: 100%;
-}
-
-.et-clinic-td1 {
-	   width: 60%;
-}
-
-.et-clinic-td2 {
-	   width: 20%;
-}
-
-.et-clinic-td3 {
-	   width: 20%;
-}
-
 </style>
 
 
@@ -147,7 +131,8 @@ table.agenda th  {
 		<!-- BEGIN LEFT SIDEBAR -->
 		<div id="sidebar">
 			<ul>
-				<li><a href="zoomtips.html" style="background-color: #FFFF00; font-size: 1.4em; font-weight: bold;">ZOOM<br />TIPS</a></li>
+				<li><a href="http://www.pcrnmra.org/NMRA2021/zoomtips.html" style="background-color: #FFFF00; font-size: 1.4em; font-weight: bold;">ZOOM<br />TIPS</a></li>
+
 				<li><a href="http://www.pcrnmra.org/NMRA2021/news.html">NEWS &amp; UPDATES</a></li>
 				<li><a href="http://www.pcrnmra.org/NMRA2021/sched.html">SCHEDULES</a></li>
 				<li><a href="http://www.pcrnmra.org/NMRA2021/index.html">Home</a></li>
@@ -167,8 +152,7 @@ table.agenda th  {
 				<!--li><a href="http://www.pcrnmra.org/NMRA2021/store.html">Company Store</a></li-->
 				<!--li><a href="http://www.pcrnmra.org/NMRA2021/swapmeet.html">Swap Meet</a></li-->
 				<!--li><a href="http://www.pcrnmra.org/NMRA2021/sigs.html">SIGs</a></li-->
-				<li><a href="ldsig.html">Layout Design SIG</a></li>
-
+				<li><a href="http://www.pcrnmra.org/NMRA2021/ldsig.html">Layout Design SIG</a></li>
 				<li><a href="http://www.pcrnmra.org/NMRA2021/committee.html">Committee</a></li>
 				<li><a href="http://www.pcrnmra.org/NMRA2021/links.html">Links</a></li>
 				<li><a href="http://www.pcrnmra.org/NMRA2021/policies.html">Policies</a></li>				  	</ul>
@@ -194,40 +178,16 @@ table.agenda th  {
 		<div id="content">
 
 <h1>Attendee Video Links</h1>
-This page shows clinics from today and earlier; check back tomorrow for the next group of clinics.
 All times are Pacific Daylight Time (PDT).
-<p>
-<h3>
-<form action="http:listing.php">
-      <input type="hidden" id="order" name="order" value="name">
-      <input type="submit" value="Sort by Title" />
-</form>
-<form action="http:listing.php">
-      <input type="hidden" id="order" name="order" value="date">
-      <input type="submit" value="Sort by Date and Time" />
-</form>
-<form action="http:listing.php">
-      <input type="hidden" id="order" name="order" value="presenter">
-      <input type="submit" value="Sort by Presenter Name" />
-</form>
-</h3>
 
 <?php
-
 require_once('eventtools2021/access.php');
 require_once('eventtools2021/utilities.php');
-require_once('eventtools2021/formatting.php');
+require_once('eventtools2021/locale.php');
 require_once('eventtools2021/parsers.php');
 
 $where = parse_clinic_query();
-
-$r = " start_date <= '2021-".substr(date("Y-m-d"),5)." 99'";
-//if ($where != NONE) $where = $where." AND ".$r;
-//        else $where = $r;
-
-$order = parse_order();
-
-format_all_clinics_as_3table($where, $order);
+format_clinics_by_loc("http://www.pcrnmra.org/NMRA2021/clinics.html#", $where);
 
 ?>
 
@@ -265,7 +225,7 @@ format_all_clinics_as_3table($where, $order);
 			<a href="http://www.pcrnmra.org/NMRA2021/clinics.html">Clinics</a>  &bull;
 			<a href="http://www.pcrnmra.org/NMRA2021/layouts.html">Layout Tours</a> &bull;
 			<a href="http://www.pcrnmra.org/NMRA2021/bof.html">Birds of a Feather Breakout Rooms</a> &bull;
-			<a href="http://www.pcrnmra.org/NMRA2021/proto.html">Prototype Tours</a> &bull;;
+			<a href="http://www.pcrnmra.org/NMRA2021/proto.html">Prototype Tours</a> &bull;
 			<a href="http://www.pcrnmra.org/NMRA2021/volunteers.html">Volunteers</a> &bull;
 			<a href="http://www.pcrnmra.org/NMRA2021/committee.html">Committee</a>  &bull;
 			<a href="http://www.pcrnmra.org/NMRA2021/links.html">Links</a>  &bull;
