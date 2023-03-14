@@ -151,7 +151,7 @@ function tourPeriod($start, $end) {
 //
 // HTML utilities
 //
-function warNULLmpty($item, $name) {
+function warnOnEmpty($item, $name) {
     global $event_tools_replace_on_data_warn;
     if (checkEmpty($item)) {
         if ($event_tools_replace_on_data_warn)
