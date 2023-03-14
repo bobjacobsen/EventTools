@@ -511,6 +511,8 @@ function parse_order() {
         if ($args["order"] == "cfirstname") return " customers_firstname ";
         if ($args["order"] == "email") return " customers_email_address ";
         if ($args["order"] == "category") return " opsreq_priority DESC ";
+        if ($args["order"] == "telephone") return " customers_telephone DESC ";
+        if ($args["order"] == "cellphone") return " customers_cellphone DESC ";
         return NONE;
     } else {
         return NONE;
