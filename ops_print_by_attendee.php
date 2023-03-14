@@ -109,7 +109,7 @@ echo '<table border="1"><tr>';
         $day->add(new DateInterval('P1D'));
     }    
 
-echo '<tr><th></th>';
+echo '<tr><th></th><th></th>';
 foreach ($colarray as $x) { echo '<th>'.$x.'</th>'; }
 echo '</tr>';
 
@@ -117,6 +117,7 @@ $title = mysql_result($result,0,"customers_firstname").' '.mysql_result($result,
 $first = TRUE;
 
 echo '<td>'.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").' </td>';
+echo '<td>'.mysql_result($result,$i,"entry_city").', '.mysql_result($result,$i,"entry_state").' </td>';
 
 $colnum = 0;
 
@@ -133,6 +134,7 @@ for ($i=0; $i < $num; $i++) {
         echo '</tr>';
         // finally, start layout
         echo '<td>'.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").' </td>';
+	echo '<td>'.mysql_result($result,$i,"entry_city").', '.mysql_result($result,$i,"entry_state").' </td>';
         $colnum = 0;
     }
     // show if allocated
