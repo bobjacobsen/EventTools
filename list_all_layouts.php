@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 		"http://www.w3.org/TR/html4/loose.dtd">
-<?php 
-    require_once('access.php'); 
+<?php
+    require_once('access.php');
 
 echo '<html>
 <head>
     <title>'.$event_tools_event_name.' Layout List</title>
 
-        <link href="layouts.css" rel="stylesheet" type="text/css" />    
+        <link href="layouts.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
-<h1>'.$event_tools_event_name.' Layout List</h1>  
+<h1>'.$event_tools_event_name.' Layout List</h1>
 <a href="index.php">Back to main page</a>
 ';
 include_once('mysql2i.class.php'); // migration step
@@ -36,10 +36,10 @@ $query="
     SELECT *
     FROM ".$event_tools_db_prefix."eventtools_layout_with_layout_tours ";
 
-if ($where != NONE)
+if ($where != NULL)
     $query = $query.' WHERE '.$where.' ';
 
-if ($order != NONE)
+if ($order != NULL)
     $query = $query.' ORDER BY '.$order.' ';
 else
     $query = $query.'ORDER BY layout_owner_lastname, layout_owner_firstname';
@@ -68,7 +68,7 @@ while ($i < $num) {
     // list all layout tours this layout belongs to
     if (mysql_result($result,$i,"id")!='')
         list_tour_in_layout($result,$i);
-    
+
     $i++;
 }
 
@@ -76,7 +76,7 @@ echo "<hr>\n";
 
 // done, clean up
 
-mysql_close();    
+mysql_close();
 
 
 

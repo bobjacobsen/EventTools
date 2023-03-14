@@ -12,22 +12,22 @@ include_once('mysql2i.class.php'); // migration step
 // Formatting interface and classes
 
 interface Event_Formatter {
-    public function format_heading($result,$i,$url=NONE);
-    public function format_subitem($result,$i,$url=NONE);
+    public function format_heading($result,$i,$url=NULL);
+    public function format_subitem($result,$i,$url=NULL);
     public function get_major_key($result,$i);
-    public function select_statement($where=NONE, $order=NONE);
+    public function select_statement($where=NULL, $order=NULL);
     public function default_where();
     public function default_order();
 }
 
-function format_as_table($formatter, $where=NONE, $order=NONE, $url=NONE) { // note argument order differs
+function format_as_table($formatter, $where=NULL, $order=NULL, $url=NULL) { // note argument order differs
     global $opts, $event_tools_db_prefix;
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
-        
+
     //echo $formatter->select_statement($where, $order)."<br/>\n";
     $result=mysql_query($formatter->select_statement($where, $order));
-    
+
     $i=0;
     $num=mysql_numrows($result);
     //echo "num: ".$num."<br/>\n";
@@ -38,34 +38,34 @@ function format_as_table($formatter, $where=NONE, $order=NONE, $url=NONE) { // n
 
     $lastmajorkey= "";
     $first = 0;
-    
+
     while ($i < $num) {
         if ($lastmajorkey != $formatter->get_major_key($result,$i)) {
             $lastmajorkey = $formatter->get_major_key($result,$i);
-    
+
            if (checkShowEventStatus($result,$i)) {
                 // end any existing table
                 if ($first != 0) {
                     echo "</table>\n";
                 }
                 $first = 1;
-                
+
                 // start a new table
                 echo "\n";
                 echo "<table border=\"1\" class=\"et-lt-table\">\n";
-        
+
                 $formatter->format_heading($result,$i, $url);
             }
         }
-            
+
         if (checkShowEventStatus($result,$i)) $formatter->format_subitem($result,$i, $url);
-        
+
         $i++;
     }
-    
+
     echo '</table>';
 
-    mysql_close();    
+    mysql_close();
 }
 
 // -------------------------------------------------------------------------
@@ -73,53 +73,53 @@ function format_as_table($formatter, $where=NONE, $order=NONE, $url=NONE) { // n
 // Requests for formatted listings
 //
 
-// 
+//
 // Listing of layout tours, including the sublist of layouts
 //
 
-function format_all_layout_tours_as_3table($where=NONE, $order=NONE, $url=NONE, $formatter=NONE) {
-    
-    if ($formatter==NONE) $formatter = new Layout_Tours_as_3Table;
-    
+function format_all_layout_tours_as_3table($where=NULL, $order=NULL, $url=NULL, $formatter=NULL) {
+
+    if ($formatter==NULL) $formatter = new Layout_Tours_as_3Table;
+
     format_as_table($formatter, $where, $order, $url);
 }
 
-function format_all_layout_tours_as_8table($where=NONE, $order=NONE, $url=NONE, $formatter=NONE) {
-    
-    if ($formatter==NONE) $formatter = new Layout_Tours_as_8Table;
-    
+function format_all_layout_tours_as_8table($where=NULL, $order=NULL, $url=NULL, $formatter=NULL) {
+
+    if ($formatter==NULL) $formatter = new Layout_Tours_as_8Table;
+
     format_as_table($formatter, $where, $order, $url);
 }
 
-// 
+//
 // Listing of general tours
 //
 
-function format_all_general_tours_as_3table($where=NONE, $order=NONE, $url=NONE, $formatter=NONE) {
-    
-    if ($formatter==NONE) $formatter = new General_Tours_as_3Table;
-    
+function format_all_general_tours_as_3table($where=NULL, $order=NULL, $url=NULL, $formatter=NULL) {
+
+    if ($formatter==NULL) $formatter = new General_Tours_as_3Table;
+
     format_as_table($formatter, $where, $order);
 }
 
-function format_all_general_tours_as_8table($where=NONE, $order=NONE, $url=NONE, $formatter=NONE) {
-    
-    if ($formatter==NONE) $formatter = new General_Tours_as_8Table;
-    
+function format_all_general_tours_as_8table($where=NULL, $order=NULL, $url=NULL, $formatter=NULL) {
+
+    if ($formatter==NULL) $formatter = new General_Tours_as_8Table;
+
     format_as_table($formatter, $where, $order);
 }
 
-function simple_table($table_name, $var_names, $where=NONE, $order=NONE) {
-    // If you provide an array of labels in $transpose, you'll get a table with 
+function simple_table($table_name, $var_names, $where=NULL, $order=NULL) {
+    // If you provide an array of labels in $transpose, you'll get a table with
     // with the data in columns
-    
+
     global $opts, $event_tools_db_prefix;
 
-    if ($order==NONE) $order = "layout_owner_lastname, layout_owner_firstname";
+    if ($order==NULL) $order = "layout_owner_lastname, layout_owner_firstname";
 
-    if ($where != NONE) $where = "WHERE ".$where." ";
+    if ($where != NULL) $where = "WHERE ".$where." ";
     else $where = " ";
-    
+
     $query="
         SELECT  *
         FROM ".$event_tools_db_prefix."eventtools_".$table_name."
@@ -137,41 +137,41 @@ function table_from_query($query, $var_names) {
 
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
-    
+
     //echo $query;
     $result=mysql_query($query);
-    
+
     $i=0;
     $num=mysql_numrows($result);
     //echo $num;
-    
+
     while ($i < $num) {
         $j = 0;
         echo "<tr>\n";
         $row = mysql_fetch_assoc($result);
 
         while ($j < count($var_names)) {
-    
+
             simple_table_format_cell($j, $row, $var_names[$j]);
-    
+
             $j++;
         }
         echo "</tr>\n";
         $i++;
-    }    
+    }
 }
 
-function by_column_table($table_name, $var_names, $labels, $where=NONE, $order=NONE) {
-    // Provide an array of labels in $transpose, you'll get a table with 
+function by_column_table($table_name, $var_names, $labels, $where=NULL, $order=NULL) {
+    // Provide an array of labels in $transpose, you'll get a table with
     // with the data in columns
-    
+
     global $opts, $event_tools_db_prefix;
 
-    if ($order==NONE) $order = "layout_owner_lastname, layout_owner_firstname";
+    if ($order==NULL) $order = "layout_owner_lastname, layout_owner_firstname";
 
-    if ($where != NONE) $where = "WHERE ".$where." ";
+    if ($where != NULL) $where = "WHERE ".$where." ";
     else $where = " ";
-    
+
     $query="
         SELECT  *
         FROM ".$event_tools_db_prefix."eventtools_".$table_name."
@@ -183,18 +183,18 @@ function by_column_table($table_name, $var_names, $labels, $where=NONE, $order=N
 
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
-    
+
     //echo $query;
     $result=mysql_query($query);
-    
+
     $j=0;
     $num=mysql_numrows($result);
     //echo $num;
-    
+
     while ($j < count($var_names)) {
         $i = 0;
-        
-        if ($labels[$j] != NONE) { 
+
+        if ($labels[$j] != NULL) {
             echo "<tr><td>".$labels[$j]."</td>\n";
 
             while ($i < $num) {
@@ -204,26 +204,26 @@ function by_column_table($table_name, $var_names, $labels, $where=NONE, $order=N
             echo "</tr>\n";
         }
         $j++;
-    }    
+    }
 }
 
-// 
+//
 // Listing of layouts, including the sublist of layout tours they're on
 //
 // Also checks status of tours, adds op sessions at the end
-function format_all_layouts_as_table($url=NONE, $where=NONE, $order=NONE) {
+function format_all_layouts_as_table($url=NULL, $where=NULL, $order=NULL) {
     global $opts, $event_tools_db_prefix, $event_tools_href_add_on;
     global $event_tools_show_min_value;
 
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
-    
-    if ($order==NONE) $order = "layout_owner_lastname, layout_owner_firstname";
 
-    if ($where != NONE) $where = "WHERE ".$where." AND ";
+    if ($order==NULL) $order = "layout_owner_lastname, layout_owner_firstname";
+
+    if ($where != NULL) $where = "WHERE ".$where." AND ";
     else $where = "WHERE ";
     $where .= " ( status_code >= ".$event_tools_show_min_value." OR id IS NULL ) ";  // good or blank status required
-    
+
     $query="
         SELECT  *
         FROM ".$event_tools_db_prefix."eventtools_layout_with_layout_tours
@@ -232,7 +232,7 @@ function format_all_layouts_as_table($url=NONE, $where=NONE, $order=NONE) {
         ;
     ";
     $result=mysql_query($query);
-    
+
     $query="
         SELECT  *
         FROM ".$event_tools_db_prefix."eventtools_opsession_name
@@ -241,7 +241,7 @@ function format_all_layouts_as_table($url=NONE, $where=NONE, $order=NONE) {
     ";
     $resultOps=mysql_query($query);
     $numOps=mysql_numrows($resultOps);
-    
+
     $i=0;
     $num=mysql_numrows($result);
     //echo "num: ".$num."<br/>\n";
@@ -252,10 +252,10 @@ function format_all_layouts_as_table($url=NONE, $where=NONE, $order=NONE) {
 
     $lastmajorkey= "";
     $first = 0;
-    
+
     while ($i < $num) {
         $majorkey = mysql_result($result,$i,"layout_id");
-        
+
         // skip if not at sufficient level _and_ no associated tour
         if (!checkShowLayoutStatus($result, $i) && mysql_result($result,$i,"id")=='') {
             echo "\n<!-- skip ".$i;
@@ -272,20 +272,20 @@ function format_all_layouts_as_table($url=NONE, $where=NONE, $order=NONE) {
             echo " #".mysql_result($result,$i,"layout_status_code");
             echo '# -->'."\n";
         }
-        
+
         if ($lastmajorkey != $majorkey) {
             $lastmajorkey = $majorkey;
-    
+
             // end any existing table
             if ($first != 0) {
                 echo "</table>\n";
             }
             $first = 1;
-            
+
             // start a new table
             echo "\n";
             echo "<table border=\"1\" class=\"et-layout-table\">\n";
-    
+
             // line 1 - Name
             echo "<tr class=\"et-layout-tr1\">\n";
             echo "  <td colspan=\"3\" class=\"et-layout-td1\">\n";
@@ -295,32 +295,32 @@ function format_all_layouts_as_table($url=NONE, $where=NONE, $order=NONE) {
             echo "      </span> \n";
             echo "  </td>\n";
             echo "</tr>\n";
-        
+
             // line 2 - owner, city
             echo "<tr class=\"et-layout-tr2\">\n";
             echo "    <td colspan=\"2\" class=\"et-layout-td1\">\n";
-            echo "        <span class=\"et-layout-owner\">".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_owner_firstname")),"first").
-                        " ".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_owner_lastname")), "last")."</span> \n";
+            echo "        <span class=\"et-layout-owner\">".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_owner_firstname")),"first").
+                        " ".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_owner_lastname")), "last")."</span> \n";
             echo "    </td>\n";
             echo "    <td class=\"et-layout-td3\">\n";
-            echo "        <span class=\"et-layout-city\">".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_city")),"city")."</span> \n";
+            echo "        <span class=\"et-layout-city\">".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_city")),"city")."</span> \n";
             echo "    </td>\n";
             echo "</tr>\n";
-            
+
             // line 3 - short description
             echo "<tr class=\"et-layout-tr3\">\n";
             echo "    <td colspan=\"3\" class=\"et-layout-td1\">\n";
             echo "        <span class=\"et-layout-shortdesc\">".errorOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_short_description")),"short description")."</span> \n";
             echo "    </td>\n";
             echo "</tr>\n";
-        
+
             // line 4 - scale, prototype, URL
             echo "<tr class=\"et-layout-tr4\">\n";
             echo "    <td class=\"et-layout-td1\">\n";
             echo "        <span class=\"et-layout-scale\">".errorOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_scale")), "scale")."</span> \n";
             echo "    </td>\n";
             echo "    <td class=\"et-layout-td2\">\n";
-            echo "        <span class=\"et-layout-prototype\">".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_prototype")),"proto")."</span> \n";
+            echo "        <span class=\"et-layout-prototype\">".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_prototype")),"proto")."</span> \n";
             echo "    </td>\n";
             echo "    <td class=\"et-layout-td3\">\n";
             echo "        <span class=\"et-lt-layout-owner_url\">";
@@ -328,55 +328,55 @@ function format_all_layouts_as_table($url=NONE, $where=NONE, $order=NONE) {
             echo "        </span>\n";
             echo "    </td>\n";
             echo "</tr>\n";
-        
+
             // line 5 - scenery, size, mainline length
             echo "<tr class=\"et-layout-tr5\">\n";
 
-            $scenery = warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_scenery")), "scenery");
+            $scenery = warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_scenery")), "scenery");
             if (mysql_result($result,$i,"layout_scenery") !='') $scenery = 'Scenery: '.$scenery;
             echo "    <td class=\"et-layout-td1\">\n";
             echo "        <span class=\"et-layout-scenery\">".$scenery."</span> \n";
             echo "    </td>\n";
             echo "    <td class=\"et-layout-td2\">\n";
-            echo "        <span class=\"et-layout-size\">".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_size")),"size")."</span> \n";
+            echo "        <span class=\"et-layout-size\">".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_size")),"size")."</span> \n";
             echo "    </td>\n";
             echo "    <td class=\"et-layout-td3\">\n";
-            echo "        <span class=\"et-layout-mainline_length\">".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_mainline_length")), "main len")."</span> \n";
+            echo "        <span class=\"et-layout-mainline_length\">".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_mainline_length")), "main len")."</span> \n";
             echo "    </td>\n";
             echo "</tr>\n";
-        
+
             // line 6 - plan type, ops scheme, control
             echo "<tr class=\"et-layout-tr6\">\n";
             echo "    <td class=\"et-layout-td1\">\n";
-            echo "        <span class=\"et-layout-plantype\">".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_plan_type")), "plan")."</span> \n";
+            echo "        <span class=\"et-layout-plantype\">".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_plan_type")), "plan")."</span> \n";
             echo "    </td>\n";
             echo "    <td class=\"et-layout-td2\">\n";
-            echo "        <span class=\"et-layout-opsscheme\">".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_ops_scheme")), "ops scheme")."</span> \n";
+            echo "        <span class=\"et-layout-opsscheme\">".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_ops_scheme")), "ops scheme")."</span> \n";
             echo "    </td>\n";
             echo "    <td class=\"et-layout-td3\">\n";
-            echo "        <span class=\"et-layout-control\">".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_control")), "control")."</span> \n";
+            echo "        <span class=\"et-layout-control\">".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_control")), "control")."</span> \n";
             echo "    </td>\n";
             echo "</tr>\n";
-        
+
             // line 7 - accessibility, era, photos
             if (mysql_result($result,$i,"accessibility_display") != "") {
                 $accessibility = mysql_result($result,$i,"accessibility_display");
             } else {
-                $accessibility = NONE;
+                $accessibility = NULL;
             }
             echo "<tr class=\"et-layout-tr7\">\n";
             echo "    <td class=\"et-layout-td1\">\n";
-            echo "        <span class=\"et-layout-accessibility\">".warnOnEmpty($accessibility, "accessibility")."</span> \n";
+            echo "        <span class=\"et-layout-accessibility\">".warNULLmpty($accessibility, "accessibility")."</span> \n";
             echo "    </td>\n";
             echo "    <td class=\"et-layout-td2\">\n";
-            echo "        <span class=\"et-layout-era\">".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_era")), "era")."</span> \n";
+            echo "        <span class=\"et-layout-era\">".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_era")), "era")."</span> \n";
             echo "    </td>\n";
             echo "    <td class=\"et-layout-td3\">\n";
             if (mysql_result($result,$i,"layout_photo_url") != '')
                 echo '<a href="'.htmlspecialchars(mysql_result($result,$i,"layout_photo_url")).'">Photos</a>';
             echo "    </td>\n";
             echo "</tr>\n";
-        
+
             // line 8 - long description
             echo "<tr class=\"et-layout-tr8\">\n";
             echo "    <td colspan=\"3\" class=\"et-layout-td1\">\n";
@@ -437,11 +437,11 @@ function format_all_layouts_as_table($url=NONE, $where=NONE, $order=NONE) {
             echo "      ".mysql_result($result,$i,"number");
             echo "    </a></span>\n";
             echo "    <span class=\"et-layout-tourShortName\">".htmlspecialchars(mysql_result($result,$i,"name"))."</span> \n";
-            
+
             $date = daytime_from_long_format(mysql_result($result,$i,"start_date"))
                         ." - ".
                     time_from_long_format(mysql_result($result,$i,"end_date"));
-            
+
             echo "  </td>\n";
             echo "  <td colspan=\"3\" class=\"et-layout-td2\">\n";
             echo "    <span class=\"et-layout-tourDateTime\">".$date."</span>\n";
@@ -450,29 +450,29 @@ function format_all_layouts_as_table($url=NONE, $where=NONE, $order=NONE) {
         }
         $i++;
     }
-    
+
     echo "</table>\n";
-    
+
     // done, clean up
-    
-    mysql_close();    
+
+    mysql_close();
 
 }
 
 
-// 
+//
 // Listing of operating layouts
 //
-function format_all_ops_as_table($url=NONE, $where=NONE, $order=NONE) {
+function format_all_ops_as_table($url=NULL, $where=NULL, $order=NULL) {
     global $opts, $event_tools_db_prefix, $event_tools_href_add_on;
     global $event_tools_show_min_value;
 
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
-    
-    if ($order==NONE) $order = "layout_owner_lastname";
-    if ($where==NONE) $where =" WHERE l1.ops_layout_id != 0 OR l2.ops_layout_id2 != 0";
-    
+
+    if ($order==NULL) $order = "layout_owner_lastname";
+    if ($where==NULL) $where =" WHERE l1.ops_layout_id != 0 OR l2.ops_layout_id2 != 0";
+
     $query="
         SELECT  ".$event_tools_db_prefix."eventtools_layouts . *
 
@@ -488,7 +488,7 @@ function format_all_ops_as_table($url=NONE, $where=NONE, $order=NONE) {
         ;
     ";
     $result=mysql_query($query);
-    
+
     $i=0;
     $num=mysql_numrows($result);
     //echo "num: ".$num."<br/>\n";
@@ -497,11 +497,11 @@ function format_all_ops_as_table($url=NONE, $where=NONE, $order=NONE) {
         return;
     }
     $alt = 1;
-    
+
     // start a new table
     echo "\n";
     echo "<table border=\"1\" class=\"et-ops-table\">\n";
-    
+
     echo '<tr>
         <th>Host</th>
         <th>Railroad</th>
@@ -518,16 +518,16 @@ function format_all_ops_as_table($url=NONE, $where=NONE, $order=NONE) {
         <th>Communications</th>
         <th>Photos</th>
         </tr>'."\n";
-        
+
     while ($i < $num) {
-   
+
         if ($alt > 0 ) {
             echo "<tr>\n";
         } else {
             echo '<tr class="altrow">'."\n";
         }
         $alt = -$alt;
-        
+
         // Owner
         echo "  <td class=\"et-ops-td01\">\n";
         echo "    <span class=\"et-ops-host\">\n";
@@ -535,7 +535,7 @@ function format_all_ops_as_table($url=NONE, $where=NONE, $order=NONE) {
         echo "     ".htmlspecialchars(mysql_result($result,$i,"layout_owner_lastname"));
         echo "      </a></span> \n";
         echo "  </td>\n";
-    
+
         // Name
         echo "  <td class=\"et-ops-td02\">\n";
         echo "    <span class=\"et-ops-name\">\n";
@@ -543,15 +543,15 @@ function format_all_ops_as_table($url=NONE, $where=NONE, $order=NONE) {
         echo "     ".htmlspecialchars(mysql_result($result,$i,"layout_name"));
         echo "      </a></span> \n";
         echo "  </td>\n";
-    
-    
+
+
         // Size
         echo "  <td class=\"et-ops-td03\">\n";
         echo "    <span class=\"et-ops-size\">\n";
         echo "        ".htmlspecialchars(mysql_result($result,$i,"layout_size"));
         echo "      </span> \n";
         echo "  </td>\n";
-    
+
         // Scenery
         echo "  <td class=\"et-ops-td04\">\n";
         echo "    <span class=\"et-ops-scenery\">\n";
@@ -565,42 +565,42 @@ function format_all_ops_as_table($url=NONE, $where=NONE, $order=NONE) {
         echo "        ".htmlspecialchars(mysql_result($result,$i,"layout_fidelity"));
         echo "      </span> \n";
         echo "  </td>\n";
-        
+
         // Rigor
         echo "  <td class=\"et-ops-td06\">\n";
         echo "    <span class=\"et-ops-rigor\">\n";
         echo "        ".htmlspecialchars(mysql_result($result,$i,"layout_rigor"));
         echo "      </span> \n";
         echo "  </td>\n";
-        
+
         // Documentation
         echo "  <td class=\"et-ops-td07\">\n";
         echo "    <span class=\"et-ops-documentation\">\n";
         echo "        ".htmlspecialchars(mysql_result($result,$i,"layout_documentation"));
         echo "      </span> \n";
         echo "  </td>\n";
-        
+
         // Pace of session
         echo "  <td class=\"et-ops-td08\">\n";
         echo "    <span class=\"et-ops-pace\">\n";
         echo "        ".htmlspecialchars(mysql_result($result,$i,"layout_session_pace"));
         echo "      </span> \n";
         echo "  </td>\n";
-        
+
         // Car forwarding
         echo "  <td class=\"et-ops-td09\">\n";
         echo "    <span class=\"et-ops-forwarding\">\n";
         echo "        ".htmlspecialchars(mysql_result($result,$i,"layout_car_forwarding"));
         echo "      </span> \n";
         echo "  </td>\n";
-        
+
         // Tone
         echo "  <td class=\"et-ops-td10\">\n";
         echo "    <span class=\"et-ops-tone\">\n";
         echo "        ".htmlspecialchars(mysql_result($result,$i,"layout_tone"));
         echo "      </span> \n";
         echo "  </td>\n";
-        
+
         // Dispatch
         echo "  <td class=\"et-ops-td11\">\n";
         echo "    <span class=\"et-ops-dispatch\">\n";
@@ -609,14 +609,14 @@ function format_all_ops_as_table($url=NONE, $where=NONE, $order=NONE) {
             echo ' '.mysql_result($result,$i,"layout_dispatched_by2");
         echo "      </span> \n";
         echo "  </td>\n";
-        
+
         // Controls
         echo "  <td class=\"et-ops-td12\">\n";
         echo "    <span class=\"et-ops-controls\">\n";
         echo "        ".htmlspecialchars(mysql_result($result,$i,"layout_control"));
         echo "</span> \n";
         echo "  </td>\n";
-        
+
         // Communications
         echo "  <td class=\"et-ops-td13\">\n";
         echo "    <span class=\"et-ops-comms\">\n";
@@ -636,28 +636,28 @@ function format_all_ops_as_table($url=NONE, $where=NONE, $order=NONE) {
 
         $i++;
     }
-    
+
     echo "</table>\n";
-    
+
     // done, clean up
-    
-    mysql_close();    
+
+    mysql_close();
 
 }
 
-// 
+//
 // Listing of operating layout addresses
 //
-function format_all_ops_addresses($url=NONE, $where=NONE, $order=NONE) {
+function format_all_ops_addresses($url=NULL, $where=NULL, $order=NULL) {
     global $opts, $event_tools_db_prefix, $event_tools_href_add_on;
     global $event_tools_show_min_value;
 
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
-    
-    if ($order==NONE) $order = "layout_owner_lastname";
-    if ($where==NONE) $where =" WHERE l1.ops_layout_id != 0 OR l2.ops_layout_id2 != 0";
-    
+
+    if ($order==NULL) $order = "layout_owner_lastname";
+    if ($where==NULL) $where =" WHERE l1.ops_layout_id != 0 OR l2.ops_layout_id2 != 0";
+
     $query="
         SELECT  ".$event_tools_db_prefix."eventtools_layouts . *
 
@@ -673,7 +673,7 @@ function format_all_ops_addresses($url=NONE, $where=NONE, $order=NONE) {
         ;
     ";
     $result=mysql_query($query);
-    
+
     $i=0;
     $num=mysql_numrows($result);
     //echo "num: ".$num."<br/>\n";
@@ -682,27 +682,27 @@ function format_all_ops_addresses($url=NONE, $where=NONE, $order=NONE) {
         return;
     }
     $alt = 1;
-    
+
     // start a new table
     echo "\n";
     echo "<table border=\"1\" class=\"et-ops-table\">\n";
-    
+
     echo '<tr>
         <th>Host</th>
         <th>Railroad</th>
         <th>Address</th>
         <th>Phone</th>
         </tr>'."\n";
-        
+
     while ($i < $num) {
-   
+
         if ($alt > 0 ) {
             echo "<tr>\n";
         } else {
             echo '<tr class="altrow">'."\n";
         }
         $alt = -$alt;
-        
+
         // Owner
         echo "  <td class=\"et-ops-td01\">\n";
         echo "    <span class=\"et-ops-host\">\n";
@@ -710,7 +710,7 @@ function format_all_ops_addresses($url=NONE, $where=NONE, $order=NONE) {
         echo "     ".htmlspecialchars(mysql_result($result,$i,"layout_owner_lastname"));
         echo "      </a></span> \n";
         echo "  </td>\n";
-    
+
         // Name
         echo "  <td class=\"et-ops-td02\">\n";
         echo "    <span class=\"et-ops-name\">\n";
@@ -718,8 +718,8 @@ function format_all_ops_addresses($url=NONE, $where=NONE, $order=NONE) {
         echo "     ".htmlspecialchars(mysql_result($result,$i,"layout_name"));
         echo "      </a></span> \n";
         echo "  </td>\n";
-    
-    
+
+
         // Address
         echo "  <td class=\"et-ops-td03\">\n";
         echo "    <span class=\"et-ops-address\">\n";
@@ -727,61 +727,61 @@ function format_all_ops_addresses($url=NONE, $where=NONE, $order=NONE) {
         echo ", ".htmlspecialchars(mysql_result($result,$i,"layout_city"));
         echo "      </span> \n";
         echo "  </td>\n";
-    
+
         // City
         echo "  <td class=\"et-ops-td04\">\n";
         echo "    <span class=\"et-ops-city\">\n";
         echo "        ".htmlspecialchars(mysql_result($result,$i,"layout_owner_phone"));
         echo "      </span> \n";
         echo "  </td>\n";
-        
+
 
         echo "</tr>";
 
         $i++;
     }
-    
+
     echo "</table>\n";
-    
+
     // done, clean up
-    
-    mysql_close();    
+
+    mysql_close();
 
 }
 
-// 
+//
 // Listing of operating sessions
 //
-function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_limit=NONE, $link_field=NONE) {
+function format_all_ops_by_day($url=NULL, $where=NULL, $order=NULL, $start_date_limit=NULL, $link_field=NULL) {
     // layout_local_url and layout_photo_url were
     // added to the $event_tools_db_prefix."eventtools_opsession_name
     // as layout_local_url1, layout_local_url2 and layout_photo_url1, layout_photo_url2
     // so they could be selected in $link_field.  Use e.g. $link_field="layout_local_url"
-    
+
     global $opts, $event_tools_db_prefix, $event_tools_href_add_on;
     global $event_tools_show_min_value;
 
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
-    
-    if ($order==NONE) $order = " layout_owner_lastname1, layout_owner_lastname2, layout_name1, layout_name2, start_date ";
+
+    if ($order==NULL) $order = " layout_owner_lastname1, layout_owner_lastname2, layout_name1, layout_name2, start_date ";
     else $order = " layout_owner_lastname1, layout_owner_lastname2, layout_name1, layout_name2, start_date, ".$order;
-        
-    if ($where==NONE) $where = " ";
-    
+
+    if ($where==NULL) $where = " ";
+
     $query="
         SELECT  *
 
         FROM ".$event_tools_db_prefix."eventtools_opsession_name
         ".$where."
         ORDER BY ".$order."
-        
+
         ;
     ";
     //echo $query;
-    
+
     $result=mysql_query($query);
-    
+
     $i=0;
     $num=mysql_numrows($result);
     //echo "num: ".$num."<br/>\n";
@@ -789,16 +789,16 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
         echo "No matching operating session definitions found. <p>\n";
     }
     $alt = 1;
-    
+
     // start a new table
     echo "\n";
     echo "<table border=\"1\" class=\"et-faobd-table\">\n";
-    
+
     // generate table headings from first, last date
     $first_string =  "2200-01-01 00:00:00";
     $last_string =  "1999-01-01 00:00:00";
     // default is nothing before this month, specify argument if you want to see the past
-    if ($start_date_limit == NONE) {
+    if ($start_date_limit == NULL) {
         $now = new DateTime();
         $start_date_limit = $now->format("Y-m")."-01 00:00:00";
         //echo '['.$start_date_limit.']';
@@ -817,26 +817,26 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
     //echo 'days: '.$days.'<p>';
     if ($days < 1) {
        echo "Some session dates are probably wrong, found ".$first_string." through ".$last_string."; is status parameter right?<p>";
-    }    
+    }
     if ($days > 10) {
        $days = 10;  // limit to width; more probably due to bad dates
        echo "Some session dates are probably wrong, found ".$first_string." through ".$last_string."; is status parameter right?<p>";
     }
     $headings = array(); // like [Wed 03, Thu 04]
     $dates = array();    // like [2008-01-03, 2008-01-04]
-    
+
     $day = $first_date;
     for ($j=0; $j<=$days; $j++) {
         $headings[] = $day->format('D').'<br>'.$day->format('Y-m-d');
         $dates[] = $day->format('Y-m-d');
         $day->add(new DateInterval('P1D'));
-    }    
-        
+    }
+
     $total_seats = array(count($dates));
     for ($j = 0; $j < count($dates); $j++) {
         $total_seats[$j] = 0;
     }
-    
+
     // columns
     echo '
         <col class="et-faobd-col-1"/>
@@ -844,9 +844,9 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
         <col class="et-faobd-col-3"/>
         <col class="et-faobd-col-4"/>
         <colgroup class="et-faobd-colgroup-days">';
-        
+
     for ($i = 0; $i < count($headings); $i++) {
-        echo '  
+        echo '
             <col class="et-faobd-col-'.($i+5).'"/>';
     }
     echo '
@@ -859,31 +859,31 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
         <th class="et-faobd-th-2">Railroad</th>
         <th class="et-faobd-th-3">Distance/Time</th>
         <th class="et-faobd-th-4">Crew</th>';
-        
+
     for ($i = 0; $i < count($headings); $i++) {
         echo '
         <th class="et-faobd-col-day-'.$i.'">'.$headings[$i].'</th>';
     }
     echo '
     </tr>'."\n</thead>\n\n<tbody class=\"et-faobd-tbody\">\n\n";
-    
+
     $i = 0;
     while ($i < $num) {
-   
+
         // skip blank
         if (mysql_result($result,$i,"layout_name1") == '') { $i++; continue;}
-        
+
         if ($alt > 0 ) {
             echo "\n<tr>\n";
         } else {
             echo "\n".'<tr class="altrow">'."\n";
         }
         $alt = -$alt;
-        
+
         // compute destination page for link
         $link_url1 = $url.mysql_result($result,$i,"layout_id1");
         $link_url2 = $url.mysql_result($result,$i,"layout_id2");
-        if ($link_field != NONE) {
+        if ($link_field != NULL) {
             $link_url1 = mysql_result($result,$i,$link_field."1");
             $link_url2 = mysql_result($result,$i,$link_field."2");
         }
@@ -912,7 +912,7 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
         }
         echo "      </span> \n";
         echo "  </td>\n";
-    
+
         // distance
         echo "  <td class=\"et-faobd-td-3\">\n";
         echo "    <span class=\"et-faobd-distance\"> ";
@@ -923,7 +923,7 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
             echo mysql_result($result,$i,"travel_time");
         }
         echo "&nbsp;</span></td> \n";
-        
+
         // slots
         echo "  <td class=\"et-faobd-td-4\">\n";
         echo "    <span class=\"et-faobd-spaces\">\n";
@@ -931,9 +931,9 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
         echo "      </span> \n";
         echo "  </td>\n";
 
-        
+
         // start processing dates to fill in row
-        
+
         for ($j = 0; $j < count($dates); $j++) {  // loop over dates
             echo "\n".'  <td class="et-faobd-td-'.($j+5).'">';
             // if match up, display and advance
@@ -946,7 +946,7 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
                 echo "\n".'    <span class="et-faobd-session-status-'.mysql_result($result,$i,"status_code").'">';
                 echo "\n".'      <span class="et-faobd-sessions">'.time_from_long_format(mysql_result($result,$i,"start_date")).'</span></span><br/>';
                 $total_seats[$j] = $total_seats[$j] + mysql_result($result,$i,"spaces");
-                if (($i!=$num-1) 
+                if (($i!=$num-1)
                         && mysql_result($result,$i,"show_name") == mysql_result($result,$i+1,"show_name")
                         && mysql_result($result,$i,"distance") == mysql_result($result,$i+1,"distance")
                         && mysql_result($result,$i,"travel_time") == mysql_result($result,$i+1,"travel_time")
@@ -963,15 +963,15 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
 
             echo '</td>';
         }
-        
+
         // end processing dates
         echo "</tr>";
 
         $i++;
     }
-    
+
     echo "\n</tbody>\n\n";
-    
+
     // issues
     //     1) getting the marged cell across the bottom to hold the label/header
     //              how to do something like a varible colspan?
@@ -985,17 +985,17 @@ function format_all_ops_by_day($url=NONE, $where=NONE, $order=NONE, $start_date_
         echo '<td>'.$total_seats[$j].'</td>';
     }
     echo '</tr>';
-    
+
     echo "</table>\n";
-    
+
     // done, clean up
-    
-    mysql_close();    
+
+    mysql_close();
 
 }
 
 
-// 
+//
 // Listing of clinics
 //
 function format_all_clinics_as_2table($where="", $order="start_date, end_date") {
@@ -1003,11 +1003,11 @@ function format_all_clinics_as_2table($where="", $order="start_date, end_date") 
 
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
-    
-    if ($where != NONE) {
+
+    if ($where != NULL) {
         $where = " WHERE ".$where;
     }
-    
+
     $query="
         SELECT *
         FROM ".$event_tools_db_prefix."eventtools_clinics_with_tags
@@ -1028,18 +1028,18 @@ function format_all_clinics_as_2table($where="", $order="start_date, end_date") 
     }
 
     $lastmajorkey = mysql_result($result,0,"start_date");
-    
+
     echo "<table border=\"1\" class=\"et-clinic\">\n";
-    
+
     while ($i < $num) {
-    
+
         if ($lastmajorkey != mysql_result($result,$i,"start_date")) {
             $lastmajorkey = mysql_result($result,$i,"start_date");
             echo "</table>\n";
             echo "<p/>\n";
             echo "<table border=\"1\" class=\"et-clinic\">\n";
         }
-        
+
         echo "<tr class=\"et-clinic-tr1\">\n";
         echo "  <td class=\"et-clinic-td1\">\n";
         echo "    <a name=\"".mysql_result($result,$i,"number")."\"></a>\n";
@@ -1049,7 +1049,7 @@ function format_all_clinics_as_2table($where="", $order="start_date, end_date") 
         echo "    <span class=\"et-clinic-time\">".daydatetime_from_long_format(mysql_result($result,$i,"start_date"))." - ".time_from_long_format(mysql_result($result,$i,"end_date"))."</span>\n";
         echo "  </td>\n";
         echo "</tr>\n";
-    
+
         if (mysql_result($result,$i,"clinic_presenter")!='') {
             $clinic_presenter = mysql_result($result,$i,"clinic_presenter");
         } else {
@@ -1060,7 +1060,7 @@ function format_all_clinics_as_2table($where="", $order="start_date, end_date") 
         } else {
             $description = "(no description provided)";
         }
-    
+
         echo "<tr class=\"et-clinic-tr2\">\n";
         echo "  <td class=\"et-clinic-td1\">\n";
         echo "    <span class=\"et-clinic-presenter\">".$clinic_presenter."</span>\n";
@@ -1069,13 +1069,13 @@ function format_all_clinics_as_2table($where="", $order="start_date, end_date") 
         echo "    <span class=\"et-clinic-location\">".mysql_result($result,$i,"location_name")."</span>\n";
         echo "  </td>\n";
         echo "</tr>\n";
-        
+
         echo "<tr class=\"et-clinic-tr3\">\n";
         echo "  <td colspan=\"2\" class=\"et-clinic-td1\">\n";
         echo "    <div class=\"et-clinic-description\">".$description."</div>\n";
         echo "  </td>\n";
         echo "</tr>\n";
-        
+
         echo "<tr class=\"et-clinic-tr4\">\n";
         echo "  <td colspan=\"2\" class=\"et-clinic-td1\">\n";
         if (mysql_result($result,$i,"clinic_url")!='') {
@@ -1083,12 +1083,12 @@ function format_all_clinics_as_2table($where="", $order="start_date, end_date") 
         }
         echo "  </td>\n";
         echo "</tr>\n";
-        
+
         // process tags
         echo "<tr class=\"et-clinic-tr5\">\n";
         echo "  <td colspan=\"2\" class=\"et-clinic-td1\"><span class=\"et-clinic-tags\">\n";
         echo mysql_result($result,$i,"tag_name");
-        while ( ($i < $num-1) && 
+        while ( ($i < $num-1) &&
                     (mysql_result($result,$i,"name") == mysql_result($result,$i+1,"name"))
                ) {
             $i++;
@@ -1096,21 +1096,21 @@ function format_all_clinics_as_2table($where="", $order="start_date, end_date") 
         }
         echo "\n  </span></td>\n";
         echo "</tr>\n";
-        
+
         // spare line at end
         echo "<tr class=\"et-clinic-tr6\">\n"; // blank line
         echo "  <td colspan=\"2\" class=\"et-clinic-td1\">\n";
         echo "  </td>\n";
         echo "</tr>\n";
-        
+
         $i++;
     }
-    
+
     // done, clean up
-    
+
     echo "</table>\n";
-    
-    mysql_close();    
+
+    mysql_close();
 }
 
 function format_all_clinics_as_3table($where="", $order="start_date, end_date") {
@@ -1118,16 +1118,16 @@ function format_all_clinics_as_3table($where="", $order="start_date, end_date") 
 
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
-    
-//     if ($where != NONE) {
+
+//     if ($where != NULL) {
 //         $where = " WHERE `status_code` < 80 AND ".$where;
 //     } else {
 //         $where = " WHERE `status_code` < 80 ";
 //     }
-    if ($where != NONE) {
+    if ($where != NULL) {
         $where = " WHERE ".$where;
-    }  
-    
+    }
+
     $query="
         SELECT *
         FROM ".$event_tools_db_prefix."eventtools_clinics_with_tags
@@ -1146,20 +1146,20 @@ function format_all_clinics_as_3table($where="", $order="start_date, end_date") 
         mysql_close();
         return;
     }
-    
+
     $lastmajorkey = mysql_result($result,0,"id");
-    
+
     echo "<table border=\"1\" class=\"et-clinic\">\n";
-    
+
     while ($i < $num) {
-    
+
         if ($lastmajorkey != mysql_result($result,$i,"id")) {
             $lastmajorkey = mysql_result($result,$i,"id");
             echo "</table>\n";
             echo "<p/>\n";
             echo "<table border=\"1\" class=\"et-clinic\">\n";
         }
-        
+
         echo "<tr class=\"et-clinic-tr1\">\n";
         echo "  <td class=\"et-clinic-td1\">\n";
         echo "    <a name=\"".mysql_result($result,$i,"number")."\"></a>\n";
@@ -1172,7 +1172,7 @@ function format_all_clinics_as_3table($where="", $order="start_date, end_date") 
         echo "    <span class=\"et-clinic-times\">".time_from_long_format(mysql_result($result,$i,"start_date"))." - ".time_from_long_format(mysql_result($result,$i,"end_date"))."</span>\n";
         echo "  </td>\n";
         echo "</tr>\n";
-    
+
         if (mysql_result($result,$i,"clinic_presenter")!='' || !$event_tools_replace_on_data_warn) {
             $clinic_presenter = mysql_result($result,$i,"clinic_presenter");
         } else {
@@ -1183,7 +1183,7 @@ function format_all_clinics_as_3table($where="", $order="start_date, end_date") 
         } else {
             $description = "(no description provided)";
         }
-    
+
         echo "<tr class=\"et-clinic-tr2\">\n";
         echo "  <td colspan=\"2\" class=\"et-clinic-td1\">\n";
         echo "    <span class=\"et-clinic-presenter\">".$clinic_presenter."</span>\n";
@@ -1192,15 +1192,15 @@ function format_all_clinics_as_3table($where="", $order="start_date, end_date") 
         echo "    <span class=\"et-clinic-location\">".mysql_result($result,$i,"location_name")."</span>\n";
         echo "  </td>\n";
         echo "</tr>\n";
-        
+
         echo "<tr class=\"et-clinic-tr3\">\n";
         echo "  <td colspan=\"3\" class=\"et-clinic-td1\">\n";
         echo "    <div class=\"et-clinic-description\">".$description."</div>\n";
         echo "  </td>\n";
         echo "</tr>\n";
-        
+
         // URL line if present
-        if (mysql_result($result,$i,"clinic_url") != '') { 
+        if (mysql_result($result,$i,"clinic_url") != '') {
             echo "<tr class=\"et-clinic-tr4\">\n";
             echo "  <td colspan=\"3\" class=\"et-clinic-td1\">\n";
             if (mysql_result($result,$i,"clinic_url")!='') {
@@ -1209,13 +1209,13 @@ function format_all_clinics_as_3table($where="", $order="start_date, end_date") 
             echo "  </td>\n";
             echo "</tr>\n";
         }
-        
+
         // process tags if present
         if (mysql_result($result,$i,"tag_name") != '' ) {
             echo "<tr class=\"et-clinic-tr5\">\n";
             echo "  <td colspan=\"3\" class=\"et-clinic-td1\"><span class=\"et-clinic-tags\">\n";
             echo mysql_result($result,$i,"tag_name");
-            while ( ($i < $num-1) && 
+            while ( ($i < $num-1) &&
                         (mysql_result($result,$i,"id") == mysql_result($result,$i+1,"id"))
                    ) {
                 $i++;
@@ -1224,15 +1224,15 @@ function format_all_clinics_as_3table($where="", $order="start_date, end_date") 
             echo "\n  </span></td>\n";
             echo "</tr>\n";
         }
-                
+
         $i++;
     }
-    
+
     // done, clean up
-    
+
     echo "</table>\n";
-    
-    mysql_close();    
+
+    mysql_close();
 }
 
 function format_all_clinics_as_table_ip($where="", $order="start_date, end_date, name") {
@@ -1240,15 +1240,15 @@ function format_all_clinics_as_table_ip($where="", $order="start_date, end_date,
 
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
-    
-    if ($where != NONE) {
+
+    if ($where != NULL) {
         $where = " WHERE ".$where;
     }
-    
-    if ($order == NONE) {
+
+    if ($order == NULL) {
         $order = "  start_date, end_date, name ";
     }
-    
+
     $query="
         SELECT *
         FROM ".$event_tools_db_prefix."eventtools_clinics_with_tags
@@ -1267,20 +1267,20 @@ function format_all_clinics_as_table_ip($where="", $order="start_date, end_date,
         mysql_close();
         return;
     }
-    
+
     $lastmajorkey = mysql_result($result,0,"id");
-    
+
     echo "<table class=\"et-clinic\">\n";
-    
+
     while ($i < $num) {
-    
+
         if ($lastmajorkey != mysql_result($result,$i,"id")) {
             $lastmajorkey = mysql_result($result,$i,"id");
             echo "</table>\n";
             echo "<p/>\n";
             echo "<table class=\"et-clinic\">\n";
         }
-        
+
 
 
         if (mysql_result($result,$i,"clinic_presenter")!='' || !$event_tools_replace_on_data_warn) {
@@ -1312,21 +1312,21 @@ function format_all_clinics_as_table_ip($where="", $order="start_date, end_date,
         echo "    <span class=\"et-clinic-location\">".mysql_result($result,$i,"location_name")."</span>\n";
         echo "  </td>\n";
         echo "</tr>\n";
-    
+
         if (mysql_result($result,$i,"description")!='' || !$event_tools_replace_on_data_warn) {
             $description = mysql_result($result,$i,"description");
         } else {
             $description = "(no description provided)";
         }
-            
+
         echo "<tr class=\"et-clinic-tr4\">\n";
         echo "  <td colspan=\"2\" class=\"et-clinic-td1\">\n";
         echo "    <div class=\"et-clinic-description\">".$description."</div>\n";
         echo "  </td>\n";
         echo "</tr>\n";
-        
+
         // URL line if present
-        if (mysql_result($result,$i,"clinic_url") != '') { 
+        if (mysql_result($result,$i,"clinic_url") != '') {
             echo "<tr class=\"et-clinic-tr4\">\n";
             echo "  <td colspan=\"3\" class=\"et-clinic-td1\">\n";
             if (mysql_result($result,$i,"clinic_url")!='') {
@@ -1335,13 +1335,13 @@ function format_all_clinics_as_table_ip($where="", $order="start_date, end_date,
             echo "  </td>\n";
             echo "</tr>\n";
         }
-        
+
         // process tags if present
         if (mysql_result($result,$i,"tag_name") != '' ) {
             echo "<tr class=\"et-clinic-tr5\">\n";
             echo "  <td colspan=\"3\" class=\"et-clinic-td1\"><span class=\"et-clinic-tags\">\n";
             echo mysql_result($result,$i,"tag_name");
-            while ( ($i < $num-1) && 
+            while ( ($i < $num-1) &&
                         (mysql_result($result,$i,"id") == mysql_result($result,$i+1,"id"))
                    ) {
                 $i++;
@@ -1350,15 +1350,15 @@ function format_all_clinics_as_table_ip($where="", $order="start_date, end_date,
             echo "\n  </span></td>\n";
             echo "</tr>\n";
         }
-                
+
         $i++;
     }
-    
+
     // done, clean up
-    
+
     echo "</table>\n";
-    
-    mysql_close();    
+
+    mysql_close();
 }
 
 function format_all_misc_events_as_3table($where="", $order="start_date, end_date") {
@@ -1366,11 +1366,11 @@ function format_all_misc_events_as_3table($where="", $order="start_date, end_dat
 
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
-    
-    if ($where != NONE) {
+
+    if ($where != NULL) {
         $where = " WHERE ".$where;
     }
-    
+
     $query="
         SELECT *
         FROM ".$event_tools_db_prefix."eventtools_misc_events_with_tags
@@ -1391,18 +1391,18 @@ function format_all_misc_events_as_3table($where="", $order="start_date, end_dat
     }
 
     $lastmajorkey = mysql_result($result,0,"start_date");
-    
+
     echo "<table border=\"1\" class=\"et-misc\">\n";
-    
+
     while ($i < $num) {
-    
+
         if ($lastmajorkey != mysql_result($result,$i,"start_date")) {
             $lastmajorkey = mysql_result($result,$i,"start_date");
             echo "</table>\n";
             echo "<p/>\n";
             echo "<table border=\"1\" class=\"et-misc\">\n";
         }
-        
+
         echo "<tr class=\"et-misc-tr1\">\n";
         echo "  <td class=\"et-misc-td1\">\n";
         echo "    <a name=\"".mysql_result($result,$i,"number")."\"></a>\n";
@@ -1415,13 +1415,13 @@ function format_all_misc_events_as_3table($where="", $order="start_date, end_dat
         echo "    <span class=\"et-misc-times\">".time_from_long_format(mysql_result($result,$i,"start_date"))." - ".time_from_long_format(mysql_result($result,$i,"end_date"))."</span>\n";
         echo "  </td>\n";
         echo "</tr>\n";
-    
+
         if (mysql_result($result,$i,"description")!='') {
             $description = mysql_result($result,$i,"description");
         } else {
             $description = "(no description provided)";
         }
-    
+
         echo "<tr class=\"et-misc-tr2\">\n";
         echo "  <td colspan=\"2\" class=\"et-misc-td1\">\n";
         echo "  </td>\n";
@@ -1429,13 +1429,13 @@ function format_all_misc_events_as_3table($where="", $order="start_date, end_dat
         echo "    <span class=\"et-misc-location\">".htmlspecialchars(mysql_result($result,$i,"location_name"))."</span>\n";
         echo "  </td>\n";
         echo "</tr>\n";
-        
+
         echo "<tr class=\"et-misc-tr3\">\n";
         echo "  <td colspan=\"3\" class=\"et-misc-td1\">\n";
         echo "    <div class=\"et-misc-description\">".$description."</div>\n";
         echo "  </td>\n";
         echo "</tr>\n";
-        
+
         echo "<tr class=\"et-misc-tr4\">\n";
         echo "  <td colspan=\"3\" class=\"et-misc-td1\">\n";
         if (mysql_result($result,$i,"misc_url")!='') {
@@ -1443,13 +1443,13 @@ function format_all_misc_events_as_3table($where="", $order="start_date, end_dat
         }
         echo "  </td>\n";
         echo "</tr>\n";
-        
+
         // process tags
         echo "<tr class=\"et-misc-tr5\">\n";
         echo "  <td colspan=\"3\" class=\"et-misc-td1\"><span class=\"et-misc-tags\">\n";
         echo htmlspecialchars(mysql_result($result,$i,"tag_name"));
-        while ( ($i < $num-1) && 
-                    (mysql_result($result,$i,"name") == mysql_result($result,$i+1,"name")) && 
+        while ( ($i < $num-1) &&
+                    (mysql_result($result,$i,"name") == mysql_result($result,$i+1,"name")) &&
                     (mysql_result($result,$i,"id") == mysql_result($result,$i+1,"id"))
                ) {
             $i++;
@@ -1457,21 +1457,21 @@ function format_all_misc_events_as_3table($where="", $order="start_date, end_dat
         }
         echo "\n  </span></td>\n";
         echo "</tr>\n";
-        
+
         // spare line at end
         echo "<tr class=\"et-misc-tr6\">\n"; // blank line
         echo "  <td colspan=\"3\" class=\"et-misc-td1\">\n";
         echo "  </td>\n";
         echo "</tr>\n";
-        
+
         $i++;
     }
-    
+
     // done, clean up
-    
+
     echo "</table>\n";
-    
-    mysql_close();    
+
+    mysql_close();
 }
 
 function format_all_clinics_as_4table($where="", $order="start_date, end_date") {
@@ -1479,11 +1479,11 @@ function format_all_clinics_as_4table($where="", $order="start_date, end_date") 
 
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
-    
-    if ($where != NONE) {
+
+    if ($where != NULL) {
         $where = " WHERE ".$where;
     }
-    
+
     $query="
         SELECT *
         FROM ".$event_tools_db_prefix."eventtools_clinics_with_tags
@@ -1504,18 +1504,18 @@ function format_all_clinics_as_4table($where="", $order="start_date, end_date") 
     }
 
     $lastmajorkey = mysql_result($result,0,"id");
-    
+
     echo "<table border=\"1\" class=\"et-clinic\">\n";
-    
+
     while ($i < $num) {
-    
+
         if ($lastmajorkey != mysql_result($result,$i,"id")) {
             $lastmajorkey = mysql_result($result,$i,"id");
             echo "</table>\n";
             echo "\n";
             echo "<table border=\"1\" class=\"et-clinic\">\n";
         }
-        
+
         echo "<tr class=\"et-clinic-tr1\">\n";
         echo "  <td class=\"et-clinic-td1\">\n";
         echo "    <a name=\"".mysql_result($result,$i,"id")."\"></a>\n";
@@ -1531,7 +1531,7 @@ function format_all_clinics_as_4table($where="", $order="start_date, end_date") 
         echo "    <span class=\"et-clinic-end\">".time_from_long_format(mysql_result($result,$i,"end_date"))."</span>\n";
         echo "  </td>\n";
         echo "</tr>\n";
-    
+
         if (mysql_result($result,$i,"clinic_presenter")!='') {
             $clinic_presenter = htmlspecialchars(mysql_result($result,$i,"clinic_presenter"));
         } else {
@@ -1542,7 +1542,7 @@ function format_all_clinics_as_4table($where="", $order="start_date, end_date") 
         } else {
             $description = "(no description provided)";
         }
-    
+
         echo "<tr class=\"et-clinic-tr2\">\n";
         echo "  <td colspan=\"3\" class=\"et-clinic-td1\">\n";
         echo "    <span class=\"et-clinic-presenter\">".$clinic_presenter."</span>\n";
@@ -1551,13 +1551,13 @@ function format_all_clinics_as_4table($where="", $order="start_date, end_date") 
         echo "    <span class=\"et-clinic-location\">".htmlspecialchars(mysql_result($result,$i,"location_name"))."</span>\n";
         echo "  </td>\n";
         echo "</tr>\n";
-        
+
         echo "<tr class=\"et-clinic-tr3\">\n";
         echo "  <td colspan=\"4\" class=\"et-clinic-td1\">\n";
         echo "    <div class=\"et-clinic-description\">".$description."</div>\n";
         echo "  </td>\n";
         echo "</tr>\n";
-        
+
         echo "<tr class=\"et-clinic-tr4\">\n";
         echo "  <td colspan=\"4\" class=\"et-clinic-td1\">\n";
         if (mysql_result($result,$i,"clinic_url")!='') {
@@ -1565,12 +1565,12 @@ function format_all_clinics_as_4table($where="", $order="start_date, end_date") 
         }
         echo "  </td>\n";
         echo "</tr>\n";
-        
+
         // process tags
         echo "<tr class=\"et-clinic-tr5\">\n";
         echo "  <td colspan=\"4\" class=\"et-clinic-td1\"><span class=\"et-clinic-tags\">\n";
         echo htmlspecialchars(mysql_result($result,$i,"tag_name"));
-        while ( ($i < $num-1) && 
+        while ( ($i < $num-1) &&
                     (mysql_result($result,$i,"id") == mysql_result($result,$i+1,"id"))
                ) {
             $i++;
@@ -1578,21 +1578,21 @@ function format_all_clinics_as_4table($where="", $order="start_date, end_date") 
         }
         echo "\n  </span></td>\n";
         echo "</tr>\n";
-        
+
         // spare line at end
         echo "<tr class=\"et-clinic-tr6\">\n"; // blank line
         echo "  <td colspan=\"4\" class=\"et-clinic-td1\">\n";
         echo "  </td>\n";
         echo "</tr>\n";
-        
+
         $i++;
     }
-    
+
     // done, clean up
-    
+
     echo "</table>\n";
-    
-    mysql_close();    
+
+    mysql_close();
 }
 
 
@@ -1604,13 +1604,13 @@ function format_all_clinics_as_4table($where="", $order="start_date, end_date") 
 abstract class Tours_as_3Table implements Event_Formatter {
     public function format_heading($result,$i,$url=NULL) {
         global $event_tools_replace_on_data_error;
-        
+
         if (mysql_result($result,$i,"description")!='') {
             $description = htmlspecialchars(mysql_result($result,$i,"description"));
         } else {
             $description = "<span class=\"et-warning-missing\">(no description provided)</span>";
         }
-    
+
         echo "<tr class=\"et-lt-tour-tr1\">\n";
         echo "  <td colspan=\"3\" class=\"et-lt-tour-td1\">\n";
         echo "    <span class=\"et-lt-tour-tourNumber\" id=\"tour_".mysql_result($result,$i,"number")."\">\n";
@@ -1618,18 +1618,18 @@ abstract class Tours_as_3Table implements Event_Formatter {
         echo "      ".mysql_result($result,$i,"number");
         echo "    </span>\n";
         echo "    <span class=\"et-lt-tour-tourShortName\">".htmlspecialchars(mysql_result($result,$i,"name"))."</span> \n";
-        
+
         $date = daytime_from_long_format(mysql_result($result,$i,"start_date"))
                     ." - ".
                 time_from_long_format(mysql_result($result,$i,"end_date"));
-        
+
         echo "    <span class=\"et-lt-tour-tourDateTime\">".$date."</span>\n";
         echo "  </td>\n";
         echo "</tr>\n";
         echo "<tr class=\"et-lt-tour-tr2\">\n";
         echo "    <td colspan=\"3\" class=\"et-lt-tour-td1\">\n";
         echo "        <div class=\"et-lt-tour-tourComment\">".$description."</div> \n";
-        
+
         if (((float)mysql_result($result,$i,"tour_price")) >=0 ) {
             $cost = "$".mysql_result($result,$i,"tour_price");
         } else {
@@ -1652,9 +1652,9 @@ abstract class Tours_as_3Table implements Event_Formatter {
 
 class Layout_Tours_as_3Table extends Tours_as_3Table {
 
-    public function format_subitem($result,$i,$url=NONE) {
+    public function format_subitem($result,$i,$url=NULL) {
         global $event_tools_href_add_on;
-        
+
         // format the layout information
         if (mysql_result($result,$i,"layout_name")!='') {
             $layout_name = htmlspecialchars(mysql_result($result,$i,"layout_name"));
@@ -1671,9 +1671,9 @@ class Layout_Tours_as_3Table extends Tours_as_3Table {
         } else {
             $layout_long_description = "<span class=\"et-warning-missing\">(no layout long description provided)</span>";
         }
-    
+
         $owner = htmlspecialchars(mysql_result($result,$i,"layout_owner_firstname").' '.mysql_result($result,$i,"layout_owner_lastname"));
-        
+
         echo "<tr class=\"et-lt-layout-tr1\">\n";
         echo "    <td class=\"et-lt-layout-td1\">\n";
         echo "        <span class=\"et-lt-tour-scale\">".htmlspecialchars(mysql_result($result,$i,"layout_scale"))."</span>\n";
@@ -1706,16 +1706,16 @@ class Layout_Tours_as_3Table extends Tours_as_3Table {
         echo "<tr class=\"et-lt-layout-tr4\"><td colspan=\"3\" class=\"et-lt-layout-endBlank\"></td></tr>\n";
     }
 
-    public function select_statement($where=NONE, $order=NONE) {
+    public function select_statement($where=NULL, $order=NULL) {
         global $event_tools_db_prefix;
 
-        if ($where != NONE) {
+        if ($where != NULL) {
             $w = ' WHERE '.$where;
         } else {
             $w = $this->default_where();
         }
-        
-        if ($order != NONE) {
+
+        if ($order != NULL) {
             $o = $order;
         } else {
             $o = $this->default_order();
@@ -1735,20 +1735,20 @@ class Layout_Tours_as_3Table extends Tours_as_3Table {
 
 class General_Tours_as_3Table extends Tours_as_3Table {
 
-    public function format_subitem($result,$i,$url=NONE) {
-        // none
+    public function format_subitem($result,$i,$url=NULL) {
+        // NULL
     }
 
-    public function select_statement($where=NONE, $order=NONE) {
+    public function select_statement($where=NULL, $order=NULL) {
         global $event_tools_db_prefix;
 
-        if ($where != NONE) {
+        if ($where != NULL) {
             $w = ' WHERE '.$where;
         } else {
             $w = $this->default_where();
         }
-        
-        if ($order != NONE) {
+
+        if ($order != NULL) {
             $o = $order;
         } else {
             $o = $this->default_order();
@@ -1777,20 +1777,20 @@ abstract class Tours_as_8Table implements Event_Formatter {
         global $event_tools_db_prefix, $event_tools_cartlink, $event_tools_lookup_flag, $event_tools_lookup_result;
         if (!$event_tools_lookup_flag) {
             $event_tools_lookup_flag = TRUE;
-            
+
             // load a cache between model/tour_number and product ID
             $select = "
             SELECT products_model, products_id
                 FROM ".$event_tools_db_prefix."products
                 ;
             ";
-    
+
             // ugly hack: Turn off links (instead of checking Zen DB product status)
             $product_lookup_result=mysql_query($select);
             //while ($row = mysql_fetch_assoc($product_lookup_result)) {
             //    $event_tools_lookup_result[$row['products_model']] = $row['products_id'];
             //}
-            
+
         }
         $product = $event_tools_lookup_result[mysql_result($result,$i,"number")];
         if (mysql_result($result,$i,"event_status_code") == '60' && $product != NULL) {
@@ -1803,7 +1803,7 @@ abstract class Tours_as_8Table implements Event_Formatter {
         }
     }
 
-    public function format_heading($result,$i,$url=NONE) {
+    public function format_heading($result,$i,$url=NULL) {
         global $event_tools_replace_on_data_error;
 
         echo "<tr class=\"et-tour-tr1\">\n";
@@ -1829,10 +1829,10 @@ abstract class Tours_as_8Table implements Event_Formatter {
                 .date_from_long_format(mysql_result($result,$i,"start_date"))
                 ."</span></td>\n";
             echo "<td class=\"et-tour-td5\"><span class=\"et-tour-spare\">".""."</span></td>\n";
-            
-            if (mysql_result($result,$i,"tour_price") >= 0 ) { 
-                $price = "$".mysql_result($result,$i,"tour_price"); 
-            } else { 
+
+            if (mysql_result($result,$i,"tour_price") >= 0 ) {
+                $price = "$".mysql_result($result,$i,"tour_price");
+            } else {
                 if ($event_tools_replace_on_data_error)
                     $price = "<span class=\"et-error-missing\">(no price)</span>";
                 else
@@ -1841,11 +1841,11 @@ abstract class Tours_as_8Table implements Event_Formatter {
             echo "<td class=\"et-tour-td6\"><span class=\"et-tour-price\">"
                 .$price
                 ."</span></td>\n";
-            
+
             echo "<td class=\"et-tour-td7\"><span class=\"et-tour-depart\">"
                 ."Dep ".time_from_long_format(mysql_result($result,$i,"start_date"))
                 ."</span></td>\n";
-            
+
             if ( (substr(mysql_result($result,$i,"start_date"),-8) !='00:00:00') &&
                  (substr(mysql_result($result,$i,"end_date"),-8) =='00:00:00') )
                 $r = "";
@@ -1854,7 +1854,7 @@ abstract class Tours_as_8Table implements Event_Formatter {
             echo "<td class=\"et-tour-td8\"><span class=\"et-tour-depart\">"
                 .$r
                 ."</span></td>\n";
-                
+
         echo "</tr>\n";
 
         echo "<tr class=\"et-tour-tr3\">\n";
@@ -1875,9 +1875,9 @@ abstract class Tours_as_8Table implements Event_Formatter {
 
 class Layout_Tours_as_8Table extends Tours_as_8Table {
 
-    public function format_subitem($result,$i,$url=NONE) {
+    public function format_subitem($result,$i,$url=NULL) {
         global $event_tools_href_add_on;
-        
+
         // layout on layout tour
         // line 2 - scale, owner name, layout name (links)
         echo "<tr class=\"et-tour-layout-tr2\">\n";
@@ -1890,27 +1890,27 @@ class Layout_Tours_as_8Table extends Tours_as_8Table {
                 ."</a></span></td>\n";
             echo "<td colspan=\"4\" class=\"et-tour-td3\"><span class=\"et-tour-layout-name\">"
                 ."<a href=\"".$url.mysql_result($result,$i,"layout_id")."\">"
-                .warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_name")), "layout name")
+                .warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_name")), "layout name")
                 ."</a></span></td>\n";
         echo "</tr>\n";
-    
-    
+
+
         // line 3 - size, scenery, control, access, url
         echo "<tr class=\"et-tour-layout-tr3\">\n";
             echo "<td class=\"et-tour-td1\"><span class=\"et-tour-layout-size\">"
-                .warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_size")), "size")
+                .warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_size")), "size")
                 ."</span></td>\n";
-            $scenery = warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_scenery")), "scenery");
+            $scenery = warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_scenery")), "scenery");
             if (mysql_result($result,$i,"layout_scenery") !='') $scenery = 'Scenery: '.$scenery;
             echo "<td class=\"et-tour-td2\"><span class=\"et-tour-layout-scenery\">"
                 .$scenery
                 ."</span></td>\n";
 
             echo "<td class=\"et-tour-td3\"><span class=\"et-tour-layout-control\">"
-                .warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_control")), "control")
+                .warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_control")), "control")
                 ."</span></td>\n";
             echo "<td class=\"et-tour-td4\"><span class=\"et-tour-layout-access\">"
-                .warnOnEmpty(mysql_result($result,$i,"accessibility_display"), "accessibility")
+                .warNULLmpty(mysql_result($result,$i,"accessibility_display"), "accessibility")
                 ."</span></td>\n";
 
             echo "<td colspan=\"4\" class=\"et-tour-td4\"><span class=\"et-tour-owner-url\">\n";
@@ -1918,9 +1918,9 @@ class Layout_Tours_as_8Table extends Tours_as_8Table {
             echo "</span></td>\n";
 
         echo "</tr>\n";
-        
+
         // not used:  prototype, era, main length, plan type, ops scheme
-        
+
         // line 4 - description, preferring short
         echo "<tr class=\"et-tour-layout-tr4\">\n";
             echo "<td colspan=\"8\" class=\"et-tour-td1\"><span class=\"et-tour-layout-desc\">";
@@ -1932,16 +1932,16 @@ class Layout_Tours_as_8Table extends Tours_as_8Table {
         echo "</tr>\n";
     }
 
-    public function select_statement($where=NONE, $order=NONE) {
+    public function select_statement($where=NULL, $order=NULL) {
         global $event_tools_db_prefix;
 
-        if ($where != NONE) {
+        if ($where != NULL) {
             $w = ' WHERE '.$where;
         } else {
             $w = $this->default_where();
         }
-        
-        if ($order != NONE) {
+
+        if ($order != NULL) {
             $o = $order;
         } else {
             $o = $this->default_order();
@@ -1961,20 +1961,20 @@ class Layout_Tours_as_8Table extends Tours_as_8Table {
 
 class General_Tours_as_8Table extends Tours_as_8Table {
 
-    public function format_subitem($result,$i,$url=NONE) {
-        // none
+    public function format_subitem($result,$i,$url=NULL) {
+        // NULL
     }
 
-    public function select_statement($where=NONE, $order=NONE) {
+    public function select_statement($where=NULL, $order=NULL) {
         global $event_tools_db_prefix;
 
-        if ($where != NONE) {
+        if ($where != NULL) {
             $w = ' WHERE '.$where;
         } else {
             $w = $this->default_where();
         }
-        
-        if ($order != NONE) {
+
+        if ($order != NULL) {
             $o = $order;
         } else {
             $o = $this->default_order();

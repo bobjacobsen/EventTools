@@ -103,6 +103,7 @@ function time_from_long_format($date) {
 //
 // Check for missing time
 function check_missing_time($date) {
+    global $event_tools_default_event_start_date;
     if ($date == "") { return TRUE; }
     if ($date == "0000-00-00 00:00:00") { return TRUE; }
     if ($date == $event_tools_default_event_start_date) { return TRUE; } // flags default
@@ -114,7 +115,7 @@ function show_missing_time($date) {
     if ($event_tools_replace_on_data_error)
         return "<span class=\"et-error-missing\">(date time)</span>";
     else
-        return "<span class=\"et-error-missing\">".$date."</span>";            
+        return "<span class=\"et-error-missing\">".$date."</span>";
 }
 
 function tourPeriod($start, $end) {
@@ -130,7 +131,7 @@ function tourPeriod($start, $end) {
             }
         } else {
             $r = $r.$start." ".$end." ";
-        } 
+        }
         return $r." )</span>";
     }
 
@@ -150,13 +151,13 @@ function tourPeriod($start, $end) {
 //
 // HTML utilities
 //
-function warnOnEmpty($item, $name) {
+function warNULLmpty($item, $name) {
     global $event_tools_replace_on_data_warn;
     if (checkEmpty($item)) {
         if ($event_tools_replace_on_data_warn)
             return "<span class=\"et-warning-missing\">(".$name.")</span>";
         else
-            return "<span class=\"et-warning-missing\">".$item."</span>";            
+            return "<span class=\"et-warning-missing\">".$item."</span>";
     } else {
         return $item;
     }
@@ -167,7 +168,7 @@ function warnOnZero($item, $name) {
         if ($event_tools_replace_on_data_warn)
             return "<span class=\"et-warning-missing\">(".$name." unset)</span>";
         else
-            return "<span class=\"et-warning-missing\">".$item."</span>";            
+            return "<span class=\"et-warning-missing\">".$item."</span>";
     } else {
         return $item;
     }
@@ -178,7 +179,7 @@ function warnOnNeg($item, $name) {
         if ($event_tools_replace_on_data_warn)
             return "<span class=\"et-warning-missing\">(".$name." = 0)</span>";
         else
-            return "<span class=\"et-warning-missing\">".$item."</span>";            
+            return "<span class=\"et-warning-missing\">".$item."</span>";
     } else {
         return $item;
     }
@@ -190,7 +191,7 @@ function errorOnEmpty($item, $name) {
         if ($event_tools_replace_on_data_error)
             return "<span class=\"et-error-missing\">(".$name.")</span>";
         else
-            return "<span class=\"et-error-missing\">".$item."</span>";            
+            return "<span class=\"et-error-missing\">".$item."</span>";
     } else {
         return $item;
     }
@@ -201,7 +202,7 @@ function errorOnMissingTime($time, $name) {
         if ($event_tools_replace_on_data_error)
             return "<span class=\"et-error-missing\">".$time." (".$name.")</span>";
         else
-            return "<span class=\"et-error-missing\">".$time."</span>";            
+            return "<span class=\"et-error-missing\">".$time."</span>";
     } else {
         return $time;
     }
@@ -212,7 +213,7 @@ function errorOnZero($item, $name) {
         if ($event_tools_replace_on_data_error)
             return "<span class=\"et-error-missing\">(".$name." = 0)</span>";
         else
-            return "<span class=\"et-error-missing\">".$item."</span>";            
+            return "<span class=\"et-error-missing\">".$item."</span>";
     } else {
         return $item;
     }
@@ -223,29 +224,29 @@ function errorOnNegative($item, $name) {
         if ($event_tools_replace_on_data_error)
             return "<span class=\"et-error-missing\">(".$name." unset)</span>";
         else
-            return "<span class=\"et-error-missing\">".$item."</span>";            
+            return "<span class=\"et-error-missing\">".$item."</span>";
     } else {
         return $item;
     }
 }
 
 function checkEmpty($item) {
-    if ($item == NONE) return true;
+    if ($item == NULL) return true;
     if (is_string($item) && $item == '') return true;
     if (is_int($item) && $item == 0) return true;
     if (is_float($item) && $item == 0.0) return true;
     return false;
 }
 
-// $document should contain an HTML document. 
-// This will remove HTML tags, javascript sections 
-// and white space. It will also convert some 
-// common HTML entities to their text equivalent. 
+// $document should contain an HTML document.
+// This will remove HTML tags, javascript sections
+// and white space. It will also convert some
+// common HTML entities to their text equivalent.
 
-require_once('class.html2text.inc'); 
+require_once('class.html2text.inc');
 function htmlToText($document) {
-    $h2t = new html2text(str_replace("\n"," ",str_replace("\r"," ",$document))); 
-    return $h2t->get_text(); 
+    $h2t = new html2text(str_replace("\n"," ",str_replace("\r"," ",$document)));
+    return $h2t->get_text();
 }
 
 
@@ -267,7 +268,7 @@ function get_clinic_tags() {
     ";
 
     $result=mysql_query($query);
-    
+
     $i = 0;
     $num = mysql_numrows($result);
 
@@ -293,7 +294,7 @@ function get_misc_event_tags() {
     ";
 
     $result=mysql_query($query);
-    
+
     $i = 0;
     $num = mysql_numrows($result);
 
@@ -319,7 +320,7 @@ function get_clinic_presenters() {
     ";
 
     $result=mysql_query($query);
-    
+
     $i = 0;
     $num = mysql_numrows($result);
 
@@ -341,7 +342,7 @@ function get_general_tour_numbers() {
 function get_event_numbers($table) {
     global $opts, $event_tools_db_prefix;
     global $event_tools_show_min_value;
-    
+
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
 
@@ -354,7 +355,7 @@ function get_event_numbers($table) {
     ";
 
     $result=mysql_query($query);
-    
+
     $i = 0;
     $num = mysql_numrows($result);
 

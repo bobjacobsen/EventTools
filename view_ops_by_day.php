@@ -9,7 +9,7 @@
 
 </head>
 <body>
-<h2>Operating Session vs Day</h2>  
+<h2>Operating Session vs Day</h2>
 <a href="index.php">Back to main page</a>
 <p>
 
@@ -23,20 +23,20 @@
     /* except left align owner and layout name cells */
     .et-faobd-td-1 { text-align: left; }
     .et-faobd-td-2 { text-align: left; }
-        
+
     /* dont display the distance/time (3) or crew (4) columns */
 
     .et-faobd-th-3 { display: none; }
     .et-faobd-td-3 { display: none; }
     .et-faobd-th-4 { display: none; }
     .et-faobd-td-4 { display: none; }
-    
+
     .et-faobd-slots-total{ display: none; } /* don't display totals */
-    
+
     /* sessions with "bonus" status show green  */
     .et-faobd-session-status-50 { background: #80FF80; }
-    
-    
+
+
 </style>
 
 <?php
@@ -53,10 +53,10 @@ $event_tools_replace_on_data_error = TRUE;  // TRUE replace with text, FALSE lea
 $where = parse_layout_query();
 $order = parse_order();
 
-if ($where == NONE) $where = "";
+if ($where == NULL) $where = "";
 if ($where != "") $where = " WHERE ".$where;
 
-format_all_ops_by_day("edit_layouts_all.php?layoutid=", $where, $order, NONE, "layout_photo_url" );
+format_all_ops_by_day("edit_layouts_all.php?layoutid=", $where, $order, NULL, "layout_photo_url" );
 
 ?>
 </body>

@@ -7,7 +7,7 @@
 // -------------------------------------------------------------------------
 include_once('mysql2i.class.php'); // migration step
 
-global $event_tools_require_authenticate, $event_tools_require_user, 
+global $event_tools_require_authenticate, $event_tools_require_user,
     $opts, $event_tools_db_prefix, $REMOTE_USER, $event_tools_user_email_log_skip;
 
 //
@@ -17,12 +17,17 @@ global $event_tools_require_authenticate, $event_tools_require_user,
 
 if ($event_tools_require_user_authenticate  || $event_tools_require_user_id ) {
     // required to get user name
-    $user = $_SERVER['PHP_AUTH_USER'];
-    $REMOTE_USER = $user;  // for phpMyEdit
+    if (array_key_exists('PHP_AUTH_USER', $_SERVER)) {
+        $user = $_SERVER["PHP_AUTH_USER"];
+        $REMOTE_USER = $user;  // for phpMyEdit
+    } else {
+        $REMOTE_USER = "";
+        $user = "";
+    }
 
     if ($event_tools_require_user_id) {
         // requires a user ID
-        if ($REMOTE_USER == NONE || $REMOTE_USER == "") {
+        if ($REMOTE_USER == NULL || $REMOTE_USER == "") {
             // fail
             header('WWW-Authenticate: Basic realm="EventTools Admin"');
             header('HTTP/1.0 401 Unauthorized');
@@ -31,7 +36,7 @@ if ($event_tools_require_user_authenticate  || $event_tools_require_user_id ) {
     }
     if ($event_tools_require_user_authenticate) {
         // required to check
-        
+
         $query="
             SELECT *
             FROM ".$event_tools_db_prefix."eventtools_users
@@ -39,15 +44,15 @@ if ($event_tools_require_user_authenticate  || $event_tools_require_user_id ) {
             AND user_pwd = '".strtolower($_SERVER['PHP_AUTH_PW'])."'
             ;";
 
-        
+
         // open database
-        require_once('access_and_open.php'); 
-    
+        require_once('access_and_open.php');
+
         $result=mysql_query($query);
         $num = 0;
         if ($result)
             $num = mysql_numrows($result);
-        
+
         if ($num == 0) {
             // fail
             header('WWW-Authenticate: Basic realm="EventTools Admin"');

@@ -105,7 +105,7 @@ $opts['filters'] = "PMEtable0.sessions_count > 200";
 */
 
 /* Field definitions
-   
+
 Fields will be displayed left to right on the screen in the order in which they
 appear in generated list. Here are some most used field options documented.
 
@@ -167,7 +167,7 @@ $opts['fdd']['status_code'] = array(
   'select'   => 'D',
   'maxlen'   => 36,
   'sort'     => true,
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_event_status_values', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_event_status_values',
                         'column' => 'event_status_code',
                         'orderby' => 'event_status_code',
                         'description' => 'event_status_name'),
@@ -213,7 +213,7 @@ $opts['fdd']['clinic_location_code'] = array(
   'select'   => 'D',
   'maxlen'   => 10,
   'sort'     => true,
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_clinic_locations', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_clinic_locations',
                         'column' => 'location_code',
                         'description' => 'location_name'),
   'trimlen|LF' => 6
@@ -270,13 +270,6 @@ $opts['fdd']['mark_changed'] = array(
   'values'   => array('','Y'),
   'select'   => 'T',
   'maxlen'   => 1,
-  'sort'     => true
-);
-$opts['fdd']['last_mod_time'] = array(
-  'name'     => 'Last mod time',
-  'input'    => 'R',
-  'select'   => 'T',
-  'maxlen'   => 19,
   'sort'     => true
 );
 

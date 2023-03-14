@@ -9,7 +9,7 @@
 // -------------------------------------------------------------------------
 //
 // Parse query strings into "where" strings
-// 
+//
 // First, a bunch of individual routines so
 // you can control which queries are available
 // on a particular page.
@@ -24,10 +24,10 @@
 
 
 // tag=AA  for clinic and misc event tags
-function where_add_changed($args, $where=NONE) {
-    if ($args["changed"]) {
+function where_add_changed($args, $where=NULL) {
+    if (isset($args["changed"])) {
         $r = " mark_changed != '' ";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -35,10 +35,10 @@ function where_add_changed($args, $where=NONE) {
 }
 
 // tag=AA  for clinic and misc event tags
-function where_add_tag($args, $where=NONE) {
-    if ($args["tag"]) {
+function where_add_tag($args, $where=NULL) {
+    if (isset($args["tag"])) {
         $r = " tag_name = \"".$args["tag"]."\"";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -46,10 +46,10 @@ function where_add_tag($args, $where=NONE) {
 }
 
 // date=n  tours, clinics starting on July n
-function where_add_date($args, $where=NONE) {
-    if ($args["date"]) {
-        $r = " start_date LIKE '2018-".$args["date"]."%'";
-        if ($where != NONE) return $where." AND ".$r;
+function where_add_date($args, $where=NULL) {
+    if (isset($args["date"])) {
+        $r = " start_date LIKE '2021-".$args["date"]."%'";
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -57,10 +57,10 @@ function where_add_date($args, $where=NONE) {
 }
 
 // number=AA  tours, events, clinic number
-function where_add_number($args, $where=NONE) {
-    if ($args["number"]) {
+function where_add_number($args, $where=NULL) {
+    if (isset($args["number"])) {
         $r = " number = '".$args["number"]."'";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -68,10 +68,10 @@ function where_add_number($args, $where=NONE) {
 }
 
 // id=n  tours, events, clinic ID number
-function where_add_id($args, $where=NONE) {
-    if ($args["id"]) {
+function where_add_id($args, $where=NULL) {
+    if (isset($args["id"])) {
         $r = " id = ".$args["id"];
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -79,10 +79,10 @@ function where_add_id($args, $where=NONE) {
 }
 
 // layoutid=n  layout ID number
-function where_add_layoutid($args, $where=NONE) {
-    if ($args["layoutid"]) {
+function where_add_layoutid($args, $where=NULL) {
+    if (isset($args["layoutid"])) {
         $r = " layout_id = ".$args["layoutid"];
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -90,10 +90,10 @@ function where_add_layoutid($args, $where=NONE) {
 }
 
 // name=AA  tours, events, clinic names
-function where_add_name($args, $where=NONE) {
-    if ($args["name"]) {
+function where_add_name($args, $where=NULL) {
+    if (isset($args["name"])) {
         $r = " name LIKE '%".$args["name"]."%'";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -101,10 +101,10 @@ function where_add_name($args, $where=NONE) {
 }
 
 // name=AA  layoutname
-function where_add_layoutname($args, $where=NONE) {
-    if ($args["layoutname"]) {
+function where_add_layoutname($args, $where=NULL) {
+    if (isset($args["layoutname"])) {
         $r = " layout_name LIKE '%".$args["layoutname"]."%'";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -112,10 +112,10 @@ function where_add_layoutname($args, $where=NONE) {
 }
 
 // layoutname=AA  layoutname
-function where_add_owner($args, $where=NONE) {
-    if ($args["owner"]) {
+function where_add_owner($args, $where=NULL) {
+    if (isset($args["owner"])) {
         $r = " layout_owner_firstname LIKE '%".$args["owner"]."%' OR layout_owner_lastname LIKE '%".$args["owner"]."%' ";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -123,10 +123,10 @@ function where_add_owner($args, $where=NONE) {
 }
 
 // access=n  layouts or layout tours with accessibility better than n
-function where_add_access($args, $where=NONE) {
-    if ($args["access"]) {
+function where_add_access($args, $where=NULL) {
+    if (isset($args["access"])) {
         $r = " layout_accessibility LIKE '%".$args["access"]."%'";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -134,10 +134,10 @@ function where_add_access($args, $where=NONE) {
 }
 
 // presenter=AA  clinics with presenter like AA
-function where_add_presenter($args, $where=NONE) {
-    if ($args["presenter"]) {
+function where_add_presenter($args, $where=NULL) {
+    if (isset($args["presenter"])) {
         $r = " clinic_presenter LIKE '%".$args["presenter"]."%'";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -145,10 +145,10 @@ function where_add_presenter($args, $where=NONE) {
 }
 
 // scale=AA  layouts or layout tours with scale like AA
-function where_add_scale($args, $where=NONE) {
-    if ($args["scale"]) {
+function where_add_scale($args, $where=NULL) {
+    if (isset($args["scale"])) {
         $r = " CONCAT(CONCAT(\" \",layout_scale),\" \") REGEXP BINARY ' ".$args["scale"]." '";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -156,10 +156,10 @@ function where_add_scale($args, $where=NONE) {
 }
 
 // gauge=AA  layouts or layout tours with scale like AA
-function where_add_gauge($args, $where=NONE) {
-    if ($args["gauge"]) {
+function where_add_gauge($args, $where=NULL) {
+    if (isset($args["gauge"])) {
         $r = " CONCAT(CONCAT(\" \",layout_gauge),\" \") REGEXP BINARY ' ".$args["gauge"]." '";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -167,10 +167,10 @@ function where_add_gauge($args, $where=NONE) {
 }
 
 // prototype=AA  layouts or layout tours with prototype like AA
-function where_add_prototype($args, $where=NONE) {
-    if ($args["prototype"]) {
+function where_add_prototype($args, $where=NULL) {
+    if (isset($args["prototype"])) {
         $r = " layout_prototype LIKE '%".$args["prototype"]."%'";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -178,10 +178,10 @@ function where_add_prototype($args, $where=NONE) {
 }
 
 // layout=AA  layouts or layout tours with layout name like AA
-function where_add_layout($args, $where=NONE) {
-    if ($args["layout"]) {
+function where_add_layout($args, $where=NULL) {
+    if (isset($args["layout"])) {
         $r = " layout_name LIKE '%".$args["layout"]."%'";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -191,23 +191,23 @@ function where_add_layout($args, $where=NONE) {
 // match=AA for tours and events
 //           searches (most of) the text fields
 //           see next for checking layout fields
-function where_add_match_event($args, $where=NONE) {
-    if ($args["match"]) {
+function where_add_match_event($args, $where=NULL) {
+    if (isset($args["match"])) {
         $r = " ( ".
             " name LIKE '%".urldecode($args["match"])."%' OR ".
             " description LIKE '%".urldecode($args["match"])."%' ".
             " ) ";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
     }
 }
 
-// match=AA  for layout tours 
+// match=AA  for layout tours
 //           searches (most of) the text fields
-function where_add_match_layout_tour($args, $where=NONE) {
-    if ($args["match"]) {
+function where_add_match_layout_tour($args, $where=NULL) {
+    if (isset($args["match"])) {
         $r = " ( ".
             " name LIKE '%".urldecode($args["match"])."%' OR ".
             " description LIKE '%".urldecode($args["match"])."%' OR ".
@@ -223,7 +223,7 @@ function where_add_match_layout_tour($args, $where=NONE) {
             " layout_owner_firstname LIKE '%".urldecode($args["match"])."%' OR ".
             " layout_owner_lastname LIKE '%".urldecode($args["match"])."%' ".
             " ) ";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -232,8 +232,8 @@ function where_add_match_layout_tour($args, $where=NONE) {
 
 // match=AA  for layout
 //           searches (most of) the text fields
-function where_add_match_layout($args, $where=NONE) {
-    if ($args["match"]) {
+function where_add_match_layout($args, $where=NULL) {
+    if (isset($args["match"])) {
         $r = " ( ".
             " layout_name LIKE '%".urldecode($args["match"])."%' OR ".
             " layout_short_description LIKE '%".urldecode($args["match"])."%' OR ".
@@ -247,7 +247,7 @@ function where_add_match_layout($args, $where=NONE) {
             " layout_owner_firstname LIKE '%".urldecode($args["match"])."%' OR ".
             " layout_owner_lastname LIKE '%".urldecode($args["match"])."%' ".
             " ) ";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -256,30 +256,30 @@ function where_add_match_layout($args, $where=NONE) {
 
 // clinic status = works on the status number (show greater or equal)
 // and over-rides the global "all less than 70" default
-function where_add_clinic_status($args, $where=NONE) {
+function where_add_clinic_status($args, $where=NULL) {
     global $event_tools_show_min_value;
 
     if (array_key_exists('status', $args)) {
         $event_tools_show_min_value = (int) $args["status"];
         $r = " status_code >= ".$args["status"];
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         $r = " status_code < 70 ";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     }
 }
 
 // event status = works on the status number (show greater)
 // and over-rides the global
-function where_add_status($args, $where=NONE) {
+function where_add_status($args, $where=NULL) {
     global $event_tools_show_min_value;
 
     if (array_key_exists('status', $args)) {
         $event_tools_show_min_value = (int) $args["status"];
         $r = " status_code >= ".$args["status"];
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     }
     return $where;
@@ -287,35 +287,35 @@ function where_add_status($args, $where=NONE) {
 
 // layout status = works on the status number (show greater)
 // and over-rides the global
-function where_add_layout_status($args, $where=NONE) {
+function where_add_layout_status($args, $where=NULL) {
     global $event_tools_show_min_value;
 
     if (array_key_exists('status', $args)) {
         $event_tools_show_min_value = (int) $args["status"];
         $r = " layout_status_code >= ".$args["status"];
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     }
     return $where;
 }
 
 // tour type - limits general tours to "G" or "P" numbers
-function where_add_general_tour_type($args, $where=NONE) {
+function where_add_general_tour_type($args, $where=NULL) {
     global $event_tools_show_min_value;
 
     if (array_key_exists('type', $args)) {
         $r = " number  LIKE '%".$args["type"]."%' ";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     }
     return $where;
 }
 
 // control=AA  layouts or layout tours with control name like AA
-function where_add_control($args, $where=NONE) {
-    if ($args["control"]) {
+function where_add_control($args, $where=NULL) {
+    if (isset($args["control"])) {
         $r = " layout_control LIKE '%".$args["control"]."%'";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -323,10 +323,10 @@ function where_add_control($args, $where=NONE) {
 }
 
 // era=AA  layouts or layout tours with era name like AA
-function where_add_era($args, $where=NONE) {
-    if ($args["era"]) {
+function where_add_era($args, $where=NULL) {
+    if (isset($args["era"])) {
         $r = " layout_era LIKE '%".$args["era"]."%'";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -334,10 +334,10 @@ function where_add_era($args, $where=NONE) {
 }
 
 // class=AA  layouts or layout tours with era name like AA
-function where_add_class($args, $where=NONE) {
-    if ($args["class"]) {
+function where_add_class($args, $where=NULL) {
+    if (isset($args["class"])) {
         $r = " layout_class LIKE '%".$args["class"]."%'";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -345,10 +345,10 @@ function where_add_class($args, $where=NONE) {
 }
 
 // theme=AA  layouts or layout tours with era name like AA
-function where_add_theme($args, $where=NONE) {
-    if ($args["theme"]) {
+function where_add_theme($args, $where=NULL) {
+    if (isset($args["theme"])) {
         $r = " layout_theme LIKE '%".$args["theme"]."%'";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -356,10 +356,10 @@ function where_add_theme($args, $where=NONE) {
 }
 
 // scenery=AA  layouts or layout tours with scenery like AA
-function where_add_scenery($args, $where=NONE) {
-    if ($args["scenery"]) {
+function where_add_scenery($args, $where=NULL) {
+    if (isset($args["scenery"])) {
         $r = " layout_scenery LIKE '%".$args["scenery"]."%'";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -367,10 +367,10 @@ function where_add_scenery($args, $where=NONE) {
 }
 
 // size=AA  layouts or layout tours with size like AA
-function where_add_size($args, $where=NONE) {
-    if ($args["size"]) {
+function where_add_size($args, $where=NULL) {
+    if (isset($args["size"])) {
         $r = " layout_size LIKE '%".$args["size"]."%'";
-        if ($where != NONE) return $where." AND ".$r;
+        if ($where != NULL) return $where." AND ".$r;
         else return $r;
     } else {
         return $where;
@@ -379,8 +379,8 @@ function where_add_size($args, $where=NONE) {
 
 // where=    Use last, if you want people to be able to provide
 //           their own 'where' string
-function where_add_where($args, $where=NONE) {
-    if ($args["where"]) {
+function where_add_where($args, $where=NULL) {
+    if (isset($args["where"])) {
         return urldecode($args["where"]);
     } else {
         return $where;
@@ -390,12 +390,12 @@ function where_add_where($args, $where=NONE) {
 // -------------------------------------------------------------------------
 //
 // Standard queries for page types.
-// 
+//
 // These do the argument parsing for you
 
 function parse_clinic_query() {
     parse_str($_SERVER["QUERY_STRING"], $args);
-    $where = where_add_clinic_status($args, NONE);
+    $where = where_add_clinic_status($args, NULL);
     $where = where_add_changed($args, $where);
     $where = where_add_tag($args, $where);
     $where = where_add_number($args, $where);
@@ -411,7 +411,7 @@ function parse_clinic_query() {
 
 function parse_misc_event_query() {
     parse_str($_SERVER["QUERY_STRING"], $args);
-    $where = where_add_status($args, NONE);
+    $where = where_add_status($args, NULL);
     $where = where_add_changed($args, $where);
     $where = where_add_tag($args, $where);
     $where = where_add_number($args, $where);
@@ -426,7 +426,7 @@ function parse_misc_event_query() {
 
 function parse_general_tour_query() {
     parse_str($_SERVER["QUERY_STRING"], $args);
-    $where = where_add_status($args, NONE);
+    $where = where_add_status($args, NULL);
     $where = where_add_changed($args, $where);
     $where = where_add_number($args, $where);
     $where = where_add_id($args, $where);
@@ -441,7 +441,7 @@ function parse_general_tour_query() {
 
 function parse_layout_tour_query() {
     parse_str($_SERVER["QUERY_STRING"], $args);
-    $where = where_add_status($args, NONE);
+    $where = where_add_status($args, NULL);
     $where = where_add_changed($args, $where);
     $where = where_add_number($args, $where);
     $where = where_add_id($args, $where);
@@ -460,7 +460,7 @@ function parse_layout_tour_query() {
 
 function parse_layout_query() {
     parse_str($_SERVER["QUERY_STRING"], $args);
-    $where = where_add_layout_status($args, NONE);
+    $where = where_add_layout_status($args, NULL);
     $where = where_add_changed($args, $where);
     $where = where_add_number($args, $where);
     $where = where_add_id($args, $where);
@@ -482,7 +482,7 @@ function parse_layout_query() {
     $where = where_add_theme($args, $where);
     $where = where_add_scenery($args, $where);
     $where = where_add_size($args, $where);
-    
+
     $where = where_add_where($args, $where);
     //echo $where;
     return $where;
@@ -490,7 +490,7 @@ function parse_layout_query() {
 
 function parse_order() {
     parse_str($_SERVER["QUERY_STRING"], $args);
-    if ($args["order"]) {
+    if (isset($args["order"])) {
         if ($args["order"] == "status") return " status_code ";
         if ($args["order"] == "lstatus") return " layout_status_code ";
         if ($args["order"] == "name") return " name ";
@@ -511,9 +511,9 @@ function parse_order() {
         if ($args["order"] == "cfirstname") return " customers_firstname ";
         if ($args["order"] == "email") return " customers_email_address ";
         if ($args["order"] == "category") return " opsreq_priority DESC ";
-        return NONE;
+        return NULL;
     } else {
-        return NONE;
+        return NULL;
     }
 }
 
