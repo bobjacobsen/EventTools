@@ -4,6 +4,12 @@
 # private / per-user configuration files
 google_staticmap_key.php
 
+# backups
+*~
+
+# registration log
+datafile.dtf
+
 # transient artifacts
 .ant-targets-build.xml
 
