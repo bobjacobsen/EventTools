@@ -13,12 +13,12 @@
         div.filled    { background: #c0ffc0; }
         span.disabled { background: #ff8080; }
         div.disabled  { background: #ff8080; }
-        
+
         td.session { width: 600px; }
     </style>
 </head>
 <body>
-<h1>Op Session Set Assignments</h1>  
+<h1>Op Session Set Assignments</h1>
 <a href="index.php">Back to main page</a><p/>
 
 <?php
@@ -71,7 +71,7 @@ function setstatus($id, $status) {  // set request with opsreq_req_status_id == 
                 ;";
     //echo '<p>'.$query.'<p>';
     mysql_query($query);
-    
+
     // now locate rest of group
     $query="
         SELECT opsreq_group_id, show_name, start_date
@@ -85,7 +85,7 @@ function setstatus($id, $status) {  // set request with opsreq_req_status_id == 
     $name = mysql_result($result,0,"show_name");
     $date = mysql_result($result,0,"start_date");
     // echo '<p>'.$name.' '.$date.'<p>';
-    
+
     $query="
         SELECT opsreq_group_id, opsreq_req_status_id
         FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
@@ -96,7 +96,7 @@ function setstatus($id, $status) {  // set request with opsreq_req_status_id == 
     $result=mysql_query($query);
     $num = mysql_numrows($result);
     // echo "<p>Changing group of ".$num.'<p>';
-    
+
     // change the statuses
     for ($i = 0; $i < $num; $i++) {
         $query = "UPDATE ".$event_tools_db_prefix."eventtools_opsreq_req_status
@@ -109,20 +109,20 @@ function setstatus($id, $status) {  // set request with opsreq_req_status_id == 
 }
 
 function transfer_unassigned($toDate, $fromDate, $showName, $cycle, $email=NONE) {
-    // fromID is the opsreq_req_status_id 
-    // goal is to take requests R1..Rn from user U1..Un currently on layout L date D1, and 
+    // fromID is the opsreq_req_status_id
+    // goal is to take requests R1..Rn from user U1..Un currently on layout L date D1, and
     // link it to layout L date D2 instead. Status is not changed and only unassigned are moved.
     //
     // This is done by changing the opsreq_id from the one for L-D1 to the one for L-D2
     // in the relevant prefix_eventtools_opsreq_req_status record, which is
     // turn is found from join on
-    // prefix_eventtools_ops_group_names.opsreq_group_req_link_id 
+    // prefix_eventtools_ops_group_names.opsreq_group_req_link_id
     //         = prefix_eventtools_opsreq_req_status.opsreq_group_req_link_id
-    
+
     if ($email == NONE) {
         echo "Transfer requests for ".$showName." at ".$fromDate." to ".$toDate.'<br>';
     }
-    
+
     // query for "to" session
     global $event_tools_db_prefix, $cycle;
     $query="
@@ -131,7 +131,7 @@ function transfer_unassigned($toDate, $fromDate, $showName, $cycle, $email=NONE)
         WHERE show_name = '".$showName."'
             AND start_date = '".$toDate."'
         ;";
-    
+
     $result=mysql_query($query);
     $num = mysql_numrows($result);
     if ($num != 1) {
@@ -140,7 +140,7 @@ function transfer_unassigned($toDate, $fromDate, $showName, $cycle, $email=NONE)
     }
     //echo "Moving to id ".mysql_result($result,0,"ops_id")."<br>";
     $toID = mysql_result($result,0,"ops_id");
-    
+
     // query for the right requests
     $query="
         SELECT  *
@@ -167,7 +167,7 @@ function transfer_unassigned($toDate, $fromDate, $showName, $cycle, $email=NONE)
             $first = False;
             echo mysql_result($result,$i,"customers_lastname");
         }
-        
+
         // do the move
         //echo "(".mysql_result($result,$i,"ops_id").")";
         //echo "[".mysql_result($result,$i,"opsreq_group_req_link_id")."]";
@@ -193,7 +193,7 @@ function updatenavigation() {
     global $group_user_count;
     global $empty_slots_by_session, $layout_number_by_session, $strtdate_by_session, $session_status_by_session;
     global $event_tools_db_prefix, $cycle, $min_status;
-    
+
     // get status vector
     $query="
         SELECT  ops_id, status_code, show_name, start_date
@@ -210,11 +210,11 @@ function updatenavigation() {
     $query="
         SELECT  *
         FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
-        WHERE opsreq_group_cycle_name = '".$cycle."' 
+        WHERE opsreq_group_cycle_name = '".$cycle."'
         ORDER BY opsreq_priority DESC, customers_create_date, customers_lastname, opsreq_person_email, req_num
         ;
     ";
-    
+
     $result=mysql_query($query);
     $num = mysql_numrows($result);
 
@@ -223,7 +223,7 @@ function updatenavigation() {
     $strtdate_by_rqstr = array();  // array of start_date requests [1:n] by rqstr email
     $statusid_by_rqstr = array();  // array of opsreq_req_status_id requests [1:n] by rqstr email
     $status_by_rqstr = array();  // array of opsreq_req_status_id requests [1:n] by rqstr email
-    
+
     $rqstr_name = array();  // for presentation name by rqstr email
     $rqstr_group = array(); // for group number by rqstr email
     $rqstr_address = array(); // for address (city, state) by rqstr email
@@ -231,11 +231,11 @@ function updatenavigation() {
     $rqstr_group_size  = array(); // for group size by rqstr email
     $rqstr_req_size  = array(); // for number of requests by rqstr email
     $rqstr_req_any  = array(); // accept any sessions by rqstr email
-    
+
     $rqstr_email = array(); // emails in order of adding
-    
+
     for ($i = 0; $i < $num; ) {
-    
+
         // build for one requestor
         $email = mysql_result($result,$i,"opsreq_person_email");
         $rqstr_email[] = $email;
@@ -246,23 +246,23 @@ function updatenavigation() {
         $rqstr_group_size[$email] = $group_user_count[mysql_result($result,$i,"opsreq_group_id")];
         $rqstr_req_size[$email] = mysql_result($result,$i,"opsreq_number");
         $rqstr_req_any[$email] = mysql_result($result,$i,"opsreq_any");
-        
+
         $names = array();
         $nums = array();
         $strtdate = array();
         $statusid = array();
         $status = array();
-    
+
         for ($j = 1; $j<=12; $j++) {
             $nums[$j] = mysql_result($result,$i,"req_num");
             $names[$j] = mysql_result($result,$i,"show_name");
-    
+
             $date = mysql_result($result,$i,"start_date");
             $strtdate[$j] = $date;
-    
+
             $statusid[$j] = mysql_result($result,$i,"opsreq_req_status_id");
             $status[$j] = mysql_result($result,$i,"status");
-            
+
             // check for a date conflict
             for ($k = 1; $k<$j; $k++) {
                 if (strcmp( substr($date,0,10), substr($strtdate[$k],0,10) ) == 0) {
@@ -273,14 +273,14 @@ function updatenavigation() {
             }
             $i++;
         }
-        
+
         $reqnum_by_rqstr[$email] = $nums;
         $reqname_by_rqstr[$email] = $names;
         $strtdate_by_rqstr[$email] = $strtdate;
         $statusid_by_rqstr[$email] = $statusid;
         $status_by_rqstr[$email] = $status;
     }
-    
+
     // query all op sessions
     $layout_number_by_session = array(); // layout ID by session name (show_name.start_date)
     $strtdate_by_session = array();      // start date by session name (show_name.start_date)
@@ -301,7 +301,7 @@ function updatenavigation() {
             $strtdate_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$i,"start_date")] = mysql_result($result,$i,"start_date");
         }
     }
-     
+
     // query by op session with assignments
     $query="
         SELECT  *
@@ -312,12 +312,12 @@ function updatenavigation() {
     ";
     $result=mysql_query($query);
     $num = mysql_numrows($result);
-    
+
     // scan for full sessions and disable requests
     $empty_slots_by_session = array();   // count of empty slots by session name (show_name.start_date)
-    
+
     $detailed_debug = FALSE;
- 
+
     if ($detailed_debug) echo "\n<br/>Start original scan for disabled sessions<p/>\n";
     for ($i=0; $i<$num; $i++ ) {
         if (mysql_result($result,$i,"show_name") != "") {
@@ -329,7 +329,7 @@ function updatenavigation() {
                     echo "<br><span class='disabled'>Disabling requests for disabled session: ".mysql_result($result,$i,"show_name")." ".mysql_result($result,$i,"start_date")."</span><p>\n";
                     setstatus(mysql_result($result,$j,"opsreq_req_status_id"), STATUS_DISABLED);
                 }
-                while ( ($j<$num-1) && (mysql_result($result,$j,"show_name") == mysql_result($result,$j+1,"show_name")) 
+                while ( ($j<$num-1) && (mysql_result($result,$j,"show_name") == mysql_result($result,$j+1,"show_name"))
                         && (mysql_result($result,$j,"start_date") == mysql_result($result,$j+1,"start_date")) ) {
                     $j++;
                     if (mysql_result($result,$j,"status") != STATUS_DISABLED) {
@@ -351,7 +351,7 @@ function updatenavigation() {
             $j = $i;
             $count1 = 0;
             if (mysql_result($result,$j,"status") == STATUS_ASSIGNED) $count1++;
-            while ( ($j<$num-1) && (mysql_result($result,$j,"show_name") == mysql_result($result,$j+1,"show_name")) 
+            while ( ($j<$num-1) && (mysql_result($result,$j,"show_name") == mysql_result($result,$j+1,"show_name"))
                     && (mysql_result($result,$j,"start_date") == mysql_result($result,$j+1,"start_date")) ) {
                 $j++;
                 if (mysql_result($result,$j,"status") == STATUS_ASSIGNED) $count1++;
@@ -367,10 +367,10 @@ function updatenavigation() {
                 if (mysql_result($result,$j,"status") == STATUS_RELEASED) {
                     setfilled(mysql_result($result,$j,"opsreq_person_email"), mysql_result($result,$j,"req_num"));
                 }
-                while ( ($j<$num-1) && (mysql_result($result,$j,"show_name") == mysql_result($result,$j+1,"show_name")) 
+                while ( ($j<$num-1) && (mysql_result($result,$j,"show_name") == mysql_result($result,$j+1,"show_name"))
                         && (mysql_result($result,$j,"start_date") == mysql_result($result,$j+1,"start_date")) ) {
                     $j++;
-                    if (mysql_result($result,$j,"status") == STATUS_RELEASED) { 
+                    if (mysql_result($result,$j,"status") == STATUS_RELEASED) {
                         setfilled(mysql_result($result,$j,"opsreq_person_email"), mysql_result($result,$j,"req_num"));
                     }
                 }
@@ -411,7 +411,7 @@ if (! array_key_exists("cy", $args)) {
     $cycle = $args["cy"];
 }
 
-// here, the cycle name exists, 
+// here, the cycle name exists,
 echo '<h2>Cycle: '.$cycle.'</h2>';
 
 // Load it
@@ -486,8 +486,8 @@ if (array_key_exists("transfer", $args)) {
 
 if (array_key_exists("insert", $args)) {
     // insert a request not already present
-    
-    $ops_id = $args["session"];  
+
+    $ops_id = $args["session"];
 
     $query="
         SELECT *
@@ -501,7 +501,7 @@ if (array_key_exists("insert", $args)) {
     $num = mysql_numrows($result);
     //echo $num;
     if ($num != "0") {
-        // scan for existing 
+        // scan for existing
         $O = TRUE;
         $id = 0;
         for ($i = 0; $i < $num; $i++) {
@@ -521,7 +521,7 @@ if (array_key_exists("insert", $args)) {
         }
         // check if that did the job, or if we need a new one
         if ($O & $id != 0) {
-            // have to create one for this. 
+            // have to create one for this.
             $query2 = "UPDATE ".$event_tools_db_prefix."eventtools_opsreq_req_status
                         SET status='".STATUS_ASSIGNED."', ops_id='".$ops_id."', forced='1'
                         WHERE opsreq_req_status_id = '".$id."'
@@ -541,7 +541,7 @@ if (array_key_exists("insert", $args)) {
             //echo $query;
             $result=mysql_query($query);
             $num = mysql_numrows($result);
-            
+
             echo '<b>New request force assigned to '.mysql_result($result,0,"show_name").' '.mysql_result($result,0,"start_date").'</b> ';
             //echo '[opsreq_group_req_link: '.mysql_result($result,0,"opsreq_group_id").' '.mysql_result($result,0,"opsreq_id").']';
             //echo '[opsreq_req_status: '.mysql_result($result,0,"ops_id").' '.$lastfree.']';
@@ -553,7 +553,7 @@ if (array_key_exists("insert", $args)) {
     } else {
         echo '<br/><b>Failed to find operator/session for insert</b><br/>';
     }
-    
+
 }
 
 if (array_key_exists("op", $args)) {
@@ -595,7 +595,7 @@ for ($i = 0; $i < $num; ) {
 $result = updatenavigation();
 $num = mysql_numrows($result);
 
-// handle group operations after the temporary 
+// handle group operations after the temporary
 // status (conflicts, etc) has been set
 
 if (array_key_exists("grp", $args)) { // assign remaining top priority in requesting session
@@ -617,16 +617,16 @@ if (array_key_exists("grp", $args)) { // assign remaining top priority in reques
                     ON l2.opsreq_group_id = g2.opsreq_group_id )
                     LEFT JOIN ".$event_tools_db_prefix."eventtools_opsession_req op
                     ON op.opsreq_id = l2.opsreq_id
-                WHERE seg.opsreq_req_status_id = '".$id."' 
-                    AND final.status = '0' 
-                    AND seg.req_num = final.req_num 
+                WHERE seg.opsreq_req_status_id = '".$id."'
+                    AND final.status = '0'
+                    AND seg.req_num = final.req_num
                     AND g1.opsreq_group_cycle_name = g2.opsreq_group_cycle_name
                 ;";
 
     //echo '<p>'.$query.'<p>';
     $rgrp = mysql_query($query);
     //echo "found ".mysql_numrows($rgrp).'<br/>';
-    
+
     // now have the items to set status on
     for ($j = 0; $j<mysql_numrows($rgrp); $j++) {
         $email = mysql_result($rgrp,$j,"opsreq_person_email");
@@ -640,7 +640,7 @@ if (array_key_exists("grp", $args)) { // assign remaining top priority in reques
             setstatus($statusid_by_rqstr[$email][$reqn],"1");
         }
     }
-    
+
     // and update status
     $result = updatenavigation();
     $num = mysql_numrows($result);
@@ -658,7 +658,7 @@ if (array_key_exists("best", $args)) {
             //echo '<br/>{'.$email.' '.$status_by_rqstr[$email][$pri].' ';
             // skip if not valid request
             if ($reqname_by_rqstr[$email][$pri] == "") continue;
-            // check for not session full or conflicted 
+            // check for not session full or conflicted
             if (!( ($status_by_rqstr[$email][$pri] == STATUS_FULL) || ($status_by_rqstr[$email][$pri] == STATU_CONFLICT) )) continue;
             // yes, check for another available session with same layout
             $session = $reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri];
@@ -687,7 +687,7 @@ if (array_key_exists("best", $args)) {
     }
 
     echo "\nstart placement processing<br/>\n";
-    
+
     // make a list of everybody we're trying to place
     $users = array();
     $groups = array();
@@ -706,7 +706,7 @@ if (array_key_exists("best", $args)) {
     }
     echo '<p>Will attempt to place '.count($users).' requests: ';
     foreach ($users as $u) echo ' '.$u.' '; echo '<br/>';
-    
+
     // order the users by their category (prefix_eventtools_opsession_req.opsreq_priority) and time (prefix_customers.customers_create_date)
     $q2 = "SELECT opsreq_priority, opsreq_person_email ".
                 "FROM ".$event_tools_db_prefix."eventtools_opsession_req_with_user_info ".
@@ -720,11 +720,11 @@ if (array_key_exists("best", $args)) {
     $users = $users_ordered;
     echo 'Order of attempts: ';
     foreach ($users as $u) echo ' '.$u.' '; echo '<br/>';
-    
+
     echo '<p>';
-    
+
     $detail_debug = FALSE;
-    
+
     // loop until can't do anything
     while (TRUE) {
         if ($detail_debug)  echo "\n********* part 1 - move if needed & possible<br/>\n";
@@ -734,7 +734,7 @@ if (array_key_exists("best", $args)) {
                 if ($detail_debug) echo '<br/>{Start user '.$email.' pri: '.$status_by_rqstr[$email][$pri].' ';
                 // skip if not valid request
                 if ($reqname_by_rqstr[$email][$pri] == "") continue;
-                // check for not session full or conflicted 
+                // check for not session full or conflicted
                 if (!( ($status_by_rqstr[$email][$pri] == STATUS_FULL) || ($status_by_rqstr[$email][$pri] == STATU_CONFLICT) )) continue;
                 // yes, check for another available session with same layout
                 $session = $reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri];
@@ -765,7 +765,7 @@ if (array_key_exists("best", $args)) {
         if ($detail_debug)  echo "\n<br/>======== part 2: find and satisfy requests without a N+1th choice<br/>\n";
         foreach ($users as $key => $email) {
             if ( ($status_by_rqstr[$email][1+$pri] == STATUS_RELEASED) && ($reqname_by_rqstr[$email][1+$pri] != "") ) {
-                // continue if there's space available in next choice, we'll pick this up 
+                // continue if there's space available in next choice, we'll pick this up
                 // in the next part
                 if ($detail_debug) echo "Next choice for ".$email.' is '.$reqname_by_rqstr[$email][1+$pri].', has '.$status_by_rqstr[$email][1+$pri].' status and '.$empty_slots_by_session[$reqname_by_rqstr[$email][1+$pri].$strtdate_by_rqstr[$email][1+$pri]].' spaces now, skipping assignment<br/>';
                 continue;
@@ -783,7 +783,7 @@ if (array_key_exists("best", $args)) {
             unset($users[$key]);
             // update
             $result = updatenavigation();
-            $num = mysql_numrows($result); 
+            $num = mysql_numrows($result);
             // and restart at top
             continue 2;
         }
@@ -804,7 +804,7 @@ if (array_key_exists("best", $args)) {
                 unset($users[$key]);
                 // update
                 $result = updatenavigation();
-                $num = mysql_numrows($result); 
+                $num = mysql_numrows($result);
                 continue;
             }
             // found one
@@ -816,17 +816,17 @@ if (array_key_exists("best", $args)) {
             unset($users[$key]);
             // update
             $result = updatenavigation();
-            $num = mysql_numrows($result); 
+            $num = mysql_numrows($result);
             // and restart at top
             continue 2;
         }
-        
+
         // don't have anything to do, done
         break;
     }
     // assign remaining to 2nd place
     echo "Have ".count($users)." left at end of main pass.<br/>";
-    
+
     // loop to assign those to their next choice
     foreach ($users as $key => $email) {
         if ( ($status_by_rqstr[$email][$pri+1] != STATUS_RELEASED) || ($reqname_by_rqstr[$email][$pri+1] == "") ) {
@@ -843,15 +843,15 @@ if (array_key_exists("best", $args)) {
         unset($users[$key]);
         // update
         $result = updatenavigation();
-        $num = mysql_numrows($result); 
+        $num = mysql_numrows($result);
         // and restart at top
         continue;
     }
-    
+
     // error if can't make it work
     if (count($users) > 0) {
         echo '<b>Error: cannot process requests for: ';
-        foreach ($users as $u) echo ' '.$u.' '; 
+        foreach ($users as $u) echo ' '.$u.' ';
         echo '</b><br/>';
     }
     echo '<hr><p>';
@@ -919,7 +919,7 @@ echo '</select>';
 echo '<select name="session" title="Number Assigned / Spaces Left / Total Spaces">';
 $query="
 SELECT start_date, spaces, show_name, COUNT(*), ops_id
-FROM ".$event_tools_db_prefix."eventtools_opsreq_group 
+FROM ".$event_tools_db_prefix."eventtools_opsreq_group
     JOIN ".$event_tools_db_prefix."eventtools_opsreq_group_req_link USING ( opsreq_group_id )
     JOIN ".$event_tools_db_prefix."eventtools_opsreq_req_status USING ( opsreq_group_req_link_id )
     JOIN ".$event_tools_db_prefix."eventtools_opsession_name USING ( ops_id )
@@ -1032,7 +1032,7 @@ for ($i=0; $i<$num; ) {
             }
         }
         if (mysql_result($result,$j,"status") == "1") $count1++;
-        while ( ($j<$num-1) && (mysql_result($result,$j,"show_name") == mysql_result($result,$j+1,"show_name")) 
+        while ( ($j<$num-1) && (mysql_result($result,$j,"show_name") == mysql_result($result,$j+1,"show_name"))
                 && (mysql_result($result,$j,"start_date") == mysql_result($result,$j+1,"start_date")) ) {
             $j++;
             if ($status_by_rqstr[mysql_result($result,$j,"opsreq_person_email")][mysql_result($result,$j,"req_num")] == "0") {
@@ -1047,10 +1047,10 @@ for ($i=0; $i<$num; ) {
             }
             if (mysql_result($result,$j,"status") == "1") $count1++;
         }
-        
+
         // make row
         echo '<tr>';
-        
+
         // start cell for session info
         echo '<td class="session">';
 
@@ -1068,15 +1068,15 @@ for ($i=0; $i<$num; ) {
         echo '<br/>';
         // button to add?
         echo '<form method="get" action="ops_assign_set.php#'.'s'.$tagnum.'">';
-        
+
         // color the numbers and add tooltip
         echo '<div ';
         if ($session_status_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$i,"start_date")] < $min_status) echo ' class="disabled" ';
         else if ($count1 >= (int) mysql_result($result,$i,"spaces")) echo ' class="filled" ';
         echo ' title="Number operators assigned / empty slots left / total slots : assignable requests left">';
         echo $count1.'/'.(mysql_result($result,$i,"spaces")-$count1).'/'.mysql_result($result,$i,"spaces").' : '.$count0; // report counts
-        echo'</div>';  
-        
+        echo'</div>';
+
         // add the P button if available
         echo '<input type="hidden" name="cy" value="'.$cycle.'">
               <input type="hidden" name="id" value="'.mysql_result($result,$firstindex,"opsreq_req_status_id").'">
@@ -1085,9 +1085,9 @@ for ($i=0; $i<$num; ) {
             echo '<input type="submit" name="grp" value="P" title="P buttons assign the next priority remaining requests for this layout."/><br/>';
         }
         $header = False;
-        for ($session = 0; $session < $n_sessions; $session++) { 
+        for ($session = 0; $session < $n_sessions; $session++) {
             if (mysql_result($r_sessions, $session, "show_name") == mysql_result($result,$i,"show_name")
-                    && mysql_result($r_sessions, $session, "start_date") != mysql_result($result,$i,"start_date") 
+                    && mysql_result($r_sessions, $session, "start_date") != mysql_result($result,$i,"start_date")
                     && mysql_result($r_sessions, $session, "status_code") >= $min_status) {
                 if (! $header) {
                     echo 'Move to: <br/>';
@@ -1099,16 +1099,16 @@ for ($i=0; $i<$num; ) {
             }
         }
         echo '</form>';
-        
+
         // end warning if session disabled
         if ($session_status_by_session[mysql_result($result,$i,"show_name").mysql_result($result,$i,"start_date")] < $min_status) {
             echo "Session Disabled</span>\n";
         }
-        
+
         // end of head cell
         echo "</td>\n";
-        
-        // Display row of people requesting this session, in order 
+
+        // Display row of people requesting this session, in order
         echo '<td>';
         $status = $status_by_rqstr[mysql_result($result,$i,"opsreq_person_email")][mysql_result($result,$i,"req_num")];
         setspan($status);
@@ -1121,13 +1121,13 @@ for ($i=0; $i<$num; ) {
         $count = $group_user_count[$rqstr_group[mysql_result($result,$i,"opsreq_person_email")]];
         if ($count > 1) echo " Group of ".$count;
         setbuttons($cycle,$status,mysql_result($result,$i,"opsreq_req_status_id"),'s'.$tagnum);
-        
-        while ( ($i<$num-1) && (mysql_result($result,$i,"show_name") == mysql_result($result,$i+1,"show_name")) 
+
+        while ( ($i<$num-1) && (mysql_result($result,$i,"show_name") == mysql_result($result,$i+1,"show_name"))
                 && (mysql_result($result,$i,"start_date") == mysql_result($result,$i+1,"start_date")) ) {
             $i++;
             echo '</span>';
             echo '</td><td>';
-            
+
             $status = $status_by_rqstr[mysql_result($result,$i,"opsreq_person_email")][mysql_result($result,$i,"req_num")];
             setspan($status);
             echo '<a name="'.'y'.mysql_result($result,$i,"opsreq_req_status_id").'"/>';
@@ -1139,7 +1139,7 @@ for ($i=0; $i<$num; ) {
             $count = $group_user_count[$rqstr_group[mysql_result($result,$i,"opsreq_person_email")]];
             if ($count > 1) echo " Group of ".$count;
             setbuttons($cycle,$status,mysql_result($result,$i,"opsreq_req_status_id"),'s'.$tagnum);
-            
+
         }
         echo '</span></td></tr>'."\n";
     }

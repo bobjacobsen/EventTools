@@ -43,7 +43,7 @@ if (! ($args["cy"]) ) {
 $cycle = $args["cy"];
 $date = $args["date"];
 $where = "";
-if ($date != NONE && $date != "") {
+if ($date != NULL && $date != "") {
     if (strlen($date) == 1) $date = '0'.$date;
     // assume single month for now
     $where = ' AND start_date LIKE "2___-__-'.substr($date,-2).'%" ';
@@ -97,7 +97,7 @@ for ($i=0; $i < $num; $i++) {
         echo mysql_result($result,$i,"customers_lastname").' ';
 
         // if you want to print options selected by user, put it here
-        
+
         echo '</td>';
         $count--;
     }

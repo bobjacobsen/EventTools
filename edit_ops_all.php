@@ -105,7 +105,7 @@ $opts['filters'] = "PMEtable0.sessions_count > 200";
 
 // check for one user request
 parse_str($_SERVER["QUERY_STRING"], $args);
-if ($args["email"]) {
+if (isset($args["email"])) {
     $opts['filters'] = "opsreq_person_email = '".$args["email"]."' ";
 }
 
@@ -115,7 +115,7 @@ if ($args["email"]) {
 $opts['options'] = 'CPVDF';
 
 /* Field definitions
-   
+
 Fields will be displayed left to right on the screen in the order in which they
 appear in generated list. Here are some most used field options documented.
 
@@ -174,7 +174,7 @@ $opts['fdd']['opsreq_person_email'] = array(
   'sort'     => true,
   'default'  => 'None',
   'escape'   => false,
-  'values'   => array('table' => $event_tools_db_prefix.'customers', 
+  'values'   => array('table' => $event_tools_db_prefix.'customers',
                         'column' => 'customers_email_address',
                         'description' => array(
                                 'columns' => array(
@@ -194,7 +194,7 @@ $opts['fdd']['opsreq_pri1'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts',
                         'column' => 'ops_id',
                         'orderby' => 'layout_owner_lastname',
                         'description' => array(
@@ -204,7 +204,7 @@ $opts['fdd']['opsreq_pri1'] = array(
                                                 'start_date'
                                                 ),
                                 'divs' => array(
-                                                ' ', 
+                                                ' ',
                                                 ' ',
                                                 '  ',
                                                 ''
@@ -218,7 +218,7 @@ $opts['fdd']['opsreq_pri2'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts',
                         'column' => 'ops_id',
                         'orderby' => 'layout_owner_lastname',
                         'description' => array(
@@ -228,7 +228,7 @@ $opts['fdd']['opsreq_pri2'] = array(
                                                 'start_date'
                                                 ),
                                 'divs' => array(
-                                                ' ', 
+                                                ' ',
                                                 ' ',
                                                 '  ',
                                                 ''
@@ -242,7 +242,7 @@ $opts['fdd']['opsreq_pri3'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts',
                         'column' => 'ops_id',
                         'orderby' => 'layout_owner_lastname',
                         'description' => array(
@@ -252,7 +252,7 @@ $opts['fdd']['opsreq_pri3'] = array(
                                                 'start_date'
                                                 ),
                                 'divs' => array(
-                                                ' ', 
+                                                ' ',
                                                 ' ',
                                                 '  ',
                                                 ''
@@ -266,7 +266,7 @@ $opts['fdd']['opsreq_pri4'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts',
                         'column' => 'ops_id',
                         'orderby' => 'layout_owner_lastname',
                         'description' => array(
@@ -276,7 +276,7 @@ $opts['fdd']['opsreq_pri4'] = array(
                                                 'start_date'
                                                 ),
                                 'divs' => array(
-                                                ' ', 
+                                                ' ',
                                                 ' ',
                                                 '  ',
                                                 ''
@@ -290,7 +290,7 @@ $opts['fdd']['opsreq_pri5'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts',
                         'column' => 'ops_id',
                         'orderby' => 'layout_owner_lastname',
                         'description' => array(
@@ -300,7 +300,7 @@ $opts['fdd']['opsreq_pri5'] = array(
                                                 'start_date'
                                                 ),
                                 'divs' => array(
-                                                ' ', 
+                                                ' ',
                                                 ' ',
                                                 '  ',
                                                 ''
@@ -314,7 +314,7 @@ $opts['fdd']['opsreq_pri6'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts',
                         'column' => 'ops_id',
                         'orderby' => 'layout_owner_lastname',
                         'description' => array(
@@ -324,7 +324,7 @@ $opts['fdd']['opsreq_pri6'] = array(
                                                 'start_date'
                                                 ),
                                 'divs' => array(
-                                                ' ', 
+                                                ' ',
                                                 ' ',
                                                 '  ',
                                                 ''
@@ -338,7 +338,7 @@ $opts['fdd']['opsreq_pri7'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts',
                         'column' => 'ops_id',
                         'orderby' => 'layout_owner_lastname',
                         'description' => array(
@@ -348,7 +348,7 @@ $opts['fdd']['opsreq_pri7'] = array(
                                                 'start_date'
                                                 ),
                                 'divs' => array(
-                                                ' ', 
+                                                ' ',
                                                 ' ',
                                                 '  ',
                                                 ''
@@ -362,7 +362,7 @@ $opts['fdd']['opsreq_pri8'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts',
                         'column' => 'ops_id',
                         'orderby' => 'layout_owner_lastname',
                         'description' => array(
@@ -385,7 +385,7 @@ $opts['fdd']['opsreq_pri9'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts',
                         'column' => 'ops_id',
                         'orderby' => 'layout_owner_lastname',
                         'description' => array(
@@ -408,7 +408,7 @@ $opts['fdd']['opsreq_pri10'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts',
                         'column' => 'ops_id',
                         'orderby' => 'layout_owner_lastname',
                         'description' => array(
@@ -431,7 +431,7 @@ $opts['fdd']['opsreq_pri11'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts',
                         'column' => 'ops_id',
                         'orderby' => 'layout_owner_lastname',
                         'description' => array(
@@ -454,7 +454,7 @@ $opts['fdd']['opsreq_pri12'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_with_layouts',
                         'column' => 'ops_id',
                         'orderby' => 'layout_owner_lastname',
                         'description' => array(
