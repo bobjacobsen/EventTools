@@ -19,8 +19,6 @@
  * http://platon.sk/projects/phpMyEdit/
  */
 
-include_once('mysql2i.class.php'); // migration step
-
 /* $Platon: phpMyEdit/phpMyEdit.class.php,v 1.204 2007-09-16 12:57:07 nepto Exp $ */
 
 /*  This is a generic table editing program. The table and fields to be
@@ -291,7 +289,7 @@ class phpMyEdit
 			($this->filter_operation() && stristr($options, 'F')) ||
 			($this->list_operation()   && stristr($options, 'L'));
 	} /* }}} */
-
+	
 	function debug_var($name, $val) /* {{{ */
 	{
 		if (is_array($val) || is_object($val)) {
@@ -318,7 +316,7 @@ class phpMyEdit
 			? @mysql_pconnect($this->hn, $this->un, $this->pw)
 			: @mysql_connect($this->hn, $this->un, $this->pw);
 	} /* }}} */
-
+		
 
 	function sql_disconnect() /* {{{ */
 	{
@@ -386,7 +384,7 @@ class phpMyEdit
 		return $ret;
 	} /* }}} */
 
-	/* end of sql functions */
+	/* end of sql functions */ 
 
 	function make_language_labels($language) /* {{{ */
 	{
@@ -458,7 +456,7 @@ class phpMyEdit
 						$qparts['select'] .= ',';
 					}
 				}
-				$qparts['select'][strlen($qparts['select']) - 1] = ')';
+				$qparts['select']{strlen($qparts['select']) - 1} = ')';
 				$qparts['select'] .= ' AS '.$this->sd.'PMEalias'.$field_num.$this->ed;
 				$qparts['orderby'] = $this->sd.'PMEalias'.$field_num.$this->ed;
 			} else if ($desc && is_array($desc)) {
@@ -522,7 +520,7 @@ class phpMyEdit
 							$ret .= ',';
 						}
 					}
-					$ret[strlen($ret) - 1] = ')';
+					$ret{strlen($ret) - 1} = ')';
 				} else if (is_array($desc)) {
 					// TODO
 				} else {
@@ -545,7 +543,7 @@ class phpMyEdit
 	{
  		return $this->get_SQL_query($qparts);
  	} /* }}} */
-
+ 
 
 
 	function get_SQL_query($parts) /* {{{ */
@@ -1069,7 +1067,7 @@ function '.$this->js['prefix'].'filter_handler(theForm, theEvent)
 				// Simple edit box required
 				$len_props = '';
 				$maxlen = intval($this->fdd[$k]['maxlen']);
-				$size   = isset($this->fdd[$k]['size']) ? $this->fdd[$k]['size'] : min($maxlen, 60);
+				$size   = isset($this->fdd[$k]['size']) ? $this->fdd[$k]['size'] : min($maxlen, 60); 
 				if ($size > 0) {
 					$len_props .= ' size="'.$size.'"';
 				}
@@ -1171,7 +1169,7 @@ function '.$this->js['prefix'].'filter_handler(theForm, theEvent)
 		}
 	} /* }}} */
 
-	function display_change_field($row, $k) /* {{{ */
+	function display_change_field($row, $k) /* {{{ */ 
 	{
 		$css_postfix    = @$this->fdd[$k]['css']['postfix'];
 		$css_class_name = $this->getCSSclass('input', null, true, $css_postfix);
@@ -1216,7 +1214,7 @@ function '.$this->js['prefix'].'filter_handler(theForm, theEvent)
 		} else {
 			$len_props = '';
 			$maxlen = intval($this->fdd[$k]['maxlen']);
-			$size   = isset($this->fdd[$k]['size']) ? $this->fdd[$k]['size'] : min($maxlen, 60);
+			$size   = isset($this->fdd[$k]['size']) ? $this->fdd[$k]['size'] : min($maxlen, 60); 
 			if ($size > 0) {
 				$len_props .= ' size="'.$size.'"';
 			}
@@ -1240,7 +1238,7 @@ function '.$this->js['prefix'].'filter_handler(theForm, theEvent)
 		echo $this->getColAttributes($k),">\n";
 		$len_props = '';
 		$maxlen = intval($this->fdd[$k]['maxlen']);
-		$size   = isset($this->fdd[$k]['size']) ? $this->fdd[$k]['size'] : min($maxlen, 60);
+		$size   = isset($this->fdd[$k]['size']) ? $this->fdd[$k]['size'] : min($maxlen, 60); 
 		if ($size > 0) {
 			$len_props .= ' size="'.$size.'"';
 		}
@@ -2293,7 +2291,7 @@ function '.$this->js['prefix'].'filter_handler(theForm, theEvent)
 				echo '</tr>',"\n";
 			}
 		} // }}}
-
+		
 		/*
 		 * Display sorting sequence
 		 */
@@ -2568,7 +2566,7 @@ function '.$this->js['prefix'].'filter_handler(theForm, theEvent)
 		echo '</table>',"\n";
  		if ($this->tabs_enabled()) {
 		echo '</div>',"\n";
-		}
+		}		
 		$this->display_record_buttons('down');
 
 		$this->form_end();
@@ -2898,7 +2896,7 @@ function '.$this->js['prefix'].'filter_handler(theForm, theEvent)
 		$oldvals = $newvals = $changed = array();
 		return $this->exec_triggers($op, $step, $oldvals, $changed, $newvals);
 	} /* }}} */
-
+	
 	/*
 	 * Recreate functions
 	 */
@@ -3078,7 +3076,7 @@ function '.$this->js['prefix'].'filter_handler(theForm, theEvent)
 		}
 		return true;
 	} /* }}} */
-
+	
 	/*
 	 * The workhorse
 	 */
@@ -3228,7 +3226,7 @@ function '.$this->js['prefix'].'filter_handler(theForm, theEvent)
 		if (! isset($this->page_name)) {
 			$this->page_name = basename($this->get_server_var('PHP_SELF'));
 			isset($this->page_name) || $this->page_name = $this->tb;
-		}
+		} 
 		$this->display['query'] = @$opts['display']['query'];
 		$this->display['sort']  = @$opts['display']['sort'];
 		$this->display['time']  = @$opts['display']['time'];
@@ -3319,7 +3317,7 @@ function '.$this->js['prefix'].'filter_handler(theForm, theEvent)
 		elseif($navfmup!=NULL && $navfmup != $this->fm) $this->navfm = $navfmup;
 		elseif($navpndown!=NULL && ($navpndown-1)*$this->inc != $this->fm) $this->navfm = ($navpndown-1)*$this->inc;
 		elseif($navpnup!=NULL && ($navpnup-1)*$this->inc != $this->fm) $this->navfm = ($navpnup-1)*$this->inc;
-		else $this->navfm = $this->fm;
+		else $this->navfm = $this->fm; 
 		$this->operation = $this->get_sys_cgi_var('operation');
 		$oper_prefix_len = strlen($this->cgi['prefix']['operation']);
 		if (! strncmp($this->cgi['prefix']['operation'], $this->operation, $oper_prefix_len)) {
