@@ -1,8 +1,8 @@
-<?php require_once('access_and_open.php'); 
+<?php require_once('access_and_open.php');
 
     // check for email address
     parse_str($_SERVER["QUERY_STRING"], $args);
-    if ($args["email"] == NONE || $args["email"] == "") {
+    if ($args["email"] == NULL || $args["email"] == "") {
         echo "<html><body>You must enter an email address to see the corresponding request<p>";
         echo '<form action="" method="get">';
         echo '<input type=text size=25 name=email>';
@@ -33,7 +33,7 @@
 	.pme-navigation, .pme-hr,
 	.pme-more {  display:none; } // suppress inter-table rule, nav table, Apply button
 
-    
+
 	hr.pme2-hr		     { border: 0px solid; padding: 0px; margin: 0px; border-top-width: 1px; height: 1px; }
 	table.pme2-main 	     { border: #004d9c 1px solid; border-collapse: collapse; border-spacing: 0px; width: 100%; }
 	table.pme2-navigation { border: #004d9c 0px solid; border-collapse: collapse; border-spacing: 0px; width: 100%; }
@@ -45,8 +45,8 @@
 	td.pme2-buttons { text-align: left;   }
 	td.pme2-message { text-align: center; }
 	td.pme2-stats   { text-align: right;  }
-	td.pme2-value-0, td.pme2-value-1 { width: 5%; } 
-	
+	td.pme2-value-0, td.pme2-value-1 { width: 5%; }
+
 	.pme2-navigation, .pme2-hr,
 	.pme2-more { display:none; } // suppress inter-table rule, nav table, Apply button
 
@@ -79,7 +79,7 @@
  *              generating setup script: 1.50
  */
 
-if (!$event_tools_user_email_log_skip) {
+if (!isset($event_tools_user_email_log_skip)) {
     // email results
     $opts['notify']['all'] = $event_tools_notify_email_address;
     $opts['notify']['prefix'] = $event_tools_notify_email_prefix;
@@ -147,7 +147,7 @@ $opts['filters'] = "opsreq_person_email = '".$args["email"]."' ";
 $opts['options'] = 'V';
 
 /* Field definitions
-   
+
 Fields will be displayed left to right on the screen in the order in which they
 appear in generated list. Here are some most used field options documented.
 
@@ -250,7 +250,7 @@ $opts['fdd']['customers_id'] = array(
   'maxlen'   => 25,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'address_book', 
+  'values'   => array('table' => $event_tools_db_prefix.'address_book',
                         'column' => 'customers_id',
                         'description' => array(
                                 'columns' => array(
@@ -271,7 +271,7 @@ $opts['fdd']['opsreq_pri1'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name',
                         'column' => 'ops_id',
                         'orderby' => 'show_name',
                         'description' => array(
@@ -292,7 +292,7 @@ $opts['fdd']['opsreq_pri2'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name',
                         'column' => 'ops_id',
                         'orderby' => 'show_name',
                         'description' => array(
@@ -313,7 +313,7 @@ $opts['fdd']['opsreq_pri3'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name',
                         'column' => 'ops_id',
                         'orderby' => 'show_name',
                         'description' => array(
@@ -334,7 +334,7 @@ $opts['fdd']['opsreq_pri4'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name',
                         'column' => 'ops_id',
                         'orderby' => 'show_name',
                         'description' => array(
@@ -355,7 +355,7 @@ $opts['fdd']['opsreq_pri5'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name',
                         'column' => 'ops_id',
                         'orderby' => 'show_name',
                         'description' => array(
@@ -376,7 +376,7 @@ $opts['fdd']['opsreq_pri6'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name',
                         'column' => 'ops_id',
                         'orderby' => 'show_name',
                         'description' => array(
@@ -397,7 +397,7 @@ $opts['fdd']['opsreq_pri7'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name',
                         'column' => 'ops_id',
                         'orderby' => 'show_name',
                         'description' => array(
@@ -418,7 +418,7 @@ $opts['fdd']['opsreq_pri8'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name',
                         'column' => 'ops_id',
                         'orderby' => 'show_name',
                         'description' => array(
@@ -439,7 +439,7 @@ $opts['fdd']['opsreq_pri9'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name',
                         'column' => 'ops_id',
                         'orderby' => 'show_name',
                         'description' => array(
@@ -460,7 +460,7 @@ $opts['fdd']['opsreq_pri10'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name',
                         'column' => 'ops_id',
                         'orderby' => 'show_name',
                         'description' => array(
@@ -481,7 +481,7 @@ $opts['fdd']['opsreq_pri11'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name',
                         'column' => 'ops_id',
                         'orderby' => 'show_name',
                         'description' => array(
@@ -502,7 +502,7 @@ $opts['fdd']['opsreq_pri12'] = array(
   'maxlen'   => 5,
   'sort'     => true,
   'default'  => 'None',
-  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name', 
+  'values'   => array('table' => $event_tools_db_prefix.'eventtools_opsession_name',
                         'column' => 'ops_id',
                         'orderby' => 'show_name',
                         'description' => array(
