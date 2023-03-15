@@ -70,6 +70,8 @@ echo '<tr>';
 echo '<th><a href="?order=cfirstname">First</a></th>';
 echo '<th><a href="?order=clastname">Last</a></th>';
 echo '<th><a href="?order=email">Email</a></th>';
+echo '<th><a href="?order=telephone">Telephone</a></th>';
+echo '<th><a href="?order=cellphone">Cell Phone</a></th>';
 echo '<th><a href="?order=create">Created Date</a></th>';
 echo '<th><a href="?order=update">Updated Date</a></th>';
 echo '<th><a href="?order=category">Attendee<br/>Category</a></th>';
@@ -111,6 +113,8 @@ while ($i < $numReqs) {
     echo  '<td>'.mysql_result($resultReqs,$i,"customers_firstname").'</td>';
     echo  '<td>'.mysql_result($resultReqs,$i,"customers_lastname").'</td>';
     echo  '<td>'.mysql_result($resultReqs,$i,"opsreq_person_email").'</td>';
+    echo  '<td>'.mysql_result($resultReqs,$i,"customers_telephone").'</td>';
+    echo  '<td>'.mysql_result($resultReqs,$i,"customers_cellphone").'</td>';
     echo  '<td>';
         if (("".mysql_result($resultReqs,$i,"customers_create_date")) != "")
             echo mysql_result($resultReqs,$i,"customers_create_date");
