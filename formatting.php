@@ -299,11 +299,11 @@ function format_all_layouts_as_table($url=NULL, $where=NULL, $order=NULL) {
             // line 2 - owner, city
             echo "<tr class=\"et-layout-tr2\">\n";
             echo "    <td colspan=\"2\" class=\"et-layout-td1\">\n";
-            echo "        <span class=\"et-layout-owner\">".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_owner_firstname")),"first").
-                        " ".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_owner_lastname")), "last")."</span> \n";
+            echo "        <span class=\"et-layout-owner\">".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_owner_firstname")),"first").
+                        " ".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_owner_lastname")), "last")."</span> \n";
             echo "    </td>\n";
             echo "    <td class=\"et-layout-td3\">\n";
-            echo "        <span class=\"et-layout-city\">".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_city")),"city")."</span> \n";
+            echo "        <span class=\"et-layout-city\">".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_city")),"city")."</span> \n";
             echo "    </td>\n";
             echo "</tr>\n";
 
@@ -320,7 +320,7 @@ function format_all_layouts_as_table($url=NULL, $where=NULL, $order=NULL) {
             echo "        <span class=\"et-layout-scale\">".errorOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_scale")), "scale")."</span> \n";
             echo "    </td>\n";
             echo "    <td class=\"et-layout-td2\">\n";
-            echo "        <span class=\"et-layout-prototype\">".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_prototype")),"proto")."</span> \n";
+            echo "        <span class=\"et-layout-prototype\">".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_prototype")),"proto")."</span> \n";
             echo "    </td>\n";
             echo "    <td class=\"et-layout-td3\">\n";
             echo "        <span class=\"et-lt-layout-owner_url\">";
@@ -332,29 +332,29 @@ function format_all_layouts_as_table($url=NULL, $where=NULL, $order=NULL) {
             // line 5 - scenery, size, mainline length
             echo "<tr class=\"et-layout-tr5\">\n";
 
-            $scenery = warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_scenery")), "scenery");
+            $scenery = warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_scenery")), "scenery");
             if (mysql_result($result,$i,"layout_scenery") !='') $scenery = 'Scenery: '.$scenery;
             echo "    <td class=\"et-layout-td1\">\n";
             echo "        <span class=\"et-layout-scenery\">".$scenery."</span> \n";
             echo "    </td>\n";
             echo "    <td class=\"et-layout-td2\">\n";
-            echo "        <span class=\"et-layout-size\">".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_size")),"size")."</span> \n";
+            echo "        <span class=\"et-layout-size\">".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_size")),"size")."</span> \n";
             echo "    </td>\n";
             echo "    <td class=\"et-layout-td3\">\n";
-            echo "        <span class=\"et-layout-mainline_length\">".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_mainline_length")), "main len")."</span> \n";
+            echo "        <span class=\"et-layout-mainline_length\">".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_mainline_length")), "main len")."</span> \n";
             echo "    </td>\n";
             echo "</tr>\n";
 
             // line 6 - plan type, ops scheme, control
             echo "<tr class=\"et-layout-tr6\">\n";
             echo "    <td class=\"et-layout-td1\">\n";
-            echo "        <span class=\"et-layout-plantype\">".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_plan_type")), "plan")."</span> \n";
+            echo "        <span class=\"et-layout-plantype\">".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_plan_type")), "plan")."</span> \n";
             echo "    </td>\n";
             echo "    <td class=\"et-layout-td2\">\n";
-            echo "        <span class=\"et-layout-opsscheme\">".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_ops_scheme")), "ops scheme")."</span> \n";
+            echo "        <span class=\"et-layout-opsscheme\">".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_ops_scheme")), "ops scheme")."</span> \n";
             echo "    </td>\n";
             echo "    <td class=\"et-layout-td3\">\n";
-            echo "        <span class=\"et-layout-control\">".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_control")), "control")."</span> \n";
+            echo "        <span class=\"et-layout-control\">".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_control")), "control")."</span> \n";
             echo "    </td>\n";
             echo "</tr>\n";
 
@@ -366,10 +366,10 @@ function format_all_layouts_as_table($url=NULL, $where=NULL, $order=NULL) {
             }
             echo "<tr class=\"et-layout-tr7\">\n";
             echo "    <td class=\"et-layout-td1\">\n";
-            echo "        <span class=\"et-layout-accessibility\">".warNULLmpty($accessibility, "accessibility")."</span> \n";
+            echo "        <span class=\"et-layout-accessibility\">".warnOnEmpty($accessibility, "accessibility")."</span> \n";
             echo "    </td>\n";
             echo "    <td class=\"et-layout-td2\">\n";
-            echo "        <span class=\"et-layout-era\">".warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_era")), "era")."</span> \n";
+            echo "        <span class=\"et-layout-era\">".warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_era")), "era")."</span> \n";
             echo "    </td>\n";
             echo "    <td class=\"et-layout-td3\">\n";
             if (mysql_result($result,$i,"layout_photo_url") != '')
@@ -1890,7 +1890,7 @@ class Layout_Tours_as_8Table extends Tours_as_8Table {
                 ."</a></span></td>\n";
             echo "<td colspan=\"4\" class=\"et-tour-td3\"><span class=\"et-tour-layout-name\">"
                 ."<a href=\"".$url.mysql_result($result,$i,"layout_id")."\">"
-                .warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_name")), "layout name")
+                .warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_name")), "layout name")
                 ."</a></span></td>\n";
         echo "</tr>\n";
 
@@ -1898,19 +1898,19 @@ class Layout_Tours_as_8Table extends Tours_as_8Table {
         // line 3 - size, scenery, control, access, url
         echo "<tr class=\"et-tour-layout-tr3\">\n";
             echo "<td class=\"et-tour-td1\"><span class=\"et-tour-layout-size\">"
-                .warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_size")), "size")
+                .warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_size")), "size")
                 ."</span></td>\n";
-            $scenery = warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_scenery")), "scenery");
+            $scenery = warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_scenery")), "scenery");
             if (mysql_result($result,$i,"layout_scenery") !='') $scenery = 'Scenery: '.$scenery;
             echo "<td class=\"et-tour-td2\"><span class=\"et-tour-layout-scenery\">"
                 .$scenery
                 ."</span></td>\n";
 
             echo "<td class=\"et-tour-td3\"><span class=\"et-tour-layout-control\">"
-                .warNULLmpty(htmlspecialchars(mysql_result($result,$i,"layout_control")), "control")
+                .warnOnEmpty(htmlspecialchars(mysql_result($result,$i,"layout_control")), "control")
                 ."</span></td>\n";
             echo "<td class=\"et-tour-td4\"><span class=\"et-tour-layout-access\">"
-                .warNULLmpty(mysql_result($result,$i,"accessibility_display"), "accessibility")
+                .warnOnEmpty(mysql_result($result,$i,"accessibility_display"), "accessibility")
                 ."</span></td>\n";
 
             echo "<td colspan=\"4\" class=\"et-tour-td4\"><span class=\"et-tour-owner-url\">\n";

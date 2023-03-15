@@ -272,7 +272,7 @@ class html2text
      *  @see _build_link_list()
      */
     var $_link_list = '';
-    
+
     /**
      *  Number of valid links detected in the text, used for plain text
      *  display (rendered similar to footnotes).
@@ -295,7 +295,7 @@ class html2text
      *  @access public
      *  @return void
      */
-    function html2text( $source = '', $from_file = false )
+    function __constructor( $source = '', $from_file = false )
     {
         if ( !empty($source) ) {
             $this->set_html($source, $from_file);

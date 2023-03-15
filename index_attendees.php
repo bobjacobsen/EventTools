@@ -6,15 +6,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>Contacts</title>
 
-        <link href="tours.css" rel="stylesheet" type="text/css" />    
+        <link href="tours.css" rel="stylesheet" type="text/css" />
 
     </head>
     <body>
-    <h2>Contacts</h2>  
+    <h2>Contacts</h2>
     <a href="index.php">Back to main page</a>
     <p>
 
-<?php 
+<?php
     require_once('utilities.php'); require_once('formatting.php');
 
         function simple_table_format_cell($index, $row, $name) {
@@ -40,11 +40,15 @@
             echo "      </span> \n";
             echo "  </td>\n";
         }
-        
+
         parse_str($_SERVER["QUERY_STRING"], $args);
-        $order = $args["order"];
-        if ($order == NONE || $order == '') $order = 'customers_lastname';
-        
+        if (isset($args["order"])) {
+            $order = $args["order"];
+        } else {
+            $order = NULL;
+        }
+        if ($order == NULL || $order == '') $order = 'customers_lastname';
+
         echo '<table border="1">';
         echo '<tr>
             <th><a href="index_attendees.php?order=customers_firstname">First</a></th>
@@ -63,11 +67,11 @@
         echo  '<th><a href="index_attendees.php?order=customers_create_date">Created</a></th>';
         echo  '<th><a href="index_attendees.php?order=customers_updated_date">Updated</a></th>
             </tr>';
-        
+
         $table = $event_tools_db_prefix.'customers LEFT JOIN '.$event_tools_db_prefix.'address_book
                 ON '.$event_tools_db_prefix.'customers.customers_id = '.$event_tools_db_prefix.'address_book.customers_id
             ';
-            
+
         $query="
             SELECT  *
             FROM ".$table."
@@ -77,11 +81,11 @@
         //echo $query;
 
         if ($event_tools_emergency_contact_info) {
-            table_from_query( $query, 
+            table_from_query( $query,
                 array('customers_firstname', 'customers_lastname', 'customers_email_address', 'entry_street_address', 'entry_city', 'entry_state', 'entry_postcode', 'customers_telephone', 'customers_cellphone', 'customers_x2011_emerg_contact_name', 'customers_x2011_emerg_contact_phone', 'customers_create_date', 'customers_updated_date')
             );
         } else {
-            table_from_query( $query, 
+            table_from_query( $query,
                 array('customers_firstname', 'customers_lastname', 'customers_email_address', 'entry_street_address', 'entry_city', 'entry_state', 'entry_postcode', 'customers_telephone', 'customers_cellphone', 'customers_create_date', 'customers_updated_date')
             );
         }
