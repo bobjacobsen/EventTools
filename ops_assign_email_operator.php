@@ -49,11 +49,11 @@ if ($num == 0) {
 if ( ($args["savetext"]) ) {
     mysql_query("INSERT INTO ".$event_tools_db_prefix."eventtools_user_text (user_text_key, user_text_value) VALUES ('ops_assign_email_operator_sample_text', '".str_replace("'", "''", $args["content"])."') ON DUPLICATE KEY UPDATE user_text_value = '".str_replace("'", "''", $args["content"])."';");
     $default_text = $args["content"];
-    echo "<b>Email text saved</b><br>";    
-} 
+    echo "<b>Email text saved</b><br>";
+}
 
 if ( ($args["send"]) && (! $args["cy"])  ) {
-    echo "<b>You have to specify a cycle to send email</b><br>";    
+    echo "<b>You have to specify a cycle to send email</b><br>";
 }
 
 if ( (! $args["send"]) || (! $args["cy"])  ) {
@@ -73,15 +73,15 @@ if ( (! $args["send"]) || (! $args["cy"])  ) {
         <button type="submit" name="savetext" value="savetext">Save Text (doesn'."'".'t send mail)</button><br>
         <button type="submit" name="send" value="send">Send Emails (doesn'."'".'t save text changes)</button>
     ';
-    
+
     // display existing cycles & number of assignments)
     echo '<h3>Existing cycles</h3><table><tr><th>Cycle Name</th><th>N Assigned</th></tr>';
     global $opts, $event_tools_db_prefix, $event_tools_href_add_on;
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
-    
+
     $query="
-        SELECT opsreq_group_cycle_name, SUM(status) 
+        SELECT opsreq_group_cycle_name, SUM(status)
         FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
         WHERE status = 1
         GROUP BY opsreq_group_cycle_name
@@ -96,10 +96,10 @@ if ( (! $args["send"]) || (! $args["cy"])  ) {
     echo '</table>';
     $query="
         SELECT *
-            FROM ( 
+            FROM (
             ".$event_tools_db_prefix."eventtools_opsession_req LEFT JOIN ".$event_tools_db_prefix."customers
             ON ".$event_tools_db_prefix."eventtools_opsession_req.opsreq_person_email = ".$event_tools_db_prefix."customers.customers_email_address
-            ) 
+            )
             ".$where." ORDER BY customers_lastname
             ;
         ";
@@ -107,7 +107,7 @@ if ( (! $args["send"]) || (! $args["cy"])  ) {
     $result=mysql_query($query);
     $num=mysql_numrows($result);
     $i=0;
-    
+
     echo '<h3>Operators</h3><p>If you select a specific operator below, only that person will get email</p><select name="operator" id="operator">';
     echo '<option value="(ALL)">(ALL)</option>';
     while ($i < $num) {
@@ -131,7 +131,7 @@ mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
 
 echo "Emailing from cycle ".$cycle."<p>";
 
-if (!($args["operator"]==NONE || $args["operator"]=="" || $args["operator"]=="(ALL)")) {
+if (!($args["operator"]==NULL || $args["operator"]=="" || $args["operator"]=="(ALL)")) {
     $where = "AND opsreq_person_email = '".$args["operator"]."' ";
 } else {
     $where = "";
@@ -139,7 +139,7 @@ if (!($args["operator"]==NONE || $args["operator"]=="" || $args["operator"]=="(A
 
 $query="
     SELECT *
-    FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments 
+    FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
     WHERE opsreq_group_cycle_name = '".$cycle."'
     ".$where."
     AND show_name != ''
@@ -160,37 +160,37 @@ $sessions = "";
 
 while ($i < $num) {
     $sessions = $sessions.mysql_result($result,$i,"show_name")."\n".daydatetime_from_long_format(mysql_result($result,$i,"start_date"))."\n\n";
-    
+
     if ( ($i == $num-1) || ($lastmajorkey != mysql_result($result,$i+1,"opsreq_person_email")) ) {
         if ($i < $num-1) {
             $lastmajorkey = mysql_result($result,$i+1,"opsreq_person_email");
         }
-        
+
         if ($testto=='$')
             $to = mysql_result($result,$i,"opsreq_person_email");
         else
             $to = $testto;
 
         echo "sending to ".mysql_result($result,$i,"opsreq_person_email").'('.$to.')<p>';
-            
+
         $subject = $args["subject"];
-        
+
         $headers = "from: ".$from."\nreply-to: ".$reply."\nbcc: ".$bcc;
-                
+
         $body = $part1;
         if ($args["noassignments"] != "on") $body = $body.$sessions;
         $body = $body."\n\n\n";
-        
+
         mail($to,$subject,$body,$headers);
         //echo '<hr>'.$body.'<hr>';
-        
+
         $sessions = "";
     }
-    
+
     $i++;
 }
 
-mysql_close();    
+mysql_close();
 
 echo "</clinics>\n";
 ?>

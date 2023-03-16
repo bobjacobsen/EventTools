@@ -108,7 +108,7 @@ function setstatus($id, $status) {  // set request with opsreq_req_status_id == 
     }
 }
 
-function transfer_unassigned($toDate, $fromDate, $showName, $cycle, $email=NONE) {
+function transfer_unassigned($toDate, $fromDate, $showName, $cycle, $email=NULL) {
     // fromID is the opsreq_req_status_id
     // goal is to take requests R1..Rn from user U1..Un currently on layout L date D1, and
     // link it to layout L date D2 instead. Status is not changed and only unassigned are moved.
@@ -119,7 +119,7 @@ function transfer_unassigned($toDate, $fromDate, $showName, $cycle, $email=NONE)
     // prefix_eventtools_ops_group_names.opsreq_group_req_link_id
     //         = prefix_eventtools_opsreq_req_status.opsreq_group_req_link_id
 
-    if ($email == NONE) {
+    if ($email == NULL) {
         echo "Transfer requests for ".$showName." at ".$fromDate." to ".$toDate.'<br>';
     }
 
@@ -150,7 +150,7 @@ function transfer_unassigned($toDate, $fromDate, $showName, $cycle, $email=NONE)
             AND start_date = '".$fromDate."'
             AND status = '".STATUS_RELEASED."'
     ";
-    if ($email != NONE) {
+    if ($email != NULL) {
         $query = $query." AND opsreq_person_email = '".$email."' ";
     }
     $query = $query.';';
@@ -161,7 +161,7 @@ function transfer_unassigned($toDate, $fromDate, $showName, $cycle, $email=NONE)
 
     $first = True;
     for ($i = 0; $i < $num; $i++) {
-        if ($email == NONE) {
+        if ($email == NULL) {
             if ($first) echo "Moving ";
             else echo ", ";
             $first = False;
@@ -183,7 +183,7 @@ function transfer_unassigned($toDate, $fromDate, $showName, $cycle, $email=NONE)
 
 
     }
-    if ($email == NONE) echo "<br>";
+    if ($email == NULL) echo "<br>";
 
 }
 
@@ -243,7 +243,13 @@ function updatenavigation() {
         $rqstr_group[$email] = mysql_result($result,$i,"opsreq_group_id");
         $rqstr_address[$email] = mysql_result($result,$i,"entry_city").', '.mysql_result($result,$i,"entry_state");
         $rqstr_category[$email] = mysql_result($result,$i,"opsreq_priority");
-        $rqstr_group_size[$email] = $group_user_count[mysql_result($result,$i,"opsreq_group_id")];
+
+        if (isset($group_user_count[mysql_result($result,$i,"opsreq_group_id")])) {
+            $rqstr_group_size[$email] = $group_user_count[mysql_result($result,$i,"opsreq_group_id")];
+        } else {
+            $rqstr_group_size[$email] = 0;
+        }
+
         $rqstr_req_size[$email] = mysql_result($result,$i,"opsreq_number");
         $rqstr_req_any[$email] = mysql_result($result,$i,"opsreq_any");
 
@@ -659,7 +665,7 @@ if (array_key_exists("best", $args)) {
             // skip if not valid request
             if ($reqname_by_rqstr[$email][$pri] == "") continue;
             // check for not session full or conflicted
-            if (!( ($status_by_rqstr[$email][$pri] == STATUS_FULL) || ($status_by_rqstr[$email][$pri] == STATU_CONFLICT) )) continue;
+            if (!( ($status_by_rqstr[$email][$pri] == STATUS_FULL) || ($status_by_rqstr[$email][$pri] == STATUS_CONFLICT) )) continue;
             // yes, check for another available session with same layout
             $session = $reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri];
             $layout = $layout_number_by_session[$session];
@@ -671,7 +677,7 @@ if (array_key_exists("best", $args)) {
                     if ($empty_slots_by_session[$ses_next] >= $min_status) {
                         // check space
                         //echo '[ checking '.$ses_next.' with '.$empty_slots_by_session[$ses_next].']';
-                        if ($empty_slots_by_session[$ses_next] == '' || $empty_slots_by_session[$ses_next] == NONE || $empty_slots_by_session[$ses_next] > 0) {
+                        if ($empty_slots_by_session[$ses_next] == '' || $empty_slots_by_session[$ses_next] == NULL || $empty_slots_by_session[$ses_next] > 0) {
                             // found, move request over and repeat
                             echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Move '.$email.' request from '.$reqname_by_rqstr[$email][$pri].' '.$strtdate_by_rqstr[$email][$pri];
                             echo ' to '.$strtdate_by_session[$ses_next].'<br/>';
@@ -695,7 +701,7 @@ if (array_key_exists("best", $args)) {
         if (($status_by_rqstr[$email][$pri] == STATUS_RELEASED) && ($reqname_by_rqstr[$email][$pri] != "")) {
             // user needs to be assigned
             // see if already handling via group
-            if ( $groups[$rqstr_group[$email]]) {
+            if ( isset($groups[$rqstr_group[$email]])) {
                 echo $email." is part of existing group<br/>";
                 continue;
             }
@@ -735,7 +741,7 @@ if (array_key_exists("best", $args)) {
                 // skip if not valid request
                 if ($reqname_by_rqstr[$email][$pri] == "") continue;
                 // check for not session full or conflicted
-                if (!( ($status_by_rqstr[$email][$pri] == STATUS_FULL) || ($status_by_rqstr[$email][$pri] == STATU_CONFLICT) )) continue;
+                if (!( ($status_by_rqstr[$email][$pri] == STATUS_FULL) || ($status_by_rqstr[$email][$pri] == STATUS_CONFLICT) )) continue;
                 // yes, check for another available session with same layout
                 $session = $reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri];
                 $layout = $layout_number_by_session[$session];
@@ -746,7 +752,7 @@ if (array_key_exists("best", $args)) {
                         // alternate session, check space
                         if ($detail_debug) echo '[ checking '.$ses_next.' with '.$empty_slots_by_session[$ses_next].']';
                         if ($session_status_by_session[$ses_next] >= $min_status) {
-                            if ($empty_slots_by_session[$ses_next] == '' || $empty_slots_by_session[$ses_next] == NONE || $empty_slots_by_session[$ses_next] > 0) {
+                            if ($empty_slots_by_session[$ses_next] == '' || $empty_slots_by_session[$ses_next] == NULL || $empty_slots_by_session[$ses_next] > 0) {
                                 // found, move request over and repeat
                                 echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Move '.$email.' request from '.$reqname_by_rqstr[$email][$pri].' '.$strtdate_by_rqstr[$email][$pri];
                                 echo ' to '.$strtdate_by_session[$ses_next].'<br/>';

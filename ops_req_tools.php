@@ -1,5 +1,5 @@
 <?php
-// Service routines for creating a request page for 
+// Service routines for creating a request page for
 // op sessions.
 include_once('mysql2i.class.php'); // migration step
 
@@ -12,19 +12,19 @@ include_once('mysql2i.class.php'); // migration step
 // for operating sessions
 // selections result in things like 23=14  where the first is the op session number
 //   and the second is the priority
-function create_request_entries($max_pri, $where=NONE, $order=NONE ) {
+function create_request_entries($max_pri, $where=NULL, $order=NULL ) {
     global $opts, $event_tools_db_prefix, $event_tools_href_add_on;
     global $event_tools_show_min_value;
     global $event_tools_ops_session_assign_by_layout;
-    
+
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
-    
-    if ($order==NONE) $order = "show_name, start_date";
 
-    if ($where != NONE) $where = "WHERE ".$where." ";
+    if ($order==NULL) $order = "show_name, start_date";
+
+    if ($where != NULL) $where = "WHERE ".$where." ";
     else $where = " ";
-    
+
     $query="
         SELECT  *
         FROM ".$event_tools_db_prefix."eventtools_opsession_name
@@ -34,12 +34,12 @@ function create_request_entries($max_pri, $where=NONE, $order=NONE ) {
     ";
     //echo $query;
     $result=mysql_query($query);
-    
+
     $i=0;
     $num=mysql_numrows($result);
     //echo $num;
     $last_show_name = "";
-    
+
     while ($i < $num) {
         $row = mysql_fetch_assoc($result);
         // if by layout, don't show duplicates
@@ -61,12 +61,12 @@ function create_request_entries($max_pri, $where=NONE, $order=NONE ) {
         }
         $last_show_name = $row["show_name"];
         $i++;
-    }    
+    }
 }
 
 // create form selection boxes
 // for options
-// 
+//
 function create_option_entries() {
     global $opts, $event_tools_db_prefix;
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);

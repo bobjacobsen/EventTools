@@ -42,17 +42,17 @@ $min_status = 60;                  // min status below which get warning; 40 is 
 
 function score($choice,$key) {
     global $stats;
-    if ($key == NONE || $key == '') return;
+    if ($key == NULL || $key == '') return;
     $stats[$key][$choice] = $stats[$key][$choice]+1;
 }
 
 function summarize_question($shortOptionName, $where) {
     global $event_tools_db_prefix;
-    
+
     $query="
         SELECT customers_id
             FROM ( ".$event_tools_db_prefix."eventtools_customer_cross_options_and_values
-                JOIN ".$event_tools_db_prefix."eventtools_opsession_req 
+                JOIN ".$event_tools_db_prefix."eventtools_opsession_req
                 ON customers_email_address = opsreq_person_email )
             ";
     if ($where) {
@@ -60,7 +60,7 @@ function summarize_question($shortOptionName, $where) {
     } else {
         $query = $query." WHERE customer_option_value_value = \"Y\" ";
     }
-    $query=$query."        
+    $query=$query."
             AND customer_option_short_name = \"".$shortOptionName."\"
             ;
         ";
@@ -86,7 +86,7 @@ echo '<span style="background: #ffa0a0">Red highlights</span> indicate an error:
 
 // is there a requested move?
 if ($args["move"]) {
-    
+
     // doing this the database way!
     // UPDATE fruits SET name='oranges' WHERE name='apples';
     mysql_query("UPDATE ".$event_tools_db_prefix."eventtools_opsession_req SET opsreq_pri1='".$args["to"]."' WHERE opsreq_pri1='".$args["move"]."';");
@@ -150,30 +150,30 @@ while ($i < $numSessions) {
 $where = "";
 if ($args["session"]) {
     $where = ' WHERE (
-        opsreq_pri1 = "'.$args["session"].'" OR 
-        opsreq_pri2 = "'.$args["session"].'" OR 
-        opsreq_pri3 = "'.$args["session"].'" OR 
-        opsreq_pri4 = "'.$args["session"].'" OR 
-        opsreq_pri5 = "'.$args["session"].'" OR 
-        opsreq_pri6 = "'.$args["session"].'" OR 
-        opsreq_pri7 = "'.$args["session"].'" OR 
-        opsreq_pri8 = "'.$args["session"].'" OR 
-        opsreq_pri9 = "'.$args["session"].'" OR 
-        opsreq_pri10 = "'.$args["session"].'" OR 
-        opsreq_pri11 = "'.$args["session"].'" OR 
-        opsreq_pri12 = "'.$args["session"].'" 
+        opsreq_pri1 = "'.$args["session"].'" OR
+        opsreq_pri2 = "'.$args["session"].'" OR
+        opsreq_pri3 = "'.$args["session"].'" OR
+        opsreq_pri4 = "'.$args["session"].'" OR
+        opsreq_pri5 = "'.$args["session"].'" OR
+        opsreq_pri6 = "'.$args["session"].'" OR
+        opsreq_pri7 = "'.$args["session"].'" OR
+        opsreq_pri8 = "'.$args["session"].'" OR
+        opsreq_pri9 = "'.$args["session"].'" OR
+        opsreq_pri10 = "'.$args["session"].'" OR
+        opsreq_pri11 = "'.$args["session"].'" OR
+        opsreq_pri12 = "'.$args["session"].'"
          ) ';
 }
 
 require_once('parsers.php');
 $order = parse_order();
-if ($order == NONE) $order = "customers_lastname";
+if ($order == NULL) $order = "customers_lastname";
 $query="
     SELECT *
-        FROM ( 
+        FROM (
         ".$event_tools_db_prefix."eventtools_opsession_req LEFT JOIN ".$event_tools_db_prefix."customers
         ON ".$event_tools_db_prefix."eventtools_opsession_req.opsreq_person_email = ".$event_tools_db_prefix."customers.customers_email_address
-        ) 
+        )
         ".$where." ORDER BY ".$order."
         ;
     ";
@@ -208,13 +208,13 @@ $i = 0;
 while ($i < $numSessions) {
     $key = mysql_result($resultSessions,$i,"ops_id");
     echo '<tr>';
-    
+
     // layout name
     echo '<td><a href="?session='.mysql_result($resultSessions,$i,"ops_id").'">'.mysql_result($resultSessions,$i,"show_name").'</a></td>';
-    
+
     // start time
     echo '<td>'.mysql_result($resultSessions,$i,"start_date").'</td>'."\n";
-        
+
     // spaces (called spots)
     echo '<td align="right">'.mysql_result($resultSessions,$i,"spaces").'</td>'."\n";
 
@@ -226,22 +226,22 @@ while ($i < $numSessions) {
         $j++;
     }
     echo '<td align="right">';
-    if (mysql_result($resultSessions,$i,"status_code") < $min_status 
+    if (mysql_result($resultSessions,$i,"status_code") < $min_status
             && $sum != 0
             && mysql_result($resultSessions,$i,"spaces") > 0)
         echo '<div style="background: #ffa0a0">';  // red if not at or above min_status
     else
-        echo '<div>';            
+        echo '<div>';
     echo $sum;
     echo '</div></td>'."\n";
-    
+
     // status
     echo '<td>'.$statusMap[mysql_result($resultSessions,$i,"status_code")].'</td>';
-    
+
     // set up the move-to form
     echo "\n".'<td>';
     echo '<form onsubmit="
-        var sel = 
+        var sel =
             document.getElementById(\'to'
                 .mysql_result($resultSessions,$i,"ops_id")
                 .'\');
@@ -258,17 +258,17 @@ while ($i < $numSessions) {
     echo "\n".'<select name="to" id="to'.mysql_result($resultSessions,$i,"ops_id").'">'."\n";
     $n = 0;
     while ($n < $numSessions) {
-        if ($i != $n) 
+        if ($i != $n)
             echo '  <option value="'.mysql_result($resultSessions,$n,"ops_id").'">'.mysql_result($resultSessions,$n,"show_name")." ".mysql_result($resultSessions,$n,"start_date").'</option>'."\n";
         $n++;
     }
-    
+
     echo '</select>';
     echo "\n".'<button type="submit" name="move" value="'.$key.'">Move!</button>';
     echo '</form></td>';
 
     $i++;
-    
+
 }
 
 echo '</table>';

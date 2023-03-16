@@ -42,7 +42,7 @@ if (! ($args["cy"]) ) {
 $cycle = $args["cy"];
 $date = $args["date"];
 $where = "";
-if ($date != NONE && $date != "") {
+if ($date != NULL && $date != "") {
     if (strlen($date) == 1) $date = '0'.$date;
     $where = ' AND start_date LIKE "2___-__-'.substr($date,-2).'%" ';
 }
@@ -105,7 +105,7 @@ for ($i=0; $i < $num; $i++) {
     }
 }
 
-// end last session 
+// end last session
 if ($count > 0) {
     for ($j = 0; $j < $count; $j++) echo '<tr><td class="num">'.($colnum++).'</td><td>____</td><td class="slot"><pre>__________________________________________________</pre></td></tr>';
 }

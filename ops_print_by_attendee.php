@@ -43,7 +43,7 @@ if (! ($args["cy"]) ) {
 $cycle = $args["cy"];
 $date = $args["date"];
 $where = "";
-if ($date != NONE && $date != "") {
+if ($date != NULL && $date != "") {
     if (strlen($date) == 1) $date = '0'.$date;
     $where = ' AND start_date LIKE "2___-__-'.substr($date,-2).'%" ';
 }
@@ -75,7 +75,7 @@ echo '<table border="1"><tr>';
     $first_string =  "2200-01-01 00:00:00";
     $last_string =  "1999-01-01 00:00:00";
     // default is nothing before this month, specify argument if you want to see the past
-    if ($start_date_limit == NONE) {
+    if ($start_date_limit == NULL) {
         $now = new DateTime();
         $start_date_limit = $now->format("Y-m")."-01 00:00:00";
         //echo '['.$start_date_limit.']';
@@ -94,20 +94,20 @@ echo '<table border="1"><tr>';
     //echo 'days: '.$days.'<p>';
     if ($days < 0) {
        echo "Some session dates are probably wrong, found ".$first_string." through ".$last_string."; is date parameter right?<p>";
-    }    
+    }
     if ($days > 10) {
        $days = 10;  // limit to width; more probably due to bad dates
        echo "Some session dates are probably wrong, found ".$first_string." through ".$last_string."; is date parameter right?<p>";
     }
     $headings = array();    // like [Wed 03, Thu 04]
     $colarray = array();    // like [2008-01-03, 2008-01-04]
-    
+
     $day = $first_date;
     for ($j=0; $j<=$days; $j++) {
         $headings[] = $day->format('D').'<br>'.$day->format('Y-m-d');
         $colarray[] = $day->format('Y-m-d');
         $day->add(new DateInterval('P1D'));
-    }    
+    }
 
 echo '<tr><th></th><th></th>';
 foreach ($colarray as $x) { echo '<th>'.$x.'</th>'; }
@@ -130,7 +130,7 @@ for ($i=0; $i < $num; $i++) {
             echo '<td></td>';
             $colnum++;
         }
-        
+
         echo '</tr>';
         // finally, start layout
         echo '<td>'.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").' </td>';

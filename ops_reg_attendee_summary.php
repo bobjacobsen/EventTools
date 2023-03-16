@@ -54,10 +54,10 @@ require_once('parsers.php');
 // get the list of extras
 $queryExtras="
     SELECT *
-        FROM ( 
+        FROM (
         ".$event_tools_db_prefix."eventtools_customer_options
-        ) 
-        ".$where." ORDER BY customer_option_order 
+        )
+        ".$where." ORDER BY customer_option_order
         ;
     ";
 //echo $queryExtras;
@@ -92,12 +92,12 @@ echo '</tr>';
 if (strlen($args["order"])>5 AND substr($args["order"],0,5) == "value") $order = urldecode($args["order"]).' DESC, customers_updated_date ';
 else $order = parse_order();
 
-if ($order == NONE) $order = "customers_lastname";
+if ($order == NULL) $order = "customers_lastname";
 
 $query=options_select_statement();  // create default select statement
-     
+
 $query=$query."
-        ".$where." ORDER BY ".$order." 
+        ".$where." ORDER BY ".$order."
         ;
     ";
 //echo $query;

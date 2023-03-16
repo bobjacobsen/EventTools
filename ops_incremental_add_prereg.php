@@ -20,7 +20,7 @@ function check_for_value($values, $check, $reqs)
     return $reqs;
 }
 
-function clean_text($text) 
+function clean_text($text)
 {
     return mysql_real_escape_string(stripslashes($text));
 }
@@ -38,7 +38,7 @@ $findu = "SELECT customers_id FROM ".$event_tools_db_prefix."customers WHERE cus
 $reqs = mysql_query($findu);
 
 if (mysql_num_rows($reqs) == 0) {
- 
+
     // no, do an insert of the user
     $user = "REPLACE INTO ".$event_tools_db_prefix."customers (`customers_email_address`, `customers_firstname`, `customers_lastname`, `customers_telephone`, `customers_cellphone`, `customers_create_date`, `customers_x2011_emerg_contact_name`, `customers_x2011_emerg_contact_phone`) VALUES "
         ."('".$email."','".clean_text($_REQUEST["fname"])."','".clean_text($_REQUEST["lname"])."','".clean_text($_REQUEST["phone"])."','".clean_text($_REQUEST["cell"])."',now(),'".clean_text($_REQUEST["econtact"])."','".clean_text($_REQUEST["ephone"])."');";
@@ -67,7 +67,7 @@ $address = "REPLACE INTO ".$event_tools_db_prefix."address_book (`customers_id`,
 $repl = mysql_query($address);
 
 $id = mysql_insert_id();
-if ($id == NONE || $id =='' || $id == 0) {
+if ($id == NULL || $id =='' || $id == 0) {
     // need to retrieve the address row by query
     $finda = $findu = "SELECT address_book_id FROM ".$event_tools_db_prefix."address_book WHERE customers_id = '".mysql_result($reqs,0,"customers_id")."';";
     $repa = mysql_query($finda);

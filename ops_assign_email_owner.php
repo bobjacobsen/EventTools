@@ -11,7 +11,7 @@ require_once('options_utilities.php');
 parse_str($_SERVER["QUERY_STRING"], $args);
 
 $default_text = '
-First, let me thank you again for agreeing to host op session(s).  Without your participation this event, especially of this magnitude, would just not happen. 
+First, let me thank you again for agreeing to host op session(s).  Without your participation this event, especially of this magnitude, would just not happen.
 
 In this email you will find the names and email addresses of the convention attendees assigned to your op session(s).  Please feel free to contact them and send them any operating documents or information you may want them to review before they arrive on your doorstep.  Please be aware that there are likely to be some last minute changes in assignments due to the real world - we will let you know of any changes that occur prior the the convention itself.
 
@@ -51,11 +51,11 @@ if ($num == 0) {
 if ( ($args["savetext"]) ) {
     mysql_query("INSERT INTO ".$event_tools_db_prefix."eventtools_user_text (user_text_key, user_text_value) VALUES ('ops_assign_email_owner_sample_text', '".str_replace("'", "''", $args["content"])."') ON DUPLICATE KEY UPDATE user_text_value = '".str_replace("'", "''", $args["content"])."';");
     $default_text = $args["content"];
-    echo "<b>Email text saved</b><br>";    
-} 
+    echo "<b>Email text saved</b><br>";
+}
 
 if ( ($args["send"]) && (! $args["cy"])  ) {
-    echo "<b>You have to specify a cycle to send email</b><br>";    
+    echo "<b>You have to specify a cycle to send email</b><br>";
 }
 
 if ( (! $args["send"]) || (! $args["cy"])  ) {
@@ -73,12 +73,12 @@ if ( (! $args["send"]) || (! $args["cy"])  ) {
         <button type="submit" name="savetext" value="savetext">Save Text (doesn'."'".'t send mail)</button><br>
         <button type="submit" name="send" value="send">Send Emails (doesn'."'".'t save text changes)</button>
     ';
-    
+
     // display existing cycles & number of assignments)
     echo '<h3>Existing cycles</h3><table><tr><th>Cycle Name</th><th>N Assigned</th></tr>';
-    
+
     $query="
-        SELECT opsreq_group_cycle_name, SUM(status) 
+        SELECT opsreq_group_cycle_name, SUM(status)
         FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
         WHERE status = 1
         GROUP BY opsreq_group_cycle_name
@@ -94,7 +94,7 @@ if ( (! $args["send"]) || (! $args["cy"])  ) {
 
     $query="
         SELECT *
-            FROM  
+            FROM
             ".$event_tools_db_prefix."eventtools_opsession_name
             ".$where." ORDER BY show_name
             ;
@@ -103,7 +103,7 @@ if ( (! $args["send"]) || (! $args["cy"])  ) {
     $result=mysql_query($query);
     $num=mysql_numrows($result);
     $i=0;
-    
+
     echo '<h3>Sessions</h3><p>If you select a specific session below, only that owner will get email</p><select name="session" id="session">';
     echo '<option value="(ALL)">(ALL)</option>';
     while ($i < $num) {
@@ -127,7 +127,7 @@ mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
 
 echo "Emailing from cycle ".$cycle."<p>";
 
-if (!($args["session"]==NONE || $args["session"]=="" || $args["session"]=="(ALL)")) {
+if (!($args["session"]==NULL || $args["session"]=="" || $args["session"]=="(ALL)")) {
     $where = "AND ops_id = '".$args["session"]."' ";
 } else {
     $where = "";
@@ -135,7 +135,7 @@ if (!($args["session"]==NONE || $args["session"]=="" || $args["session"]=="(ALL)
 
 $query="
     SELECT *
-    FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments 
+    FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
     LEFT JOIN ".$event_tools_db_prefix."eventtools_layouts
     ON layout_id = ops_layout_id
     LEFT JOIN ".$event_tools_db_prefix."eventtools_opsession_req
@@ -162,10 +162,10 @@ $first = TRUE;
 // get the list of extras
 $queryExtras="
     SELECT *
-        FROM ( 
+        FROM (
         ".$event_tools_db_prefix."eventtools_customer_options
-        ) 
-        ORDER BY customer_option_order 
+        )
+        ORDER BY customer_option_order
         ;
     ";
 //echo $queryExtras;
@@ -177,7 +177,7 @@ while ($i < $num) {
     // accumulate the individual attendee information
     $sessions = $sessions.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname")."\n";
     $sessions = $sessions.'  Email: '.mysql_result($result,$i,"opsreq_person_email");
-        
+
     // accumulate all the customer options that have gotten a Y answer as CSV string
     $options = "";
     $optQuery = options_select_statement()." WHERE ( opsreq_person_email = '".mysql_result($result,$i,"opsreq_person_email")."' ) ;";
@@ -185,7 +185,7 @@ while ($i < $num) {
     $resultOptions = mysql_query($optQuery);
     $numOptions = mysql_numrows($resultOptions);
     if ($numOptions > 1) echo "Didn't expect more than one match";
-    
+
     $j = 0;
     $first = True;
     while ($j < $numExtras) {
@@ -194,7 +194,7 @@ while ($i < $num) {
                 $options = $options."  Options Selected: ";
             } else {
                 $options = $options.", ";
-            } 
+            }
             $first = False;
             $options = $options." ".mysql_result($resultExtras,$j,"customer_option_session_report_name");
         }
@@ -207,35 +207,35 @@ while ($i < $num) {
 
     if ($options != "") $sessions = $sessions."\n".$options;
     $sessions = $sessions."\n";
-    
+
     if ( ($i == $num-1) || ($lastmajorkey != mysql_result($result,$i+1,"show_name").mysql_result($result,$i+1,"start_date")) ) {
         if ($i < $num-1) {
             $lastmajorkey = mysql_result($result,$i+1,"show_name").mysql_result($result,$i+1,"start_date");
         }
-    
+
         if ($testto=='$')
             $to = mysql_result($result,$i,"layout_owner_email");
         else
             $to = $testto;
-        
+
         echo "Sending to ".mysql_result($result,$i,"layout_owner_email").' '.mysql_result($result,$i,"show_name").'('.$to.')<p>';
-        
+
         $subject = "Operating Session Assignments";
-        
+
         $headers = "from: ".$from."\nreply-to: ".$reply."\nbcc: ".$bcc;
-                
+
         $body = $part1."\n\n".
                 daydatetime_from_long_format(mysql_result($result,$i,"start_date"))." session attendees:\n\n".
                 $sessions."\n\n\n";
-        
+
         mail($to,$subject,$body,$headers);
-        
+
         // debug outputs for email
         // echo '<hr>'.$body.'<hr>';
-        
+
         $sessions = "";
     }
-    
+
     $i++;
 }
 
