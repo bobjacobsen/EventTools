@@ -23,10 +23,10 @@ $query="
     SELECT *
     FROM ".$event_tools_db_prefix."eventtools_clinics_with_tags ";
 
-if ($where != NONE)
+if ($where != NULL)
     $query = $query.' WHERE '.$where.' ';
 
-if ($order != NONE)
+if ($order != NULL)
     $query = $query.' ORDER BY '.$order.' ';
 else
     $query = $query.'ORDER BY start_date,  number';
@@ -48,11 +48,11 @@ while ($i < $num) {
 
         list_clinic_xml($result,$i); // from listing.php
     }
-    
+
     $i++;
 }
 
-mysql_close();    
+mysql_close();
 
 echo "</clinics>\n";
 ?>

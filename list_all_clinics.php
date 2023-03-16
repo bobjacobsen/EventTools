@@ -5,11 +5,11 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title><?php require_once('access.php'); echo $event_tools_event_name; ?> Clinic List</title>
 
-    <link href="clinics.css" rel="stylesheet" type="text/css" />    
+    <link href="clinics.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
-<h2><?php require_once('access.php'); echo $event_tools_event_name; ?> Clinic List</h2>  
+<h2><?php require_once('access.php'); echo $event_tools_event_name; ?> Clinic List</h2>
 <a href="index.php">Back to main page</a>
 <?php
 include_once('mysql2i.class.php'); // migration step
@@ -32,10 +32,10 @@ $query="
     SELECT *
     FROM ".$event_tools_db_prefix."eventtools_clinics_with_tags ";
 
-if ($where != NONE)
+if ($where != NULL)
     $query = $query.' WHERE '.$where.' ';
 
-if ($order != NONE)
+if ($order != NULL)
     $query = $query.' ORDER BY '.$order.' ';
 else
     $query = $query.'ORDER BY start_date,  number';
@@ -58,11 +58,11 @@ while ($i < $num) {
         list_clinic($result,$i); // from listing.php
         echo "<p>\n";
     }
-    
+
     $i++;
 }
 
-mysql_close();    
+mysql_close();
 
 ?>
 </body>

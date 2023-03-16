@@ -16,13 +16,13 @@ function format_clinic_cell($result,$i,$width,$num,$url) {
     $name = htmlspecialchars(mysql_result($result,$i,"name"));
     echo "  <td colspan=\"".$width."\" class=\"et-clbl-td-clinic\"><table class=\"et-clbl-sub-table\">\n";
     echo "     <tr class=\"et-clbl-sub-tr1\"><td class=\"et-clbl-sub-td1\"><span class=\"et-clbl-sub-name\">";
-    echo "      <a href=\"".$url.mysql_result($result,$i,"number")."\">".$name."</a>\n";                 
+    echo "      <a href=\"".$url.mysql_result($result,$i,"number")."\">".$name."</a>\n";
     echo "      </span></td></tr>\n";
     echo "     <tr class=\"et-clbl-sub-tr2\"><td class=\"et-clbl-sub-td1\"><span class=\"et-clbl-sub-presenter\">".htmlspecialchars(mysql_result($result,$i,"clinic_presenter"))."</span></td></tr>\n";
     // tags
     echo "     <tr class=\"et-clbl-sub-tr3\"><td class=\"et-clbl-sub-td1\"><span class=\"et-clbl-sub-tags\">";
     echo htmlspecialchars(mysql_result($result,$i,"tag_name"));
-    while ( ($i < $num-1) && 
+    while ( ($i < $num-1) &&
                 (mysql_result($result,$i,"name") == mysql_result($result,$i+1,"name")) &&
                 (mysql_result($result,$i,"start_date") == mysql_result($result,$i+1,"start_date"))
            ) {
@@ -52,7 +52,7 @@ function output_clinic_glue($width) {
 
 function output_clinic_location($result,$rowindexes,$starttimes,$num,$url) {
     $location = $rowindexes[0];
-    
+
     $rows = array();
     $row = array();
     // loop over entries, forming a row of non-overlaps
@@ -76,7 +76,7 @@ function output_clinic_location($result,$rowindexes,$starttimes,$num,$url) {
         $rows[] = $row;
         $row = array();
     }
-    
+
     $first = TRUE;
     foreach ($rows as $r) {
         echo "<tr class=\"et-clbl-tr-\">\n";
@@ -86,7 +86,7 @@ function output_clinic_location($result,$rowindexes,$starttimes,$num,$url) {
             echo "  <th rowspan=\"".count($rows)."\" class=\"et-clbl-th-location\">".htmlspecialchars(mysql_result($result,$location,"location_name"))."</th>\n";
         }
         $first = FALSE;
-        
+
         // put out cells
         $cell = 0;
         foreach ($r as $index) {
@@ -103,27 +103,27 @@ function output_clinic_location($result,$rowindexes,$starttimes,$num,$url) {
         output_clinic_glue(count($starttimes)-$cell);
         echo "</tr>\n";
     }
-    
+
 }
 
 
-function format_clinics_by_loc($url=NONE, $where=NONE) {
+function format_clinics_by_loc($url=NULL, $where=NULL) {
     global $opts, $event_tools_db_prefix, $event_tools_dates, $event_tools_clinics_start_times;
-    
+
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
-    
+
     $dates = $event_tools_dates; // from access.php
     $k = 0;
-    
-    if($where!=NONE) {
+
+    if($where!=NULL) {
         $where = " AND ".$where." ";
     } else {
         $where ="";
     }
-    
-    while ($k < count($dates)) { 
-        
+
+    while ($k < count($dates)) {
+
         // query for start times
         $query="
             SELECT DISTINCT start_date
@@ -134,30 +134,30 @@ function format_clinics_by_loc($url=NONE, $where=NONE) {
             ;
         ";
         //echo $query;
-        
+
         $result=mysql_query($query);
-        
+
         $i = 0;
         $num = mysql_numrows($result);
-    
+
         if ($num==0) {
             $k++;
             continue;
         }
-    
+
         // fixed time slots regardless
         $starttimes = $event_tools_clinics_start_times;
-    
+
         // add dynamic entries
         while ($i < $num) {
             $starttimes[$i] = substr(mysql_result($result,$i,"start_date"), -8, 5);
             $i++;
         }
-    
-        // remove duplicates   
+
+        // remove duplicates
         sort( $starttimes, SORT_STRING);
         $starttimes = array_values(array_unique( $starttimes ));
-                
+
         // now query for clinics
         $query="
             SELECT *
@@ -167,46 +167,46 @@ function format_clinics_by_loc($url=NONE, $where=NONE) {
             ORDER BY location_name, start_date, name, tag_name
             ;
         ";
-        
+
         $result=mysql_query($query);
-        
+
         $i = 0;
         $num = mysql_numrows($result);
-        
+
         if ($num==0) {
             $k++;
             continue;
         }
-        
+
         $lastmajorkey = "";
-            
+
         echo "<h2 class=\"et-clbl-h2\" >".daydate_from_long_format($dates[$k])."</h2>\n";
         echo "<table border=\"1\" class=\"et-clbl-table\">\n";
-        
+
         $j = 0;
         // header row
         echo "<tr class=\"et-clbl-tr-head\"><th class=\"et-clbl-th-corner\">Location</th>";
         while ($j < count($starttimes)) { echo "<th class=\"et-clbl-th-time\">".$starttimes[$j++]."</th>"; }
         echo "</tr>\n";
-        
-        $k++;    
-    
+
+        $k++;
+
         // loop over locations, using SQL query order
         while ($i < $num) {
-        
+
             // search for new location
             if ($lastmajorkey != mysql_result($result,$i,"location_name")) {
                 $lastmajorkey = mysql_result($result,$i,"location_name");
-                
+
                 // gather the elements for this location, this date
                 $rowindexes = array();
-                
+
                 while ($i < $num) {
                     if ($lastmajorkey == mysql_result($result,$i,"location_name")) {
                         $rowindexes[] = $i;
 
                         // skip dups due to tags
-                        while ( ($i < $num-1) && 
+                        while ( ($i < $num-1) &&
                                     (mysql_result($result,$i,"name") == mysql_result($result,$i+1,"name")) &&
                                     (mysql_result($result,$i,"start_date") == mysql_result($result,$i+1,"start_date"))
                                ) {
@@ -222,17 +222,17 @@ function format_clinics_by_loc($url=NONE, $where=NONE) {
             } else {
                 echo "\nerror lining up at i=".$i."\n";
             }
-            
+
         } // end of loop over locations
-        
+
         // done, clean up
-        
+
         echo "</tr>\n";
         echo "</table>\n";
-    
+
     }
-    
-    mysql_close();    
+
+    mysql_close();
 }
 
 ///////////////////////////////////
@@ -241,12 +241,12 @@ function format_misc_cell($result,$i,$width,$num,$url) {
     $name = htmlspecialchars(mysql_result($result,$i,"name"));
     echo "  <td colspan=\"".$width."\" class=\"et-mebl-td-clinic\"><table class=\"et-mebl-sub-table\">\n";
     echo "     <tr class=\"et-mebl-sub-tr1\"><td class=\"et-mebl-sub-td1\"><span class=\"et-mebl-sub-name\">";
-    echo "      <a href=\"".$url.mysql_result($result,$i,"number")."\">".$name."</a>\n";                 
+    echo "      <a href=\"".$url.mysql_result($result,$i,"number")."\">".$name."</a>\n";
     echo "      </span></td></tr>\n";
     // tags
     echo "     <tr class=\"et-mebl-sub-tr3\"><td class=\"et-mebl-sub-td1\"><span class=\"et-mebl-sub-tags\">";
     echo htmlspecialchars(mysql_result($result,$i,"tag_name"));
-    while ( ($i < $num-1) && 
+    while ( ($i < $num-1) &&
                 (mysql_result($result,$i,"name") == mysql_result($result,$i+1,"name")) &&
                 (mysql_result($result,$i,"start_date") == mysql_result($result,$i+1,"start_date"))
            ) {
@@ -264,7 +264,7 @@ function output_misc_glue($width) {
 
 function output_misc_location($result,$rowindexes,$starttimes,$num,$url) {
     $location = $rowindexes[0];
-    
+
     $rows = array();
     $row = array();
     // loop over entries, forming a row of non-overlaps
@@ -288,7 +288,7 @@ function output_misc_location($result,$rowindexes,$starttimes,$num,$url) {
         $rows[] = $row;
         $row = array();
     }
-    
+
     $first = TRUE;
     foreach ($rows as $r) {
         echo "<tr class=\"et-mebl-tr-\">\n";
@@ -298,7 +298,7 @@ function output_misc_location($result,$rowindexes,$starttimes,$num,$url) {
             echo "  <th rowspan=\"".count($rows)."\" class=\"et-mebl-th-location\">".htmlspecialchars(mysql_result($result,$location,"location_name"))."</th>\n";
         }
         $first = FALSE;
-        
+
         // put out cells
         $cell = 0;
         foreach ($r as $index) {
@@ -315,26 +315,26 @@ function output_misc_location($result,$rowindexes,$starttimes,$num,$url) {
         output_misc_glue(count($starttimes)-$cell);
         echo "</tr>\n";
     }
-    
+
 }
 
-function format_misc_events_by_loc($url=NONE, $where=NONE) {
+function format_misc_events_by_loc($url=NULL, $where=NULL) {
     global $opts, $event_tools_db_prefix, $event_tools_dates, $event_tools_misc_event_start_times;
-    
+
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
-    
+
     $dates = $event_tools_dates; // from access.php
     $k = 0;
-    
-    if($where!=NONE) {
+
+    if($where!=NULL) {
         $where = " AND ".$where." ";
     } else {
         $where ="";
     }
-    
-    while ($k < count($dates)) { 
-        
+
+    while ($k < count($dates)) {
+
         // query for start times
         $query="
             SELECT DISTINCT start_date
@@ -345,30 +345,30 @@ function format_misc_events_by_loc($url=NONE, $where=NONE) {
             ;
         ";
         //echo $query;
-        
+
         $result=mysql_query($query);
-        
+
         $i = 0;
         $num = mysql_numrows($result);
-    
+
         if ($num==0) {
             $k++;
             continue;
         }
-    
+
         // fixed time slots regardless
         $starttimes = $event_tools_misc_event_start_times; // access.php
-    
+
         // add dynamic entries
         while ($i < $num) {
             $starttimes[$i] = substr(mysql_result($result,$i,"start_date"), -8, 5);
             $i++;
         }
-    
-        // remove duplicates   
+
+        // remove duplicates
         sort( $starttimes, SORT_STRING);
         $starttimes = array_values(array_unique( $starttimes ));
-                
+
         // now query for misc events
         $query="
             SELECT *
@@ -378,46 +378,46 @@ function format_misc_events_by_loc($url=NONE, $where=NONE) {
             ORDER BY location_name, start_date, name, tag_name
             ;
         ";
-        
+
         $result=mysql_query($query);
-        
+
         $i = 0;
         $num = mysql_numrows($result);
-        
+
         if ($num==0) {
             $k++;
             continue;
         }
-        
+
         $lastmajorkey = "";
-            
+
         echo "<h2 class=\"et-mebl-h2\" >".daydate_from_long_format($dates[$k])."</h2>\n";
         echo "<table border=\"1\" class=\"et-mebl-table\">\n";
-        
+
         $j = 0;
         // header row
         echo "<tr class=\"et-mebl-tr-head\"><th class=\"et-mebl-th-corner\">Location</th>";
         while ($j < count($starttimes)) { echo "<th class=\"et-mebl-th-time\">".$starttimes[$j++]."</th>"; }
         echo "</tr>\n";
-        
-        $k++;    
-    
+
+        $k++;
+
         // loop over locations, using SQL query order
         while ($i < $num) {
-        
+
             // search for new location
             if ($lastmajorkey != mysql_result($result,$i,"location_name")) {
                 $lastmajorkey = mysql_result($result,$i,"location_name");
-                
+
                 // gather the elements for this location, this date
                 $rowindexes = array();
-                
+
                 while ($i < $num) {
                     if ($lastmajorkey == mysql_result($result,$i,"location_name")) {
                         $rowindexes[] = $i;
 
                         // skip dups due to tags
-                        while ( ($i < $num-1) && 
+                        while ( ($i < $num-1) &&
                                     (mysql_result($result,$i,"name") == mysql_result($result,$i+1,"name")) &&
                                     (mysql_result($result,$i,"start_date") == mysql_result($result,$i+1,"start_date"))
                                ) {
@@ -433,17 +433,17 @@ function format_misc_events_by_loc($url=NONE, $where=NONE) {
             } else {
                 echo "\nerror lining up at i=".$i."\n";
             }
-            
+
         } // end of loop over locations
-        
+
         // done, clean up
-        
+
         echo "</tr>\n";
         echo "</table>\n";
-    
+
     }
-    
-    mysql_close();    
+
+    mysql_close();
 }
 
 
