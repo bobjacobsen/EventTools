@@ -5,11 +5,11 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title><?php require_once('access.php'); echo $event_tools_event_name; ?> Event</title>
 
-    <link href="miscevent.css" rel="stylesheet" type="text/css" />    
+    <link href="miscevent.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
-<h2><?php require_once('access.php'); echo $event_tools_event_name; ?> Event</h2>  
+<h2><?php require_once('access.php'); echo $event_tools_event_name; ?> Event</h2>
 <a href="index.php">Back to main page</a>
 <p>
 
@@ -21,7 +21,7 @@ require_once('parsers.php');
 
 $where = parse_misc_event_query();
 
-format_all_misc_events_as_3table($where,NONE);
+format_all_misc_events_as_3table($where,NULL);
 
 ?>
 </body>

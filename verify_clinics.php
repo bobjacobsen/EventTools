@@ -8,7 +8,7 @@ require_once('mail_utilities.php');
 
 // confirm_clinics.php and verify_clinics.php work together.
 // confirm_clinics present the web page with info for the clinician to confirm
-// verify_clinics sends the emails that point to 
+// verify_clinics sends the emails that point to
 
 // Over-ride globals for on visibility here
 $event_tools_replace_on_data_warn = TRUE;  // TRUE replace with text, FALSE leave as is
@@ -22,7 +22,7 @@ mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
 
 $query="
     SELECT *
-    FROM ".$event_tools_db_prefix."eventtools_clinics_with_tags 
+    FROM ".$event_tools_db_prefix."eventtools_clinics_with_tags
     WHERE clinic_presenter_email != ''
     ";
 
@@ -30,7 +30,7 @@ $query="
 //    WHERE clinic_presenter_email != ''
 //    GROUP BY clinic_presenter_email
 
-if ($where != NONE)
+if ($where != NULL)
     $query = $query.' WHERE '.$where.' ';
 
 $query = $query."
@@ -66,21 +66,21 @@ while ($i < $num) {
         $lastmajorkey = mysql_result($result,$i,"id");
 
         echo "<br>sending to ".mysql_result($result,$i,"clinic_presenter_email").' id '.mysql_result($result,$i,"id").' key '.(1445+12*mysql_result($result,$i,"id"));
-    
+
         $to = mysql_result($result,$i,"clinic_presenter_email");
         $subject = "X2011 Clinic Confirmation";
-        
+
         $url = "http://x2011west.org/eventtools/confirm_clinics.php?key=".(1445+12*mysql_result($result,$i,"id"));
-        
+
         $body = $part1.$url.$part2;
-        
+
         sendNotificationEmail($to, $subject, $body);
     }
-    
+
     $i++;
 }
 
-mysql_close();    
+mysql_close();
 
 echo "</clinics>\n";
 ?>

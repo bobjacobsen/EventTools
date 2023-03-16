@@ -9,7 +9,7 @@
 
 </head>
 <body>
-<h2><?php require_once('access.php'); echo $event_tools_event_name; ?> Layout Tour</h2>  
+<h2><?php require_once('access.php'); echo $event_tools_event_name; ?> Layout Tour</h2>
 <a href="index.php">Back to main page</a>
 <p>
 
@@ -21,7 +21,7 @@ require_once('parsers.php');
 
 $where = parse_layout_tour_query();
 
-format_all_layout_tours_as_8table($where,NONE,"format_all_layouts.php#");
+format_all_layout_tours_as_8table($where,NULL,"format_all_layouts.php#");
 
 ?>
 </body>
