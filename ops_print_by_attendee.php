@@ -28,7 +28,7 @@ require_once('utilities.php');
 parse_str($_SERVER["QUERY_STRING"], $args);
 
 // first, see if there's a "?cy=" or "?start=" in the arguments
-if (! ($args["cy"]) ) {
+if (! array_key_exists("cy",$args) ) {
     echo '<h1>'.$event_tools_event_name.' Op Session Roster</h1>';
     echo '<a href="index.php">Back to main page</a><p/>';
     echo '<form method="get" action="ops_print_by_attendee.php">
@@ -37,6 +37,28 @@ if (! ($args["cy"]) ) {
         <button type="submit">Start</button>
         </form>
     ';
+
+    // display existing cycles & number of assignments)
+    echo '<h3>Existing cycles</h3><table><tr><th>Cycle Name</th><th>N Assigned</th></tr>';
+    global $opts, $event_tools_db_prefix, $event_tools_href_add_on;
+    mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
+    @mysql_select_db($opts['db']) or die( "Unable to select database");
+
+    $query="
+        SELECT opsreq_group_cycle_name, SUM(status)
+        FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
+        WHERE status = 1
+        GROUP BY opsreq_group_cycle_name
+        ORDER BY  opsreq_group_cycle_name
+        ;
+    ";
+    $result=mysql_query($query);
+    $num = mysql_numrows($result);
+    for ($i = 0; $i < $num; $i++) {
+        echo '<tr><td><a href="?cy='.mysql_result($result,$i,"opsreq_group_cycle_name").'">'.mysql_result($result,$i,"opsreq_group_cycle_name").'</a></td><td>'.mysql_result($result,$i,1).'</td></tr>';
+    }
+    echo '</table>';
+
     return;
 }
 
