@@ -45,7 +45,7 @@ function create_request_entries($max_pri, $where=NULL, $order=NULL ) {
         // if by layout, don't show duplicates
         if ( (! $event_tools_ops_session_assign_by_layout ) || ($row["show_name"] != $last_show_name)) {
 
-            echo '<tr><td><select name=v_'.$row[ops_id].'>';
+            echo '<tr><td><select name=v_'.$row["ops_id"].'>';
             $k = 1;
             echo '<option value=""></option>';
             while ($k <= $max_pri) {
