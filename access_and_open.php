@@ -22,7 +22,7 @@ require_once('access.php');
 global $opts, $event_tools_db_prefix;
 // Open the database.
 // Stored handle to $opts[’dbh’] so that open version is used by phpMyEdit
-$opts["dbh"] = mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
+$opts['dbh'] = mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
 @mysql_select_db($opts['db']) or die( "Unable to select database");
 
 // Set a local mode to handle migration of '' as a decimal value
