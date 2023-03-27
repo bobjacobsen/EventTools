@@ -135,7 +135,7 @@ echo '<table border="1"><tr>';
     }
 
 echo '<tr><th></th><th></th>';
-foreach ($colarray as $x) { echo '<th>'.$x.'</th>'; }
+foreach ($colarray as $x) { echo '<th>'.$x.'<br>Name</th><th>'.$x.'<br>Layout</th>'; }
 echo '</tr>';
 
 $title = mysql_result($result,0,"customers_firstname").' '.mysql_result($result,0,"customers_lastname");
@@ -152,7 +152,7 @@ for ($i=0; $i < $num; $i++) {
         $title = mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname");
         // first end old session
         while ( $colnum < count($colarray) ) {
-            echo '<td></td>';
+            echo '<td></td><td></td>';
             $colnum++;
         }
 
@@ -166,11 +166,20 @@ for ($i=0; $i < $num; $i++) {
     if (1 == mysql_result($result,$i,"status")) {
         // skip to here
         while ($colarray[$colnum] != substr(mysql_result($result,$i,"start_date"), 0, 10) && $colnum < 5) {
-            echo '<td></td>';
+            echo '<td></td><td></td>';
             $colnum++;
         }
         echo '<td class="attendee">';
-        echo mysql_result($result,$i,"show_name");
+        echo mysql_result($result,$i,"layout_owner_lastname1");
+        if (mysql_result($result,$i,"layout_owner_lastname2") !="") {
+            echo " / ".mysql_result($result,$i,"layout_owner_lastname2");
+        }
+        echo '</td>';
+        echo '<td class="attendee">';
+        echo mysql_result($result,$i,"layout_name1");
+        if (mysql_result($result,$i,"layout_name2") !="") {
+            echo " / ".mysql_result($result,$i,"layout_name2");
+        }
         echo '</td>';
         $colnum++;
     }
