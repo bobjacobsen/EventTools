@@ -62,7 +62,10 @@ if (! ($args["cy"]) ) {
 }
 
 $cycle = $args["cy"];
-$date = $args["date"];
+$date = NULL;
+if (array_key_exists("date", $args)) {
+    $date = $args["date"];
+}
 $where = "";
 if ($date != NULL && $date != "") {
     if (strlen($date) == 1) $date = '0'.$date;
@@ -80,7 +83,7 @@ $query="
     SELECT  *
     FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
     WHERE opsreq_group_cycle_name = '".$cycle."'
-        AND show_name != \"\" AND start_date != \"\" ".$where."
+        AND show_name != \"\" ".$where."
     ORDER BY start_date, show_name, customers_lastname, customers_firstname
     ;
 ";
@@ -94,8 +97,8 @@ $date = date_from_long_format(mysql_result($result,0,"start_date"));
 $count = 0+mysql_result($result,0,"spaces");
 $first = TRUE;
 
-echo '<div class="session">'.mysql_result($result,$i,"show_name").' <div>';
-echo '<span class="date">'.mysql_result($result,$i,"start_date").' <span>';
+echo '<div class="session">'.mysql_result($result,0,"show_name").' <div>';
+echo '<span class="date">'.mysql_result($result,0,"start_date").' <span>';
 echo '<table><tr><th></th><th class="carpool">Seats for<br/>carpool?</th><th></th></tr>';
 $colnum = 1;
 

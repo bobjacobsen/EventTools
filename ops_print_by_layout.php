@@ -63,7 +63,10 @@ if (! ($args["cy"]) ) {
 }
 
 $cycle = $args["cy"];
-$date = $args["date"];
+$date = NULL;
+if (array_key_exists("date", $args)) {
+    $date = $args["date"];
+}
 $where = "";
 if ($date != NULL && $date != "") {
     if (strlen($date) == 1) $date = '0'.$date;
@@ -84,7 +87,7 @@ $query="
     LEFT JOIN ".$event_tools_db_prefix."eventtools_opsession_req
     USING ( opsreq_person_email )
     WHERE opsreq_group_cycle_name = '".$cycle."'
-        AND show_name != \"\" AND start_date != \"\" ".$where."
+        AND show_name != \"\" ".$where."
     ORDER BY start_date, show_name, customers_lastname, customers_firstname
     ;
 ";
@@ -99,7 +102,7 @@ $count = 0+mysql_result($result,0,"spaces");
 $first = TRUE;
 
 echo '<table border="1"><tr>';
-echo '<th>'.mysql_result($result,$i,"show_name").'<br>'.mysql_result($result,$i,"start_date").' </th>';
+echo '<th>'.mysql_result($result,0,"show_name").'<br>'.mysql_result($result,0,"start_date").' </th>';
 $colnum = 1;
 
 for ($i=0; $i < $num; $i++) {

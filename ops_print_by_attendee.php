@@ -63,7 +63,10 @@ if (! array_key_exists("cy",$args) ) {
 }
 
 $cycle = $args["cy"];
-$date = $args["date"];
+$date = NULL;
+if (array_key_exists("date", $args)) {
+    $date = $args["date"];
+}
 $where = "";
 if ($date != NULL && $date != "") {
     if (strlen($date) == 1) $date = '0'.$date;
@@ -76,18 +79,18 @@ global $opts, $event_tools_db_prefix, $event_tools_href_add_on, $cycle;
 mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
 @mysql_select_db($opts['db']) or die( "Unable to select database");
 
-
 $query="
     SELECT  *
     FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
     WHERE opsreq_group_cycle_name = '".$cycle."'
-        AND show_name != \"\" AND start_date != \"\" ".$where."
+        AND show_name != \"\" ".$where."
     ORDER BY customers_lastname, customers_firstname, start_date, show_name
     ;
 ";
 
-//echo $query;
+// echo "\n".$query."\n";
 $result=mysql_query($query);
+
 $num = mysql_numrows($result);
 
 echo '<table border="1"><tr>';
@@ -97,7 +100,7 @@ echo '<table border="1"><tr>';
     $first_string =  "2200-01-01 00:00:00";
     $last_string =  "1999-01-01 00:00:00";
     // default is nothing before this month, specify argument if you want to see the past
-    if ($start_date_limit == NULL) {
+    if (!isset($start_date_limit) || $start_date_limit == NULL) {
         $now = new DateTime();
         $start_date_limit = $now->format("Y-m")."-01 00:00:00";
         //echo '['.$start_date_limit.']';
@@ -138,8 +141,8 @@ echo '</tr>';
 $title = mysql_result($result,0,"customers_firstname").' '.mysql_result($result,0,"customers_lastname");
 $first = TRUE;
 
-echo '<td>'.mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").' </td>';
-echo '<td>'.mysql_result($result,$i,"entry_city").', '.mysql_result($result,$i,"entry_state").' </td>';
+echo '<td>'.mysql_result($result,0,"customers_firstname").' '.mysql_result($result,0,"customers_lastname").' </td>';
+echo '<td>'.mysql_result($result,0,"entry_city").', '.mysql_result($result,0,"entry_state").' </td>';
 
 $colnum = 0;
 
