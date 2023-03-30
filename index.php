@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<?php 
-    require_once('access.php'); 
+<?php
+    require_once('access.php');
 
 echo "<html>
 <head>
@@ -55,7 +55,7 @@ if ($event_tools_option_op_sessions)    echo '<td><a href="edit_ops_all.php">Ent
 
 echo '</tr><tr>
     <th>Review Content</th>';
-    
+
 if ($event_tools_option_general_tours ) echo '<td><a href="list_all_general_tours.php">List</a></td>';
 if ($event_tools_option_layout_tours)   echo '<td><a href="list_all_layout_tours.php">List</a></td>';
 if ($event_tools_option_other_events)   echo '<td><a href="list_all_misc_events.php">List</a></td>';
@@ -65,7 +65,7 @@ if ($event_tools_option_op_sessions)    echo '<td></td>';
 
 echo '</tr><tr>
     <th>Index Example</th>';
-    
+
 if ($event_tools_option_general_tours ) echo '<td><a href="index_general_tours.php">Index</a></td>';
 if ($event_tools_option_layout_tours)   echo '<td><a href="index_layout_tours.php">Index</a></td>';
 if ($event_tools_option_other_events)   echo '<td><a href="index_misc_events.php">Index</a></td>';
@@ -75,7 +75,7 @@ if ($event_tools_option_op_sessions)    echo '<td><a href="index_ops.php">Sessio
 
 echo '</tr><tr>
     <th>Format Example</th>';
-    
+
 if ($event_tools_option_general_tours ) echo '<td><a href="format_all_general_tours.php">Formatted View</a></td>';
 if ($event_tools_option_layout_tours)   echo '<td><a href="format_all_layout_tours.php">Formatted View</a></td>';
 if ($event_tools_option_other_events)   echo '<td><a href="format_all_misc_events.php">Formatted View</td>';
@@ -123,10 +123,10 @@ if ($event_tools_option_clinics)        echo '<td><a href="format_clinics_by_loc
 if ($event_tools_option_op_sessions)    echo '<td><a href="ops_req_summary.php">Requests Summary<a/><p>
     <a href="format_all_ops.php">Operating Layout Table</a><br/>
     <a href="format_all_ops_address.php">Operating Layout Addresses</a><p>
-    <a href="format_ops_by_day.php?where=status_code%3E40">Operating Sessions vs Day</a><p> 
+    <a href="format_ops_by_day.php?where=status_code%3E50">Operating Sessions vs Day</a><p>
     <hr>
-    <a href="ops_assign_group.php">Start Assignments with Grouping</a>  <p> 
-    The following display a given assignment cycle.<p> 
+    <a href="ops_assign_group.php">Start Assignments with Grouping</a>  <p>
+    The following display a given assignment cycle.<p>
     <a href="ops_print_by_layout.php">Session Rosters</a>    <br>
     <a href="ops_print_summary.php">Printable Session Rosters</a>    <p>
     <a href="ops_print_by_attendee.php">Assigned Sessions by Attendee</a><p>
@@ -134,7 +134,7 @@ if ($event_tools_option_op_sessions)    echo '<td><a href="ops_req_summary.php">
     <a href="ops_assign_email_owner.php">Email Roster to Layout Owners</a>
 
     </td>';
-    
+
 echo '</td>
 
 </table>
@@ -146,13 +146,13 @@ if (!$event_tools_option_general_tours ||
     !$event_tools_option_layouts ||
     !$event_tools_option_clinics ||
     !$event_tools_option_op_sessions ) {
-    
-    if (!$event_tools_option_general_tours) echo "General Tours feature is disabled.<br/>";    
-    if (!$event_tools_option_layout_tours) echo "Layout Tours feature is disabled.<br/>";    
-    if (!$event_tools_option_other_events) echo "Other Events feature is disabled.<br/>";    
-    if (!$event_tools_option_layouts) echo "Layouts feature is disabled.<br/>";    
-    if (!$event_tools_option_clinics) echo "Clinics feature is disabled.<br/>";    
-    if (!$event_tools_option_op_sessions) echo "Op Session feature is disabled.<br/>";    
+
+    if (!$event_tools_option_general_tours) echo "General Tours feature is disabled.<br/>";
+    if (!$event_tools_option_layout_tours) echo "Layout Tours feature is disabled.<br/>";
+    if (!$event_tools_option_other_events) echo "Other Events feature is disabled.<br/>";
+    if (!$event_tools_option_layouts) echo "Layouts feature is disabled.<br/>";
+    if (!$event_tools_option_clinics) echo "Clinics feature is disabled.<br/>";
+    if (!$event_tools_option_op_sessions) echo "Op Session feature is disabled.<br/>";
 }
 
 echo '<h2 id="people">People</h2>
@@ -314,10 +314,10 @@ if ( $event_tools_option_general_tours ||
        $event_tools_option_layout_tours ||
        $event_tools_option_other_events ||
        $event_tools_option_clinics ) {
-    
+
     echo '
         <h2 id="program">Program and Calendar</h2>
-        The following links provide formatted information for inclusion in the 
+        The following links provide formatted information for inclusion in the
         printed program.
         <table border="1">
         <tr><th>Program Printing</th>
@@ -349,36 +349,36 @@ if ( $event_tools_option_general_tours ||
 
 <h2 id="information">Information</h2>
 For more information on using EventTools, please see the
-most recent draft of the 
+most recent draft of the
 <a href="EventTools.pdf">EventTools User Guide</a>.
 <br>
-For information on using EventTools at an operating meet, please see the 
-most recent draft of the 
-<a href="EventToolsOps.pdf">EventTools Op Sessions Guide</a>. 
-The 
+For information on using EventTools at an operating meet, please see the
+most recent draft of the
+<a href="EventToolsOps.pdf">EventTools Op Sessions Guide</a>.
+The
 <a href="EventToolsOpsQuickStart.pdf">Quick Start guide</a>
 will walk you through entering the initial data.
 <br>
-For EventTools installation and configuration information, please see the 
-most recent draft of the 
+For EventTools installation and configuration information, please see the
+most recent draft of the
 <a href="EventToolsAdmin.pdf">EventTools Administration Guide</a>.
 <br>
-For information on using Cascading Style Sheets (CSS) to 
-configure how EventTools information is displayed on your web pages, 
+For information on using Cascading Style Sheets (CSS) to
+configure how EventTools information is displayed on your web pages,
 please see the most recent draft of the
 <a href="EventToolsCSS.pdf">EventTools CSS Guide</a>.
 <br>
 For example query code, see the <a href="samples.php">samples page</a>.
 
 <p>
-There are sample pages for 
+There are sample pages for
 <a href="sample_ops_prereg_form.php">preregistration</a>
 and
 <a href="sample_ops_reg_form.php">registration and requesting op sessions</a>.
 <p>
-EventTools was written and is maintained by Bob Jacobsen, 
+EventTools was written and is maintained by Bob Jacobsen,
 please contact him directly if you want more information on using EventTools.
-This is the 
+This is the
 <a href="<?php echo 'http://'.$_SERVER['SERVER_NAME'].'/eventtools/index.php';  ?>">
 <?php echo $event_tools_event_name;  ?> EventTools index page</a>
 running on PHP <?php echo phpversion()  ?>
