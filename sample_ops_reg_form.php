@@ -2,11 +2,11 @@
 
 // Note that the sample code includes PHP 'require' and 'require_once'
 // statements that reference files in the EventTools directory.  If you
-// move the sample file to another directory, you'll have to update the file 
+// move the sample file to another directory, you'll have to update the file
 // paths in these statements.
 
-	require_once('access.php'); 
-	require('utilities.php'); 
+	require_once('access.php');
+	require('utilities.php');
 
 	$message = "";
 
@@ -15,9 +15,9 @@
 	    showform( "" );
 	    return;
 	}
-	
+
 	//' check for not enough completed
-    if ( !formcomplete() ) { 
+    if ( !formcomplete() ) {
         $message = "<span style=\"color:red;font-weight:bold\">";
         $message .= "Please complete all values and submit again; your registration is not complete.";
         $message .= "</span>";
@@ -25,7 +25,7 @@
         return;
     }
 
-	$now = time();	
+	$now = time();
 
 	// add to local log file.
 	$datastring = get_request_args(date("m/d/y g:i a T",$now),";")."\r\n";
@@ -39,7 +39,7 @@
 
     // If needed, change the email address on the next line
 	$to = $event_tools_registrar_email_address;
-	
+
 	$subject = $event_tools_event_name." Registration FYI ".$_REQUEST["fname"]." ".$_REQUEST["lname"];
 	$headers = sprintf("From:  ".$event_tools_event_name." Registration Form <".$to.">\r\n");
 	$message = sprintf("%s %s has registered\r\n\r\n", $_REQUEST["fname"], $_REQUEST["lname"]);
@@ -50,7 +50,7 @@
 
     // uncomment next line to send email
 	//mail($to, $subject, $message, $headers);
-	
+
 	// process into database
 	require( 'ops_incremental_request.php');
 
@@ -74,7 +74,7 @@ function formcomplete() {
 	$musthave[] = "city";
 	$musthave[] = "state";
 	$musthave[] = "zip";
-	
+
 	foreach ( $musthave as $i ) {
 		if ( !isset( $_REQUEST[ $i ] ) || ($_REQUEST[ $i ] == "") )
 			return(0);
@@ -85,7 +85,7 @@ function formcomplete() {
 // show the HTML form
 function showform( $message ) {
     global $event_tools_event_name;
-    
+
 	 $page = <<<END
     <html>
     <body>
@@ -93,7 +93,7 @@ END;
     print $page.$message;
 
 	 $page = <<<END
-	<h2>Register for 
+	<h2>Register for
 END;
 	print $page.$event_tools_event_name;
 
@@ -119,7 +119,7 @@ END;
     global $event_tools_emergency_contact_info;
     if ($event_tools_emergency_contact_info) {
          $page =  <<<END
-                <tr><td>Emergency contact</td><td><input type=text size=15 name=econtact></td></tr>
+                <tr><td>Emergency contact</td><td><input type=text size=25 name=econtact></td></tr>
                 <tr><td>Emergency phone</td><td><input type=text size=15 name=ephone></td></tr>
 END;
         print $page;
@@ -144,7 +144,7 @@ END;
 $page =  <<<END
 
 		</table>
-		
+
 	</td>
 	</tr>
 	<tr><td colspan=3><br>Comments<div style="text-align:center"><textarea name="comments" rows=10 cols=60></textarea></div><br></td></tr>
@@ -155,7 +155,7 @@ $page =  <<<END
 	</form>
     </body>
     </html>
-    
+
 END;
 	print $page;
 }
