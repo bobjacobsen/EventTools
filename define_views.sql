@@ -8,14 +8,14 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 -- --------------------------------------------------------
 
--- 
+--
 -- You can do a bulk replace of 'prefix_'
 -- to convert to your local prefix.
 --
--- This defines the MySQL views across the 
+-- This defines the MySQL views across the
 -- the tables defined by defined_db.sql
 --
--- It should be executed after any changes to the 
+-- It should be executed after any changes to the
 -- table structure.
 --
 
@@ -28,15 +28,15 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 -- Layout tours, plus any contained layouts
 CREATE OR REPLACE VIEW prefix_eventtools_layout_tour_with_layouts
-AS SELECT prefix_eventtools_layout_tours.*, prefix_eventtools_layouts.*, 
-                prefix_eventtools_layout_tour_links.layout_tour_link_order, prefix_eventtools_event_status_values.*, 
+AS SELECT prefix_eventtools_layout_tours.*, prefix_eventtools_layouts.*,
+                prefix_eventtools_layout_tour_links.layout_tour_link_order, prefix_eventtools_event_status_values.*,
                 prefix_eventtools_accessibility_codes.*
         FROM ((
                 (prefix_eventtools_layout_tours
                     LEFT JOIN prefix_eventtools_layout_tour_links
                     ON prefix_eventtools_layout_tour_links.tour_number = prefix_eventtools_layout_tours.id
-                )  
-                    LEFT JOIN prefix_eventtools_layouts 
+                )
+                    LEFT JOIN prefix_eventtools_layouts
                     ON prefix_eventtools_layouts.layout_id = prefix_eventtools_layout_tour_links.layout_id
                 )
                     LEFT JOIN prefix_eventtools_event_status_values
@@ -44,17 +44,17 @@ AS SELECT prefix_eventtools_layout_tours.*, prefix_eventtools_layouts.*,
                 )
                     LEFT JOIN prefix_eventtools_accessibility_codes
                     ON layout_accessibility = accessibility_code;
-                
+
 
 -- Layouts, plus any tours they're on, and accessibility
 CREATE OR REPLACE VIEW prefix_eventtools_layout_with_layout_tours
 AS  SELECT  prefix_eventtools_layout_tours.*,
             prefix_eventtools_layouts.*, prefix_eventtools_accessibility_codes.*, prefix_eventtools_event_status_values.*
     FROM  ((
-            (prefix_eventtools_layouts 
+            (prefix_eventtools_layouts
                 LEFT JOIN prefix_eventtools_layout_tour_links
                 ON prefix_eventtools_layouts.layout_id = prefix_eventtools_layout_tour_links.layout_id
-            )  
+            )
                 LEFT JOIN prefix_eventtools_layout_tours
                 ON prefix_eventtools_layout_tour_links.tour_number = prefix_eventtools_layout_tours.id
             )
@@ -63,7 +63,7 @@ AS  SELECT  prefix_eventtools_layout_tours.*,
             )
                 LEFT JOIN prefix_eventtools_event_status_values
                 ON prefix_eventtools_layouts.layout_status_code = prefix_eventtools_event_status_values.event_status_code;
-            
+
 -- General tours, plus any contained status
 CREATE OR REPLACE VIEW prefix_eventtools_general_tour_with_status
 AS SELECT prefix_eventtools_general_tours.*, prefix_eventtools_event_status_values.*
@@ -113,7 +113,7 @@ AS SELECT * FROM prefix_eventtools_opsession LEFT JOIN prefix_eventtools_layouts
 
 -- Op Session name for use in requests
 CREATE OR REPLACE VIEW prefix_eventtools_opsession_name
-AS SELECT ops_id, start_date, presenting_time, spaces, distance, travel_time, location, ops_layout_id, status_code, 
+AS SELECT ops_id, start_date, presenting_time, spaces, distance, travel_time, location, ops_layout_id, status_code,
             IF((ops_layout_id2!=0),CONCAT(l1.layout_owner_lastname,' / ',l2.layout_owner_lastname),CONCAT(l1.layout_owner_lastname,' ',l1.layout_name)) AS show_name,
             l1.layout_owner_lastname AS layout_owner_lastname1, l2.layout_owner_lastname AS layout_owner_lastname2,
             l1.layout_owner_firstname AS layout_owner_firstname1, l2.layout_owner_firstname AS layout_owner_firstname2,
@@ -128,9 +128,10 @@ AS SELECT ops_id, start_date, presenting_time, spaces, distance, travel_time, lo
         LEFT JOIN prefix_eventtools_layouts l2
         ON prefix_eventtools_opsession.ops_layout_id2 = l2.layout_id;
 
+-- Not UPDATABLE
 CREATE OR REPLACE VIEW prefix_eventtools_ops_group_names
 AS SELECT customers_firstname, customers_lastname, customers_create_date, customers_updated_date,
-            opsreq_person_email, opsreq_priority, prefix_eventtools_opsreq_group.opsreq_group_id, 
+            opsreq_person_email, opsreq_priority, prefix_eventtools_opsreq_group.opsreq_group_id,
             opsreq_group_cycle_name, opsreq_comment, prefix_eventtools_opsreq_group_req_link.opsreq_id,
             opsreq_group_req_link_id, entry_city, entry_state, opsreq_number, opsreq_any
         FROM (((
@@ -147,10 +148,11 @@ AS SELECT customers_firstname, customers_lastname, customers_create_date, custom
 -- op session request assignment with session name info
 CREATE OR REPLACE VIEW prefix_eventtools_ops_group_session_assignments
 AS SELECT customers_firstname, customers_lastname, customers_create_date, customers_updated_date,
-            opsreq_person_email, opsreq_priority, prefix_eventtools_ops_group_names.opsreq_group_id, 
+            opsreq_person_email, opsreq_priority, prefix_eventtools_ops_group_names.opsreq_group_id,
             opsreq_group_cycle_name, opsreq_comment, prefix_eventtools_ops_group_names.opsreq_id, opsreq_req_status_id, status,
             prefix_eventtools_ops_group_names.opsreq_group_req_link_id, req_num, prefix_eventtools_opsreq_req_status.ops_id,
-            start_date, spaces, show_name, entry_city, entry_state, opsreq_number, opsreq_any, ops_layout_id 
+            start_date, spaces, show_name, entry_city, entry_state, opsreq_number, opsreq_any, ops_layout_id,
+            layout_owner_lastname1, layout_owner_lastname2, layout_name1, layout_name2
     FROM (prefix_eventtools_ops_group_names
         LEFT JOIN prefix_eventtools_opsreq_req_status
         ON prefix_eventtools_ops_group_names.opsreq_group_req_link_id = prefix_eventtools_opsreq_req_status.opsreq_group_req_link_id
@@ -158,19 +160,33 @@ AS SELECT customers_firstname, customers_lastname, customers_create_date, custom
         ON prefix_eventtools_opsreq_req_status.ops_id = prefix_eventtools_opsession_name.ops_id
     ;
 
+-- CREATE OR REPLACE VIEW prefix_eventtools_opsession_req_with_user_info
+-- AS SELECT prefix_eventtools_opsession_req.*,  prefix_customers.*,
+--             prefix_address_book.entry_street_address, prefix_address_book.entry_city, prefix_address_book.entry_state, prefix_address_book.entry_postcode
+--         FROM (
+--         prefix_eventtools_opsession_req LEFT JOIN prefix_customers
+--         ON prefix_eventtools_opsession_req.opsreq_person_email = prefix_customers.customers_email_address AND
+--            prefix_eventtools_opsession_req.opsreq_person_password = prefix_customers.customers_password
+--         ) LEFT JOIN prefix_address_book
+--         ON prefix_customers.customers_id = prefix_address_book.customers_id
+--         ;
+
+-- customer name and address with request values - the JOINS
+-- below are to make it UPDATEABLE; this wasn't when those were LEFT JOINs
 CREATE OR REPLACE VIEW prefix_eventtools_opsession_req_with_user_info
-AS SELECT prefix_eventtools_opsession_req.*,  prefix_customers.*, 
+AS SELECT prefix_eventtools_opsession_req.*,  prefix_customers.*,
             prefix_address_book.entry_street_address, prefix_address_book.entry_city, prefix_address_book.entry_state, prefix_address_book.entry_postcode
         FROM (
-        prefix_eventtools_opsession_req LEFT JOIN prefix_customers
+        prefix_eventtools_opsession_req JOIN prefix_customers
         ON prefix_eventtools_opsession_req.opsreq_person_email = prefix_customers.customers_email_address
-        ) LEFT JOIN prefix_address_book
+        ) JOIN prefix_address_book
         ON prefix_customers.customers_id = prefix_address_book.customers_id
         ;
 
--- customer name with option values
+
+-- customer name and address with option values
 CREATE OR REPLACE VIEW prefix_eventtools_customer_cross_options_and_values
-AS SELECT prefix_customers.*, prefix_eventtools_customer_options.*, 
+AS SELECT prefix_customers.*, prefix_eventtools_customer_options.*,
             prefix_eventtools_customer_option_values.customer_option_value_value, prefix_eventtools_customer_option_values.customer_option_value_date,
             prefix_eventtools_customer_option_values.customer_option_value_id
         FROM (
@@ -179,7 +195,6 @@ AS SELECT prefix_customers.*, prefix_eventtools_customer_options.*,
         ) LEFT JOIN prefix_eventtools_customer_options
         ON prefix_eventtools_customer_option_values.customer_option_id = prefix_eventtools_customer_options.customer_option_id
         ;
-
 
 --
 -- Trigger ensures availability is always available for view
