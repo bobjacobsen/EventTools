@@ -102,6 +102,8 @@ echo '<table border="1"><tr>';
     // default is nothing before this month, specify argument if you want to see the past
     if (!isset($start_date_limit) || $start_date_limit == NULL) {
         $now = new DateTime();
+        // step back 1 year
+        $now = $now->modify('-1 year');
         $start_date_limit = $now->format("Y-m")."-01 00:00:00";
         //echo '['.$start_date_limit.']';
     }
