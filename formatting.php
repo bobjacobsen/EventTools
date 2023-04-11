@@ -803,7 +803,7 @@ function format_all_ops_by_day($url=NULL, $where=NULL, $order=NULL, $start_date_
         // step back 1 year
         $now = $now->modify('-1 year');
         $start_date_limit = $now->format("Y-m")."-01 00:00:00";
-        echo '['.$start_date_limit.']';
+        // echo '['.$start_date_limit.']';
     }
     for ($j=0; $j<$num; $j++) {
         if ((mysql_result($result,$j,"start_date") < $first_string) &&  (mysql_result($result,$j,"start_date") > $start_date_limit) ) {
