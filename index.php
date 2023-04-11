@@ -172,7 +172,8 @@ if ($event_tools_option_zen_cart_used) {
     echo '<a href="ops_reg_attendee_summary.php">Attendee Summary Table<a/><p>';
     if ($event_tools_ops_session_by_category) echo '<a href="edit_user_req_group.php">View/Edit Attendee Category Numbers</a><p>';
     echo '<a href="ops_req_single.php">Single Attendee Summary (enter email)<a/><p>';
-    echo '<a href="ops_req.php">Form for attendees to change their own request (enter email)</a><p>';
+    // the above used to be ops_req.php but that one is broken
+    echo '<a href="edit_ops_one.php">Form for attendees to change their own request (requires ?email= arg)</a><p>';
     echo '<a href="ops_print_by_attendee.php">Assigned Sessions by Attendee (enter cycle)</a><p>';
     echo '<a href="ops_list_group.php">Email list for attendees (enter cycle)</a>    <p>';
     echo '</td><td>Attendees have registered and/or<br/>requested operating session<br/>assignments<p>They also appear in the contacts pages,<br/>where you can edit their contact info.</td></tr></table>';
