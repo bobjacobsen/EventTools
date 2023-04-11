@@ -797,11 +797,13 @@ function format_all_ops_by_day($url=NULL, $where=NULL, $order=NULL, $start_date_
     // generate table headings from first, last date
     $first_string =  "2200-01-01 00:00:00";
     $last_string =  "1999-01-01 00:00:00";
-    // default is nothing before this month, specify argument if you want to see the past
+    // default is nothing before this month last year, specify argument if you want change that
     if ($start_date_limit == NULL) {
         $now = new DateTime();
+        // step back 1 year
+        $now = $now->modify('-1 year');
         $start_date_limit = $now->format("Y-m")."-01 00:00:00";
-        //echo '['.$start_date_limit.']';
+        echo '['.$start_date_limit.']';
     }
     for ($j=0; $j<$num; $j++) {
         if ((mysql_result($result,$j,"start_date") < $first_string) &&  (mysql_result($result,$j,"start_date") > $start_date_limit) ) {
