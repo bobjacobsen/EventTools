@@ -5,11 +5,11 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Op Session Email List</title>
-    
+
 
 </head>
 <body>
-<h1>Op Session Email List</h1>  
+<h1>Op Session Email List</h1>
 <a href="index.php">Back to main page</a><p/>
 
 <?php
@@ -21,7 +21,7 @@ require_once('ops_assign_common.php');
 parse_str($_SERVER["QUERY_STRING"], $args);
 
 // first, see if there's a "?cy=" in the arguments
-if (! ($args["cy"]) ) {
+if (! array_key_exists('cy', $args) ) {
     echo "This is the starting page for printing email lists for op session assignments.<p/>";
     echo "Please provide a cycle name and press start start. (Your cycle must exist)";
     echo '<form method="get" action="ops_list_group.php">
@@ -29,15 +29,15 @@ if (! ($args["cy"]) ) {
         <button type="submit">Start</button>
         </form>
     ';
-    
+
     // display existing cycles & number of assignments)
     echo '<h3>Existing cycles</h3><table><tr><th>Cycle Name</th><th>N Assigned</th></tr>';
     global $opts, $event_tools_db_prefix, $event_tools_href_add_on;
     mysql_connect($opts['hn'],$opts['un'],$opts['pw']);
     @mysql_select_db($opts['db']) or die( "Unable to select database");
-    
+
     $query="
-        SELECT opsreq_group_cycle_name, SUM(status) 
+        SELECT opsreq_group_cycle_name, SUM(status)
         FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
         WHERE status = 1
         GROUP BY opsreq_group_cycle_name
@@ -55,7 +55,7 @@ if (! ($args["cy"]) ) {
     $cycle = $args["cy"];
 }
 
-// here, the cycle name exists, 
+// here, the cycle name exists,
 echo '<h2>Cycle: '.$cycle.'</h2>';
 
 // Try to load it
@@ -80,7 +80,7 @@ if ($num == 0) {
 
 
 $query="
-    SELECT DISTINCT opsreq_person_email
+    SELECT opsreq_person_email
     FROM ".$event_tools_db_prefix."eventtools_ops_group_names
     WHERE opsreq_group_cycle_name = '".$cycle."'
     ORDER BY opsreq_group_id
@@ -89,6 +89,7 @@ $query="
 
 
 $result=mysql_query($query);
+
 $num = mysql_numrows($result);
 
 echo "<p>";
