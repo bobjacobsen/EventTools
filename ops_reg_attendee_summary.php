@@ -41,11 +41,31 @@ require_once('options_utilities.php');
 global $stats;
 
 parse_str($_SERVER["QUERY_STRING"], $args);
+
+// are we changing an option to start?
+if (array_key_exists("id", $args) AND array_key_exists("option", $args) AND array_key_exists("curvalue", $args)) {
+    // here to do an update
+    $id = $args["id"];
+    $option = $args["option"];
+    $curvalue = $args["curvalue"];
+    $newvalue = ($curvalue == "Y") ? "" : "Y";
+
+    $email = $args["email"];
+    $j = $args["j"];
+
+    echo "updated ".$email." option ".$j." to ".($newvalue == "Y" ? "Y" : "N")."<br>";
+
+    $update_query = "UPDATE ".$event_tools_db_prefix."eventtools_customer_option_values SET customer_option_value_value='".$newvalue."' WHERE customers_id='".$id."' AND customer_option_id='".$option."';";
+    //echo $update_query;
+    mysql_query($update_query);
+}
+
+// is this only for a specific session?
 $where = "";
-if ($args["session"]) {
+if (array_key_exists("session", $args)) {
     $where = " WHERE ops_id = \"".$args["session"]."\"";
 }
-if ($args["q"]) {
+if (array_key_exists("q", $args)) {
     $where = " WHERE opsreq_opt".$args["q"]." = \"Y\"";
 }
 
@@ -72,6 +92,13 @@ echo '<th><a href="?order=clastname">Last</a></th>';
 echo '<th><a href="?order=email">Email</a></th>';
 echo '<th><a href="?order=telephone">Telephone</a></th>';
 echo '<th><a href="?order=cellphone">Cell Phone</a></th>';
+
+global $event_tools_emergency_contact_info;
+if ($event_tools_emergency_contact_info ) {
+    echo '<th><a href="?order=cellphone">Emergency<br>Contact</a></th>';
+    echo '<th><a href="?order=cellphone">Emergency<br>Phone</a></th>';
+}
+
 echo '<th><a href="?order=create">Created Date</a></th>';
 echo '<th><a href="?order=update">Updated Date</a></th>';
 echo '<th><a href="?order=category">Attendee<br/>Category</a></th>';
@@ -89,7 +116,7 @@ echo '</tr>';
 
 // create a query that includes the extras
 
-if (strlen($args["order"])>5 AND substr($args["order"],0,5) == "value") $order = urldecode($args["order"]).' DESC, customers_updated_date ';
+if ( array_key_exists("order", $args) AND strlen($args["order"])>5 AND substr($args["order"],0,5) == "value") $order = urldecode($args["order"]).' DESC, customers_updated_date ';
 else $order = parse_order();
 
 if ($order == NULL) $order = "customers_lastname";
@@ -100,7 +127,7 @@ $query=$query."
         ".$where." ORDER BY ".$order."
         ;
     ";
-//echo $query;
+// echo $query;
 
 $resultReqs=mysql_query($query);
 $numReqs= mysql_numrows($resultReqs);
@@ -115,6 +142,12 @@ while ($i < $numReqs) {
     echo  '<td>'.mysql_result($resultReqs,$i,"opsreq_person_email").'</td>';
     echo  '<td>'.mysql_result($resultReqs,$i,"customers_telephone").'</td>';
     echo  '<td>'.mysql_result($resultReqs,$i,"customers_cellphone").'</td>';
+
+    if ($event_tools_emergency_contact_info ) {
+        echo  '<td>'.mysql_result($resultReqs,$i,"customers_x2011_emerg_contact_name").'</td>';
+        echo  '<td>'.mysql_result($resultReqs,$i,"customers_x2011_emerg_contact_phone").'</td>';
+    }
+
     echo  '<td>';
         if (("".mysql_result($resultReqs,$i,"customers_create_date")) != "")
             echo mysql_result($resultReqs,$i,"customers_create_date");
@@ -127,7 +160,21 @@ while ($i < $numReqs) {
     // add options
     $j = 0;
     while ($j < $numExtras) {
-        echo  '<td align="center">'.mysql_result($resultReqs,$i,"value".$j).'</td>';
+        echo  '<td align="center">';
+            // enclose in a link to an edit page
+            echo '<a href="';
+                    echo '?id='.mysql_result($resultReqs,$i,"customers_id");
+                    echo '&option='.mysql_result($resultReqs,$i,"id".$j);
+                    echo '&curvalue='.mysql_result($resultReqs,$i,"value".$j);
+                    echo '&email='.mysql_result($resultReqs,$i,"opsreq_person_email");
+                    echo '&j='.$j;
+                    echo '">';
+
+                echo '&nbsp;';
+                echo mysql_result($resultReqs,$i,"value".$j);
+                echo '&nbsp;';
+            echo '</a>';
+        echo '</td>';
         $j++;
     }
     echo '</tr>';
