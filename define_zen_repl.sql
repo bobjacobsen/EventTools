@@ -8,7 +8,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 -- --------------------------------------------------------
 
--- 
+--
 -- This defines tables needed if you are not using Zen Cart
 --
 
@@ -18,41 +18,50 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `prefix_eventtools_users`
 --
 
+
 DROP TABLE IF EXISTS `prefix_customers`;
+CREATE TABLE `prefix_customers` (
+  `customers_id` int(11) NOT NULL,
+  `customers_gender` char(1) NOT NULL DEFAULT '',
+  `customers_firstname` varchar(32) NOT NULL DEFAULT '',
+  `customers_lastname` varchar(32) NOT NULL DEFAULT '',
+  `customers_dob` datetime NOT NULL DEFAULT '0001-01-01 00:00:00',
+  `customers_email_address` varchar(96) NOT NULL DEFAULT '',
+  `customers_nick` varchar(96) NOT NULL DEFAULT '',
+  `customers_default_address_id` int(11) NOT NULL DEFAULT '0',
+  `customers_telephone` varchar(32) NOT NULL DEFAULT '',
+  `customers_cellphone` varchar(32) NOT NULL DEFAULT '',
+  `customers_fax` varchar(32) DEFAULT NULL,
+  `customers_x2011_nmra_num` varchar(8) DEFAULT NULL,
+  `customers_x2011_nmra_expires` date DEFAULT NULL,
+  `customers_x2011_reg_num` varchar(8) DEFAULT NULL,
+  `customers_x2011_ldsig_num` varchar(32) DEFAULT NULL,
+  `customers_x2011_opsig_num` varchar(32) DEFAULT NULL,
+  `customers_x2011_nasg_num` varchar(32) DEFAULT NULL,
+  `customers_x2011_other_aff_groups` varchar(60) DEFAULT NULL,
+  `customers_x2011_emerg_contact_name` varchar(60) DEFAULT NULL,
+  `customers_x2011_emerg_contact_phone` varchar(32) DEFAULT NULL,
+  `customers_x2011_MMRp` char(1) DEFAULT NULL,
+  `customers_x2011_HLMp` char(1) DEFAULT NULL,
+  `customers_x2011_first_name_badge` varchar(32) DEFAULT NULL,
+  `customers_x2011_spouse_name` varchar(32) DEFAULT NULL,
+  `customers_x2011_cell_number` varchar(32) DEFAULT NULL,
+  `customers_x2011_nmra_region` varchar(8) DEFAULT NULL,
+  `customers_x2011_scale` varchar(32) DEFAULT NULL,
+  `customers_password` varchar(40) NOT NULL DEFAULT '',
+  `customers_newsletter` char(1) DEFAULT NULL,
+  `customers_group_pricing` int(11) NOT NULL DEFAULT '0',
+  `customers_email_format` varchar(4) NOT NULL DEFAULT 'TEXT',
+  `customers_authorization` int(1) NOT NULL DEFAULT '0',
+  `customers_referral` varchar(32) NOT NULL DEFAULT '',
+  `customers_paypal_payerid` varchar(20) NOT NULL DEFAULT '',
+  `customers_paypal_ec` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
+  `customers_x2011_associated_num` varchar(60) DEFAULT NULL,
+  `customers_create_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `customers_updated_date` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS `prefix_customers` (
-  `customers_id` int(11) NOT NULL auto_increment,
-  `customers_gender` char(1) NOT NULL default '',
-  `customers_firstname` varchar(32) NOT NULL default '',
-  `customers_lastname` varchar(32) NOT NULL default '',
-  `customers_dob` datetime NOT NULL default '0001-01-01 00:00:00',
-  `customers_email_address` varchar(96) NOT NULL default '',
-  `customers_nick` varchar(96) NOT NULL default '',
-  `customers_default_address_id` int(11) NOT NULL default '0',
-  `customers_telephone` varchar(32) NOT NULL default '',
-  `customers_cellphone` varchar(32) NOT NULL default '',
-  `customers_fax` varchar(32) default NULL,
-  `customers_x2011_emerg_contact_name` varchar(60) default NULL,
-  `customers_x2011_emerg_contact_phone` varchar(32) default NULL,
-  `customers_password` varchar(40) NOT NULL default '',
-  `customers_newsletter` char(1) default NULL,
-  `customers_group_pricing` int(11) NOT NULL default '0',
-  `customers_email_format` varchar(4) NOT NULL default 'TEXT',
-  `customers_authorization` int(1) NOT NULL default '0',
-  `customers_referral` varchar(32) NOT NULL default '',
-  `customers_paypal_payerid` varchar(20) NOT NULL default '',
-  `customers_paypal_ec` tinyint(1) unsigned NOT NULL default '0',
-  `customers_create_date` datetime,
-  `customers_updated_date` timestamp ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`customers_id`),
-  UNIQUE KEY `idx_email_address_zen` (`customers_email_address`),
-  KEY `idx_referral_zen` (`customers_referral`(10)),
-  KEY `idx_grp_pricing_zen` (`customers_group_pricing`),
-  KEY `idx_nick_zen` (`customers_nick`),
-  KEY `idx_newsletter_zen` (`customers_newsletter`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1428 ;
 
-    
 DROP TABLE IF EXISTS `prefix_address_book`;
 
 CREATE TABLE IF NOT EXISTS `prefix_address_book` (
