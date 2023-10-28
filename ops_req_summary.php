@@ -62,7 +62,7 @@ function summarize_question($shortOptionName, $where) {
             AND customer_option_short_name = \"".$shortOptionName."\"
             ;
         ";
-    //echo $query;
+    // echo $query;
     $resultSurvey=mysql_query($query);
     return mysql_numrows($resultSurvey);
 }
@@ -333,7 +333,7 @@ while ($i < $numReqs) {
 echo '</table>';
 echo '<p>';
 echo 'Click on a column header to sort the results.<br>';
-echo 'Category numbers can be <a href="http://localhost/eventtools/edit_user_req_group.php">changed here</a>.<br>';
+echo 'Category numbers can be <a href="edit_user_req_group.php">changed here</a>.<br>';
 echo '<p>';
 
 
