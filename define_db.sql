@@ -311,7 +311,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_layouts` (
   `layout_photo_url` varchar(128) default '',
   
   `layout_mark_changed` varchar(1) default '',
-  `layout_last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `layout_last_mod_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY  (`layout_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
@@ -343,7 +343,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_layout_tours` (
   `tour_self_guide` char(1) default NULL,
 
   `mark_changed` varchar(1) default '',
-  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `last_mod_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY  (`id`),
   KEY `idx_eventtools_layout_tours_number` (`number`)
@@ -364,7 +364,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_layout_tour_links` (
   `layout_tour_link_order` int(2) NOT NULL,
 
   `link_mark_changed` varchar(1) default '',
-  `link_last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `link_last_mod_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY  (`layout_tour_link_num`),
   KEY `idx_eventtools_layout_tour_links_layout` (`layout_id`),
@@ -401,7 +401,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_clinics` (
   `clinic_presenter_av_request` varchar(10) default '',
 
   `mark_changed` varchar(1) default '',
-  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `last_mod_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY  (`id`),
   KEY `idx_eventtools_clinics_number` (`number`)
@@ -429,7 +429,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_misc_events` (
   `misc_url` varchar(64) default '',
 
   `mark_changed` varchar(1) default '',
-  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `last_mod_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY  (`id`),
   KEY `idx_eventtools_misc_number` (`number`)
@@ -449,7 +449,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_accessibility_codes` (
   `accessibility_display` varchar(40) NOT NULL,
 
   `acc_mark_changed` varchar(1) default '',
-  `acc_last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `acc_last_mod_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY  (`accessibility_code`),
   KEY `idx_eventtools_accessibility_name` (`accessibility_name`)
@@ -470,7 +470,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_event_status_values` (
   `event_status_display` varchar(40) default NULL,
 
   `status_mark_changed` varchar(1) default '',
-  `status_last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `status_last_mod_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY  (`event_status_id`),
   KEY `idx_eventtools_event_status_code` (`event_status_code`),
@@ -491,7 +491,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_clinic_locations` (
   `location_name` varchar(40) NOT NULL,
 
   `locations_mark_changed` varchar(1) default '',
-  `locations_last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `locations_last_mod_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY  (`id`),
   KEY `idx_eventtools_clinic_location_code` (`location_code`),
@@ -512,7 +512,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_clinic_tags` (
   `tag_name` varchar(64) default '',
 
   `mark_changed` varchar(1) default '',
-  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `last_mod_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY  (`clinic_tag_num`),
   CONSTRAINT up UNIQUE NONCLUSTERED(clinic_tag_clinic_number, tag_name),
@@ -533,7 +533,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_misc_event_tags` (
   `tag_name` varchar(64) default '',
 
   `mark_changed` varchar(1) default '',
-  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `last_mod_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY  (`misc_event_tag_num`),
   CONSTRAINT up UNIQUE NONCLUSTERED(misc_event_tag_misc_event_number, tag_name),
@@ -565,7 +565,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_general_tours` (
   `tour_mileage` int(5)  default '0',
   
   `mark_changed` varchar(1) default '',
-  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `last_mod_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY  (`id`),
   KEY `idx_eventtools_general_tours_number` (`number`)
@@ -587,7 +587,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_users` (
   `user_email_log_skip` binary(1) DEFAULT '0',
 
   `mark_changed` varchar(1) default '',
-  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `last_mod_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY  (`user_id`),
   KEY `idx_eventtools_users_user_name` (`user_name`)
@@ -610,7 +610,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_people` (
   `person_email` varchar(96) default '',
 
   `mark_changed` varchar(1) default '',
-  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `last_mod_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY  (`person_id`),
   KEY `idx_eventtools_person_email` (`person_email`)
@@ -643,7 +643,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_opsession` (
   `ops_layout_id4` int(5),
   
   `mark_changed` varchar(1) default '',
-  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `last_mod_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY  (`ops_id`),
   KEY `idx_eventtools_ops_layout_id` (`ops_layout_id`)
@@ -683,7 +683,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_opsession_req` (
   `opsreq_comment` varchar(200),
 
   `mark_changed` varchar(1) default '',
-  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `last_mod_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `opsreq_priority` int(5) default '0',
 
   PRIMARY KEY  (`opsreq_id`),
@@ -704,7 +704,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_opsreq_group` (
   `opsreq_group_cycle_name` varchar(32),
 
   `mark_changed` varchar(1) default '',
-  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `last_mod_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY  (`opsreq_group_id`),
   KEY `idx_eventtools_opsreq_group_cycle_name` (`opsreq_group_cycle_name`)
@@ -725,7 +725,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_opsreq_group_req_link` (
   `opsreq_id` int(5),
 
   `mark_changed` varchar(1) default '',
-  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `last_mod_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY  (`opsreq_group_req_link_id`),
   KEY `idx_eventtools_opsreq_group_id` (`opsreq_group_id`),
@@ -754,7 +754,7 @@ CREATE TABLE IF NOT EXISTS `prefix_eventtools_opsreq_req_status` (
   `forced` int(1) DEFAULT 0,
 
   `mark_changed` varchar(1) default '',
-  `last_mod_time` timestamp ON UPDATE CURRENT_TIMESTAMP,
+  `last_mod_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY  (`opsreq_req_status_id`),
   KEY `idx_eventtools_opsreq_group_req_link_id` (`opsreq_group_req_link_id`)

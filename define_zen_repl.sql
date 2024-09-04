@@ -61,6 +61,14 @@ CREATE TABLE `prefix_customers` (
   `customers_updated_date` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+ALTER TABLE `prefix_customers`
+  ADD PRIMARY KEY (`customers_id`),
+  ADD UNIQUE KEY `idx_email_address_zen` (`customers_email_address`),
+  ADD KEY `idx_referral_zen` (`customers_referral`(10)),
+  ADD KEY `idx_grp_pricing_zen` (`customers_group_pricing`),
+  ADD KEY `idx_nick_zen` (`customers_nick`),
+  ADD KEY `idx_newsletter_zen` (`customers_newsletter`);
+
 
 DROP TABLE IF EXISTS `prefix_address_book`;
 
