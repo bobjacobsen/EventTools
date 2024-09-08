@@ -10,6 +10,7 @@
         span.assigned { background: #b0b0ff; }
         span.conflict { background: #ffc0c0; }
         span.filled   { background: #c0ffc0; }
+        span.local_op { background: #c0c0c0; }
         div.filled    { background: #c0ffc0; }
         span.disabled { background: #ff8080; }
         div.disabled  { background: #ff8080; }
@@ -655,6 +656,7 @@ if (array_key_exists("grp", $args)) { // assign remaining top priority in reques
 
 // do a best-fill operation
 if (array_key_exists("best", $args)) {
+    $detailed_debug = FALSE;
     echo '<hr>';
     $pri = 0+$args["pri"];
 
@@ -666,6 +668,11 @@ if (array_key_exists("best", $args)) {
             if ($reqname_by_rqstr[$email][$pri] == "") continue;
             // check for not session full or conflicted
             if (!( ($status_by_rqstr[$email][$pri] == STATUS_FULL) || ($status_by_rqstr[$email][$pri] == STATUS_CONFLICT) )) continue;
+            // check for not auto allocated, e.g. local person
+            if ($rqstr_category[$email] < 0) {
+                if ($detailed_debug) echo "<br/>Alternate check skipping ".$email." with category ".$rqstr_category[$email]."<br/>";
+                continue;
+            }
             // yes, check for another available session with same layout
             $session = $reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri];
             $layout = $layout_number_by_session[$session];
@@ -705,6 +712,11 @@ if (array_key_exists("best", $args)) {
                 echo $email." is part of existing group<br/>";
                 continue;
             }
+            // check for not auto allocated, e.g. local person
+            if ($rqstr_category[$email] < 0) {
+                if ($detailed_debug) echo "<br/>Master build skipping ".$email." with category ".$rqstr_category[$email]."<br/>";
+                continue;
+            }
             // else we need to process this one
             $users[] = $email;
             $groups[$rqstr_group[$email]] = TRUE;
@@ -742,6 +754,11 @@ if (array_key_exists("best", $args)) {
                 if ($reqname_by_rqstr[$email][$pri] == "") continue;
                 // check for not session full or conflicted
                 if (!( ($status_by_rqstr[$email][$pri] == STATUS_FULL) || ($status_by_rqstr[$email][$pri] == STATUS_CONFLICT) )) continue;
+                // check for not auto allocated, e.g. local person
+                if ($rqstr_category[$email] < 0) {
+                    if ($detailed_debug) echo "<br>Allocation check skipping ".$email." with category ".$rqstr_category[$email]."<br>";
+                    continue;
+                }
                 // yes, check for another available session with same layout
                 $session = $reqname_by_rqstr[$email][$pri].$strtdate_by_rqstr[$email][$pri];
                 $layout = $layout_number_by_session[$session];
@@ -981,7 +998,13 @@ foreach ($rqstr_email as $email) {
     echo '<tr><td title="'.$comment.'">';
     echo '<a name="'.'p'.$tagnum.'">'.$rqstr_name[$email].'<br/>'.$rqstr_address[$email];
     if ($group_user_count[$rqstr_group[$email]] > 1) echo '<br/>Group of '.$group_user_count[$rqstr_group[$email]];
-    if ($event_tools_ops_session_by_category) echo ' ('.$rqstr_category[$email].')';
+    if ($event_tools_ops_session_by_category) {
+        echo ' (';
+        if ($rqstr_category[$email] < 0) echo "<span class='local_op'>";
+        echo $rqstr_category[$email];
+        if ($rqstr_category[$email] < 0) echo "</span>";
+        echo ')';
+    }
     echo '<br/>';
     echo 'Has '.$count.' assigned';
     if ($rqstr_req_size[$email]!='') echo ', Up to '.$rqstr_req_size[$email];
@@ -1024,7 +1047,7 @@ $n_sessions = mysql_numrows($r_sessions);
 // now do a table of people by op session
 echo '<h3>By Session</h3>';
 echo 'Key: <span class="assigned">Assigned</span> <span class="filled">Layout full</span> <span class="conflict">Time conflict</span> <span class="disabled">Disabled</span><br>';
-echo 'Left-header numbers are (Number Operators Assigned)/(Assignable Requests Left)/(Total Slots) colored if <span class="filled">layout full</span><br>';
+echo 'Left-header numbers are (Number Operators Assigned)/(Assignable Requests Left)/(Total Slots) : (Remaining Assignable Requests) &nbsp;colored if <span class="filled">layout full</span><br>';
 
 echo '<table border="1">';
 $tagnum = 0;
@@ -1041,12 +1064,14 @@ for ($i=0; $i<$num; ) {
         $firstpri = 99; // lowest (best) remaining priority (1-12 position, aka req_num) this row
         $pricnt = 0; // count of those
         if ($status_by_rqstr[mysql_result($result,$j,"opsreq_person_email")][mysql_result($result,$j,"req_num")] == "0") {
-            if (mysql_result($result,$j,"req_num") < $lowpri) $lowpri = mysql_result($result,$j,"req_num");
-            $count0++;
-            if ( (mysql_result($result,$j,"req_num") < $firstpri) && (mysql_result($result,$j,"req_num") > 0)) {
-                $firstpri = mysql_result($result,$j,"req_num");
-                $firstindex = $j;
-                $pricnt = 1;
+            if (mysql_result($result,$j,"opsreq_priority") >= 0) {
+                if (mysql_result($result,$j,"req_num") < $lowpri) $lowpri = mysql_result($result,$j,"req_num");
+                $count0++;
+                if ( (mysql_result($result,$j,"req_num") < $firstpri) && (mysql_result($result,$j,"req_num") > 0)) {
+                    $firstpri = mysql_result($result,$j,"req_num");
+                    $firstindex = $j;
+                    $pricnt = 1;
+                }
             }
         }
         if (mysql_result($result,$j,"status") == "1") $count1++;
@@ -1054,14 +1079,16 @@ for ($i=0; $i<$num; ) {
                 && (mysql_result($result,$j,"start_date") == mysql_result($result,$j+1,"start_date")) ) {
             $j++;
             if ($status_by_rqstr[mysql_result($result,$j,"opsreq_person_email")][mysql_result($result,$j,"req_num")] == "0") {
-                if (mysql_result($result,$j,"req_num") < $lowpri) $lowpri = mysql_result($result,$j,"req_num");
-                $count0++;
-                if ( (mysql_result($result,$j,"req_num") < $firstpri) && (mysql_result($result,$j,"req_num") > 0)) {
-                    $firstpri = mysql_result($result,$j,"req_num");
-                    $firstindex = $j;
-                    $pricnt = 0;
+                if (mysql_result($result,$j,"opsreq_priority") >= 0) {
+                    if (mysql_result($result,$j,"req_num") < $lowpri) $lowpri = mysql_result($result,$j,"req_num");
+                    $count0++;
+                    if ( (mysql_result($result,$j,"req_num") < $firstpri) && (mysql_result($result,$j,"req_num") > 0)) {
+                        $firstpri = mysql_result($result,$j,"req_num");
+                        $firstindex = $j;
+                        $pricnt = 0;
+                    }
+                    if (mysql_result($result,$j,"req_num") == $firstpri) $pricnt++;
                 }
-                if (mysql_result($result,$j,"req_num") == $firstpri) $pricnt++;
             }
             if (mysql_result($result,$j,"status") == "1") $count1++;
         }
@@ -1100,7 +1127,7 @@ for ($i=0; $i<$num; ) {
               <input type="hidden" name="id" value="'.mysql_result($result,$firstindex,"opsreq_req_status_id").'">
               <input type="hidden" name="pri" value="'.$firstpri.'">';
         if (($pricnt > 0) && ($pricnt <= (mysql_result($result,$i,"spaces") - $count1))) { // won't show button if none, or too many to take all
-            echo '<input type="submit" name="grp" value="P" title="P buttons assign the next priority remaining requests for this layout."/><br/>';
+            echo '<input type="submit" name="grp" value="P = '.$firstpri.'" title="P buttons assign the next priority remaining requests for this layout, including local operators (category < 0)."/><br/>';
         }
         $header = False;
         for ($session = 0; $session < $n_sessions; $session++) {
@@ -1134,7 +1161,13 @@ for ($i=0; $i<$num; ) {
         echo '<a href="ops_assign_set.php?cy='.$cycle.'#i'.mysql_result($result,$i,"opsreq_req_status_id").'">';
         echo mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").'<br/>'.mysql_result($result,$i,"opsreq_person_email").'</a>';
         echo '<br/>'.mysql_result($result,$i,"entry_city").', '.mysql_result($result,$i,"entry_state");
-        if ($event_tools_ops_session_by_category) echo ' ('.$rqstr_category[mysql_result($result,$i,"opsreq_person_email")].')';
+        if ($event_tools_ops_session_by_category) { 
+            echo ' (';
+            if ( $rqstr_category[mysql_result($result,$i,"opsreq_person_email")] < 0) echo "<span class='local_op'>";
+            echo $rqstr_category[mysql_result($result,$i,"opsreq_person_email")];
+            if ( $rqstr_category[mysql_result($result,$i,"opsreq_person_email")] < 0) echo "</span>";
+            echo ')';
+        }
         echo '<br/>'.' [Pri: '.mysql_result($result,$i,"req_num").']';
         $count = $group_user_count[$rqstr_group[mysql_result($result,$i,"opsreq_person_email")]];
         if ($count > 1) echo " Group of ".$count;
@@ -1152,7 +1185,13 @@ for ($i=0; $i<$num; ) {
             echo '<a href="ops_assign_set.php?cy='.$cycle.'#i'.mysql_result($result,$i,"opsreq_req_status_id").'">';
             echo mysql_result($result,$i,"customers_firstname").' '.mysql_result($result,$i,"customers_lastname").'<br/>'.mysql_result($result,$i,"opsreq_person_email").'</a>';
             echo '<br/>'.mysql_result($result,$i,"entry_city").', '.mysql_result($result,$i,"entry_state");
-            if ($event_tools_ops_session_by_category) echo ' ('.$rqstr_category[mysql_result($result,$i,"opsreq_person_email")].')';
+            if ($event_tools_ops_session_by_category) {
+                echo ' (';
+                if ( $rqstr_category[mysql_result($result,$i,"opsreq_person_email")] < 0) echo "<span class='local_op'>";
+                echo $rqstr_category[mysql_result($result,$i,"opsreq_person_email")];
+                if ( $rqstr_category[mysql_result($result,$i,"opsreq_person_email")] < 0) echo "</span>";
+                echo ')';
+            }
             echo '<br/>'.' [Pri: '.mysql_result($result,$i,"req_num").']';
             $count = $group_user_count[$rqstr_group[mysql_result($result,$i,"opsreq_person_email")]];
             if ($count > 1) echo " Group of ".$count;
@@ -1172,6 +1211,7 @@ echo '<form method="get" action="ops_assign_set.php">
       <input type="hidden" name="pri" value="'.$lowpri.'">';
 if ($lowpri < 99) {
     echo '<input type="submit" name="best" value="Fill Best Priority '.$lowpri.'" title="Assign as many priority '.$lowpri.' requests as possible" />';
+    echo '&nbsp;&nbsp;&nbsp;This will not include local operators (People with category less than zero)';
 } else {
     echo "Automatic assignment complete";
 }
