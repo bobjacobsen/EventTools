@@ -31,7 +31,7 @@ function options_select_statement() {
     $numExtras= mysql_numrows($resultExtras);
 
     $query="
-        SELECT ".$event_tools_db_prefix."customers.customers_id, customers_firstname, customers_lastname, customers_telephone, customers_cellphone, opsreq_person_email, customers_create_date, customers_updated_date, opsreq_priority
+        SELECT ".$event_tools_db_prefix."customers.customers_id, customers_firstname, customers_lastname, customers_telephone, customers_cellphone, opsreq_person_email, customers_create_date, customers_updated_date, opsreq_priority, customers_x2011_emerg_contact_name, customers_x2011_emerg_contact_phone
         ";
 
     // loop over extras and add column
