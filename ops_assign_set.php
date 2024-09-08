@@ -884,7 +884,9 @@ if (array_key_exists("best", $args)) {
 
 // Create the force-assignment lines
 
-echo 'The next two lines do the same thing. The first is in alphabetical order, and the second is ordered by least existing assignments<br>';
+echo 'The next two buttons do the same thing: force assign an operator to a specific section, regardless of whether it was requested or not. <br/>';
+echo 'The first is listed in alphabetical order. ';
+echo 'The second is listed by least existing assignments for the operator and most existing spaces for the session.<br>';
 
 // first form
 echo '<form method="get" action="ops_assign_set.php">
@@ -929,7 +931,7 @@ $query="
     SELECT customers_firstname, customers_lastname, opsreq_person_email, COUNT(*)
     FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
     WHERE opsreq_group_cycle_name = '".$cycle."' AND status < '".STATUS_ASSIGNED."'
-    GROUP BY customers_firstname, customers_lastname, opsreq_person_email
+    GROUP BY customers_firstname, customers_lastname, opsreq_person_email, opsreq_priority
     ORDER BY COUNT(*) DESC, opsreq_priority DESC, customers_create_date
     ;
 ";
@@ -941,7 +943,7 @@ for ($i = 0; $i < $num; $i++) {
 echo '</select>';
 echo '<select name="session" title="Number Assigned / Spaces Left / Total Spaces">';
 $query="
-SELECT start_date, spaces, show_name, COUNT(*), ops_id, opsreq_comment
+SELECT start_date, spaces, show_name, COUNT(*), ops_id
 FROM ".$event_tools_db_prefix."eventtools_opsreq_group
     JOIN ".$event_tools_db_prefix."eventtools_opsreq_group_req_link USING ( opsreq_group_id )
     JOIN ".$event_tools_db_prefix."eventtools_opsreq_req_status USING ( opsreq_group_req_link_id )
@@ -949,9 +951,10 @@ FROM ".$event_tools_db_prefix."eventtools_opsreq_group
     JOIN ".$event_tools_db_prefix."eventtools_layouts on ops_layout_id = layout_id
  WHERE opsreq_group_cycle_name = '".$cycle."' and status = '1' AND status_code >= ".$min_status."
  GROUP BY `ops_id`
- ORDER BY SUBSTRING(start_date,1,10) ASC, spaces-COUNT(*) DESC, show_name ASC
+ ORDER BY spaces-COUNT(*) DESC, SUBSTRING(start_date,1,10) ASC,  show_name ASC
  ;
  ";
+
 $result=mysql_query($query);
 $num = mysql_numrows($result);
 for ($i = 0; $i < $num; $i++) {
