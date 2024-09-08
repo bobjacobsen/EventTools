@@ -924,7 +924,7 @@ for ($i = 0; $i < $num; $i++) {
 echo '</select>';
 echo '<select name="session" title="Number Assigned / Spaces Left / Total Spaces">';
 $query="
-SELECT start_date, spaces, show_name, COUNT(*), ops_id
+SELECT start_date, spaces, show_name, COUNT(*), ops_id, opsreq_comment
 FROM ".$event_tools_db_prefix."eventtools_opsreq_group
     JOIN ".$event_tools_db_prefix."eventtools_opsreq_group_req_link USING ( opsreq_group_id )
     JOIN ".$event_tools_db_prefix."eventtools_opsreq_req_status USING ( opsreq_group_req_link_id )
@@ -961,13 +961,25 @@ $tagnum = 1;
 
 foreach ($rqstr_email as $email) {
     $row = $reqname_by_rqstr[$email];
+    
+    // find comment for tooltip on first cell
+    $comment = "(No comment)";
+    $knum = mysql_numrows($result);
+    for ($k = 0; $k<$knum; $k++) {
+        if ($email == mysql_result($result,$k,"opsreq_person_email")) {
+            $comment = mysql_result($result,$k,"opsreq_comment");
+        }
+    }
+    if ($comment == "") $comment = "(No comment)";
+    
     // count assignments
     $count = 0;
     for ($j = 1; $j<13; $j++) {
         if ( ($status_by_rqstr[$email][$j] == "1") && ($row[$j] != "") ) $count++;
     }
     // display output
-    echo '<tr><td><a name="'.'p'.$tagnum.'">'.$rqstr_name[$email].'<br/>'.$rqstr_address[$email];
+    echo '<tr><td title="'.$comment.'">';
+    echo '<a name="'.'p'.$tagnum.'">'.$rqstr_name[$email].'<br/>'.$rqstr_address[$email];
     if ($group_user_count[$rqstr_group[$email]] > 1) echo '<br/>Group of '.$group_user_count[$rqstr_group[$email]];
     if ($event_tools_ops_session_by_category) echo ' ('.$rqstr_category[$email].')';
     echo '<br/>';
