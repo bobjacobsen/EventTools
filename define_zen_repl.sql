@@ -21,7 +21,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 DROP TABLE IF EXISTS `prefix_customers`;
 CREATE TABLE `prefix_customers` (
-  `customers_id` int(11) NOT NULL,
+  `customers_id` int(11) NOT NULL AUTO_INCREMENT,
   `customers_gender` char(1) NOT NULL DEFAULT '',
   `customers_firstname` varchar(32) NOT NULL DEFAULT '',
   `customers_lastname` varchar(32) NOT NULL DEFAULT '',
@@ -58,11 +58,11 @@ CREATE TABLE `prefix_customers` (
   `customers_paypal_ec` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
   `customers_x2011_associated_num` varchar(60) DEFAULT NULL,
   `customers_create_date` datetime DEFAULT CURRENT_TIMESTAMP,
-  `customers_updated_date` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `customers_updated_date` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`customers_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 ALTER TABLE `prefix_customers`
-  ADD PRIMARY KEY (`customers_id`),
   ADD UNIQUE KEY `idx_email_address_zen` (`customers_email_address`),
   ADD KEY `idx_referral_zen` (`customers_referral`(10)),
   ADD KEY `idx_grp_pricing_zen` (`customers_group_pricing`),
