@@ -1127,7 +1127,7 @@ for ($i=0; $i<$num; ) {
               <input type="hidden" name="id" value="'.mysql_result($result,$firstindex,"opsreq_req_status_id").'">
               <input type="hidden" name="pri" value="'.$firstpri.'">';
         if (($pricnt > 0) && ($pricnt <= (mysql_result($result,$i,"spaces") - $count1))) { // won't show button if none, or too many to take all
-            echo '<input type="submit" name="grp" value="P = '.$firstpri.'" title="P buttons assign the next priority remaining requests for this layout, including local operators (category < 0)."/><br/>';
+            echo '<input type="submit" name="grp" value="P = '.$firstpri.'" title="P buttons assign the next priority remaining requests for this layout, not including local operators (category < 0)."/><br/>';
         }
         $header = False;
         for ($session = 0; $session < $n_sessions; $session++) {
