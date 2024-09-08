@@ -52,7 +52,7 @@ function show_update_request_line($result,$i,$cycle,$show_name,$start_date,$vari
 parse_str($_SERVER["QUERY_STRING"], $args);
 
 // first, see if there's a "?cy=" or "?start=" in the arguments
-if (! ($args["cy"]) ) {
+if (! (array_key_exists("cy", $args)) ) {
     echo 'This page has to be entered from the <a href="ops_assign_group.php">grouping page</a>.<p/>';
     echo "Please click on that link and start there.<p/>";
     return;
@@ -84,7 +84,7 @@ echo '<input type="hidden" name="cy" value="'.$cycle.'">';
 echo '<button type="submit">Refresh/Update</button></form>';
 
 // Process inputs
-if ($args["op"] == "Update") {
+if (array_key_exists("op", $args) && $args["op"] == "Update") {
     $id = $args["id"];
     $req = $args["req"];
     
@@ -95,11 +95,11 @@ if ($args["op"] == "Update") {
     //echo '<p>'.$query.'<p>';
     mysql_query($query);
 
-} else if ($args["op"] == "Delete") {
+} else if (array_key_exists("op", $args) && $args["op"] == "Delete") {
     // delete by removing connection between request and group
     echo "Internal error, delete should have been automatic with removal of request row<br/>";
     
-} else if ($args["op"] == "Add") {
+} else if (array_key_exists("op", $args) && $args["op"] == "Add") {
     // skip if already exists
     $query="
         SELECT  *
@@ -146,10 +146,10 @@ $reqs=mysql_query($query);
 $nums = mysql_numrows($reqs);
 
 $query="
-    SELECT  *
+    SELECT opsreq_person_email, opsreq_group_req_link_id
     FROM ".$event_tools_db_prefix."eventtools_ops_group_session_assignments
     WHERE opsreq_group_cycle_name = '".$cycle."'
-    GROUP BY opsreq_person_email
+    GROUP BY opsreq_person_email, opsreq_group_req_link_id
     ORDER BY opsreq_person_email
     ;
 ";
