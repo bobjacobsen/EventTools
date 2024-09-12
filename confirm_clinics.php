@@ -35,7 +35,7 @@ if ($_POST['submit']) {
     echo "Submission received, ";
     
     // send the email
-    $to = "falken@mac.com";
+    //$to = "falken@mac.com";
     //$to = "jacobsen@berkeley.edu";
     $body = "email: ".$_POST['email']."\n\n".
             "OK: ".$_POST['OK']."\n\n".
@@ -43,7 +43,7 @@ if ($_POST['submit']) {
             "Cell: ".$_POST['cell-number']."\n\n".
             "AV: ".$_POST['av']." ".$_POST['av-comment']."\n\n";
     $subject = "X2011 Clinic Confirmation Update";
-    $headers = "from: x2011west@pacbell.net\nbcc: rgj1927@pacbell.net";
+    $headers = "from: x2011west@pacbell.net\nbcc: rgj1927@gmail.com";
     mail($to,$subject,$body,$headers);
     
     // do the insert
