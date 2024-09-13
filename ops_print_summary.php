@@ -27,7 +27,7 @@ require_once('utilities.php');
 parse_str($_SERVER["QUERY_STRING"], $args);
 
 // first, see if there's a "?cy=" or "?start=" in the arguments
-if (! ($args["cy"]) ) {
+if ( ! isset($args["cy"])) {
     echo '<h1>'.$event_tools_event_name.' Op Session Roster</h1>';
     echo '<a href="index.php">Back to main page</a><p/>';
     echo '<form method="get" action="ops_print_summary.php">
