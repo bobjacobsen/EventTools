@@ -145,10 +145,11 @@ appear in generated list. Here are some most used field options documented.
 $opts['fdd']['customer_option_id'] = array(
   'name'     => 'ID',
   'select'   => 'T',
-  'options'  => 'AVCPDR', // auto increment
+  'options'  => 'VCPDRL', // auto increment
   'maxlen'   => 5,
   'sort'     => true
 );
+
 $opts['fdd']['customer_option_long_name'] = array(
   'name'     => 'Long Form Name',
   'select'   => 'T',
