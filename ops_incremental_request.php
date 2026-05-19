@@ -167,5 +167,109 @@ while ($i < $num) {
     $i++;
 }
 
+
+// print the requests in pretty form
+function pretty_print_requests($email) 
+{
+
+    global $event_tools_db_prefix;
+    require_once('options_utilities.php');
+    
+    $retval = "\nSession Priorities:\n";
+        
+    // get the customer ID for this email
+    $queryReq="
+        SELECT *
+            FROM (
+            ".$event_tools_db_prefix."eventtools_opsession_req
+            )
+            WHERE ".$event_tools_db_prefix."eventtools_opsession_req.opsreq_person_email = '".$email."'
+            ;
+        ";
+    // echo $queryUser;
+    $resultReq=mysql_query($queryReq);
+    $numReq= mysql_numrows($resultReq);
+    // echo $numReq;
+    
+    $j = 1;
+    while ($j <= 12) {
+        $request =  mysql_result($resultReq,0,"opsreq_pri".$j);
+        if ($request > 0) {
+            $querySession = "
+                SELECT *
+                    FROM (
+                    ".$event_tools_db_prefix."eventtools_opsession_name
+                    )
+                    WHERE ".$event_tools_db_prefix."eventtools_opsession_name.ops_id = '".$request."'
+                    ;
+                ";
+            // echo $queryUser;
+            $resultSess=mysql_query($querySession);
+            $numSess= mysql_numrows($resultSess);
+            $retval .= "    ".mysql_result($resultSess,0,"show_name")."\n";
+        }
+        $j++;
+    }    
+    return $retval;
+}
+
+// print the selected options in pretty form
+function pretty_print_options($email) 
+{
+    global $event_tools_db_prefix;
+    require_once('options_utilities.php');
+    
+    $retval = "\nSelections:\n";
+        
+    // get the customer ID for this email
+    $queryUser="
+        SELECT *
+            FROM (
+            ".$event_tools_db_prefix."customers
+            )
+            WHERE ".$event_tools_db_prefix."customers.customers_email_address = '".$email."'
+            ;
+        ";
+    // echo $queryUser;
+    $resultUser=mysql_query($queryUser);
+    $numUser= mysql_numrows($resultUser);
+    
+    $customers_id = mysql_result($resultUser,0,"customers_id");
+    
+    // get the list of extras
+    $queryExtras="
+        SELECT *
+            FROM (
+            ".$event_tools_db_prefix."eventtools_customer_options
+            )
+            ORDER BY customer_option_order
+            ;
+        ";
+    //echo $queryExtras;
+    $resultExtras=mysql_query($queryExtras);
+    $numExtras= mysql_numrows($resultExtras);
+
+    $query=options_select_statement();  // create default select statement
+    
+    $query=$query."
+            WHERE ".$event_tools_db_prefix."customers.customers_id = ".$customers_id."
+            ;
+        ";
+    // echo $query;
+    
+    $resultReqs=mysql_query($query);
+    $numReqs= mysql_numrows($resultReqs);
+    
+    $j = 0;
+    while ($j < $numExtras) {
+        if (mysql_result($resultReqs,0,"value".$j) == "Y") {
+            $retval .= "    ".mysql_result($resultExtras,$j,"customer_option_long_name")."\n";
+        }
+        $j++;
+    }
+
+    return $retval;
+}
+
 ?>
 

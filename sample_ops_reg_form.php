@@ -54,6 +54,27 @@
 	// process into database
 	require( 'ops_incremental_request.php');
 
+    // start of pleasing confirmation email
+    $to_user = $_REQUEST["email"];
+    
+    $content = sprintf("Name:    %s %s\n", $_REQUEST["fname"], $_REQUEST["lname"]);
+    $content .= sprintf("Email:   %s\n", $_REQUEST["email"]);
+    $content .= sprintf("Phone:   %s\n", $_REQUEST["phone"]);
+    $content .= sprintf("Cell:    %s\n", $_REQUEST["cell"]);
+    $content .= sprintf("Address: %s, %s %s %s\n", $_REQUEST["street"],$_REQUEST["city"],$_REQUEST["state"],$_REQUEST["zip"]);
+    $content .="\n";
+    $content .= sprintf("Emergency Contact: %s\n", $_REQUEST["econtact"]);
+    $content .= sprintf("Emergency Phone:   %s\n", $_REQUEST["ephone"]);
+    
+    $content .= pretty_print_options($_REQUEST["email"]);
+    $content .= pretty_print_requests($_REQUEST["email"]);
+    
+    $content .= sprintf("\nComment: %s\n", $_REQUEST["comments"]);
+    
+    print "<pre>\n******\n";
+    print $content;
+    print "*******\n</pre>";
+    
 	// show confirmation on page
 	print "<h1>Thank you for Registering for ".$event_tools_event_name."</h1>\n";
 	print "Your info has been emailed to ".$to.", stored and will be processed shortly.<br><br>\n";
